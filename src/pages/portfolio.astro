@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Badge from '../components/Badge.astro';
 ---
 
 <Layout title="Portfolio - Saad Shahd">
@@ -7,14 +9,66 @@ import Layout from '../layouts/Layout.astro';
     <h1 class="text-5xl font-bold mb-12">Portfolio</h1>
     <p class="text-xl text-gray-600 mb-16">Selected case studies showcasing technical depth and impact</p>
 
-    <div class="grid gap-12">
-      <div class="border border-gray-200 p-8 hover:border-gray-400 transition-colors">
-        <h2 class="text-2xl font-semibold mb-4">StatsBomb Real-Time Data Collection</h2>
-        <p class="text-gray-600 mb-4">
-          Building a distributed system for real-time sports analytics processing
-        </p>
-        <span class="inline-block text-sm text-gray-500">Coming soon...</span>
-      </div>
+    <div class="grid gap-8 md:gap-12">
+      <!-- StatsBomb Case Study -->
+      <Card variant="case-study" href="/portfolio/statsbomb">
+        <div class="p-8">
+          <h2 class="text-2xl font-semibold mb-3">StatsBomb Real-Time Data Collection System</h2>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            Designed a distributed system that reduced 90-minute match collection from 16 man-hours to 4 concurrent collectors.
+            Built a dataspec and DSL enabling PMs to define sport collection rules without engineering involvement.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <Badge variant="skill">JavaScript</Badge>
+            <Badge variant="skill">Ramda</Badge>
+            <Badge variant="skill">Kafka</Badge>
+            <Badge variant="skill">DSL Design</Badge>
+          </div>
+          <div class="text-sm text-gray-500">
+            Problem → Architecture → Impact → Lessons
+          </div>
+        </div>
+      </Card>
+
+      <!-- Future Case Study Placeholder 1 -->
+      <Card variant="case-study">
+        <div class="p-8 opacity-50">
+          <h2 class="text-2xl font-semibold mb-3">Wise Editorial Platform</h2>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            Comprehensive content system enabling 20 teams to collaborate on wise.com.
+            Global→local fintech content at scale with maintained developer experience.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <Badge variant="skill">TypeScript</Badge>
+            <Badge variant="skill">React</Badge>
+            <Badge variant="skill">Content Architecture</Badge>
+            <Badge variant="skill">DX</Badge>
+          </div>
+          <div class="text-sm text-gray-500">
+            Coming soon...
+          </div>
+        </div>
+      </Card>
+
+      <!-- Future Case Study Placeholder 2 -->
+      <Card variant="case-study">
+        <div class="p-8 opacity-50">
+          <h2 class="text-2xl font-semibold mb-3">Instabug SDK Architecture</h2>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            Early-stage startup scaling: building developer tools that shipped with thousands of mobile apps.
+            Learned functional thinking through production bugs in high-velocity environments.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <Badge variant="skill">iOS</Badge>
+            <Badge variant="skill">Android</Badge>
+            <Badge variant="skill">SDK Design</Badge>
+            <Badge variant="skill">Scale</Badge>
+          </div>
+          <div class="text-sm text-gray-500">
+            Coming soon...
+          </div>
+        </div>
+      </Card>
     </div>
   </div>
 </Layout>

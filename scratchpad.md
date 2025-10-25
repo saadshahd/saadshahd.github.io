@@ -13,12 +13,12 @@ Astro v5.15 + Bun + Tailwind v4 + View Transitions
 - Contact page: Real contact info (email, LinkedIn, GitHub)
 - Tailwind v4 pure CSS config (deleted v3 JS config) + homepage scroll fix
 
-## Phase 2: Content (In Progress)
+## Phase 2: Content (Complete)
 - [x] About bio + expertise
 - [x] Contact info
 - [x] Homepage hero positioning + Motion One animation ✨
-- [ ] Resume HTML + PDF
-- [ ] Portfolio page structure
+- [x] Resume HTML + PDF
+- [x] Portfolio page structure
 
 ## Tech Notes
 - Using Motion One (motion.dev) for animations, NOT anime.js or Framer Motion
