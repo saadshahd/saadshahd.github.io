@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
 ---
 
 <Layout title="Saad Shahd - Principal Engineer">
@@ -12,12 +13,12 @@ import Layout from '../layouts/Layout.astro';
         Principal Engineer specializing in real-time systems and functional architecture
       </p>
       <div class="flex gap-4">
-        <a href="/portfolio" class="px-6 py-3 bg-black text-white hover:bg-gray-800 transition-colors">
+        <Button variant="primary" size="lg" href="/portfolio">
           View Work
-        </a>
-        <a href="/contact" class="px-6 py-3 border border-black hover:bg-gray-50 transition-colors">
+        </Button>
+        <Button variant="secondary" size="lg" href="/contact">
           Get in Touch
-        </a>
+        </Button>
       </div>
     </section>
   </div>

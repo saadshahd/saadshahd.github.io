@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import Link from '../components/Link.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { title, description = 'Principal Engineer specializing in real-time systems and functional architecture' } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -29,12 +31,12 @@ const { title, description = 'Principal Engineer specializing in real-time syste
             SS
           </a>
           <div class="flex gap-8">
-            <a href="/" class="text-sm hover:text-gray-600 transition-colors">Home</a>
-            <a href="/portfolio" class="text-sm hover:text-gray-600 transition-colors">Portfolio</a>
-            <a href="/about" class="text-sm hover:text-gray-600 transition-colors">About</a>
-            <a href="/resume" class="text-sm hover:text-gray-600 transition-colors">Resume</a>
-            <a href="/blog" class="text-sm hover:text-gray-600 transition-colors">Blog</a>
-            <a href="/contact" class="text-sm hover:text-gray-600 transition-colors">Contact</a>
+            <Link variant="nav" href="/" active={currentPath === '/'}>Home</Link>
+            <Link variant="nav" href="/portfolio" active={currentPath === '/portfolio'}>Portfolio</Link>
+            <Link variant="nav" href="/about" active={currentPath === '/about'}>About</Link>
+            <Link variant="nav" href="/resume" active={currentPath === '/resume'}>Resume</Link>
+            <Link variant="nav" href="/blog" active={currentPath === '/blog'}>Blog</Link>
+            <Link variant="nav" href="/contact" active={currentPath === '/contact'}>Contact</Link>
           </div>
         </div>
       </div>

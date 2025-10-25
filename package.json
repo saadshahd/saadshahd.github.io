@@ -12,9 +12,12 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.16",
     "@types/bun": "latest",
     "astro": "^5.15.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "tailwindcss": "^4.1.16",
     "typescript": "^5"
   }

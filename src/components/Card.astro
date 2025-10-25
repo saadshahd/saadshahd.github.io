@@ -1,0 +1,38 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { clsx } from 'clsx';
+
+const card = cva(
+  'block rounded-lg overflow-hidden transition-all',
+  {
+    variants: {
+      variant: {
+        'case-study': 'bg-white border border-slate-200 hover:shadow-xl hover:-translate-y-1 p-0',
+        'blog': 'bg-white border border-slate-200 hover:border-secondary p-6',
+        'minimal': 'bg-white border border-slate-100 shadow-sm hover:shadow-md p-6',
+      },
+    },
+    defaultVariants: {
+      variant: 'minimal',
+    },
+  }
+);
+
+type Props = VariantProps<typeof card> & {
+  href?: string;
+  class?: string;
+};
+
+const { variant, href, class: className } = Astro.props;
+const classes = clsx(card({ variant }), className);
+---
+
+{href ? (
+  <a href={href} class={classes}>
+    <slot />
+  </a>
+) : (
+  <article class={classes}>
+    <slot />
+  </article>
+)}
