@@ -4,44 +4,183 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Resume - Saad Shahd">
   <div class="max-w-4xl mx-auto px-6 py-20">
-    <div class="flex justify-between items-start mb-12">
-      <h1 class="text-5xl font-bold">Resume</h1>
-      <a
-        href="/resume.pdf"
-        class="px-6 py-3 border border-black hover:bg-gray-50 transition-colors"
-        download
-      >
-        Download PDF
-      </a>
+    <!-- Header -->
+    <div class="mb-16">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <h1 class="text-5xl font-bold mb-2">Saad Shahd</h1>
+          <p class="text-xl text-gray-600">Principal Software Engineer</p>
+        </div>
+        <a
+          href="/resume.pdf"
+          class="print:hidden px-6 py-3 border border-black hover:bg-gray-50 transition-colors"
+          download
+        >
+          Download PDF
+        </a>
+      </div>
+
+      <div class="flex flex-wrap gap-4 text-sm text-gray-600 mt-4">
+        <a href="mailto:dev.saad.shahd@gmail.com" class="hover:text-gray-900">dev.saad.shahd@gmail.com</a>
+        <a href="https://github.com/saadshahd" target="_blank" class="hover:text-gray-900">github.com/saadshahd</a>
+        <a href="https://linkedin.com/in/saadshahd" target="_blank" class="hover:text-gray-900">linkedin.com/in/saadshahd</a>
+        <span>London, United Kingdom</span>
+        <span>+447428240774</span>
+      </div>
     </div>
 
-    <div class="prose prose-lg max-w-none">
-      <section class="mb-12">
-        <h2 class="text-2xl font-semibold mb-4">Experience</h2>
-        <div class="space-y-8">
-          <div>
-            <h3 class="text-xl font-semibold">Principal Engineer</h3>
-            <p class="text-gray-600">Company Name • 2020 - Present</p>
-            <ul class="mt-2 space-y-1 text-gray-700">
-              <li>[Achievement or responsibility]</li>
-              <li>[Achievement or responsibility]</li>
-            </ul>
+    <!-- Summary -->
+    <section class="mb-16">
+      <p class="text-lg leading-relaxed">
+        Principal Software Engineer building real-time distributed systems that scale.
+        I make architectural decisions that unlock velocity while maintaining correctness—through
+        event-driven patterns, immutable data flows, and infrastructure designed to fail gracefully.
+        12+ years taking platforms from prototype to production at companies like Wise and StatsBomb,
+        handling millions of events per second.
+      </p>
+    </section>
+
+    <!-- Key Expertise -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Key Expertise</h2>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-semibold text-lg">Distributed Systems & High-Scalability Infrastructure Design</h3>
+          <p class="text-gray-700">Architecting systems that handle millions of events while maintaining correctness guarantees and operational simplicity.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Real-Time Data Stream Processing (Kafka)</h3>
+          <p class="text-gray-700">Building event-driven architectures with immutable streams, exactly-once semantics, and graceful degradation.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Microservice Architecture (DDD, CQRS, gRPC)</h3>
+          <p class="text-gray-700">Decomposing monoliths into bounded contexts with clear interfaces, reducing coupling while maintaining consistency.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">Platform Engineering & Infrastructure Evolution</h3>
+          <p class="text-gray-700">Designing infrastructure that lets teams deploy confidently—through observability, automated testing, and progressive delivery.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Experience</h2>
+
+      <div class="space-y-12">
+        <!-- Wise -->
+        <div>
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h3 class="text-xl font-semibold">Senior Software Engineer</h3>
+              <p class="text-gray-600">Wise</p>
+            </div>
+            <p class="text-gray-600">London | 03/2022 - Present</p>
+          </div>
+          <p class="text-gray-700 mb-3">Building infrastructure for the world's most international account—helping 16M+ customers move money across borders.</p>
+          <ul class="space-y-3 text-gray-700">
+            <li><strong>Increased conversion 19% through hypothesis-driven experimentation.</strong> Isolated pricing friction points through rapid A/B testing. Short iterations revealed psychological barriers traditional analytics missed—validating hunches with data, not opinions.</li>
+            <li><strong>Improved team velocity 4x by eliminating accidental complexity.</strong> Refactored tangled service dependencies into composable modules with clear boundaries. Each team could now deploy independently. Reduced coordination overhead from "everyone talks to everyone" to "services talk through contracts."</li>
+            <li><strong>Increased user satisfaction 26% by consolidating fragmented product components.</strong> Migrated six inconsistent UIs into a unified design system backed by shared state management. Users no longer learned different interactions for similar actions—cognitive load dropped, satisfaction rose.</li>
+          </ul>
+        </div>
+
+        <!-- StatsBomb -->
+        <div>
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h3 class="text-xl font-semibold">Principal Software Engineer</h3>
+              <p class="text-gray-600">StatsBomb</p>
+            </div>
+            <p class="text-gray-600">Bath, UK | 03/2018 - 03/2022</p>
+          </div>
+          <p class="text-gray-700 mb-3">Led core data infrastructure for football analytics platform—serving Premier League clubs, international federations, and media companies.</p>
+          <ul class="space-y-3 text-gray-700">
+            <li><strong>Architected real-time data streaming platform from scratch, handling 10K+ events/second.</strong> Chose event sourcing with Kafka for immutable audit trails—critical when clubs make million-pound decisions on our data. Event-driven design let us replay history, debug production issues in development, and maintain consistency across services without distributed transactions.</li>
+            <li><strong>Increased data collection speed 6x through parallel processing architecture.</strong> Previous sequential pipeline became the bottleneck—one slow collector blocked everyone. Redesigned as independent stream processors with coordinated checkpoints. Tradeoff: More complex failure handling, but throughput scaled linearly with workers.</li>
+            <li><strong>Improved data quality 8x by making validation impossible to skip.</strong> Moved from "trust but verify" post-processing to typed schemas with compile-time guarantees. Invalid data couldn't enter the system—structural correctness over runtime checks. Quality issues dropped from daily firefighting to rare edge cases.</li>
+            <li><strong>These platform improvements drove 3x increase in client satisfaction.</strong> Faster turnaround meant clubs received insights before match deadlines. Better quality meant fewer "wait, this can't be right" conversations. Technical decisions directly impacted renewal rates—architecture has business consequences.</li>
+          </ul>
+        </div>
+
+        <!-- Eventtus -->
+        <div>
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h3 class="text-xl font-semibold">Senior Software Engineer</h3>
+              <p class="text-gray-600">Eventtus</p>
+            </div>
+            <p class="text-gray-600">Cairo, Egypt | 03/2017 - 03/2018</p>
+          </div>
+          <p class="text-gray-700 mb-3">Built engagement platform for events—the leading event app provider across Middle East and North Africa.</p>
+          <ul class="space-y-3 text-gray-700">
+            <li><strong>Architected entire platform as decoupled microservices using DDD, CQRS, and gRPC.</strong> Decomposed monolithic Rails app into bounded contexts—attendees, sessions, networking, analytics. Each context owned its data, exposed typed interfaces, communicated through events. Teams could evolve services independently without coordination tax. Pattern: Eventual consistency over distributed transactions—accept temporary staleness for operational simplicity.</li>
+          </ul>
+        </div>
+
+        <!-- Instabug -->
+        <div>
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h3 class="text-xl font-semibold">Senior Frontend Engineer</h3>
+              <p class="text-gray-600">Instabug</p>
+            </div>
+            <p class="text-gray-600">Cairo, Egypt | 11/2015 - 08/2016</p>
+          </div>
+          <p class="text-gray-700 mb-3">Core team member building tools for mobile developers to ship better apps—crash reporting, user feedback, and performance monitoring.</p>
+          <ul class="space-y-3 text-gray-700">
+            <li><strong>Built real-time crash reporting dashboard processing 100K+ events daily.</strong> Designed client SDK for minimal performance overhead while capturing rich debugging context. Challenge: Collect enough data to reproduce bugs without impacting app performance—solved through smart sampling, local aggregation, and batched uploads.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Skills</h2>
+
+      <div class="space-y-6">
+        <div>
+          <h3 class="font-semibold text-lg mb-2">Architecture & Systems</h3>
+          <div class="space-y-1">
+            <p><strong>Expert:</strong> Distributed Systems, Event-Driven Architecture, Microservices, DDD, CQRS</p>
+            <p><strong>Proficient:</strong> System Design, Platform Engineering, Real-Time Processing, Stream Processing</p>
           </div>
         </div>
-      </section>
 
-      <section class="mb-12">
-        <h2 class="text-2xl font-semibold mb-4">Education</h2>
         <div>
-          <h3 class="text-xl font-semibold">[Degree]</h3>
-          <p class="text-gray-600">[University] • [Year]</p>
+          <h3 class="font-semibold text-lg mb-2">Backend & Data</h3>
+          <div class="space-y-1">
+            <p><strong>Expert:</strong> Node.js, Kafka, Redis, SQL, REST, GraphQL, gRPC</p>
+            <p><strong>Proficient:</strong> Python, Rust, Clojure, Scala, RocksDB, MongoDB, Neo4j, Druid</p>
+          </div>
         </div>
-      </section>
 
-      <section>
-        <h2 class="text-2xl font-semibold mb-4">Skills</h2>
-        <p class="text-gray-700">[List your key technical skills]</p>
-      </section>
-    </div>
+        <div>
+          <h3 class="font-semibold text-lg mb-2">DevOps & Infrastructure</h3>
+          <div class="space-y-1">
+            <p><strong>Expert:</strong> Kubernetes, Docker, AWS, Prometheus, Grafana</p>
+            <p><strong>Proficient:</strong> Helm, JenkinsX, GCP, Nginx, HAProxy</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-semibold text-lg mb-2">Frontend</h3>
+          <div class="space-y-1">
+            <p><strong>Expert:</strong> TypeScript, React, HTML/CSS</p>
+            <p><strong>Proficient:</strong> Vue, Angular, Redux, xstate, RxJS, D3, Electron</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Find Me Online -->
+    <section>
+      <h2 class="text-2xl font-bold mb-4">Find Me Online</h2>
+      <div class="space-y-2">
+        <p><strong>GitHub:</strong> <a href="https://github.com/saadshahd" target="_blank" class="text-blue-600 hover:underline">github.com/saadshahd</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/saadshahd" target="_blank" class="text-blue-600 hover:underline">linkedin.com/in/saadshahd</a></p>
+      </div>
+    </section>
   </div>
 </Layout>
