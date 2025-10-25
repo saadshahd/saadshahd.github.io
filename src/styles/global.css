@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@theme {
+  /* Mediterranean Color Palette */
+  --color-primary: #d97706;
+  --color-primary-light: #f59e0b;
+  --color-primary-dark: #b45309;
+
+  --color-secondary: #2563eb;
+  --color-secondary-light: #3b82f6;
+  --color-secondary-dark: #1e40af;
+
+  --color-accent: #22d3ee;
+  --color-accent-light: #67e8f9;
+  --color-accent-dark: #06b6d4;
+}
