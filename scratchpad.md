@@ -11,6 +11,7 @@ Astro v5.15 + Bun + Tailwind v4 + View Transitions
 - Phase 1: Foundation (6 pages, View Transitions, GitHub Actions)
 - About page: Complete bio with FP philosophy, career highlights, expertise
 - Contact page: Real contact info (email, LinkedIn, GitHub)
+- Tailwind v4 pure CSS config (deleted v3 JS config) + homepage scroll fix
 
 ## Phase 2: Content (In Progress)
 - [x] About bio + expertise

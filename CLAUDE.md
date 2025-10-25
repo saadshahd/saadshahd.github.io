@@ -5,86 +5,73 @@
 **Persona:** Technical authority with taste
 **Approach:** Content-first, animations enhance UX (never distract)
 
-### Animation Rules
+### Animation & Visual
 
-- Subtle and purposeful only
-- Page transitions, scroll reveals, hover states
-- No looping animations, particle effects, or performance blockers
-- 1-2 animations maximum for initial ship
+**Animation**: Subtle only - transitions, reveals, hovers. No loops/particles. Max 1-2 for v1.
+**Visual**: Clean typography, readable layouts, confident + accessible
+**Inspiration**: Josh Comeau, Cassie Evans, Dan Abramov
 
-### Visual Direction
+---
 
-- Clean, professional typography
-- Clear, readable layouts
-- Confident but accessible tone
-- Inspiration: Josh Comeau, Cassie Evans, Dan Abramov
+## Content Style & Voice
+
+**Voice**: Minimalist clarity - every word earns its place
+**Tone**: Respectful depth - never condescend, never showboat
+**Philosophy**: Production wisdom > trends, first principles > hype
+
+### Writing Rules
+
+**Sentence Rhythm** (Gary Provost): Vary length for musicality
+- Short: punch and emphasis
+- Medium: natural flow and connection
+- Long: build energy toward architectural insights that matter
+
+**Every Sentence Must**: Teach principle, reveal decision, or show impact
+
+**Forbidden**: Hype trends, performative jargon, tutorial-only content, condescension
+
+**Clarity**: Write for "intelligent curious person" - explain complexity simply, consistent depth for all
+
+### Reader Goals (Priority Order)
+1. Trust (battle-tested experience)
+2. Learning (deeper systems thinking)
+3. Practical (applicable patterns)
+4. Respect (principal-level thought)
+
+### Case Study: Problem → Architecture → Impact → Lessons
+- Problem (300-500w): Context, challenge, why it mattered
+- Architecture (1000-1500w): Decisions, tradeoffs, diagrams, insights
+- Impact (300-500w): Results, effects, what shipped
+- Lessons (200-400w): What worked/didn't, principles, when to use
+
+### Blog: Hook → Context → Deep Dive → Principle → Application
+
+### Pre-Publish Checklist
+- [ ] Sentence lengths vary (short/medium/long)
+- [ ] No hype words (revolutionary, game-changing)
+- [ ] No unnecessary jargon
+- [ ] Every paragraph teaches
+- [ ] Production wisdom evident
+- [ ] First principles explained
 
 ---
 
 ## Content Structure
 
-### Homepage
-
-- Intro: "Principal Engineer specializing in real-time systems and functional architecture"
-- Featured work: 2-3 case study cards with hover animations
-- Latest blog post preview
-- CTA: "View portfolio" or "Get in touch"
-
-### Portfolio
-
-- 3-5 case studies
-- Format: Problem → Architecture → Impact → Lessons
-- 2000-3000 words + diagrams each
-
-### Blog
-
-- Technical articles
-- Monthly frequency (after site is live)
-- Start with: "How I Designed a Real-Time Data Collection System"
-
-### About
-
-- Professional bio: 200-300 words
-- Technical expertise areas
-- Career highlights
-- Professional headshot
-
-### Resume
-
-- Downloadable PDF
-- HTML web version
-
-### Contact
-
-- Email, LinkedIn, GitHub
-- Optional: Simple contact form
+**Homepage**: Intro (Principal Engineer, real-time/functional), 2-3 case studies, blog preview, CTA
+**Portfolio**: 3-5 case studies (Problem→Architecture→Impact→Lessons), 2000-3000w + diagrams
+**Blog**: Monthly technical articles, start with "Real-Time Data Collection System"
+**About**: Bio 200-300w, expertise, highlights, headshot
+**Resume**: PDF + HTML version
+**Contact**: Email, LinkedIn, GitHub, optional form
 
 ---
 
 ## Success Criteria
 
-### Must Have (Week 1-2)
-
-- [x] Live on GitHub Pages
-- [x] At least one Motion One animation working
-- [x] Basic navigation structure
-- [x] Responsive layout (mobile + desktop)
-- [x] Placeholder content in all sections
-- [x] Load time < 3 seconds
-
-### Should Have (Week 3-4)
-
-- [ ] First case study published (StatsBomb)
-- [ ] Professional bio written
-- [ ] Updated resume/CV
-- [ ] Contact information
-
-### Could Have (Month 2+)
-
-- [ ] Blog posts published
-- [ ] Advanced animations
-- [ ] Additional case studies
-- [ ] SEO optimization
+**Week 1-2**: Live, one animation, responsive, placeholder content, <3s load
+**Week 3-4**: First case study (StatsBomb), bio, resume, contact
+**Month 2+**: Blog posts, more case studies, SEO
 
 ---
 
@@ -95,28 +82,13 @@
 **Optional:** Markdown for blog/case studies
 **Forbidden:** Complex build systems, heavy frameworks, over-engineering
 
-### Animation Library Decision (IMPORTANT)
+### Animation Library
 
-**✅ CORRECT: Motion One** (`motion` package)
-- Framework-agnostic, works with Astro/vanilla JS
-- Lightweight (~5KB), built on Web Animations API
-- Simple API: `animate(selector, props, options)`
-- Site: https://motion.dev
-
-**❌ WRONG: Framer Motion** (`framer-motion` package)
-- React-specific, won't work in Astro components
-- Only use if we add React islands (we haven't)
-
-**❌ WRONG: anime.js**
-- Export issues in v4, non-standard API
-- Larger bundle size than Motion One
-- Already removed from project
-
-**Rule:** For ANY animation in this Astro project, use Motion One or native CSS. Never add React-specific libraries unless we explicitly add React integration first.
+**✅ Motion One** (`motion` package): Framework-agnostic, 5KB, Web Animations API - https://motion.dev
+**❌ Framer Motion**: React-only (we don't use React)
+**❌ anime.js**: Export issues, removed
+**Rule**: Motion One or native CSS only. No React libs without React integration.
 
 ---
 
-## Definition of Done
-
-**Week 2:** Shareable URL, one animation, responsive, placeholder content, navigation
-**Month 1:** First case study, bio/resume live, actively shared
+## Done = Week 2: Shareable + animation + responsive | Month 1: Case study + bio/resume
