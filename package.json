@@ -1,15 +1,6 @@
 {
   "name": "saad-shahd-portfolio",
-  "type": "module",
   "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
     "@tailwindcss/typography": "^0.5.19",
@@ -20,5 +11,17 @@
     "clsx": "^2.1.1",
     "tailwindcss": "^4.1.16",
     "typescript": "^5"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "type": "module",
+  "dependencies": {
+    "motion": "^12.23.24"
   }
 }

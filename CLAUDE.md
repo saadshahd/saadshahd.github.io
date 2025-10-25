@@ -65,12 +65,12 @@
 
 ### Must Have (Week 1-2)
 
-- [ ] Live on GitHub Pages
-- [ ] At least one anime.js animation working
-- [ ] Basic navigation structure
-- [ ] Responsive layout (mobile + desktop)
-- [ ] Placeholder content in all sections
-- [ ] Load time < 3 seconds
+- [x] Live on GitHub Pages
+- [x] At least one Motion One animation working
+- [x] Basic navigation structure
+- [x] Responsive layout (mobile + desktop)
+- [x] Placeholder content in all sections
+- [x] Load time < 3 seconds
 
 ### Should Have (Week 3-4)
 
@@ -90,9 +90,29 @@
 
 ## Tech Stack
 
-**Core:** HTML/CSS/JavaScript, anime.js, GitHub Pages
-**Optional:** Tailwind CSS, 11ty/Jekyll, Markdown
+**Core:** Astro v5, Bun, Tailwind v4, Motion One (motion.dev), GitHub Pages/Actions
+**Current:** View Transitions API built into Astro
+**Optional:** Markdown for blog/case studies
 **Forbidden:** Complex build systems, heavy frameworks, over-engineering
+
+### Animation Library Decision (IMPORTANT)
+
+**✅ CORRECT: Motion One** (`motion` package)
+- Framework-agnostic, works with Astro/vanilla JS
+- Lightweight (~5KB), built on Web Animations API
+- Simple API: `animate(selector, props, options)`
+- Site: https://motion.dev
+
+**❌ WRONG: Framer Motion** (`framer-motion` package)
+- React-specific, won't work in Astro components
+- Only use if we add React islands (we haven't)
+
+**❌ WRONG: anime.js**
+- Export issues in v4, non-standard API
+- Larger bundle size than Motion One
+- Already removed from project
+
+**Rule:** For ANY animation in this Astro project, use Motion One or native CSS. Never add React-specific libraries unless we explicitly add React integration first.
 
 ---
 

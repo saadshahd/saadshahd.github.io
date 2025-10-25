@@ -15,9 +15,13 @@ Astro v5.15 + Bun + Tailwind v4 + View Transitions
 ## Phase 2: Content (In Progress)
 - [x] About bio + expertise
 - [x] Contact info
-- [ ] Homepage hero positioning
+- [x] Homepage hero positioning + Motion One animation ✨
 - [ ] Resume HTML + PDF
 - [ ] Portfolio page structure
+
+## Tech Notes
+- Using Motion One (motion.dev) for animations, NOT anime.js or Framer Motion
+- Astro v5 without React (can add React islands later if needed)
 
 ## Phase 3: Case Study
 - StatsBomb deep dive (2000-3000 words)
