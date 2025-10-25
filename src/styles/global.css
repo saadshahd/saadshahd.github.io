@@ -2,16 +2,22 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  /* Mediterranean Color Palette */
-  --color-primary: #d97706;
-  --color-primary-light: #f59e0b;
-  --color-primary-dark: #b45309;
+  /* Egyptian Heritage Color Palette */
+  /* Sand & Desert Tones - Magical Egyptian Gold */
+  --color-primary: #F4C430;      /* Bright Egyptian gold */
+  --color-primary-light: #FFD700; /* Luminous gold shimmer */
+  --color-primary-dark: #DAA520;  /* Rich golden bronze */
 
-  --color-secondary: #2563eb;
-  --color-secondary-light: #3b82f6;
-  --color-secondary-dark: #1e40af;
+  /* Red Sea Water Tones */
+  --color-secondary: #0EA5E9;     /* Clear Red Sea blue */
+  --color-secondary-light: #38BDF8; /* Shallow water blue */
+  --color-secondary-dark: #0369A1; /* Deep sea blue */
 
-  --color-accent: #22d3ee;
-  --color-accent-light: #67e8f9;
-  --color-accent-dark: #06b6d4;
+  /* Accent - Bright Blue */
+  --color-accent: #06B6D4;        /* Vibrant cyan-blue */
+  --color-accent-light: #67E8F9;  /* Light water shimmer */
+  --color-accent-dark: #0284C7;   /* Deep cyan */
+
+  /* Backgrounds */
+  --color-background: #F5F1E8;    /* Limestone cream */
 }

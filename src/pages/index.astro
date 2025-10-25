@@ -4,7 +4,8 @@ import Button from '../components/Button.astro';
 ---
 
 <Layout title="Saad Shahd - Principal Engineer">
-  <div class="max-w-6xl mx-auto px-6">
+  <!-- Centered content on top of patterns -->
+  <div class="max-w-6xl mx-auto px-6 relative" style="z-index: 1;">
     <section class="min-h-[calc(100vh-5rem)] flex flex-col justify-center">
       <h1 class="hero-name text-6xl md:text-7xl font-bold mb-6 leading-tight opacity-0">
         Saad Shahd
@@ -35,10 +36,10 @@ import Button from '../components/Button.astro';
   function animateHero() {
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktop = window.innerWidth >= 1024;
 
     if (!prefersReducedMotion) {
-      // Animate hero elements with staggered timing
-      // Motion One expects a selector string, not an array
+      // Content: Animate hero elements with staggered timing
       animate(
         '.hero-name, .hero-title, .hero-value, .hero-ctas',
         {
@@ -47,14 +48,14 @@ import Button from '../components/Button.astro';
         },
         {
           duration: 0.8,
-          easing: [0.16, 1, 0.3, 1], // easeOutExpo equivalent
-          delay: stagger(0.15) // 150ms stagger between elements
+          easing: [0.16, 1, 0.3, 1],
+          delay: stagger(0.15, { start: isDesktop ? 0.6 : 0 }) // Wait for patterns on desktop
         }
       );
     } else {
-      // If reduced motion, just show everything immediately
+      // If reduced motion, just show content immediately
       document.querySelectorAll('.hero-name, .hero-title, .hero-value, .hero-ctas').forEach(el => {
-        el.style.opacity = '1';
+        (el as HTMLElement).style.opacity = '1';
       });
     }
   }

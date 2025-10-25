@@ -5,11 +5,37 @@
 **Persona:** Technical authority with taste
 **Approach:** Content-first, animations enhance UX (never distract)
 
-### Animation & Visual
+### Egyptian Heritage Brand
 
-**Animation**: Subtle only - transitions, reveals, hovers. No loops/particles. Max 1-2 for v1.
-**Visual**: Clean typography, readable layouts, confident + accessible
-**Inspiration**: Josh Comeau, Cassie Evans, Dan Abramov
+**Identity**: Egyptian engineer inspired by Nile, pyramids, Red Sea, High Dam, 1973 water engineering (Bar Lev Line breakthrough)
+**Aesthetic**: Heritage as backdrop - present but not overwhelming technical content
+**Visual Metaphor**: Creative problem-solving through abstract geometric patterns
+
+**Color Palette** (src/styles/global.css @theme):
+- Primary: `#F4C430` (bright Egyptian gold) - magical, luminous
+- Secondary: `#0EA5E9` (Red Sea blue) - clear water, NOT greenish
+- Accent: `#06B6D4` (vibrant cyan-blue)
+- Background: `#F5F1E8` (limestone cream)
+
+**Pattern Components** (src/components/patterns/):
+- `PyramidGrid`: Large-scale pyramids (800x800px), golden ratio, 3 elements max, opacity 0.08-0.12
+- `WaterFlow`: Flowing Nile lines, breakthrough elements (water engineering metaphor)
+- `ScalePattern`: Fish scale tessellation (gray mullet, tilapia)
+- `EngineeringGrid`: Blueprint precision (High Dam, Suez Canal)
+
+**Pattern Rules**:
+- Desktop-optimized, bold animations (scale, flow, reveal)
+- Mobile: static or minimal CSS-only
+- `prefers-reduced-motion` respected
+- Full-screen `fixed inset-0` behind content (z-index: 0)
+- Elegant minimalism: fewer elements, larger scale, breathing room
+- NO visual noise - 2-3 clean elements per pattern max
+
+### Animation Strategy
+
+**Hero**: Geometric reveal (1.5s patterns → content fades)
+**Principles**: Bold storytelling, never distract from content, respect motion preferences
+**Inspiration**: Josh Comeau, Cassie Evans, Dan Abramov + Egyptian geometric art
 
 ---
 
