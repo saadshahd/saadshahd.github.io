@@ -12,18 +12,19 @@
 **Visual Metaphor**: Creative problem-solving through abstract geometric patterns
 
 **Color Palette** (src/styles/global.css @theme):
+
 - Primary: `#F4C430` (bright Egyptian gold) - magical, luminous
 - Secondary: `#0EA5E9` (Red Sea blue) - clear water, NOT greenish
 - Accent: `#06B6D4` (vibrant cyan-blue)
 - Background: `#F5F1E8` (limestone cream)
 
 **Pattern Components** (src/components/patterns/):
+
 - `PyramidGrid`: Large-scale pyramids (800x800px), golden ratio, 3 elements max, opacity 0.08-0.12
 - `WaterFlow`: Flowing Nile lines, breakthrough elements (water engineering metaphor)
-- `ScalePattern`: Fish scale tessellation (gray mullet, tilapia)
-- `EngineeringGrid`: Blueprint precision (High Dam, Suez Canal)
 
 **Pattern Rules**:
+
 - Desktop-optimized, bold animations (scale, flow, reveal)
 - Mobile: static or minimal CSS-only
 - `prefers-reduced-motion` respected
@@ -48,6 +49,7 @@
 ### Writing Rules
 
 **Sentence Rhythm** (Gary Provost): Vary length for musicality
+
 - Short: punch and emphasis
 - Medium: natural flow and connection
 - Long: build energy toward architectural insights that matter
@@ -61,12 +63,14 @@
 **Clarity**: Write for "intelligent curious person" - explain complexity simply, consistent depth for all
 
 ### Reader Goals (Priority Order)
+
 1. Trust (battle-tested experience)
 2. Learning (deeper systems thinking)
 3. Practical (applicable patterns)
 4. Respect (principal-level thought)
 
 ### Case Study: Problem → Architecture → Impact → Lessons
+
 - Problem (300-500w): Context, challenge, why it mattered
 - Architecture (1000-1500w): Decisions, tradeoffs, diagrams, insights
 - Impact (300-500w): Results, effects, what shipped
@@ -75,6 +79,7 @@
 ### Blog: Hook → Context → Deep Dive → Principle → Application
 
 ### Pre-Publish Checklist
+
 - [ ] Sentence lengths vary (short/medium/long)
 - [ ] No hype words (revolutionary, game-changing)
 - [ ] No unnecessary jargon
@@ -119,7 +124,7 @@
 
 ### Code Highlighting
 
-**✅ Shiki** (https://shiki.style): Built into Astro, theme `everforest-dark`, configured in `astro.config.mjs`
+**✅ Shiki** (https://shiki.style): Built into Astro
 
 ---
 
