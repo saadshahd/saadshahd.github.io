@@ -12,6 +12,8 @@ Astro v5.15 + Bun + Tailwind v4 + View Transitions
 - About page: Complete bio with FP philosophy, career highlights, expertise
 - Contact page: Real contact info (email, LinkedIn, GitHub)
 - Tailwind v4 pure CSS config (deleted v3 JS config) + homepage scroll fix
+- Resume PDF: Light gold background edge-to-edge, dedicated print styles
+- Favicon: SS branding with Egyptian gold (#F4C430)
 
 ## Phase 2: Content (Complete)
 - [x] About bio + expertise
