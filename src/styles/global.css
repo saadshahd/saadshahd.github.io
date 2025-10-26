@@ -39,14 +39,25 @@
   --font-family-serif: var(--font-serif, 'IBM Plex Serif', Georgia, serif);
   --font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
 
-  /* Font Sizes (Golden Ratio: 1.618) */
-  --font-size-xs: 0.694rem;    /* 11.1px */
-  --font-size-sm: 0.875rem;    /* 14px */
-  --font-size-base: 1.125rem;  /* 18px */
-  --font-size-lg: 1.5rem;      /* 24px */
-  --font-size-xl: 2.25rem;     /* 36px */
-  --font-size-2xl: 3.5rem;     /* 56px */
-  --font-size-3xl: 5.625rem;   /* 90px */
+  /* Font Sizes - Content-First Scale */
+  --text-xs: 0.75rem;      /* 12px - Captions, dates, metadata */
+  --text-sm: 0.875rem;     /* 14px - Secondary text, small labels */
+  --text-base: 1.125rem;   /* 18px - Body, navigation, buttons */
+  --text-lg: 1.5rem;       /* 24px - H3, pull quotes, large body */
+  --text-xl: 2rem;         /* 32px - H2, section headers */
+  --text-2xl: 2.5rem;      /* 40px - H1, page titles */
+  --text-3xl: 3rem;        /* 48px - Hero display (desktop only) */
+
+  /* Line Heights - Optimized for Readability */
+  --leading-tight: 1.2;     /* Display text, headings */
+  --leading-normal: 1.5;    /* Body text, optimal reading */
+  --leading-relaxed: 1.75;  /* Long-form content, case studies */
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   /* Spacing (Fibonacci) */
   --spacing-xs: 0.25rem;   /* 4px */
@@ -63,4 +74,3 @@
   --radius-lg: 0.75rem;    /* 12px */
   --radius-full: 9999px;
 }
-

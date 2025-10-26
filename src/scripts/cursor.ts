@@ -51,9 +51,9 @@ function initCustomCursor() {
     }
   });
 
-  // Hide cursor on links, add hover effect for buttons/cards
+  // Fade cursor on links, add hover effect for buttons/cards
   const addHoverListeners = () => {
-    // Hide cursor on links
+    // Fade cursor on links
     const links = document.querySelectorAll("a");
     links.forEach((link) => {
       if (link.hasAttribute("data-cursor-link")) {
@@ -62,13 +62,11 @@ function initCustomCursor() {
       link.setAttribute("data-cursor-link", "true");
 
       link.addEventListener("mouseenter", () => {
-        cursorWrapper.classList.remove("visible");
+        cursorWrapper.classList.add("faded");
       });
 
       link.addEventListener("mouseleave", () => {
-        if (hasMovedOnce) {
-          cursorWrapper.classList.add("visible");
-        }
+        cursorWrapper.classList.remove("faded");
       });
     });
 

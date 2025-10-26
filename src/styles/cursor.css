@@ -34,6 +34,11 @@
   opacity: 1;
 }
 
+/* Faded state when hovering over links */
+.custom-cursor-wrapper.faded {
+  opacity: 0;
+}
+
 .custom-cursor-circle {
   /* Golden circle dimensions */
   width: 40px;

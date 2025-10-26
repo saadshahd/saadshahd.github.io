@@ -215,16 +215,17 @@ import WaterFlow from '@/components/patterns/WaterFlow.astro';
 
 ### Typography Scale Enforcement
 
-**✅ ALWAYS use:** Golden ratio scale (src/styles/global.css @theme)
-- Display: `text-3xl` (90px), `text-2xl` (56px), `text-xl` (36px)
+**✅ ALWAYS use:** Content-First scale (src/styles/global.css @theme)
+- Display: `text-3xl` (48px), `text-2xl` (40px), `text-xl` (32px)
 - Headings: `text-lg` (24px), `text-base` (18px)
-- Body/UI: `text-base` (18px), `text-sm` (14px), `text-xs` (11.1px)
+- Body/UI: `text-base` (18px), `text-sm` (14px), `text-xs` (12px)
+- Responsive: Use Tailwind utilities (e.g., `text-2xl md:text-3xl` for mobile→desktop scaling)
 
 **❌ FORBIDDEN:** Arbitrary Tailwind sizes outside design system
-- `text-5xl`, `text-4xl`, `text-6xl` (not in golden ratio scale)
+- `text-5xl`, `text-4xl`, `text-6xl` (not in content-first scale)
 - Arbitrary values `text-[22px]`, `text-[1.75rem]`
 
-**Why:** Mathematical consistency maintains visual hierarchy, reduces cognitive load
+**Why:** Professional scale prioritizes readability and content scanning over theatrical impact, serving technical hiring managers who value substance over spectacle
 
 ### Spacing Enforcement
 
@@ -238,6 +239,10 @@ import WaterFlow from '@/components/patterns/WaterFlow.astro';
 - Arbitrary values `p-[18px]`, `mt-[2.5rem]`
 
 **Why:** Natural mathematical progression creates visual rhythm
+
+### Responsive Design Rule
+
+**Tailwind 4 Constraint:** Theme variables (`@theme` block) cannot be nested in media queries or selectors - they are always top-level and global. For responsive behavior, use Tailwind's responsive utility variants (`text-xl md:text-2xl`, `p-4 md:p-6`) in component markup, not custom `@media` rules around theme tokens.
 
 ### Pre-Commit Checklist
 
