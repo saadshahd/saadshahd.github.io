@@ -1,0 +1,242 @@
+---
+// SSLogo.astro
+// Inline animated SS logo for navigation with water-fill effect
+---
+
+<div class="ss-logo" role="img" aria-label="Saad Shahd">
+  <svg viewBox="-5 0 140 120" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Water gradient: Red Sea blue rising from bottom -->
+      <linearGradient id="water-gradient-logo" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="#0EA5E9" stop-opacity="1" />
+        <stop offset="50%" stop-color="#0EA5E9" stop-opacity="0.9" />
+        <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.7" />
+      </linearGradient>
+
+      <!-- Clip path for water rising effect -->
+      <clipPath id="water-rise-logo">
+        <rect id="water-rect-logo" x="-5" y="120" width="140" height="0" />
+      </clipPath>
+    </defs>
+
+    <!-- First S outline (Egyptian gold, always visible) -->
+    <path
+      d="m50 25c0-15-50-15-50 5S50 55 50 75 0 95 0 115"
+      fill="none"
+      stroke="#F4C430"
+      stroke-width="9"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Second S outline (Egyptian gold, always visible) -->
+    <path
+      d="m125 25c0-15-50-15-50 5S125 55 125 75 75 95 75 115"
+      fill="none"
+      stroke="#F4C430"
+      stroke-width="9"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- First S water stroke (clips from bottom to top) -->
+    <path
+      d="m50 25c0-15-50-15-50 5S50 55 50 75 0 95 0 115"
+      fill="none"
+      stroke="url(#water-gradient-logo)"
+      stroke-width="9"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      clip-path="url(#water-rise-logo)"
+    />
+
+    <!-- Second S water stroke (clips from bottom to top) -->
+    <path
+      d="m125 25c0-15-50-15-50 5S125 55 125 75 75 95 75 115"
+      fill="none"
+      stroke="url(#water-gradient-logo)"
+      stroke-width="9"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      clip-path="url(#water-rise-logo)"
+    />
+  </svg>
+</div>
+
+<style>
+  .ss-logo {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+  }
+
+  .ss-logo svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
+
+<script>
+  import { animate } from 'motion';
+
+  const MIN_DISPLAY_TIME = 500;
+  let controller: AbortController | null = null;
+
+  function setupLogoAnimation() {
+    // Clean up previous page's listeners
+    if (controller) {
+      controller.abort();
+    }
+
+    // Create new controller for this page
+    controller = new AbortController();
+    const { signal } = controller;
+
+    // Always get fresh reference to DOM element
+    const waterRect = document.getElementById('water-rect-logo');
+    if (!waterRect) {
+      console.error('[SSLogo] Water rect not found');
+      return;
+    }
+
+    // Page-scoped animation state
+    let isAnimating = false;
+    let showTime = 0;
+
+    console.log('[SSLogo] Animation setup complete');
+
+    // Listen to View Transition events
+    document.addEventListener('astro:before-preparation', async () => {
+      if (isAnimating) return;
+
+      isAnimating = true;
+      showTime = Date.now();
+
+      console.log('[SSLogo] Phase 1: Filling to 80%');
+
+      // Reset rect position
+      waterRect.setAttribute('y', '120');
+      waterRect.setAttribute('height', '0');
+
+      // Phase 1: Fill to 80% (96px of 120px) in 600ms
+      const startY = 120;
+      const targetY = 24; // 120 - 96 = 24 (80% filled)
+      const targetHeight = 96; // 80% of 120
+      const duration = 600;
+      const startTime = Date.now();
+
+      function animateToEightyPercent() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Easing function: cubic bezier [0.65, 0, 0.35, 1]
+        const eased = progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+        const currentY = startY - (startY - targetY) * eased;
+        const currentHeight = targetHeight * eased;
+
+        waterRect.setAttribute('y', String(currentY));
+        waterRect.setAttribute('height', String(currentHeight));
+
+        if (progress < 1) {
+          requestAnimationFrame(animateToEightyPercent);
+        } else {
+          console.log('[SSLogo] Phase 1 complete: Holding at 80%');
+        }
+      }
+
+      requestAnimationFrame(animateToEightyPercent);
+    }, { signal });
+
+    document.addEventListener('astro:after-preparation', async () => {
+      if (!isAnimating) return;
+
+      console.log('[SSLogo] Phase 2: Completing to 100%');
+
+      // Phase 2: Complete from 80% to 100% (96px to 120px) in 200ms
+      const startY = 24; // Current position (80%)
+      const endY = 0; // Final position (100%)
+      const startHeight = 96;
+      const endHeight = 120;
+      const completeDuration = 200;
+      let startTime = Date.now();
+
+      function animateToHundredPercent() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / completeDuration, 1);
+
+        const eased = progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+        const currentY = startY - (startY - endY) * eased;
+        const currentHeight = startHeight + (endHeight - startHeight) * eased;
+
+        waterRect.setAttribute('y', String(currentY));
+        waterRect.setAttribute('height', String(currentHeight));
+
+        if (progress < 1) {
+          requestAnimationFrame(animateToHundredPercent);
+        } else {
+          console.log('[SSLogo] Phase 2 complete: 100% filled');
+          startDrainPhase();
+        }
+      }
+
+      async function startDrainPhase() {
+        console.log('[SSLogo] Phase 3: Draining water');
+
+        // Ensure minimum display time
+        const elapsed = Date.now() - showTime;
+        const remaining = Math.max(0, MIN_DISPLAY_TIME - elapsed);
+
+        if (remaining > 0) {
+          await new Promise(resolve => setTimeout(resolve, remaining));
+        }
+
+        // Phase 3: Drain animation
+        const drainStartY = 0;
+        const drainEndY = 120;
+        const drainDuration = 300;
+        startTime = Date.now();
+
+        function animateWaterDrain() {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / drainDuration, 1);
+
+          const eased = progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+          const currentY = drainStartY + (drainEndY - drainStartY) * eased;
+          const currentHeight = 120 - (drainEndY - drainStartY) * eased;
+
+          waterRect.setAttribute('y', String(currentY));
+          waterRect.setAttribute('height', String(currentHeight));
+
+          if (progress < 1) {
+            requestAnimationFrame(animateWaterDrain);
+          } else {
+            console.log('[SSLogo] Phase 3 complete: Drain finished');
+            isAnimating = false;
+          }
+        }
+
+        requestAnimationFrame(animateWaterDrain);
+      }
+
+      requestAnimationFrame(animateToHundredPercent);
+    }, { signal });
+  }
+
+  // Run on page load
+  document.addEventListener('astro:page-load', setupLogoAnimation);
+
+  // Also run immediately in case page-load already fired
+  if (document.readyState !== 'loading') {
+    setupLogoAnimation();
+  }
+</script>

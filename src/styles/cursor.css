@@ -34,9 +34,9 @@
   opacity: 1;
 }
 
-/* Faded state when hovering over links */
+/* Faded state when hovering over links - instant hide */
 .custom-cursor-wrapper.faded {
-  opacity: 0;
+  opacity: 0 !important;
 }
 
 .custom-cursor-circle {

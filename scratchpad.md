@@ -14,6 +14,8 @@ Astro v5.15 + Bun + Tailwind v4 + View Transitions
 - Tailwind v4 pure CSS config (deleted v3 JS config) + homepage scroll fix
 - Resume PDF: Light gold background edge-to-edge, dedicated print styles
 - Favicon: SS branding with Egyptian gold (#F4C430)
+- Week 3-4 Animations: RevealOnScroll, ScrollProgress, CSS custom cursor
+- Typography scale refinements (content-first hierarchy, font-weight utilities)
 
 ## Phase 2: Content (Complete)
 - [x] About bio + expertise
@@ -33,6 +35,7 @@ Astro v5.15 + Bun + Tailwind v4 + View Transitions
 
 ## Phase 4: Launch
 - [x] Meta tags (OG, Twitter) + Egyptian OG image (1200x630)
+- [x] SS logo loading indicator (Web Component with water-fill animation during View Transitions)
 - [ ] Lighthouse: 95+/100/95+/100
 - [ ] Analytics + sitemap
 - [ ] LinkedIn announcement

@@ -1,7 +1,7 @@
 # Animation Registry & Reusable Component Strategy
 
-**Version**: 1.1
-**Last Updated**: 2025-10-26 (Week 3-4 in progress)
+**Version**: 1.2
+**Last Updated**: 2025-10-26 (Week 3-4: SS Logo complete with AbortController pattern)
 **Stack**: Motion One (motion.dev) + Astro v5 + Egyptian Design System
 
 ---
@@ -10,8 +10,8 @@
 
 **Primary Recommendation (90% confidence)**: Build animation system with Motion One (5KB) instead of GSAP (50KB+). All analyzed Codrops demos use GSAP, but techniques translate cleanly to Motion One's declarative API.
 
-**Complexity**: 16 story points total (7 points complete, 9 remaining)
-**Timeline**: Week 1-2 ✅ → Week 3-4 (40% complete) → Month 2+ (advanced)
+**Complexity**: 19 story points total (10 points complete, 9 remaining)
+**Timeline**: Week 1-2 ✅ → Week 3-4 (53% complete, 10/19 points) → Month 2+ (advanced)
 
 **Key Principle**: Animations enhance, never distract. Egyptian geometric patterns provide visual rhythm without overwhelming technical content.
 
@@ -268,7 +268,84 @@ import { ViewTransitions } from 'astro:transitions';
 ---
 
 ### 5. **Logo & Navigation Animations**
-Context-aware logo that morphs based on scroll position.
+
+#### A. SS Logo Navigation Animation (Week 3-4) ✅
+Inline logo in navigation that animates during View Transitions - water fills from bottom up like the Nile.
+
+**Techniques Learned**:
+- **AbortController pattern** for clean listener lifecycle (Web Platform standard)
+- Astro View Transitions API (`astro:before-preparation`, `astro:after-preparation`)
+- SVG clipPath for water rising effect (bottom → top)
+- Linear gradient for realistic water appearance (bright blue #0EA5E9)
+- Fresh DOM references on every page load (prevents stale element bugs)
+
+**Key Architecture Decision**:
+Replace manual flag tracking with `AbortController` for idiomatic cleanup:
+- ❌ **Old approach**: `let listenersAdded = false` guard + module-level state
+- ✅ **New approach**: `AbortController` auto-cleanup + page-scoped state
+
+**Implementation** (see `src/components/SSLogo.astro`):
+```typescript
+// Module-level controller for cleanup
+let controller: AbortController | null = null;
+
+function setupLogoAnimation() {
+  // Clean up previous page's listeners
+  if (controller) {
+    controller.abort();
+  }
+
+  // Create new controller for this page
+  controller = new AbortController();
+  const { signal } = controller;
+
+  // Always get fresh reference to DOM element
+  const waterRect = document.getElementById('water-rect-logo');
+  if (!waterRect) return;
+
+  // Page-scoped animation state (recreated per page load)
+  let isAnimating = false;
+  let showTime = 0;
+
+  // Add listeners with abort signal (auto-cleanup on next page load)
+  document.addEventListener('astro:before-preparation', async () => {
+    // Phase 1: Fill to 80% during page preparation...
+  }, { signal });
+
+  document.addEventListener('astro:after-preparation', async () => {
+    // Phase 2: Complete to 100%, then drain...
+  }, { signal });
+}
+
+// Run on every page load
+document.addEventListener('astro:page-load', setupLogoAnimation);
+```
+
+**Why AbortController?**:
+1. **No manual flags** - Web Platform handles lifecycle automatically
+2. **Fresh DOM refs** - Every `astro:page-load` gets new element reference
+3. **No memory leaks** - Old listeners removed via `signal.abort()`
+4. **Isolated state** - `isAnimating`/`showTime` scoped per page
+5. **Idiomatic** - Standard JavaScript pattern (90% confident)
+
+**Animation Phases**:
+1. **Phase 1** (600ms): Fill to 80% during page preparation (user sees progress)
+2. **Phase 2** (200ms): Complete to 100% after preparation (satisfaction)
+3. **Phase 3** (300ms): Drain water after minimum 500ms display
+
+**Visual Effect**:
+- Egyptian gold outline (always visible) + bright blue water gradient
+- Water "fills the SS curves" from bottom to top (staggered phases)
+- Gradient creates depth (darker blue at bottom, lighter cyan at top)
+- Smooth drain animation returns to empty state
+
+**Complexity**: 3 story points
+**Priority**: Week 3-4 ✅ **COMPLETE**
+
+---
+
+#### B. Scroll-Based Logo Morphing (Month 2)
+Context-aware logo that morphs based on scroll position (advanced feature).
 
 **Techniques Learned**:
 - Scroll-linked SVG morphing (Codrops: ContextAwareLogoAnimationScroll)
@@ -306,10 +383,10 @@ Context-aware logo that morphs based on scroll position.
 
 **Use Cases**:
 - Navigation logo morphs as user scrolls through sections
-- Can also be used as page load indicator during Astro transitions
+- Visual storytelling (pyramid stability → water flow → pyramid return)
 
 **Complexity**: 5 story points
-**Priority**: Month 2
+**Priority**: Month 2 (polish, not critical)
 
 ---
 
@@ -666,18 +743,22 @@ const { delay = 0, duration = 0.618, amount = 0.3 } = Astro.props;
 - `src/styles/animations.css` (animation-specific styles)
 - `src/components/patterns/PyramidGrid.astro` (hero pattern)
 
-### Week 3-4: Case Studies (5 story points)
+### Week 3-4: Case Studies & UX Polish (8 story points, 5 complete)
 - [x] `RevealOnScroll.astro` component
 - [ ] `WordReveal.astro` for section headers
 - [ ] Text highlighting with `<mark>` in Markdown
 - [x] Scroll progress bar (Nile water metaphor)
 - [x] CSS-only custom cursor
+- [x] SS Logo navigation animation with AbortController pattern (UX critical)
 
-**Files to Create**:
-- `src/components/animations/RevealOnScroll.astro`
-- `src/components/animations/WordReveal.astro`
-- `src/components/animations/ScrollProgress.astro`
-- `src/scripts/cursor.ts`
+**Files Created**:
+- `src/components/animations/RevealOnScroll.astro` ✅
+- `src/components/animations/ScrollProgress.astro` ✅
+- `src/scripts/cursor.ts` ✅
+- `src/components/SSLogo.astro` ✅ (refactored with AbortController)
+
+**Next Steps**:
+- `src/components/animations/WordReveal.astro` (3 story points remaining)
 
 ### Month 2: Advanced (8 story points)
 - [ ] Context-aware logo morphing
