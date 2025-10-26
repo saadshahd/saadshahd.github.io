@@ -1,0 +1,16 @@
+---
+// BottomTabBar - Composable mobile navigation container
+// Purely structural, accepts TabItem children for flexibility
+---
+
+<nav
+  class="fixed bottom-0 left-0 right-0 z-50 md:hidden
+         bg-surface/95 backdrop-blur-md border-t border-neutral-lighter
+         h-16 pb-safe"
+  role="navigation"
+  aria-label="Mobile navigation"
+>
+  <div class="flex items-center justify-around h-full px-4">
+    <slot />
+  </div>
+</nav>

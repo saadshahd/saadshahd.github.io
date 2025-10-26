@@ -91,7 +91,7 @@
 
 ## Content Structure
 
-**Homepage**: Intro (Principal Engineer, real-time/functional), 2-3 case studies, blog preview, CTA
+**Homepage**: Intro (Principal Engineer, realtime systems & functional thinking), 2-3 case studies, blog preview, CTA
 **Portfolio**: 3-5 case studies (Problem→Architecture→Impact→Lessons), 2000-3000w + diagrams
 **Blog**: Monthly technical articles, start with "Real-Time Data Collection System"
 **About**: Bio 200-300w, expertise, highlights, headshot

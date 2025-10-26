@@ -2,6 +2,9 @@
 import { ClientRouter } from 'astro:transitions';
 import { Font } from 'astro:assets';
 import Link from '../components/Link.astro';
+import BottomTabBar from '../components/navigation/BottomTabBar.astro';
+import TabItem from '../components/navigation/TabItem.astro';
+import { Home, BriefcaseBusiness, VenetianMask, Atom, Send } from '@lucide/astro';
 import '../styles/global.css';
 
 interface Props {
@@ -12,7 +15,7 @@ interface Props {
 
 const {
   title,
-  description = 'Principal Engineer specializing in real-time systems and functional architecture',
+  description = 'Principal Engineer specializing in realtime systems and functional thinking',
   ogImage = '/og-image.png'
 } = Astro.props;
 
@@ -55,13 +58,14 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <ClientRouter />
   </head>
   <body class="bg-background text-accent antialiased">
+    <!-- Desktop Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-sm border-b border-neutral-lighter">
       <div class="max-w-6xl mx-auto px-6 py-4">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-center md:justify-between">
           <a href="/" class="inline-block p-3 text-lg font-sans font-semibold text-accent hover:text-neutral transition-colors">
             SS
           </a>
-          <div class="flex gap-8">
+          <div class="hidden md:flex gap-8">
             <Link variant="nav" href="/" active={currentPath === '/'}>Home</Link>
             <Link variant="nav" href="/portfolio" active={currentPath === '/portfolio'}>Portfolio</Link>
             <Link variant="nav" href="/about" active={currentPath === '/about'}>About</Link>
@@ -72,7 +76,31 @@ const ogImageURL = new URL(ogImage, Astro.site);
         </div>
       </div>
     </nav>
-    <main class="pt-20">
+
+    <!-- Mobile Bottom Tab Bar -->
+    <BottomTabBar>
+      <TabItem href="/" active={currentPath === '/'} label="Home">
+        <Home size={24} />
+      </TabItem>
+
+      <TabItem href="/portfolio" active={currentPath === '/portfolio'} label="Portfolio">
+        <BriefcaseBusiness size={24} />
+      </TabItem>
+
+      <TabItem href="/about" active={currentPath === '/about'} label="About">
+        <VenetianMask size={24} />
+      </TabItem>
+
+      <TabItem href="/blog" active={currentPath === '/blog'} label="Blog">
+        <Atom size={24} />
+      </TabItem>
+
+      <TabItem href="/contact" active={currentPath === '/contact'} label="Contact">
+        <Send size={24} />
+      </TabItem>
+    </BottomTabBar>
+
+    <main class="pt-20 pb-20 md:pb-0">
       <slot />
     </main>
   </body>

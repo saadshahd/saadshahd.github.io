@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { FileText } from '@lucide/astro';
 ---
 
 <Layout title="About - Saad Shahd">
@@ -20,7 +21,7 @@ import Layout from '../layouts/Layout.astro';
       </p>
 
       <p class="text-gray-700 mb-6 leading-relaxed">
-        At StatsBomb, I designed a real-time collection system that reduced 90-minute match collection from 16 man-hours to 4 concurrent collectors. I built a dataspec and DSL that let PMs define sport collection rules without engineering involvement. Why did it scale? The architecture separated collection rules from execution logic. New sports became configuration, not code. We never had to choose between velocity and correctness.
+        At StatsBomb, I designed a realtime collection system that reduced 90-minute match collection from 16 man-hours to 4 concurrent collectors. I built a dataspec and DSL that let PMs define sport collection rules without engineering involvement. Why did it scale? The architecture separated collection rules from execution logic. New sports became configuration, not code. We never had to choose between velocity and correctness.
       </p>
 
       <p class="text-gray-700 mb-6 leading-relaxed">
@@ -34,6 +35,20 @@ import Layout from '../layouts/Layout.astro';
       <p class="text-lg font-medium text-gray-800">
         I optimize for the "why" first. The right question makes implementation obvious.
       </p>
+
+      <!-- Resume CTA -->
+      <div class="mt-10 mb-12">
+        <a
+          href="/resume"
+          class="inline-flex items-center gap-2 px-6 py-3
+                 bg-primary text-background rounded-lg font-semibold font-sans
+                 hover:bg-primary/90 transition-colors duration-300
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        >
+          <FileText size={20} />
+          View Full Resume
+        </a>
+      </div>
 
       <h2 class="text-2xl font-semibold mt-12 mb-6">Technical Expertise</h2>
       <ul class="space-y-2 text-gray-700">

@@ -7,7 +7,7 @@
 
 ## Summary
 
-Principal Software Engineer building real-time distributed systems that scale. I make architectural decisions that unlock velocity while maintaining correctness—through event-driven patterns, immutable data flows, and infrastructure designed to fail gracefully. 12+ years taking platforms from prototype to production at companies like Wise and StatsBomb, handling millions of events per second.
+Principal Software Engineer building realtime distributed systems that scale. I make architectural decisions that unlock velocity while maintaining correctness—through event-driven patterns, immutable data flows, and infrastructure designed to fail gracefully. 12+ years taking platforms from prototype to production at companies like Wise and StatsBomb, handling millions of events per second.
 
 ---
 
@@ -47,7 +47,7 @@ Building infrastructure for the world's most international account—helping 16M
 
 Led core data infrastructure for football's most trusted analytics platform—serving Premier League clubs, international federations, and media companies.
 
-- **Architected real-time data streaming platform from scratch, handling 10K+ events/second.** Chose event sourcing with Kafka for immutable audit trails—critical when clubs make million-pound decisions on our data. Event-driven design let us replay history, debug production issues in development, and maintain consistency across services without distributed transactions.
+- **Architected realtime data streaming platform from scratch, handling 10K+ events/second.** Chose event sourcing with Kafka for immutable audit trails—critical when clubs make million-pound decisions on our data. Event-driven design let us replay history, debug production issues in development, and maintain consistency across services without distributed transactions.
 
 - **Increased data collection speed 6x through parallel processing architecture.** Previous sequential pipeline became the bottleneck—one slow collector blocked everyone. Redesigned as independent stream processors with coordinated checkpoints. Tradeoff: More complex failure handling, but throughput scaled linearly with workers.
 
@@ -71,7 +71,7 @@ Built engagement platform for events—the leading event app provider across Mid
 
 Core team member building tools for mobile developers to ship better apps—crash reporting, user feedback, and performance monitoring.
 
-- **Built real-time crash reporting dashboard processing 100K+ events daily.** Designed client SDK for minimal performance overhead while capturing rich debugging context. Challenge: Collect enough data to reproduce bugs without impacting app performance—solved through smart sampling, local aggregation, and batched uploads.
+- **Built realtime crash reporting dashboard processing 100K+ events daily.** Designed client SDK for minimal performance overhead while capturing rich debugging context. Challenge: Collect enough data to reproduce bugs without impacting app performance—solved through smart sampling, local aggregation, and batched uploads.
 
 ---
 
