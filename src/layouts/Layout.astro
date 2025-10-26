@@ -4,7 +4,7 @@ import { Font } from 'astro:assets';
 import Link from '../components/Link.astro';
 import BottomTabBar from '../components/navigation/BottomTabBar.astro';
 import TabItem from '../components/navigation/TabItem.astro';
-import { Home, BriefcaseBusiness, VenetianMask, Atom, Send } from '@lucide/astro';
+import { House, BriefcaseBusiness, VenetianMask, Atom, Send } from '@lucide/astro';
 import '../styles/global.css';
 
 interface Props {
@@ -103,7 +103,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <!-- Mobile Bottom Tab Bar -->
     <BottomTabBar>
       <TabItem href="/" active={currentPath === '/'} label="Home">
-        <Home size={24} />
+        <House size={24} />
       </TabItem>
 
       <TabItem href="/portfolio" active={currentPath === '/portfolio'} label="Portfolio">
