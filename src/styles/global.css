@@ -1,23 +1,66 @@
+/* Structural Precision Design System - Egyptian Engineering Portfolio */
+
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @theme {
-  /* Egyptian Heritage Color Palette */
-  /* Sand & Desert Tones - Magical Egyptian Gold */
-  --color-primary: #F4C430;      /* Bright Egyptian gold */
-  --color-primary-light: #FFD700; /* Luminous gold shimmer */
-  --color-primary-dark: #DAA520;  /* Rich golden bronze */
+  /* ===== Egyptian Brand Color Palette ===== */
+  /* Primary - Egyptian Gold */
+  --color-primary: #F4C430;
+  --color-primary-light: #FFD700;
+  --color-primary-dark: #DAA520;
 
-  /* Red Sea Water Tones */
-  --color-secondary: #0EA5E9;     /* Clear Red Sea blue */
-  --color-secondary-light: #38BDF8; /* Shallow water blue */
-  --color-secondary-dark: #0369A1; /* Deep sea blue */
+  /* Secondary - Red Sea Blue */
+  --color-secondary: #0EA5E9;
+  --color-secondary-light: #38BDF8;
+  --color-secondary-dark: #0369A1;
 
-  /* Accent - Bright Blue */
-  --color-accent: #06B6D4;        /* Vibrant cyan-blue */
-  --color-accent-light: #67E8F9;  /* Light water shimmer */
-  --color-accent-dark: #0284C7;   /* Deep cyan */
+  /* Accent - Blueprint Ink (Dark Navy for Text) */
+  --color-accent: #0F172A;
+  --color-accent-light: #1E293B;
+  --color-accent-dark: #020617;
 
-  /* Backgrounds */
-  --color-background: #F5F1E8;    /* Limestone cream */
+  /* Neutrals */
+  --color-neutral: #64748B;
+  --color-neutral-light: #94A3B8;
+  --color-neutral-lighter: #F5F1E8;
+
+  /* Background */
+  --color-background: #F5F1E8;
+  --color-surface: #FFFFFF;
+
+  /* Semantic */
+  --color-success: #06B6D4;
+  --color-error: #EF4444;
+  --color-warning: #F59E0B;
+
+  /* ===== Typography (Font components provide --font-sans, --font-serif) ===== */
+  --font-family-sans: var(--font-sans, 'IBM Plex Sans', system-ui, -apple-system, sans-serif);
+  --font-family-serif: var(--font-serif, 'IBM Plex Serif', Georgia, serif);
+  --font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Font Sizes (Golden Ratio: 1.618) */
+  --font-size-xs: 0.694rem;    /* 11.1px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1.125rem;  /* 18px */
+  --font-size-lg: 1.5rem;      /* 24px */
+  --font-size-xl: 2.25rem;     /* 36px */
+  --font-size-2xl: 3.5rem;     /* 56px */
+  --font-size-3xl: 5.625rem;   /* 90px */
+
+  /* Spacing (Fibonacci) */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2.5rem;    /* 40px */
+  --spacing-2xl: 4rem;     /* 64px */
+  --spacing-3xl: 6.5rem;   /* 104px */
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-full: 9999px;
 }
+
