@@ -126,6 +126,91 @@
 
 **✅ Shiki** (https://shiki.style): Built into Astro
 
+### Design System Documentation
+
+**✅ Astrobook** (https://astrobook.pages.dev): Native Astro component playground
+**Why:** Storybook CSF v3 compatible, zero React overhead, same dev server
+**Location:** `/design-system` route with live component examples
+
+---
+
+## Design System Enforcement
+
+### Mandatory Component-First Rule
+
+**✅ ALWAYS use:** Button, Card, Badge, Link components
+**❌ NEVER use:** Raw `<button>`, `<a>`, `<div>` with manual styling
+**Why:** Type-safe variants (CVA) prevent class drift, ensure WCAG AA compliance
+
+**Examples:**
+```astro
+<!-- ✅ CORRECT -->
+<Button variant="primary" size="md" href="/portfolio">View Work</Button>
+
+<!-- ❌ FORBIDDEN -->
+<a href="/portfolio" class="px-6 py-3 bg-amber-500 text-slate-900 rounded-lg">View Work</a>
+```
+
+### Color Token Enforcement
+
+**✅ ALWAYS use:** Semantic design system tokens
+- Text: `text-accent` (body), `text-accent-light` (secondary), `text-neutral` (muted)
+- Backgrounds: `bg-primary`, `bg-secondary`, `bg-surface`, `bg-background`
+- Borders: `border-accent`, `border-neutral`, `border-primary`
+
+**❌ FORBIDDEN:** Raw Tailwind arbitrary colors
+- `text-gray-*`, `text-slate-*`, `text-zinc-*`
+- `bg-blue-*`, `bg-amber-*`, `bg-cyan-*`
+- Arbitrary hex values `text-[#...]`, `bg-[#...]`
+
+**Why:** Single source of truth for Egyptian brand palette, guaranteed WCAG AA contrast
+
+### Typography Scale Enforcement
+
+**✅ ALWAYS use:** Golden ratio scale (src/styles/global.css @theme)
+- Display: `text-3xl` (90px), `text-2xl` (56px), `text-xl` (36px)
+- Headings: `text-lg` (24px), `text-base` (18px)
+- Body/UI: `text-base` (18px), `text-sm` (14px), `text-xs` (11.1px)
+
+**❌ FORBIDDEN:** Arbitrary Tailwind sizes outside design system
+- `text-5xl`, `text-4xl`, `text-6xl` (not in golden ratio scale)
+- Arbitrary values `text-[22px]`, `text-[1.75rem]`
+
+**Why:** Mathematical consistency maintains visual hierarchy, reduces cognitive load
+
+### Spacing Enforcement
+
+**✅ ALWAYS use:** Fibonacci spacing tokens
+- `spacing-xs` (4px), `spacing-sm` (8px), `spacing-md` (16px)
+- `spacing-lg` (24px), `spacing-xl` (40px), `spacing-2xl` (64px), `spacing-3xl` (104px)
+- Maps to Tailwind: `p-1` (4px), `p-2` (8px), `p-4` (16px), `p-6` (24px), `p-10` (40px), `p-16` (64px), `p-26` (104px)
+
+**❌ FORBIDDEN:** Arbitrary spacing values
+- `p-7`, `mb-13`, `gap-11` (breaks Fibonacci sequence)
+- Arbitrary values `p-[18px]`, `mt-[2.5rem]`
+
+**Why:** Natural mathematical progression creates visual rhythm
+
+### Pre-Commit Checklist
+
+Before any component/page changes:
+- [ ] All buttons use `<Button>` component with `variant` prop
+- [ ] All links use `<Link>` component (if standalone) or `<Button href>`
+- [ ] All cards use `<Card>` component with `variant` prop
+- [ ] Zero `text-gray-*`, `text-slate-*`, `text-zinc-*` classes
+- [ ] Zero arbitrary font sizes outside design system scale
+- [ ] Zero arbitrary spacing values outside Fibonacci sequence
+- [ ] All interactive elements meet WCAG AA contrast ratio (4.5:1 minimum)
+- [ ] Component examples added to Astrobook stories (if new component)
+
+### Design System Location
+
+**Documentation:** `/design-system` route (Astrobook integration)
+**Source Files:**
+- Tokens: `src/styles/global.css` (@theme block)
+- Components: `src/components/*.astro`
+- Stories: `src/components/*.stories.ts`
+
 ---
 
 ## Done = Week 2: Shareable + animation + responsive | Month 1: Case study + bio/resume

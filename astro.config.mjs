@@ -1,10 +1,18 @@
 import { defineConfig, fontProviders } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
+import astrobook from "@northstarthemes/astrobook";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://saadshahd.github.io",
   trailingSlash: 'never',  // Prevent trailing slash redirects in production
+  integrations: [
+    astrobook({
+      title: "Egyptian Engineering Design System",
+      subpath: "/design-system",
+      css: ["./src/styles/global.css"],
+    }),
+  ],
   experimental: {
     fonts: [
       {
