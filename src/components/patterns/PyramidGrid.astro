@@ -1,0 +1,138 @@
+---
+/**
+ * PyramidGrid - Animated background pattern with 3D two-tone pyramids
+ * Two pyramids at golden ratio positions for architectural elegance
+ */
+
+import PyramidElement from './PyramidElement.astro';
+
+// Diagonal recession composition - mimics Giza pyramids receding into distance
+const pyramids = [
+  {
+    size: 600,
+    x: '22%',  // Far lower-left (foreground)
+    y: '62%',  // Lower vertical - closer to viewer
+    rotation: 0,  // Upright pyramid
+    opacity: 0.10,
+    variant: 'filled' as const,
+    delay: 0
+  },
+  {
+    size: 450,
+    x: '72%',  // Far upper-right (background)
+    y: '32%',  // Higher vertical - distant from viewer
+    rotation: 0,  // Upright pyramid
+    opacity: 0.10,
+    variant: 'filled' as const,
+    delay: 0.3
+  }
+];
+---
+
+<div class="pyramid-grid" aria-hidden="true">
+  <div class="pyramid-container">
+    {pyramids.map((pyramid, index) => (
+      <div
+        class="pyramid-wrapper"
+        data-pyramid-index={index}
+        data-delay={pyramid.delay}
+        style={{
+          left: pyramid.x,
+          top: pyramid.y,
+        }}
+      >
+        <PyramidElement
+          size={pyramid.size}
+          rotation={pyramid.rotation}
+          opacity={pyramid.opacity}
+          variant={pyramid.variant}
+        />
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  import { animate, stagger } from "motion";
+
+  function animatePyramidGrid() {
+    const pyramidWrappers = document.querySelectorAll('.pyramid-wrapper');
+
+    if (pyramidWrappers.length === 0) return;
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      // No animation, just show at final state
+      pyramidWrappers.forEach(wrapper => {
+        const svg = wrapper.querySelector('.pyramid-element');
+        if (svg) {
+          (svg as HTMLElement).style.opacity = wrapper.closest('.pyramid-wrapper')?.querySelector('.pyramid-element')?.getAttribute('style')?.match(/opacity:\s*([\d.]+)/)?.[1] || '0.08';
+        }
+      });
+      return;
+    }
+
+    // Animate pyramid entrance with staggered fade-in
+    animate(
+      pyramidWrappers,
+      {
+        opacity: [0, 1],
+        scale: [0.9, 1]
+      },
+      {
+        duration: 1.5,
+        delay: stagger(0.3),  // Stagger by 0.3s between pyramids
+        easing: [0.65, 0, 0.35, 1]  // Egyptian "water" easing
+      }
+    );
+  }
+
+  // Run animation when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', animatePyramidGrid);
+  } else {
+    animatePyramidGrid();
+  }
+
+  // Re-run on Astro page navigation
+  document.addEventListener('astro:page-load', animatePyramidGrid);
+</script>
+
+<style>
+  .pyramid-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .pyramid-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pyramid-wrapper {
+    position: absolute;
+    transform-origin: center;
+    will-change: transform, opacity;
+  }
+
+  /* Mobile: static display, no animation */
+  @media (max-width: 768px) {
+    .pyramid-wrapper {
+      opacity: 0.04 !important; /* Lighter on mobile */
+      transform: scale(0.7) !important; /* Smaller */
+      will-change: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pyramid-wrapper {
+      will-change: auto;
+    }
+  }
+</style>

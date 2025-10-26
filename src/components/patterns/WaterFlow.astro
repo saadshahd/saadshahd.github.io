@@ -1,0 +1,249 @@
+---
+/**
+ * WaterFlow - Animated Nile-inspired wave patterns
+ * Uses idiomatic SVG pattern tiling to fill viewport width
+ * Based on user's wave path: M 180 0 C 120 45, 45 -45, 0 0
+ */
+
+export interface Props {
+  variant?: 'horizontal' | 'vertical';
+  flowDirection?: 'forward' | 'reverse';
+}
+
+const { variant = 'horizontal', flowDirection = 'forward' } = Astro.props;
+
+// User's single wave unit (180px wide)
+// Wave goes from right (180,0) to left (0,0) with S-curve
+const singleWaveUnit = "M 180 0 C 120 45, 45 -45, 0 0";
+
+// Server-side: Generate initial wave pattern for common desktop width (1920px + buffer)
+function generateInitialWavePath(width: number = 2280, waveUnit: number = 180): string {
+  const numWaves = Math.ceil(width / waveUnit) + 2;
+  let pathData = "M 0 0";
+
+  for (let i = 0; i < numWaves; i++) {
+    const offset = i * waveUnit;
+    pathData += ` C ${offset + 60} -45, ${offset + 135} 45, ${offset + 180} 0`;
+  }
+
+  return pathData;
+}
+
+const initialWavePath = generateInitialWavePath();
+const initialViewBox = variant === 'horizontal' ? '0 -50 2280 100' : '0 0 100 540';
+const verticalWavePath = "M 0 0 C 45 60, -45 120, 0 180 C 45 240, -45 300, 0 360 C 45 420, -45 480, 0 540";
+---
+
+<div class="water-flow" class:list={[`water-flow--${variant}`]} aria-hidden="true">
+  <svg
+    class="water-svg"
+    data-variant={variant}
+    viewBox={initialViewBox}
+    preserveAspectRatio="none"
+  >
+    <!-- Main wave line -->
+    <path
+      class="water-path water-path--main"
+      d={variant === 'horizontal' ? initialWavePath : verticalWavePath}
+      fill="none"
+      stroke="var(--color-secondary)"
+      stroke-width="2"
+      opacity="0.8"
+      vector-effect="non-scaling-stroke"
+    />
+
+    <!-- Parallel wave (offset for depth) -->
+    <path
+      class="water-path water-path--echo"
+      d={variant === 'horizontal' ? initialWavePath : verticalWavePath}
+      fill="none"
+      stroke="var(--color-accent)"
+      stroke-width="1"
+      opacity="0.5"
+      vector-effect="non-scaling-stroke"
+      transform="translate(0, 15)"
+    />
+  </svg>
+</div>
+
+<script>
+  import { animate, scroll } from "motion";
+
+  /**
+   * Generates a repeating wave path that fills the given width
+   * Uses user's single wave unit: M 180 0 C 120 45, 45 -45, 0 0
+   */
+  function generateWavePath(width: number, waveUnit: number = 180): string {
+    const numWaves = Math.ceil(width / waveUnit) + 2; // +2 for buffer
+    let pathData = "M 0 0";
+
+    for (let i = 0; i < numWaves; i++) {
+      const offset = i * waveUnit;
+      // Each wave: Cubic Bezier from current point to next wave start
+      pathData += ` C ${offset + 60} -45, ${offset + 135} 45, ${offset + 180} 0`;
+    }
+
+    return pathData;
+  }
+
+  function setupWaterFlow() {
+    const waterFlows = document.querySelectorAll('.water-flow');
+
+    waterFlows.forEach((container) => {
+      const svg = container.querySelector('.water-svg') as SVGSVGElement;
+      if (!svg) return;
+
+      const variant = svg.getAttribute('data-variant') || 'horizontal';
+      const mainPath = svg.querySelector('.water-path--main') as SVGPathElement;
+      const echoPath = svg.querySelector('.water-path--echo') as SVGPathElement;
+
+      if (!mainPath || !echoPath) return;
+
+      // Calculate dimensions
+      const containerWidth = window.innerWidth;
+      const containerHeight = variant === 'horizontal' ? 100 : window.innerHeight;
+
+      // Generate repeating wave path
+      let pathData: string;
+      let viewBox: string;
+
+      if (variant === 'horizontal') {
+        const waveWidth = containerWidth + 360; // Extra for smooth looping
+        pathData = generateWavePath(waveWidth);
+        viewBox = `0 -50 ${waveWidth} 100`;
+      } else {
+        // Vertical variant (for future use)
+        pathData = "M 0 0 C 45 60, -45 120, 0 180 C 45 240, -45 300, 0 360 C 45 420, -45 480, 0 540";
+        viewBox = "0 0 100 540";
+      }
+
+      // Set SVG viewBox and paths
+      svg.setAttribute('viewBox', viewBox);
+      mainPath.setAttribute('d', pathData);
+      echoPath.setAttribute('d', pathData);
+    });
+  }
+
+  function animateWaterFlow() {
+    const waterPaths = document.querySelectorAll('.water-path--main');
+
+    if (waterPaths.length === 0) return;
+
+    // Check for reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    // Mobile check - disable flow animation on mobile
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (isMobile) return;
+
+    waterPaths.forEach((path) => {
+      // Flowing animation - stroke-dashoffset creates flowing effect
+      const pathLength = (path as SVGPathElement).getTotalLength();
+
+      // Set up dash pattern
+      (path as SVGPathElement).style.strokeDasharray = `${pathLength}`;
+      (path as SVGPathElement).style.strokeDashoffset = `${pathLength}`;
+
+      // Animate dash offset (creates "flowing" illusion)
+      animate(
+        path,
+        {
+          strokeDashoffset: [pathLength, 0]
+        },
+        {
+          duration: 3,
+          repeat: Infinity,
+          easing: "linear"
+        }
+      );
+
+      // Scroll-linked opacity variation (water gets stronger as you scroll)
+      scroll(
+        animate(path, {
+          opacity: [0.15, 0.25]
+        }),
+        { target: document.documentElement }
+      );
+    });
+  }
+
+  function initWaterFlow() {
+    setupWaterFlow();
+    animateWaterFlow();
+  }
+
+  // Run on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWaterFlow);
+  } else {
+    initWaterFlow();
+  }
+
+  // Re-run on Astro page navigation
+  document.addEventListener('astro:page-load', initWaterFlow);
+
+  // Re-calculate path on window resize (debounced)
+  let resizeTimeout: number;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = window.setTimeout(() => {
+      setupWaterFlow();
+    }, 250);
+  });
+</script>
+
+<style>
+  .water-flow {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    /* mix-blend-mode: multiply; */ /* Removed - makes waves invisible on light background */
+  }
+
+  .water-flow--horizontal {
+    left: 0;
+    right: 0;
+    top: 30%;
+    height: 100px;
+  }
+
+  .water-flow--vertical {
+    top: 0;
+    bottom: 0;
+    left: 10%;
+    width: 100px;
+  }
+
+  .water-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .water-path {
+    will-change: stroke-dashoffset, opacity;
+  }
+
+  .water-path--echo {
+    filter: blur(2px);
+  }
+
+  /* Mobile: static, no animation */
+  @media (max-width: 768px) {
+    .water-flow {
+      opacity: 0.5;
+    }
+
+    .water-path {
+      will-change: auto;
+      stroke-dasharray: none !important;
+      stroke-dashoffset: 0 !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .water-path {
+      will-change: auto;
+    }
+  }
+</style>

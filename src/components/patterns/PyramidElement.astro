@@ -1,0 +1,134 @@
+---
+/**
+ * PyramidElement - 3D two-tone pyramid with architectural details
+ * Features: Cool/warm gold faces, apex highlight, base shadow
+ * Based on user's pyramid: M 0 -45 L -45 0 L 45 0 Z
+ */
+
+export interface Props {
+  size?: number;
+  x?: number;
+  y?: number;
+  rotation?: number;
+  opacity?: number;
+  variant?: 'filled' | 'outline';
+}
+
+const {
+  size = 90,
+  x = 0,
+  y = 0,
+  rotation = 0,
+  opacity = 0.10,
+  variant = 'filled'
+} = Astro.props;
+
+// Scale factor for size
+const scale = size / 90;
+
+// Pyramid geometry (scaled)
+const apex = { x: 0, y: -45 * scale };
+const bottomLeft = { x: -45 * scale, y: 0 };
+const bottomRight = { x: 45 * scale, y: 0 };
+const centerBase = { x: 0, y: 0 };
+
+// Path for left face (shadow side - cool gold)
+const leftFacePath = `M ${apex.x} ${apex.y} L ${bottomLeft.x} ${bottomLeft.y} L ${centerBase.x} ${centerBase.y} Z`;
+
+// Path for right face (lit side - warm gold)
+const rightFacePath = `M ${apex.x} ${apex.y} L ${centerBase.x} ${centerBase.y} L ${bottomRight.x} ${bottomRight.y} Z`;
+---
+
+<svg
+  class="pyramid-element"
+  width={size}
+  height={size}
+  viewBox={`${-size/2} ${-size/2} ${size} ${size}`}
+  style={{
+    position: 'absolute',
+    left: `${x}px`,
+    top: `${y}px`,
+    transform: `rotate(${rotation}deg)`,
+  }}
+  aria-hidden="true"
+>
+  <defs>
+    <!-- Cool gold gradient (left/shadow face) -->
+    <linearGradient id={`coolGold-${size}`} x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E8B84D" />
+      <stop offset="100%" stop-color="#D4A73A" />
+    </linearGradient>
+
+    <!-- Warm gold gradient (right/lit face) -->
+    <linearGradient id={`warmGold-${size}`} x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F4C430" />
+      <stop offset="100%" stop-color="#E0B020" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left face (cool/shadow) -->
+  <path
+    class="pyramid-face pyramid-face-left"
+    d={leftFacePath}
+    fill={`url(#coolGold-${size})`}
+    style={{ opacity: opacity }}
+  />
+
+  <!-- Right face (warm/lit) -->
+  <path
+    class="pyramid-face pyramid-face-right"
+    d={rightFacePath}
+    fill={`url(#warmGold-${size})`}
+    style={{ opacity: opacity }}
+  />
+
+  <!-- Apex highlight (where faces meet at top) -->
+  <line
+    class="pyramid-apex"
+    x1={apex.x}
+    y1={apex.y}
+    x2={centerBase.x}
+    y2={centerBase.y}
+    stroke="var(--color-primary)"
+    stroke-width="1"
+    opacity="0.17"
+  />
+
+  <!-- Base shadow (horizontal ground line) -->
+  <line
+    class="pyramid-base"
+    x1={bottomLeft.x}
+    y1={bottomLeft.y}
+    x2={bottomRight.x}
+    y2={bottomRight.y}
+    stroke="#1E1E1E"
+    stroke-width="2"
+    opacity="0.05"
+  />
+</svg>
+
+<style>
+  .pyramid-element {
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .pyramid-face {
+    transition: opacity 0.3s ease;
+  }
+
+  /* Subtle hover effect - slightly increase opacity */
+  :global(.pyramid-grid:hover) .pyramid-face {
+    opacity: 0.14;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pyramid-element {
+      will-change: auto;
+    }
+
+    .pyramid-face {
+      transition: none;
+    }
+  }
+</style>
