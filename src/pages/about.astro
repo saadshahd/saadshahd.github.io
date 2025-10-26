@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
 import { FileText } from '@lucide/astro';
 ---
 
@@ -37,17 +38,11 @@ import { FileText } from '@lucide/astro';
       </p>
 
       <!-- Resume CTA -->
-      <div class="mt-10 mb-12">
-        <a
-          href="/resume"
-          class="inline-flex items-center gap-2 px-6 py-3
-                 bg-primary text-background rounded-lg font-semibold font-sans
-                 hover:bg-primary/90 transition-colors duration-300
-                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-        >
-          <FileText size={20} />
+      <div class="mt-10 mb-12 flex items-center gap-2">
+        <FileText size={20} class="text-accent" />
+        <Button href="/resume" variant="primary" size="md">
           View Full Resume
-        </a>
+        </Button>
       </div>
 
       <h2 class="text-2xl font-semibold mt-12 mb-6">Technical Expertise</h2>

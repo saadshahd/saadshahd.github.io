@@ -77,11 +77,11 @@ const ogImageURL = new URL(ogImage, Astro.site);
           const isActive = normalizedHref === currentPath;
 
           if (isActive) {
-            tab.classList.add('text-primary', 'scale-105');
+            tab.classList.add('text-accent', 'scale-105');
             tab.classList.remove('text-neutral');
             tab.setAttribute('aria-current', 'page');
           } else {
-            tab.classList.remove('text-primary', 'scale-105');
+            tab.classList.remove('text-accent', 'scale-105');
             tab.classList.add('text-neutral');
             tab.removeAttribute('aria-current');
           }
