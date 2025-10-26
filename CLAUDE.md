@@ -20,17 +20,65 @@
 
 **Pattern Components** (src/components/patterns/):
 
-- `PyramidGrid`: Large-scale pyramids (800x800px), golden ratio, 3 elements max, opacity 0.08-0.12
-- `WaterFlow`: Flowing Nile lines, breakthrough elements (water engineering metaphor)
+#### PyramidGrid Component
+**Path**: `src/components/patterns/PyramidGrid.astro`
+**User SVG**: `M 0 -45 L -45 0 L 45 0 Z` (refined from `M0-45-45 0H45L0-45`)
+
+**Features**:
+- 3 large pyramids (800px, 600px, 700px)
+- Golden ratio placement (20%, 65%, 15%)
+- Staggered fade-in animation (0s, 0.2s, 0.4s delays)
+- One inverted pyramid (180° rotation)
+- Opacity 0.08-0.12 (never distracts from content)
+
+**Usage**:
+```astro
+---
+import PyramidGrid from '@/components/patterns/PyramidGrid.astro';
+---
+
+<PyramidGrid />
+```
+
+**Animation**: Motion One stagger with Egyptian "water" easing `[0.65, 0, 0.35, 1]`
+
+#### WaterFlow Component
+**Path**: `src/components/patterns/WaterFlow.astro`
+**User SVG**: `M 180 0 C 120 45, 45 -45, 0 0` (refined from `M180 0C120 45 45-45 0 0`)
+
+**Features**:
+- Repeating S-curve wave pattern (4 waves, 720px wide)
+- Stroke-dashoffset animation (flowing effect, 3s loop)
+- Opacity increases on scroll (0.15 → 0.25)
+- Echo wave layer for depth (cyan accent, blurred)
+- Secondary color (#0EA5E9 Red Sea blue)
+
+**Usage**:
+```astro
+---
+import WaterFlow from '@/components/patterns/WaterFlow.astro';
+---
+
+<WaterFlow variant="horizontal" />
+<!-- or -->
+<WaterFlow variant="vertical" />
+```
+
+**Animation**: Infinite stroke-dashoffset loop + scroll-linked opacity
+
+#### Pattern Demo
+**URL**: `/patterns-demo` - Test page showing both patterns with controls
 
 **Pattern Rules**:
 
 - Desktop-optimized, bold animations (scale, flow, reveal)
-- Mobile: static or minimal CSS-only
-- `prefers-reduced-motion` respected
+- Mobile: static or minimal CSS-only (opacity 0.04, scale 0.7, no animation)
+- `prefers-reduced-motion` respected (animations disabled)
 - Full-screen `fixed inset-0` behind content (z-index: 0)
 - Elegant minimalism: fewer elements, larger scale, breathing room
 - NO visual noise - 2-3 clean elements per pattern max
+- `aria-hidden="true"` (hidden from screen readers)
+- `pointer-events: none` (doesn't block clicks)
 
 ### Animation Strategy
 

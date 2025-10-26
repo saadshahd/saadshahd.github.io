@@ -1,0 +1,35 @@
+/**
+ * Animation-Specific Styles
+ * GPU acceleration hints, mobile fallbacks, and animation utilities
+ */
+
+/* GPU Acceleration for animated elements */
+.will-animate {
+  will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes to free resources */
+.animation-complete {
+  will-change: auto;
+}
+
+/* Disable animations on mobile for performance */
+@media (max-width: 768px) {
+  .animate-desktop-only {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -53,38 +53,29 @@ const pyramids = [
 </div>
 
 <script>
-  import { animate, stagger } from "motion";
+  import { stagger } from "motion";
+  import { conditionalAnimate, goldenTiming, egyptianEasing, isMobile } from "../../utils/animations";
 
   function animatePyramidGrid() {
     const pyramidWrappers = document.querySelectorAll('.pyramid-wrapper');
 
     if (pyramidWrappers.length === 0) return;
 
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Skip animation on mobile (use static CSS instead)
+    if (isMobile()) return;
 
-    if (prefersReducedMotion) {
-      // No animation, just show at final state
-      pyramidWrappers.forEach(wrapper => {
-        const svg = wrapper.querySelector('.pyramid-element');
-        if (svg) {
-          (svg as HTMLElement).style.opacity = wrapper.closest('.pyramid-wrapper')?.querySelector('.pyramid-element')?.getAttribute('style')?.match(/opacity:\s*([\d.]+)/)?.[1] || '0.08';
-        }
-      });
-      return;
-    }
-
-    // Animate pyramid entrance with staggered fade-in
-    animate(
+    // Use centralized animation utility with golden ratio timing
+    conditionalAnimate(
       pyramidWrappers,
       {
         opacity: [0, 1],
-        scale: [0.9, 1]
+        scale: [0.9, 1],
+        rotate: [5, 0]  // Subtle entrance rotation
       },
       {
-        duration: 1.5,
+        duration: goldenTiming.extraSlow,  // 1.618s - hero entrance
         delay: stagger(0.3),  // Stagger by 0.3s between pyramids
-        easing: [0.65, 0, 0.35, 1]  // Egyptian "water" easing
+        easing: egyptianEasing.water  // Flowing ease like Nile water
       }
     );
   }
