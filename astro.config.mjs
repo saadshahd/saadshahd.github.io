@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   site: "https://saadshahd.github.io",
+  trailingSlash: 'never',  // Prevent trailing slash redirects in production
   experimental: {
     fonts: [
       {

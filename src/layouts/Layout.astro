@@ -59,13 +59,22 @@ const ogImageURL = new URL(ogImage, Astro.site);
 
     <!-- Update active tab state after View Transitions -->
     <script>
+      // Normalize pathname by removing trailing slash (except root)
+      const normalizePath = (path: string): string => {
+        if (path === '/') return '/';
+        return path.replace(/\/$/, '');
+      };
+
       document.addEventListener('astro:page-load', () => {
-        const currentPath = window.location.pathname;
+        const currentPath = normalizePath(window.location.pathname);
         const tabs = document.querySelectorAll('nav[aria-label="Mobile navigation"] a');
 
         tabs.forEach((tab) => {
           const href = tab.getAttribute('href');
-          const isActive = href === currentPath;
+          if (!href) return;
+
+          const normalizedHref = normalizePath(href);
+          const isActive = normalizedHref === currentPath;
 
           if (isActive) {
             tab.classList.add('text-primary', 'scale-105');
