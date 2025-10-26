@@ -78,8 +78,6 @@
 </style>
 
 <script>
-  import { animate } from 'motion';
-
   const MIN_DISPLAY_TIME = 500;
   let controller: AbortController | null = null;
 
@@ -116,8 +114,8 @@
       console.log('[SSLogo] Phase 1: Filling to 80%');
 
       // Reset rect position
-      waterRect.setAttribute('y', '120');
-      waterRect.setAttribute('height', '0');
+      waterRect!.setAttribute('y', '120');
+      waterRect!.setAttribute('height', '0');
 
       // Phase 1: Fill to 80% (96px of 120px) in 600ms
       const startY = 120;
@@ -138,8 +136,8 @@
         const currentY = startY - (startY - targetY) * eased;
         const currentHeight = targetHeight * eased;
 
-        waterRect.setAttribute('y', String(currentY));
-        waterRect.setAttribute('height', String(currentHeight));
+        waterRect!.setAttribute('y', String(currentY));
+        waterRect!.setAttribute('height', String(currentHeight));
 
         if (progress < 1) {
           requestAnimationFrame(animateToEightyPercent);
@@ -175,8 +173,8 @@
         const currentY = startY - (startY - endY) * eased;
         const currentHeight = startHeight + (endHeight - startHeight) * eased;
 
-        waterRect.setAttribute('y', String(currentY));
-        waterRect.setAttribute('height', String(currentHeight));
+        waterRect!.setAttribute('y', String(currentY));
+        waterRect!.setAttribute('height', String(currentHeight));
 
         if (progress < 1) {
           requestAnimationFrame(animateToHundredPercent);
@@ -214,8 +212,8 @@
           const currentY = drainStartY + (drainEndY - drainStartY) * eased;
           const currentHeight = 120 - (drainEndY - drainStartY) * eased;
 
-          waterRect.setAttribute('y', String(currentY));
-          waterRect.setAttribute('height', String(currentHeight));
+          waterRect!.setAttribute('y', String(currentY));
+          waterRect!.setAttribute('height', String(currentHeight));
 
           if (progress < 1) {
             requestAnimationFrame(animateWaterDrain);
