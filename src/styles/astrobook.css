@@ -1,0 +1,24 @@
+/* Astrobook Custom Styling - Light Theme to Match Site */
+
+/* Force light theme for preview area */
+[data-astrobook-canvas] {
+  background-color: #F5F1E8 !important; /* Limestone cream background */
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Center components in preview */
+[data-astrobook-story] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+/* Ensure text is visible on light background */
+body {
+  color: #0F172A;
+}

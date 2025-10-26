@@ -10,7 +10,9 @@ export const PrimarySmall = {
   args: {
     variant: "primary",
     size: "sm",
-    children: "Small Primary Button",
+  },
+  slots: {
+    default: "Small Primary Button",
   },
 };
 
@@ -18,7 +20,9 @@ export const PrimaryMedium = {
   args: {
     variant: "primary",
     size: "md",
-    children: "Medium Primary Button",
+  },
+  slots: {
+    default: "Medium Primary Button",
   },
 };
 
@@ -26,7 +30,9 @@ export const PrimaryLarge = {
   args: {
     variant: "primary",
     size: "lg",
-    children: "Large Primary Button",
+  },
+  slots: {
+    default: "Large Primary Button",
   },
 };
 
@@ -35,7 +41,9 @@ export const SecondarySmall = {
   args: {
     variant: "secondary",
     size: "sm",
-    children: "Small Secondary Button",
+  },
+  slots: {
+    default: "Small Secondary Button",
   },
 };
 
@@ -43,7 +51,9 @@ export const SecondaryMedium = {
   args: {
     variant: "secondary",
     size: "md",
-    children: "Medium Secondary Button",
+  },
+  slots: {
+    default: "Medium Secondary Button",
   },
 };
 
@@ -51,7 +61,9 @@ export const SecondaryLarge = {
   args: {
     variant: "secondary",
     size: "lg",
-    children: "Large Secondary Button",
+  },
+  slots: {
+    default: "Large Secondary Button",
   },
 };
 
@@ -61,7 +73,9 @@ export const PrimaryLink = {
     variant: "primary",
     size: "md",
     href: "/about",
-    children: "Primary Link Button",
+  },
+  slots: {
+    default: "Primary Link Button",
   },
 };
 
@@ -70,6 +84,8 @@ export const SecondaryLink = {
     variant: "secondary",
     size: "md",
     href: "/contact",
-    children: "Secondary Link Button",
+  },
+  slots: {
+    default: "Secondary Link Button",
   },
 };

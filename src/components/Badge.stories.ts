@@ -9,21 +9,27 @@ export default {
 export const SkillBadge = {
   args: {
     variant: "skill",
-    children: "JavaScript",
+  },
+  slots: {
+    default: "JavaScript",
   },
 };
 
 export const SkillBadgeMultiple = {
   args: {
     variant: "skill",
-    children: "TypeScript",
+  },
+  slots: {
+    default: "TypeScript",
   },
 };
 
 export const SkillBadgeKafka = {
   args: {
     variant: "skill",
-    children: "Kafka",
+  },
+  slots: {
+    default: "Kafka",
   },
 };
 
@@ -31,14 +37,18 @@ export const SkillBadgeKafka = {
 export const TechBadge = {
   args: {
     variant: "tech",
-    children: "React",
+  },
+  slots: {
+    default: "React",
   },
 };
 
 export const TechBadgeNode = {
   args: {
     variant: "tech",
-    children: "Node.js",
+  },
+  slots: {
+    default: "Node.js",
   },
 };
 
@@ -46,14 +56,18 @@ export const TechBadgeNode = {
 export const StatusBadge = {
   args: {
     variant: "status",
-    children: "Active",
+  },
+  slots: {
+    default: "Active",
   },
 };
 
 export const StatusBadgeCompleted = {
   args: {
     variant: "status",
-    children: "Completed",
+  },
+  slots: {
+    default: "Completed",
   },
 };
 
@@ -62,18 +76,8 @@ export const CustomSizedBadge = {
   args: {
     variant: "skill",
     class: "text-lg px-4 py-2",
-    children: "Large Badge",
   },
-};
-
-// Collection of badges (simulating typical usage)
-export const BadgeCollection = {
-  args: {
-    variant: "skill",
-    children: `
-      <div class="flex flex-wrap gap-2">
-        Rust
-      </div>
-    `,
+  slots: {
+    default: "Large Badge",
   },
 };

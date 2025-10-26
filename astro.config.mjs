@@ -10,7 +10,7 @@ export default defineConfig({
     astrobook({
       title: "Egyptian Engineering Design System",
       subpath: "/design-system",
-      css: ["./src/styles/global.css"],
+      css: ["./src/styles/global.css", "./src/styles/astrobook.css"],
     }),
   ],
   experimental: {
