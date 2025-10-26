@@ -273,6 +273,7 @@ import { ViewTransitions } from 'astro:transitions';
 Inline logo in navigation that animates during View Transitions - water fills from bottom up like the Nile.
 
 **Techniques Learned**:
+- **Motion One declarative animations** - Sequential `animate()` calls instead of manual RAF
 - **AbortController pattern** for clean listener lifecycle (Web Platform standard)
 - Astro View Transitions API (`astro:before-preparation`, `astro:after-preparation`)
 - SVG clipPath for water rising effect (bottom → top)
@@ -286,6 +287,8 @@ Replace manual flag tracking with `AbortController` for idiomatic cleanup:
 
 **Implementation** (see `src/components/SSLogo.astro`):
 ```typescript
+import { animate } from 'motion';
+
 // Module-level controller for cleanup
 let controller: AbortController | null = null;
 
@@ -309,11 +312,29 @@ function setupLogoAnimation() {
 
   // Add listeners with abort signal (auto-cleanup on next page load)
   document.addEventListener('astro:before-preparation', async () => {
-    // Phase 1: Fill to 80% during page preparation...
+    isAnimating = true;
+    showTime = Date.now();
+
+    // Reset and animate through 3 stages
+    waterRect!.setAttribute('y', '120');
+    waterRect!.setAttribute('height', '0');
+
+    const easing = [0.65, 0, 0.35, 1];
+
+    // Stage 1: 0% → 40%
+    await animate(waterRect, { y: [120, 72], height: [0, 48] }, { duration: 0.2, easing }).finished;
+
+    // Stage 2: 40% → 65%
+    await animate(waterRect, { y: [72, 42], height: [48, 78] }, { duration: 0.2, easing }).finished;
+
+    // Stage 3: 65% → 90%
+    await animate(waterRect, { y: [42, 12], height: [78, 108] }, { duration: 0.2, easing }).finished;
   }, { signal });
 
   document.addEventListener('astro:after-preparation', async () => {
-    // Phase 2: Complete to 100%, then drain...
+    // Complete to 100% then drain
+    await animate(waterRect, { y: [12, 0], height: [108, 120] }, { duration: 0.2, easing }).finished;
+    // ... drain after minimum display time
   }, { signal });
 }
 
@@ -329,8 +350,11 @@ document.addEventListener('astro:page-load', setupLogoAnimation);
 5. **Idiomatic** - Standard JavaScript pattern (90% confident)
 
 **Animation Phases**:
-1. **Phase 1** (600ms): Fill to 80% during page preparation (user sees progress)
-2. **Phase 2** (200ms): Complete to 100% after preparation (satisfaction)
+1. **Phase 1** (600ms): Staggered fill through 3 stages (40% → 65% → 90%)
+   - Stage 1 (200ms): 0% → 40%
+   - Stage 2 (200ms): 40% → 65%
+   - Stage 3 (200ms): 65% → 90%
+2. **Phase 2** (200ms): Complete to 100% after page preparation
 3. **Phase 3** (300ms): Drain water after minimum 500ms display
 
 **Visual Effect**:

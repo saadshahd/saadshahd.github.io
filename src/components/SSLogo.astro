@@ -78,6 +78,8 @@
 </style>
 
 <script>
+  import { animate } from 'motion';
+
   const MIN_DISPLAY_TIME = 500;
   let controller: AbortController | null = null;
 
@@ -111,122 +113,54 @@
       isAnimating = true;
       showTime = Date.now();
 
-      console.log('[SSLogo] Phase 1: Filling to 80%');
+      console.log('[SSLogo] Phase 1: Staggered fill (40% → 65% → 90%)');
 
       // Reset rect position
       waterRect!.setAttribute('y', '120');
       waterRect!.setAttribute('height', '0');
 
-      // Phase 1: Fill to 80% (96px of 120px) in 600ms
-      const startY = 120;
-      const targetY = 24; // 120 - 96 = 24 (80% filled)
-      const targetHeight = 96; // 80% of 120
-      const duration = 600;
-      const startTime = Date.now();
+      // Phase 1: Staggered fill using Motion One (600ms total)
+      const easing = [0.65, 0, 0.35, 1]; // Egyptian "water" easing
 
-      function animateToEightyPercent() {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
+      // Stage 1: 0% → 40% (200ms)
+      await animate(waterRect, { y: [120, 72], height: [0, 48] }, { duration: 0.2, easing }).finished;
 
-        // Easing function: cubic bezier [0.65, 0, 0.35, 1]
-        const eased = progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      // Stage 2: 40% → 65% (200ms)
+      await animate(waterRect, { y: [72, 42], height: [48, 78] }, { duration: 0.2, easing }).finished;
 
-        const currentY = startY - (startY - targetY) * eased;
-        const currentHeight = targetHeight * eased;
+      // Stage 3: 65% → 90% (200ms)
+      await animate(waterRect, { y: [42, 12], height: [78, 108] }, { duration: 0.2, easing }).finished;
 
-        waterRect!.setAttribute('y', String(currentY));
-        waterRect!.setAttribute('height', String(currentHeight));
-
-        if (progress < 1) {
-          requestAnimationFrame(animateToEightyPercent);
-        } else {
-          console.log('[SSLogo] Phase 1 complete: Holding at 80%');
-        }
-      }
-
-      requestAnimationFrame(animateToEightyPercent);
+      console.log('[SSLogo] Phase 1 complete: Holding at 90%');
     }, { signal });
 
     document.addEventListener('astro:after-preparation', async () => {
       if (!isAnimating) return;
 
-      console.log('[SSLogo] Phase 2: Completing to 100%');
+      console.log('[SSLogo] Phase 2: Completing 90% → 100%');
 
-      // Phase 2: Complete from 80% to 100% (96px to 120px) in 200ms
-      const startY = 24; // Current position (80%)
-      const endY = 0; // Final position (100%)
-      const startHeight = 96;
-      const endHeight = 120;
-      const completeDuration = 200;
-      let startTime = Date.now();
+      const easing = [0.65, 0, 0.35, 1]; // Egyptian "water" easing
 
-      function animateToHundredPercent() {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / completeDuration, 1);
+      // Phase 2: Complete fill (200ms)
+      await animate(waterRect, { y: [12, 0], height: [108, 120] }, { duration: 0.2, easing }).finished;
 
-        const eased = progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      console.log('[SSLogo] Phase 2 complete: 100% filled');
 
-        const currentY = startY - (startY - endY) * eased;
-        const currentHeight = startHeight + (endHeight - startHeight) * eased;
+      // Phase 3: Ensure minimum display time before draining
+      const elapsed = Date.now() - showTime;
+      const remaining = Math.max(0, MIN_DISPLAY_TIME - elapsed);
 
-        waterRect!.setAttribute('y', String(currentY));
-        waterRect!.setAttribute('height', String(currentHeight));
-
-        if (progress < 1) {
-          requestAnimationFrame(animateToHundredPercent);
-        } else {
-          console.log('[SSLogo] Phase 2 complete: 100% filled');
-          startDrainPhase();
-        }
+      if (remaining > 0) {
+        await new Promise(resolve => setTimeout(resolve, remaining));
       }
 
-      async function startDrainPhase() {
-        console.log('[SSLogo] Phase 3: Draining water');
+      console.log('[SSLogo] Phase 3: Draining water');
 
-        // Ensure minimum display time
-        const elapsed = Date.now() - showTime;
-        const remaining = Math.max(0, MIN_DISPLAY_TIME - elapsed);
+      // Phase 3: Drain animation (300ms)
+      await animate(waterRect, { y: [0, 120], height: [120, 0] }, { duration: 0.3, easing }).finished;
 
-        if (remaining > 0) {
-          await new Promise(resolve => setTimeout(resolve, remaining));
-        }
-
-        // Phase 3: Drain animation
-        const drainStartY = 0;
-        const drainEndY = 120;
-        const drainDuration = 300;
-        startTime = Date.now();
-
-        function animateWaterDrain() {
-          const elapsed = Date.now() - startTime;
-          const progress = Math.min(elapsed / drainDuration, 1);
-
-          const eased = progress < 0.5
-            ? 4 * progress * progress * progress
-            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-          const currentY = drainStartY + (drainEndY - drainStartY) * eased;
-          const currentHeight = 120 - (drainEndY - drainStartY) * eased;
-
-          waterRect!.setAttribute('y', String(currentY));
-          waterRect!.setAttribute('height', String(currentHeight));
-
-          if (progress < 1) {
-            requestAnimationFrame(animateWaterDrain);
-          } else {
-            console.log('[SSLogo] Phase 3 complete: Drain finished');
-            isAnimating = false;
-          }
-        }
-
-        requestAnimationFrame(animateWaterDrain);
-      }
-
-      requestAnimationFrame(animateToHundredPercent);
+      console.log('[SSLogo] Phase 3 complete: Drain finished');
+      isAnimating = false;
     }, { signal });
   }
 
