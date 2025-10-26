@@ -56,6 +56,29 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <Font cssVariable="--font-sans" preload />
     <Font cssVariable="--font-serif" preload />
     <ClientRouter />
+
+    <!-- Update active tab state after View Transitions -->
+    <script>
+      document.addEventListener('astro:page-load', () => {
+        const currentPath = window.location.pathname;
+        const tabs = document.querySelectorAll('nav[aria-label="Mobile navigation"] a');
+
+        tabs.forEach((tab) => {
+          const href = tab.getAttribute('href');
+          const isActive = href === currentPath;
+
+          if (isActive) {
+            tab.classList.add('text-primary', 'scale-105');
+            tab.classList.remove('text-neutral');
+            tab.setAttribute('aria-current', 'page');
+          } else {
+            tab.classList.remove('text-primary', 'scale-105');
+            tab.classList.add('text-neutral');
+            tab.removeAttribute('aria-current');
+          }
+        });
+      });
+    </script>
   </head>
   <body class="bg-background text-accent antialiased">
     <!-- Desktop Navigation -->
