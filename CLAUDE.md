@@ -52,6 +52,8 @@
 - Medium: natural flow and connection
 - Long: build energy toward architectural insights that matter
 
+**Typography Breaks**: Use `<wbr>` for long technical terms (e.g., `StatsBomb<wbr>DataCollection<wbr>Pipeline`) and `text-wrap: balance` for headlines
+
 **Every Sentence Must**: Teach principle, reveal decision, or show impact
 
 **Forbidden**: Hype trends, performative jargon, tutorial-only content, condescension
@@ -114,6 +116,10 @@
 **❌ Framer Motion**: React-only (we don't use React)
 **❌ anime.js**: Export issues, removed
 **Rule**: Motion One or native CSS only. No React libs without React integration.
+
+### Code Highlighting
+
+**✅ Shiki** (https://shiki.style): Built into Astro, theme `everforest-dark`, configured in `astro.config.mjs`
 
 ---
 

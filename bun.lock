@@ -5,6 +5,7 @@
       "name": "saad-shahd-portfolio",
       "dependencies": {
         "motion": "^12.23.24",
+        "shiki": "^3.13.0",
       },
       "devDependencies": {
         "@astrojs/check": "^0.9.5",
