@@ -30,10 +30,10 @@ Astro v5.15 + Bun + Tailwind v4 + View Transitions
 - Markdown with frontmatter + syntax highlighting
 
 ## Phase 4: Launch
-- Meta tags (OG, Twitter)
-- Lighthouse: 95+/100/95+/100
-- Analytics + sitemap
-- LinkedIn announcement
+- [x] Meta tags (OG, Twitter) + Egyptian OG image (1200x630)
+- [ ] Lighthouse: 95+/100/95+/100
+- [ ] Analytics + sitemap
+- [ ] LinkedIn announcement
 
 ## Reference Style
 - 60% Cassidy (clean, content-first)
