@@ -44,12 +44,12 @@ import Button from '../components/Button.astro';
         '.hero-name, .hero-title, .hero-value, .hero-ctas',
         {
           opacity: [0, 1],
-          y: [30, 0]
-        },
+          transform: ["translateY(30px)", "translateY(0px)"]
+        } as any,
         {
           duration: 0.8,
-          easing: [0.16, 1, 0.3, 1],
-          delay: stagger(0.15, { start: isDesktop ? 0.6 : 0 }) // Wait for patterns on desktop
+          ease: [0.16, 1, 0.3, 1],
+          delay: stagger(0.15, { startDelay: isDesktop ? 0.6 : 0 }) // Wait for patterns on desktop
         }
       );
     } else {
