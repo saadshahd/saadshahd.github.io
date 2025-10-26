@@ -1,0 +1,130 @@
+---
+/**
+ * RevealOnScroll - Foundation scroll-triggered animation component
+ *
+ * Fades in content from below when scrolled into view using Motion One's IntersectionObserver.
+ * Respects prefers-reduced-motion and applies Egyptian design system timing.
+ *
+ * @component
+ * @example
+ * ```astro
+ * <RevealOnScroll delay={0.2} duration={0.8}>
+ *   <h2>Architecture Decisions</h2>
+ *   <p>We chose a microservices approach...</p>
+ * </RevealOnScroll>
+ * ```
+ *
+ * @example
+ * ```astro
+ * <!-- With custom intersection threshold -->
+ * <RevealOnScroll amount={0.5}>
+ *   <img src="/diagram.png" alt="System architecture" />
+ * </RevealOnScroll>
+ * ```
+ */
+
+export interface Props {
+  /** Delay before animation starts in seconds (default: 0) */
+  delay?: number;
+  /** Animation duration in seconds (default: 0.618 - golden ratio) */
+  duration?: number;
+  /** IntersectionObserver threshold - 0 to 1 (default: 0.3 = trigger when 30% visible) */
+  amount?: number;
+}
+
+const { delay = 0, duration = 0.618, amount = 0.3 } = Astro.props;
+---
+
+<div
+  class="reveal-container"
+  data-delay={delay}
+  data-duration={duration}
+  data-amount={amount}
+>
+  <slot />
+</div>
+
+<script>
+  import { inView, animate } from "motion";
+  import { egyptianEasing, prefersReducedMotion } from "../../utils/animations";
+
+  // Initialize animations after DOM is ready
+  function initRevealAnimations() {
+    const containers = document.querySelectorAll('.reveal-container');
+
+    containers.forEach((container) => {
+      // Ensure we have an HTMLElement and it's connected to DOM
+      if (!(container instanceof HTMLElement) || !container.isConnected) {
+        console.warn('RevealOnScroll: Invalid container element', container);
+        return;
+      }
+
+      // Skip if already initialized
+      if (container.dataset.revealInit === 'true') {
+        return;
+      }
+      container.dataset.revealInit = 'true';
+
+      const delay = parseFloat(container.getAttribute('data-delay') || '0');
+      const duration = parseFloat(container.getAttribute('data-duration') || '0.618');
+      const amount = parseFloat(container.getAttribute('data-amount') || '0.3');
+
+      // Skip animation if user prefers reduced motion
+      if (prefersReducedMotion()) {
+        // Apply final state instantly
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+        return;
+      }
+
+      // Animate when element enters viewport
+      try {
+        inView(
+          container,
+          () => {
+            // Use container directly instead of callback target
+            animate(
+              container,
+              {
+                opacity: [0, 1],
+                y: [40, 0] // Fade in from 40px below
+              } as any,
+              {
+                delay,
+                duration,
+                easing: egyptianEasing.water // Flowing ease like Nile water
+              } as any
+            );
+          },
+          { amount } // Trigger when `amount` % of element is visible
+        );
+      } catch (error) {
+        console.error('RevealOnScroll: Failed to initialize animation', error, container);
+      }
+    });
+  }
+
+  // Run on initial load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRevealAnimations);
+  } else {
+    initRevealAnimations();
+  }
+
+  // Re-run after Astro View Transitions
+  document.addEventListener('astro:page-load', initRevealAnimations);
+</script>
+
+<style>
+  .reveal-container {
+    /* Hidden by default - prevents flash of content before animation */
+    opacity: 0;
+  }
+
+  /* If user has prefers-reduced-motion, this prevents flash */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-container {
+      opacity: 1;
+    }
+  }
+</style>

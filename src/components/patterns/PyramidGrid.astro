@@ -57,7 +57,7 @@ const pyramids = [
   import { conditionalAnimate, goldenTiming, egyptianEasing, isMobile } from "../../utils/animations";
 
   function animatePyramidGrid() {
-    const pyramidWrappers = document.querySelectorAll('.pyramid-wrapper');
+    const pyramidWrappers = Array.from(document.querySelectorAll('.pyramid-wrapper'));
 
     if (pyramidWrappers.length === 0) return;
 

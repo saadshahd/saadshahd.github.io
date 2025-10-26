@@ -150,12 +150,12 @@ const verticalWavePath = "M 0 0 C 45 60, -45 120, 0 180 C 45 240, -45 300, 0 360
         path,
         {
           strokeDashoffset: [pathLength, 0]
-        },
+        } as any,
         {
           duration: 3,
           repeat: Infinity,
           easing: "linear"
-        }
+        } as any
       );
 
       // Scroll-linked opacity variation (water gets stronger as you scroll)
