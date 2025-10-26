@@ -667,10 +667,10 @@ const { delay = 0, duration = 0.618, amount = 0.3 } = Astro.props;
 - `src/components/patterns/PyramidGrid.astro` (hero pattern)
 
 ### Week 3-4: Case Studies (5 story points)
-- [ ] `RevealOnScroll.astro` component
+- [x] `RevealOnScroll.astro` component
 - [ ] `WordReveal.astro` for section headers
 - [ ] Text highlighting with `<mark>` in Markdown
-- [ ] Scroll progress bar (Nile water metaphor)
+- [x] Scroll progress bar (Nile water metaphor)
 - [ ] CSS-only custom cursor
 
 **Files to Create**:

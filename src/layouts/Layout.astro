@@ -4,6 +4,7 @@ import { Font } from 'astro:assets';
 import Link from '../components/Link.astro';
 import BottomTabBar from '../components/navigation/BottomTabBar.astro';
 import TabItem from '../components/navigation/TabItem.astro';
+import ScrollProgress from '../components/animations/ScrollProgress.astro';
 import { House, BriefcaseBusiness, VenetianMask, Atom, Send } from '@lucide/astro';
 import '../styles/global.css';
 import '../styles/animations.css';
@@ -91,6 +92,9 @@ const ogImageURL = new URL(ogImage, Astro.site);
     </script>
   </head>
   <body class="bg-background text-accent antialiased">
+    <!-- Scroll Progress Indicator -->
+    <ScrollProgress />
+
     <!-- Desktop Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-sm border-b border-neutral-lighter">
       <div class="max-w-6xl mx-auto px-6 py-4">

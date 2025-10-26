@@ -1,0 +1,118 @@
+---
+/**
+ * ScrollProgress - Scroll-linked progress indicator
+ *
+ * Nile water metaphor - horizontal bar fills as you read down the page.
+ * Uses Motion One's scroll() to animate scaleX based on document scroll position.
+ * Respects prefers-reduced-motion and works with Astro View Transitions.
+ *
+ * @component
+ * @example
+ * ```astro
+ * // In layout or page
+ * <ScrollProgress />
+ * ```
+ */
+---
+
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<script>
+  import { scroll, animate } from "motion";
+  import { prefersReducedMotion } from "../../utils/animations";
+
+  function initScrollProgress() {
+    const progressBar = document.querySelector('.scroll-progress');
+
+    if (!progressBar || !(progressBar instanceof HTMLElement)) {
+      console.warn('ScrollProgress: Progress bar element not found');
+      return;
+    }
+
+    // Skip if already initialized
+    if (progressBar.dataset.scrollInit === 'true') {
+      return;
+    }
+    progressBar.dataset.scrollInit = 'true';
+
+    // If user prefers reduced motion, show full bar instantly
+    if (prefersReducedMotion()) {
+      progressBar.style.transform = 'scaleX(1)';
+      return;
+    }
+
+    // Animate scaleX based on scroll position
+    try {
+      scroll(
+        animate(progressBar, { scaleX: [0, 1] }),
+        {
+          target: document.documentElement,
+          offset: ['start start', 'end end']
+        }
+      );
+    } catch (error) {
+      console.error('ScrollProgress: Failed to initialize scroll animation', error);
+    }
+  }
+
+  // Run on initial load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollProgress);
+  } else {
+    initScrollProgress();
+  }
+
+  // Re-run after Astro View Transitions
+  document.addEventListener('astro:page-load', () => {
+    // Reset initialization flag to allow reinit
+    const progressBar = document.querySelector('.scroll-progress');
+    if (progressBar instanceof HTMLElement) {
+      delete progressBar.dataset.scrollInit;
+    }
+    initScrollProgress();
+  });
+</script>
+
+<style>
+  .scroll-progress {
+    /* Fixed to top of viewport */
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    /* Full width, subtle height */
+    width: 100%;
+    height: 3px;
+
+    /* Red Sea blue - Nile water metaphor */
+    background: var(--color-secondary);
+
+    /* Animate from left to right */
+    transform-origin: left;
+    transform: scaleX(0);
+
+    /* Above navigation (nav is z-50) */
+    z-index: 1000;
+
+    /* Don't block clicks */
+    pointer-events: none;
+
+    /* Hidden from screen readers */
+    opacity: 1;
+  }
+
+  /* If user prefers reduced motion, show full bar */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-progress {
+      transform: scaleX(1);
+      opacity: 0.3; /* Subtle presence without animation */
+    }
+  }
+
+  /* Hide on mobile to reduce visual clutter */
+  @media (max-width: 768px) {
+    .scroll-progress {
+      display: none;
+    }
+  }
+</style>
