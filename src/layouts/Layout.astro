@@ -8,6 +8,7 @@ import ScrollProgress from '../components/animations/ScrollProgress.astro';
 import { House, BriefcaseBusiness, VenetianMask, Atom, Send } from '@lucide/astro';
 import '../styles/global.css';
 import '../styles/animations.css';
+import '../styles/cursor.css';
 
 interface Props {
   title: string;
@@ -95,6 +96,11 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <!-- Scroll Progress Indicator -->
     <ScrollProgress />
 
+    <!-- Custom Cursor (Desktop only, two-element architecture) -->
+    <div class="custom-cursor-wrapper">
+      <div class="custom-cursor-circle"></div>
+    </div>
+
     <!-- Desktop Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-sm border-b border-neutral-lighter">
       <div class="max-w-6xl mx-auto px-6 py-4">
@@ -140,5 +146,10 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <main class="pt-20 pb-20 md:pb-0">
       <slot />
     </main>
+
+    <!-- Custom Cursor Script -->
+    <script>
+      import '../scripts/cursor.ts';
+    </script>
   </body>
 </html>

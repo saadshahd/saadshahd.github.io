@@ -671,7 +671,7 @@ const { delay = 0, duration = 0.618, amount = 0.3 } = Astro.props;
 - [ ] `WordReveal.astro` for section headers
 - [ ] Text highlighting with `<mark>` in Markdown
 - [x] Scroll progress bar (Nile water metaphor)
-- [ ] CSS-only custom cursor
+- [x] CSS-only custom cursor
 
 **Files to Create**:
 - `src/components/animations/RevealOnScroll.astro`
