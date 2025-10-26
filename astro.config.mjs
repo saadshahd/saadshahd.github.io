@@ -10,13 +10,15 @@ export default defineConfig({
         provider: fontProviders.google(),
         name: "IBM Plex Sans",
         weights: ["500", "700"],
-        cssVariable: "--font-sans"
+        cssVariable: "--font-sans",
+        display: "swap"
       },
       {
         provider: fontProviders.google(),
         name: "IBM Plex Serif",
         weights: ["400", "600"],
-        cssVariable: "--font-serif"
+        cssVariable: "--font-serif",
+        display: "swap"
       }
     ]
   },
