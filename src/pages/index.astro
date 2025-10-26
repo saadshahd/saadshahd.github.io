@@ -32,6 +32,7 @@ import Button from '../components/Button.astro';
 
 <script>
   import { animate, stagger } from 'motion';
+  import type { DOMKeyframesDefinition } from 'motion';
 
   function animateHero() {
     // Guard: Only run if hero elements exist (prevents errors on other pages)
@@ -44,18 +45,16 @@ import Button from '../components/Button.astro';
 
     if (!prefersReducedMotion) {
       // Content: Animate hero elements with staggered timing
-      animate(
-        '.hero-name, .hero-title, .hero-value, .hero-ctas',
-        {
-          opacity: [0, 1],
-          transform: ["translateY(30px)", "translateY(0px)"]
-        } as any,
-        {
-          duration: 0.8,
-          ease: [0.16, 1, 0.3, 1],
-          delay: stagger(0.15, { startDelay: isDesktop ? 0.6 : 0 }) // Wait for patterns on desktop
-        }
-      );
+      // ✅ Type-safe Motion One usage: individual transform properties, not transform strings
+      const keyframes: DOMKeyframesDefinition = {
+        opacity: [0, 1],
+        y: [30, 0] // Use 'y' property instead of transform: "translateY()"
+      };
+
+      animate('.hero-name, .hero-title, .hero-value, .hero-ctas', keyframes, {
+        duration: 0.8,
+        delay: stagger(0.15, { startDelay: isDesktop ? 0.6 : 0 }) // Wait for patterns on desktop
+      });
     } else {
       // If reduced motion, just show content immediately
       heroElements.forEach(el => {

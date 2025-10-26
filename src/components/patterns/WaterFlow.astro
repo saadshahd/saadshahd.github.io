@@ -68,6 +68,7 @@ const verticalWavePath = "M 0 0 C 45 60, -45 120, 0 180 C 45 240, -45 300, 0 360
 
 <script>
   import { animate, scroll } from "motion";
+  import type { DOMKeyframesDefinition } from "motion";
 
   /**
    * Generates a repeating wave path that fills the given width
@@ -145,26 +146,25 @@ const verticalWavePath = "M 0 0 C 45 60, -45 120, 0 180 C 45 240, -45 300, 0 360
       (path as SVGPathElement).style.strokeDasharray = `${pathLength}`;
       (path as SVGPathElement).style.strokeDashoffset = `${pathLength}`;
 
+      // ✅ Type-safe Motion One usage: SVG properties in keyframes
+      const flowKeyframes: DOMKeyframesDefinition = {
+        strokeDashoffset: [pathLength, 0]
+      };
+
       // Animate dash offset (creates "flowing" illusion)
-      animate(
-        path,
-        {
-          strokeDashoffset: [pathLength, 0]
-        } as any,
-        {
-          duration: 3,
-          repeat: Infinity,
-          easing: "linear"
-        } as any
-      );
+      animate(path, flowKeyframes, {
+        duration: 3,
+        repeat: Infinity
+      });
 
       // Scroll-linked opacity variation (water gets stronger as you scroll)
-      scroll(
-        animate(path, {
-          opacity: [0.15, 0.25]
-        }),
-        { target: document.documentElement }
-      );
+      const opacityKeyframes: DOMKeyframesDefinition = {
+        opacity: [0.15, 0.25]
+      };
+
+      scroll(animate(path, opacityKeyframes), {
+        target: document.documentElement
+      });
     });
   }
 

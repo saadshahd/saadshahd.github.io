@@ -120,16 +120,15 @@
       waterRect!.setAttribute('height', '0');
 
       // Phase 1: Staggered fill using Motion One (600ms total)
-      const easing = [0.65, 0, 0.35, 1]; // Egyptian "water" easing
-
+      // SVG rect attributes animated directly
       // Stage 1: 0% → 40% (200ms)
-      await animate(waterRect, { y: [120, 72], height: [0, 48] }, { duration: 0.2, easing }).finished;
+      await animate(waterRect as any, { y: [120, 72], height: [0, 48] }, { duration: 0.2 }).finished;
 
       // Stage 2: 40% → 65% (200ms)
-      await animate(waterRect, { y: [72, 42], height: [48, 78] }, { duration: 0.2, easing }).finished;
+      await animate(waterRect as any, { y: [72, 42], height: [48, 78] }, { duration: 0.2 }).finished;
 
       // Stage 3: 65% → 90% (200ms)
-      await animate(waterRect, { y: [42, 12], height: [78, 108] }, { duration: 0.2, easing }).finished;
+      await animate(waterRect as any, { y: [42, 12], height: [78, 108] }, { duration: 0.2 }).finished;
 
       console.log('[SSLogo] Phase 1 complete: Holding at 90%');
     }, { signal });
@@ -139,10 +138,8 @@
 
       console.log('[SSLogo] Phase 2: Completing 90% → 100%');
 
-      const easing = [0.65, 0, 0.35, 1]; // Egyptian "water" easing
-
       // Phase 2: Complete fill (200ms)
-      await animate(waterRect, { y: [12, 0], height: [108, 120] }, { duration: 0.2, easing }).finished;
+      await animate(waterRect as any, { y: [12, 0], height: [108, 120] }, { duration: 0.2 }).finished;
 
       console.log('[SSLogo] Phase 2 complete: 100% filled');
 
@@ -157,7 +154,7 @@
       console.log('[SSLogo] Phase 3: Draining water');
 
       // Phase 3: Drain animation (300ms)
-      await animate(waterRect, { y: [0, 120], height: [120, 0] }, { duration: 0.3, easing }).finished;
+      await animate(waterRect as any, { y: [0, 120], height: [120, 0] }, { duration: 0.3 }).finished;
 
       console.log('[SSLogo] Phase 3 complete: Drain finished');
       isAnimating = false;

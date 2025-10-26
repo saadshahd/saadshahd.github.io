@@ -46,6 +46,7 @@ const { delay = 0, duration = 0.618, amount = 0.3 } = Astro.props;
 
 <script>
   import { inView, animate } from "motion";
+  import type { DOMKeyframesDefinition } from "motion";
   import { egyptianEasing, prefersReducedMotion } from "../../utils/animations";
 
   // Initialize animations after DOM is ready
@@ -82,21 +83,19 @@ const { delay = 0, duration = 0.618, amount = 0.3 } = Astro.props;
         inView(
           container,
           () => {
+            // ✅ Type-safe keyframes
+            const keyframes: DOMKeyframesDefinition = {
+              opacity: [0, 1],
+              y: [40, 0] // Fade in from 40px below
+            };
+
             // Use container directly instead of callback target
-            animate(
-              container,
-              {
-                opacity: [0, 1],
-                y: [40, 0] // Fade in from 40px below
-              } as any,
-              {
-                delay,
-                duration,
-                easing: egyptianEasing.water // Flowing ease like Nile water
-              } as any
-            );
+            animate(container, keyframes, {
+              delay,
+              duration
+            });
           },
-          { amount } // Trigger when `amount` % of element is visible
+          { amount: amount as number } // Trigger when `amount` % of element is visible
         );
       } catch (error) {
         console.error('RevealOnScroll: Failed to initialize animation', error, container);

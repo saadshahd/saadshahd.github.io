@@ -170,6 +170,356 @@ import WaterFlow from '@/components/patterns/WaterFlow.astro';
 **❌ anime.js**: Export issues, removed
 **Rule**: Motion One or native CSS only. No React libs without React integration.
 
+### Motion One Idiomatic Usage Rules
+
+**CRITICAL:** Motion One is the core animation library. ALL animations must follow these type-safe patterns to prevent runtime bugs and maintain code quality.
+
+#### Type Safety Requirements
+
+**✅ ALWAYS import proper TypeScript types:**
+```typescript
+import { animate, scroll, inView, stagger } from 'motion';
+import type {
+  DOMKeyframesDefinition,
+  AnimationOptions,
+  ScrollOptions,
+  InViewOptions
+} from 'motion';
+```
+
+**❌ NEVER use `as any` to bypass types:**
+```typescript
+// ❌ FORBIDDEN - Type evasion
+animate(el, { x: 100 } as any, { duration: 1 } as any)
+
+// ✅ REQUIRED - Proper typing
+const keyframes: DOMKeyframesDefinition = { x: 100 };
+const options: AnimationOptions = { duration: 1 };
+animate(el, keyframes, options);
+```
+
+**Why:** TypeScript catches animation bugs at compile time. Runtime animation failures are expensive to debug.
+
+#### Transform Properties
+
+**✅ ALWAYS use individual transform properties:**
+- `x`, `y` - Translate X/Y axis (numbers in pixels)
+- `scale` - Scale transform (number, 1 = 100%)
+- `rotate` - Rotation (number in degrees)
+- `opacity` - Opacity (0 to 1)
+
+**❌ NEVER use `transform` string property:**
+```typescript
+// ❌ FORBIDDEN - Transform strings
+{ transform: "translateY(30px)" }
+{ transform: "scale(1.2) rotate(45deg)" }
+
+// ✅ REQUIRED - Individual properties
+{ y: 30 }
+{ scale: 1.2, rotate: 45 }
+```
+
+**Why:** Motion One optimizes individual properties for GPU acceleration. String transforms bypass these optimizations and break type safety.
+
+#### Keyframes Syntax
+
+**✅ Two valid keyframes formats:**
+
+**1. Object with arrays (most common):**
+```typescript
+const keyframes: DOMKeyframesDefinition = {
+  opacity: [0, 1],           // From 0 to 1
+  y: [40, 0],                // From 40px to 0
+  scale: [0.9, 1]            // From 0.9 to 1
+};
+```
+
+**2. Array of objects (for complex timing):**
+```typescript
+const keyframes: DOMKeyframesDefinition = [
+  { opacity: 0, y: 40 },     // Start state
+  { opacity: 1, y: 0 }       // End state
+];
+```
+
+**❌ FORBIDDEN patterns:**
+```typescript
+{ transform: [...] }         // String transforms
+{ translateY: [...] }        // Non-existent property
+```
+
+#### Animation Options
+
+**✅ All AnimationOptions properties (all optional):**
+```typescript
+const options: AnimationOptions = {
+  duration: 0.8,                        // Seconds (NOT milliseconds)
+  delay: 0.2,                           // Seconds
+  easing: [0.65, 0, 0.35, 1],          // Cubic bezier array OR string
+  repeat: 3,                            // Number of repeats
+  direction: 'alternate',               // 'normal' | 'reverse' | 'alternate'
+  endDelay: 0.1                         // Delay after animation
+};
+```
+
+**Common easing values:**
+- Cubic bezier array: `[x1, y1, x2, y2]` (e.g., `[0.65, 0, 0.35, 1]`)
+- String presets: `"linear"`, `"ease-in"`, `"ease-out"`, `"ease-in-out"`
+
+**Egyptian Design System Easings** (from `src/utils/animations.ts`):
+```typescript
+import { egyptianEasing } from '@/utils/animations';
+
+{
+  easing: egyptianEasing.water      // [0.65, 0, 0.35, 1] - Flowing
+  easing: egyptianEasing.pyramid    // [0.34, 1.56, 0.64, 1] - Sharp
+  easing: egyptianEasing.monument   // [0.76, 0, 0.24, 1] - Powerful
+}
+```
+
+#### Stagger Usage
+
+**✅ Proper stagger with delay function:**
+```typescript
+import { stagger } from 'motion';
+
+const options: AnimationOptions = {
+  duration: 0.8,
+  delay: stagger(0.15),                      // 150ms between elements
+  // OR with options:
+  delay: stagger(0.15, {
+    startDelay: 0.6,                         // Initial delay before stagger
+    from: 'first'                            // 'first' | 'last' | 'center' | number
+  })
+};
+```
+
+**Why:** Stagger creates sequential animations across multiple elements (e.g., hero text lines appearing one after another).
+
+#### Scroll-Linked Animations
+
+**✅ Proper scroll() API usage:**
+```typescript
+import { scroll, animate } from 'motion';
+import type { ScrollOptions, DOMKeyframesDefinition } from 'motion';
+
+const keyframes: DOMKeyframesDefinition = {
+  opacity: [0, 1],
+  y: [100, 0]
+};
+
+const scrollOptions: ScrollOptions = {
+  target: document.documentElement,          // Element to track scroll
+  offset: ['start end', 'end start']        // Intersection points
+};
+
+// Pass animation controls to scroll()
+scroll(animate(element, keyframes), scrollOptions);
+```
+
+**Common offset patterns:**
+- `['start start', 'end end']` - Full document scroll (0% to 100%)
+- `['start end', 'end start']` - Element entering/leaving viewport
+- `['start center', 'end center']` - Element centered in viewport
+
+**Why:** `scroll()` wraps an animation and links it to scroll position instead of time.
+
+#### InView (Intersection Observer)
+
+**✅ Proper inView() API usage:**
+```typescript
+import { inView, animate } from 'motion';
+import type { InViewOptions, DOMKeyframesDefinition, AnimationOptions } from 'motion';
+
+const inViewOptions: InViewOptions = {
+  amount: 0.3,                               // Trigger when 30% visible (0 to 1)
+  margin: '0px 0px -100px 0px'              // Optional margin (like CSS)
+};
+
+inView(element, (entry) => {
+  const keyframes: DOMKeyframesDefinition = { opacity: [0, 1], y: [40, 0] };
+  const options: AnimationOptions = { duration: 0.6, easing: [0.65, 0, 0.35, 1] };
+
+  animate(element, keyframes, options);
+}, inViewOptions);
+```
+
+**amount values:**
+- `0` - Trigger as soon as any part enters viewport
+- `0.5` - Trigger when 50% visible
+- `1` - Trigger only when fully visible
+- `"some"` - At least one pixel visible
+- `"all"` - Entire element visible
+
+**Why:** InView triggers animations when elements scroll into view, better UX than animating everything on page load.
+
+#### Return Value: AnimationPlaybackControls
+
+**✅ All animate() calls return playback controls:**
+```typescript
+const controls = animate(element, keyframes, options);
+
+// Available methods:
+controls.play();                             // Resume animation
+controls.pause();                            // Pause animation
+controls.stop();                             // Stop and reset
+controls.cancel();                           // Cancel animation
+controls.finish();                           // Jump to end state
+
+// Promise for animation completion:
+await controls.finished;                     // Resolves when animation completes
+```
+
+**Common pattern for chained animations:**
+```typescript
+await animate(el, { opacity: [0, 1] }, { duration: 0.3 }).finished;
+await animate(el, { y: [0, -20] }, { duration: 0.2 }).finished;
+// Second animation starts after first completes
+```
+
+#### SVG Animations
+
+**✅ SVG-specific properties (camelCase in keyframes):**
+```typescript
+const svgKeyframes: DOMKeyframesDefinition = {
+  strokeDashoffset: [1000, 0],               // SVG stroke animation
+  strokeDasharray: [100, 200],               // Dash pattern
+  fill: ['#F4C430', '#0EA5E9'],             // Fill color
+  stroke: ['#0EA5E9', '#06B6D4']            // Stroke color
+};
+```
+
+**Why:** Motion One handles SVG attribute updates automatically with proper camelCase property names.
+
+#### Accessibility: prefers-reduced-motion
+
+**✅ ALWAYS respect motion preferences:**
+```typescript
+import { prefersReducedMotion } from '@/utils/animations';
+
+if (prefersReducedMotion()) {
+  // Apply final state instantly without animation
+  element.style.opacity = '1';
+  element.style.transform = 'translateY(0)';
+} else {
+  // Animate normally
+  animate(element, keyframes, options);
+}
+```
+
+**Why:** Users with vestibular disorders need reduced motion. Ignoring this preference violates WCAG 2.1 Level AA (Success Criterion 2.3.3).
+
+#### Code Examples
+
+**✅ Complete type-safe animation example:**
+```typescript
+import { animate, stagger } from 'motion';
+import type { DOMKeyframesDefinition, AnimationOptions } from 'motion';
+import { egyptianEasing, prefersReducedMotion } from '@/utils/animations';
+
+function animateHero() {
+  if (prefersReducedMotion()) {
+    document.querySelectorAll('.hero-item').forEach(el => {
+      (el as HTMLElement).style.opacity = '1';
+    });
+    return;
+  }
+
+  const keyframes: DOMKeyframesDefinition = {
+    opacity: [0, 1],
+    y: [30, 0]
+  };
+
+  const options: AnimationOptions = {
+    duration: 0.8,
+    easing: egyptianEasing.water,
+    delay: stagger(0.15, { startDelay: 0.6 })
+  };
+
+  animate('.hero-item', keyframes, options);
+}
+```
+
+**✅ Scroll-linked animation example:**
+```typescript
+import { scroll, animate } from 'motion';
+import type { DOMKeyframesDefinition, ScrollOptions } from 'motion';
+
+const progressBar = document.querySelector('.scroll-progress');
+
+const keyframes: DOMKeyframesDefinition = {
+  scaleX: [0, 1]
+};
+
+const scrollOptions: ScrollOptions = {
+  target: document.documentElement,
+  offset: ['start start', 'end end']
+};
+
+scroll(animate(progressBar, keyframes), scrollOptions);
+```
+
+**✅ InView reveal animation example:**
+```typescript
+import { inView, animate } from 'motion';
+import type { InViewOptions, DOMKeyframesDefinition, AnimationOptions } from 'motion';
+
+const inViewOptions: InViewOptions = { amount: 0.3 };
+
+document.querySelectorAll('.reveal').forEach((element) => {
+  inView(element, () => {
+    const keyframes: DOMKeyframesDefinition = { opacity: [0, 1], y: [40, 0] };
+    const options: AnimationOptions = { duration: 0.6, easing: [0.65, 0, 0.35, 1] };
+
+    animate(element, keyframes, options);
+  }, inViewOptions);
+});
+```
+
+#### Pre-Animation Checklist
+
+Before writing ANY Motion One animation code:
+- [ ] Imported proper TypeScript types (`DOMKeyframesDefinition`, `AnimationOptions`, etc.)
+- [ ] Used individual transform properties (`x`, `y`, `scale`, `rotate`) NOT `transform` strings
+- [ ] Defined keyframes with proper type annotation
+- [ ] Defined options with proper type annotation
+- [ ] NO `as any` type casts anywhere
+- [ ] Checked `prefersReducedMotion()` for accessibility
+- [ ] Used Egyptian design system easings when appropriate
+- [ ] Duration in SECONDS not milliseconds (0.8, not 800)
+
+#### Common Mistakes to Avoid
+
+**❌ FORBIDDEN patterns that will break at runtime:**
+
+1. **Type evasion:**
+   ```typescript
+   animate(el, {...} as any, {...} as any)  // BREAKS TYPE SAFETY
+   ```
+
+2. **Transform strings:**
+   ```typescript
+   { transform: "translateY(30px)" }        // USE: { y: 30 }
+   ```
+
+3. **Milliseconds instead of seconds:**
+   ```typescript
+   { duration: 800 }                        // USE: { duration: 0.8 }
+   ```
+
+4. **Wrong easing property name:**
+   ```typescript
+   { ease: [...] }                          // USE: { easing: [...] }
+   ```
+
+5. **Ignoring reduced motion:**
+   ```typescript
+   animate(...)  // Always run
+   // SHOULD: Check prefersReducedMotion() first
+   ```
+
+**Enforcement:** Any PR with `as any` in animation code will be rejected. Fix types, don't evade them.
+
 ### Code Highlighting
 
 **✅ Shiki** (https://shiki.style): Built into Astro
