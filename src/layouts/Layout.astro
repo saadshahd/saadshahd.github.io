@@ -102,21 +102,19 @@ const ogImageURL = new URL(ogImage, Astro.site);
       <div class="custom-cursor-circle"></div>
     </div>
 
-    <!-- Desktop Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-sm border-b border-neutral-lighter">
-      <div class="max-w-6xl mx-auto px-6 py-4">
-        <div class="flex items-center justify-center md:justify-between">
-          <a href="/" class="inline-block p-3 hover:opacity-80 transition-opacity">
-            <SSLogo />
-          </a>
-          <div class="hidden md:flex gap-8">
-            <Link variant="nav" href="/" active={currentPath === '/'}>Home</Link>
-            <Link variant="nav" href="/portfolio" active={currentPath === '/portfolio'}>Portfolio</Link>
-            <Link variant="nav" href="/about" active={currentPath === '/about'}>About</Link>
-            <Link variant="nav" href="/resume" active={currentPath === '/resume'}>Resume</Link>
-            <Link variant="nav" href="/blog" active={currentPath === '/blog'}>Blog</Link>
-            <Link variant="nav" href="/contact" active={currentPath === '/contact'}>Contact</Link>
-          </div>
+    <!-- Responsive Navigation: Mobile circular badge → Desktop bar -->
+    <nav class="md:fixed top-2 left-2 right-2 max-w-6xl mx-auto z-50 rounded-full md:bg-surface/60 md:backdrop-blur-lg flex items-center justify-center border border-neutral-lighter">
+      <div class="flex items-center justify-center md:justify-between w-full px-4">
+        <a href="/" class="hover:opacity-80 transition-opacity">
+          <SSLogo />
+        </a>
+        <div class="hidden md:flex gap-8">
+          <Link variant="nav" href="/" active={currentPath === '/'}>Home</Link>
+          <Link variant="nav" href="/portfolio" active={currentPath === '/portfolio'}>Portfolio</Link>
+          <Link variant="nav" href="/about" active={currentPath === '/about'}>About</Link>
+          <Link variant="nav" href="/resume" active={currentPath === '/resume'}>Resume</Link>
+          <Link variant="nav" href="/blog" active={currentPath === '/blog'}>Blog</Link>
+          <Link variant="nav" href="/contact" active={currentPath === '/contact'}>Contact</Link>
         </div>
       </div>
     </nav>
@@ -144,7 +142,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
       </TabItem>
     </BottomTabBar>
 
-    <main class="pt-20 pb-20 md:pb-0">
+    <main class="md:pt-16 pb-20 md:pb-0">
       <slot />
     </main>
 
