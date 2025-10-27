@@ -34,21 +34,15 @@
   opacity: 1;
 }
 
-/* Faded state when hovering over links - instant hide */
-.custom-cursor-wrapper.faded {
-  opacity: 0 !important;
-}
-
 .custom-cursor-circle {
   /* Golden circle dimensions */
   width: 40px;
   height: 40px;
   border-radius: 50%;
 
-  /* Solid fill for strong blend mode effect */
-  background: var(--color-primary); /* Egyptian gold #F4C430 */
-  border: 2px solid var(--color-success); /* Cyan #06B6D4 */
-
+  background: var(--color-primary);
+  border: 2px solid var(--color-success);
+  
   /* Center on cursor position */
   transform: translate(-50%, -50%);
 
@@ -59,20 +53,12 @@
   will-change: transform;
 }
 
-/* Hover state - scales to 1.3x when over interactive elements */
-.custom-cursor-wrapper.hover .custom-cursor-circle {
-  transform: translate(-50%, -50%) scale(1.3);
-}
-
-/* Hide default cursor on desktop except for links */
+/* Hide default cursor on headline text - custom cursor shows instead */
 @media (pointer: fine) {
-  body {
+  h1 span,
+  h2 span,
+  h3 span {
     cursor: none;
-  }
-
-  /* Show native pointer cursor on links */
-  a {
-    cursor: pointer !important;
   }
 }
 

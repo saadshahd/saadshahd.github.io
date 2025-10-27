@@ -255,7 +255,7 @@ const keyframes: DOMKeyframesDefinition = [
 const options: AnimationOptions = {
   duration: 0.8,                        // Seconds (NOT milliseconds)
   delay: 0.2,                           // Seconds
-  easing: [0.65, 0, 0.35, 1],          // Cubic bezier array OR string
+  ease: [0.65, 0, 0.35, 1],          // Cubic bezier array OR string
   repeat: 3,                            // Number of repeats
   direction: 'alternate',               // 'normal' | 'reverse' | 'alternate'
   endDelay: 0.1                         // Delay after animation
@@ -271,9 +271,9 @@ const options: AnimationOptions = {
 import { egyptianEasing } from '@/utils/animations';
 
 {
-  easing: egyptianEasing.water      // [0.65, 0, 0.35, 1] - Flowing
-  easing: egyptianEasing.pyramid    // [0.34, 1.56, 0.64, 1] - Sharp
-  easing: egyptianEasing.monument   // [0.76, 0, 0.24, 1] - Powerful
+  ease: egyptianEasing.water      // [0.65, 0, 0.35, 1] - Flowing
+  ease: egyptianEasing.pyramid    // [0.34, 1.56, 0.64, 1] - Sharp
+  ease: egyptianEasing.monument   // [0.76, 0, 0.24, 1] - Powerful
 }
 ```
 
@@ -338,7 +338,7 @@ const inViewOptions: InViewOptions = {
 
 inView(element, (entry) => {
   const keyframes: DOMKeyframesDefinition = { opacity: [0, 1], y: [40, 0] };
-  const options: AnimationOptions = { duration: 0.6, easing: [0.65, 0, 0.35, 1] };
+  const options: AnimationOptions = { duration: 0.6, ease: [0.65, 0, 0.35, 1] };
 
   animate(element, keyframes, options);
 }, inViewOptions);
@@ -432,7 +432,7 @@ function animateHero() {
 
   const options: AnimationOptions = {
     duration: 0.8,
-    easing: egyptianEasing.water,
+    ease: egyptianEasing.water,
     delay: stagger(0.15, { startDelay: 0.6 })
   };
 
@@ -469,7 +469,7 @@ const inViewOptions: InViewOptions = { amount: 0.3 };
 document.querySelectorAll('.reveal').forEach((element) => {
   inView(element, () => {
     const keyframes: DOMKeyframesDefinition = { opacity: [0, 1], y: [40, 0] };
-    const options: AnimationOptions = { duration: 0.6, easing: [0.65, 0, 0.35, 1] };
+    const options: AnimationOptions = { duration: 0.6, ease: [0.65, 0, 0.35, 1] };
 
     animate(element, keyframes, options);
   }, inViewOptions);
@@ -509,7 +509,7 @@ Before writing ANY Motion One animation code:
 
 4. **Wrong easing property name:**
    ```typescript
-   { ease: [...] }                          // USE: { easing: [...] }
+   { ease: [...] }                          // USE: { ease: [...] }
    ```
 
 5. **Ignoring reduced motion:**

@@ -23,7 +23,7 @@ import WaterFlow from '../components/patterns/WaterFlow.astro';
   <!-- Content -->
   <div class="content">
     <section class="hero">
-      <h1>Egyptian Pattern System</h1>
+      <h1><span>Egyptian Pattern System</span></h1>
       <p class="subtitle">
         Geometric pyramids and Nile-inspired water flows<br>
         Built with your SVG paths + Motion One
@@ -38,7 +38,7 @@ import WaterFlow from '../components/patterns/WaterFlow.astro';
 
     <section class="section">
       <div class="pattern-info">
-        <h2>🔺 Your Pyramid Path</h2>
+        <h2><span>🔺 Your Pyramid Path</span></h2>
         <p>Original: <code>M0-45-45 0H45L0-45</code></p>
         <p>Refined: <code>M 0 -45 L -45 0 L 45 0 Z</code></p>
 
@@ -57,7 +57,7 @@ import WaterFlow from '../components/patterns/WaterFlow.astro';
       </div>
 
       <div class="pattern-info">
-        <h2>🌊 Your Wave Path</h2>
+        <h2><span>🌊 Your Wave Path</span></h2>
         <p>Original: <code>M180 0C120 45 45-45 0 0</code></p>
         <p>Refined: <code>M 180 0 C 120 45, 45 -45, 0 0</code></p>
 
@@ -82,10 +82,10 @@ import WaterFlow from '../components/patterns/WaterFlow.astro';
     </section>
 
     <section class="section">
-      <h2>✨ Animation Details</h2>
+      <h2><span>✨ Animation Details</span></h2>
 
       <div class="pattern-info">
-        <h3>Motion One Integration</h3>
+        <h3><span>Motion One Integration</span></h3>
         <p>Both patterns use Motion One (5KB) for animations:</p>
 
         <pre><code>// Pyramid entrance (PyramidGrid.astro)
@@ -111,7 +111,7 @@ animate(path, &#123;
       </div>
 
       <div class="controls">
-        <h3>🎮 Test Controls</h3>
+        <h3><span>🎮 Test Controls</span></h3>
 
         <div class="control-group">
           <label>Scroll down to see:</label>
@@ -145,10 +145,10 @@ animate(path, &#123;
     </section>
 
     <section class="section">
-      <h2>📝 Next Steps</h2>
+      <h2><span>📝 Next Steps</span></h2>
 
       <div class="pattern-info">
-        <h3>Integration into Homepage</h3>
+        <h3><span>Integration into Homepage</span></h3>
         <pre><code>---
 // src/pages/index.astro
 import PyramidGrid from '@/components/patterns/PyramidGrid.astro';
@@ -162,7 +162,7 @@ import WaterFlow from '@/components/patterns/WaterFlow.astro';
   &lt;!-- Your content here --&gt;
 &lt;/main&gt;</code></pre>
 
-        <h3>Create More Pattern Variations</h3>
+        <h3><span>Create More Pattern Variations</span></h3>
         <p>Try creating these next:</p>
         <ul>
           <li><strong>Inverted Pyramid:</strong> <code>M 0 45 L -45 0 L 45 0 Z</code> (point down)</li>
@@ -171,7 +171,7 @@ import WaterFlow from '@/components/patterns/WaterFlow.astro';
           <li><strong>Vertical Flow:</strong> Use <code>&lt;WaterFlow variant="vertical" /&gt;</code></li>
         </ul>
 
-        <h3>Advanced Animations</h3>
+        <h3><span>Advanced Animations</span></h3>
         <p>From the Animation Registry, you can now add:</p>
         <ul>
           <li>Scroll-triggered reveals (case study sections)</li>
@@ -183,7 +183,7 @@ import WaterFlow from '@/components/patterns/WaterFlow.astro';
     </section>
 
     <section class="section" style="min-height: 50vh;">
-      <h2>🎨 Pattern Philosophy</h2>
+      <h2><span>🎨 Pattern Philosophy</span></h2>
       <p style="font-size: 1.25rem; line-height: 1.8; max-width: 800px;">
         These patterns embody Egyptian heritage as a subtle backdrop. Large-scale geometry (800px pyramids) with breathing room. 2-3 elements maximum. Opacity 0.08-0.12 ensures patterns never distract from content. Golden ratio placement creates natural visual rhythm. Desktop-optimized animations with mobile-friendly static fallbacks.
       </p>

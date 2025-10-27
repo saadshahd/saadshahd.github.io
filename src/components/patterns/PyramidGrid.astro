@@ -53,8 +53,9 @@ const pyramids = [
 </div>
 
 <script>
-  import { stagger } from "motion";
-  import { conditionalAnimate, goldenTiming, egyptianEasing, isMobile } from "../../utils/animations";
+  import { animate, stagger } from "motion";
+  import type { DOMKeyframesDefinition, AnimationOptions } from "motion";
+  import { goldenTiming, egyptianEasing, isMobile, prefersReducedMotion } from "../../utils/animations";
 
   function animatePyramidGrid() {
     const pyramidWrappers = Array.from(document.querySelectorAll('.pyramid-wrapper'));
@@ -64,20 +65,30 @@ const pyramids = [
     // Skip animation on mobile (use static CSS instead)
     if (isMobile()) return;
 
-    // Use centralized animation utility with golden ratio timing
-    conditionalAnimate(
-      pyramidWrappers,
-      {
-        opacity: [0, 1],
-        scale: [0.9, 1],
-        rotate: [5, 0]  // Subtle entrance rotation
-      },
-      {
-        duration: goldenTiming.extraSlow,  // 1.618s - hero entrance
-        delay: stagger(0.3),  // Stagger by 0.3s between pyramids
-        easing: egyptianEasing.water  // Flowing ease like Nile water
-      }
-    );
+    // Skip animation if user prefers reduced motion
+    if (prefersReducedMotion()) {
+      // Apply final state instantly
+      pyramidWrappers.forEach(el => {
+        (el as HTMLElement).style.opacity = '1';
+        (el as HTMLElement).style.transform = 'scale(1) rotate(0)';
+      });
+      return;
+    }
+
+    // ✅ Type-safe Motion One usage with golden ratio timing
+    const keyframes: DOMKeyframesDefinition = {
+      opacity: [0, 1],
+      scale: [0.9, 1],
+      rotate: [5, 0]  // Subtle entrance rotation
+    };
+
+    const options: AnimationOptions = {
+      duration: goldenTiming.extraSlow,  // 1.618s - hero entrance
+      delay: stagger(0.3),  // Stagger by 0.3s between pyramids
+      ease: egyptianEasing.water  // Flowing ease like Nile water
+    };
+
+    animate(pyramidWrappers, keyframes, options);
   }
 
   // Run animation when DOM is ready

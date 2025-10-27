@@ -1,8 +1,8 @@
 /**
- * Custom Cursor - Mouse tracking with two-element architecture
+ * Custom Cursor - Headline-only enhancement
  *
- * Wrapper: Updates left/top position instantly (no transition)
- * Circle: Scales via CSS on hover (smooth transition)
+ * Wrapper: Updates left/top position globally (no transition)
+ * Circle: Visible only when hovering h1, h2, h3 elements
  *
  * This separation prevents lag by avoiding transform conflicts.
  *
@@ -32,10 +32,7 @@ function setupCustomCursor() {
     return;
   }
 
-  // Page-scoped cursor state
-  let hasMovedOnce = false;
-
-  // Track mouse position and update cursor instantly via left/top
+  // Track mouse position globally (cursor follows everywhere)
   document.addEventListener(
     "mousemove",
     (e) => {
@@ -45,74 +42,25 @@ function setupCustomCursor() {
       // Update position instantly (no transform, no transition)
       cursorWrapper.style.left = `${x}px`;
       cursorWrapper.style.top = `${y}px`;
-
-      // Show cursor on first mouse movement
-      if (!hasMovedOnce) {
-        cursorWrapper.classList.add("visible");
-        hasMovedOnce = true;
-      }
     },
     { signal },
   );
 
-  // Hide cursor when mouse leaves window
-  document.addEventListener(
-    "mouseleave",
-    () => {
-      cursorWrapper.classList.remove("visible");
-    },
-    { signal },
-  );
-
-  // Show cursor when mouse enters window (if it had moved before)
-  document.addEventListener(
-    "mouseenter",
-    () => {
-      if (hasMovedOnce) {
-        cursorWrapper.classList.add("visible");
-      }
-    },
-    { signal },
-  );
-
-  // Fade cursor on links
-  const links = document.querySelectorAll("a");
-  links.forEach((link) => {
-    link.addEventListener(
+  // Show cursor only when hovering headline text (spans inside headings)
+  const headlineSpans = document.querySelectorAll("h1 span, h2 span, h3 span");
+  headlineSpans.forEach((headlineSpan) => {
+    headlineSpan.addEventListener(
       "mouseenter",
       () => {
-        cursorWrapper.classList.add("faded");
+        cursorWrapper.classList.add("visible");
       },
       { signal },
     );
 
-    link.addEventListener(
+    headlineSpan.addEventListener(
       "mouseleave",
       () => {
-        cursorWrapper.classList.remove("faded");
-      },
-      { signal },
-    );
-  });
-
-  // Hover effect for buttons and cards
-  const hoverElements = document.querySelectorAll(
-    'button, .card, [role="button"], input[type="submit"], input[type="button"]',
-  );
-
-  hoverElements.forEach((el) => {
-    el.addEventListener(
-      "mouseenter",
-      () => {
-        cursorWrapper.classList.add("hover");
-      },
-      { signal },
-    );
-
-    el.addEventListener(
-      "mouseleave",
-      () => {
-        cursorWrapper.classList.remove("hover");
+        cursorWrapper.classList.remove("visible");
       },
       { signal },
     );

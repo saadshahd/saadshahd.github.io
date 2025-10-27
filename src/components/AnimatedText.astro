@@ -1,0 +1,151 @@
+---
+// AnimatedText.astro
+// Reusable text animation component with sail (waves) and fall (tumbling) presets
+
+interface Props {
+  text: string;
+  presets?: ('sail' | 'fall')[];
+  textColor?: string;
+  class?: string;
+}
+
+const { text, presets = [], textColor = '#1e293b', class: className = '' } = Astro.props;
+
+// Generate CSS classes from presets
+const presetClasses = presets.map(preset => `headline--${preset}`).join(' ');
+const classes = `headline ${presetClasses} ${className}`.trim();
+
+// Split text into individual characters with index
+const chars = text.split('').map((char, index) => ({
+  char,
+  index
+}));
+---
+
+<h2 class={classes} style={`--text-color: ${textColor};`}>
+  <span class="word">
+    {chars.map(({ char, index }) => (
+      <span class="char" data-char={char} style={`--char-index: ${index};`}>{char}</span>
+    ))}
+  </span>
+</h2>
+
+<style>
+  /* Base animation framework (from codepen) */
+  .headline {
+    font-weight: 700;
+    color: var(--text-color, #1e293b);
+    line-height: 1;
+    margin: 0;
+    white-space: nowrap; /* Prevent text wrapping */
+    --color: #0EA5E9; /* Red Sea blue for waves */
+  }
+
+  .word,
+  .char {
+    display: inline-block;
+    position: relative;
+    transform-origin: 50% 100%;
+    z-index: 1;
+  }
+
+  /* Sail animation: waves masked inside text */
+  .headline--sail .char {
+    --sail-dur: 8s;
+    --sail-del: calc(var(--char-index) * -0.15s);
+    --sail-tf-wave: linear;
+    --sail-tf-rock: ease-in-out;
+
+    /* Apply wave as background, clip to text shape */
+    background-image: radial-gradient(
+      circle at 20px -30px,
+      transparent 40px,
+      var(--color) 41px
+    );
+    background-repeat: repeat-x;
+    background-size: 40px 100%;
+    background-position: 0 70%;
+
+    animation:
+      wave-bg var(--sail-dur) var(--sail-tf-wave) infinite,
+      sail var(--sail-dur) var(--sail-tf-rock) infinite;
+    animation-delay: var(--sail-del);
+
+    /* Clip background to text shape */
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+
+    /* Show actual text color behind */
+    position: relative;
+
+    &::before {
+      content: attr(data-char);
+      position: absolute;
+      inset: 0;
+      color: var(--text-color, #1e293b);
+      z-index: -1;
+      background-clip: initial;
+      -webkit-background-clip: initial;
+    }
+  }
+
+  @keyframes sail {
+    25% { transform: rotate(-1deg) translateY(2%); }
+    50% { transform: rotate(0) translateY(0); }
+    75% { transform: rotate(1deg) translateY(1%); }
+  }
+
+  @keyframes wave-bg {
+    to { background-position: 200px 0; }
+  }
+
+  /* Fall animation: 3D tumbling with character stagger */
+  .headline--fall .char {
+    --fall-dur: 600ms;
+    --fall-del: calc(var(--char-index) * -0.05s);
+    --fall-tf: cubic-bezier(0.165, 0.44, 0.64, 1);
+
+    animation: fall var(--fall-dur) var(--fall-tf) infinite;
+    animation-delay: var(--fall-del);
+  }
+
+  /* Combined: Both sail and fall animations */
+  .headline--sail.headline--fall .char {
+    animation:
+      wave-bg var(--sail-dur) var(--sail-tf-wave) infinite,
+      sail var(--sail-dur) var(--sail-tf-rock) infinite,
+      fall var(--fall-dur) var(--fall-tf) infinite;
+    animation-delay: var(--sail-del), var(--sail-del), var(--fall-del);
+  }
+
+  @keyframes fall {
+    0% {
+      transform: rotateY(-25deg);
+    }
+    25% {
+      transform: translateY(2%) rotateY(25deg);
+    }
+    50% {
+      transform: rotateY(-25deg);
+    }
+    75% {
+      transform: translateY(4%) rotateY(25deg);
+    }
+    100% {
+      transform: rotateY(-25deg);
+    }
+  }
+
+  /* Accessibility: Disable animations for reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .headline--sail .word::before,
+    .headline--sail .word::after {
+      animation: none;
+    }
+
+    .headline--fall .char {
+      animation: none;
+    }
+  }
+</style>
