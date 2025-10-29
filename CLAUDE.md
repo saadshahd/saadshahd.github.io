@@ -147,6 +147,170 @@ import WaterFlow from '@/components/patterns/WaterFlow.astro';
 - [ ] Every paragraph teaches
 - [ ] Production wisdom evident
 - [ ] First principles explained
+- [ ] Questions open major sections (Socratic authority)
+- [ ] Collaborative framing ("we", "teams", no "I did X" heroics)
+- [ ] Philosophical systems thinking present
+- [ ] Humble learning visible ("still exploring", "lesson learned")
+- [ ] No bold/arrogant claims
+- [ ] CTAs are invitational, not commanding
+
+---
+
+## Copy Tone Guidelines
+
+**Core Tone:** Philosophical + Humble + Collaborative Confidence
+
+**Never:** Bold, arrogant, or individual hero narrative
+
+### Tone Principles
+
+**✅ ALWAYS Use:**
+
+1. **Question-led authority** (Socratic confidence without claiming answers)
+   - "How do you collect 90-minute matches without choosing between velocity and correctness?"
+   - "What if systems couldn't break by design?"
+   - "How do 20 teams collaborate without friction or incorrectness?"
+
+2. **Collaborative framing** (team/collective credit, not individual genius)
+   - "We reduced collection from 16 hours to 4 concurrent collectors"
+   - "Working in high-velocity environments revealed they're complementary"
+   - "When teams chase the right questions first, architecture emerges"
+
+3. **Philosophical systems thinking** (abstract principles, constraints, architecture)
+   - "Architecture shapes possibility"
+   - "Reliability stops being aspirational—it becomes structural"
+   - "Architectural separation eliminates trade-offs that feel inevitable"
+
+4. **Humble learning orientation** (ongoing exploration, lessons from experience)
+   - "Still exploring what's possible"
+   - "Lesson learned: architectural separation..."
+   - "Over 15 years, a pattern revealed itself"
+   - "Patterns emerged through production bugs"
+
+5. **Evidence-based confidence** (proven through production, not claims)
+   - "15 years", "production systems", "at Instabug, Statsbomb, and Wise"
+   - Metrics in service of learning, not bragging
+
+**❌ NEVER Use:**
+
+1. **Bold/arrogant claims**
+   - ❌ "I build systems that can't break"
+   - ❌ "I solved content collaboration at scale"
+   - ❌ "I cut 90-minute match collection..." (individual hero)
+
+2. **First-person hero narrative**
+   - ❌ "I designed", "I implemented", "I achieved" (without collaborative context)
+   - ❌ "My system", "My architecture" (implies sole ownership)
+
+3. **Command language in CTAs**
+   - ❌ "See What I've Built" → ✅ "Explore My Work"
+   - ❌ "Get in Touch" → ✅ "Start a Conversation"
+   - ❌ "View Full Resume" → ✅ "Full Background"
+
+4. **Definitive statements without humility**
+   - ❌ "The right question makes implementation obvious"
+   - ✅ "Curious about the 'why' first—it often reveals the 'how'"
+
+5. **Claiming perfection or absolute mastery**
+   - ❌ "I've mastered functional programming"
+   - ❌ "My approach eliminates all bugs"
+
+### Approved Copy Examples
+
+Use these as templates for new content:
+
+#### Hero Section (Homepage)
+
+**Headline:**
+"What if systems couldn't break by design?"
+
+**Value Proposition:**
+"Over 15 years, patterns emerged from production systems: when you separate behavior from state and make illegal states unrepresentable, reliability stops being aspirational—it becomes structural. Exploring what's possible when architecture shapes correctness."
+
+**CTAs:**
+- "Explore My Work" (invitational)
+- "Start a Conversation" (collaborative)
+
+**Why this works:**
+- Question opens with Socratic authority
+- "Patterns emerged" = passive discovery (not "I discovered")
+- "Exploring what's possible" = humble ongoing learning
+- CTAs invite partnership, not transactions
+
+#### Case Study Descriptions (Portfolio)
+
+**Opening:**
+"How do you collect 90-minute matches without choosing between velocity and correctness?"
+
+**Body:**
+"We reduced collection from 16 man-hours to 4 concurrent collectors by building a DSL that let PMs define sports rules without engineering involvement. The architecture separated collection rules from execution logic—new sports became configuration, not code."
+
+**Closing:**
+"Lesson learned: architectural separation eliminates trade-offs that feel inevitable."
+
+**Why this works:**
+- Socratic question implies deep problem understanding
+- "We reduced" = collaborative (not "I cut")
+- "let PMs" = team enablement
+- "Lesson learned" = humble reflection
+- Philosophical insight about false trade-offs
+
+#### About Page
+
+**Opening:**
+"Over 15 years, a pattern revealed itself: systems fail when we optimize for 'how' before understanding 'why.' When teams chase the right questions first, architecture emerges from constraints."
+
+**Current Work:**
+"At Wise, we're solving content collaboration for 20 teams at scale. Building editorial infrastructure that handles global→local fintech tension—regulations collide with cultural nuances, offerings vary by market. The problem space is architectural: how do we maintain coherence and developer experience when constraints multiply?"
+
+**Philosophy:**
+"Functional programming principles emerged through production bugs at Instabug, Statsbomb, and Wise. Traditional thinking treats velocity and correctness as opposing forces. Working in high-velocity environments revealed they're complementary: when you separate behavior from state and make illegal states unrepresentable, both increase together. Still learning what's possible when architecture constrains failure."
+
+**Closing:**
+"Curious about the 'why' first—it often reveals the 'how.'"
+
+**Why this works:**
+- "Pattern revealed itself" = passive discovery (humble)
+- "We're solving" = collaborative present tense
+- Question closes with Socratic authority
+- "Still learning" = ongoing humble exploration
+- "Often reveals" = acknowledges uncertainty (not "always")
+
+### Tone Audit Process
+
+When writing new copy, audit against these questions:
+
+1. **Question-led?** Do major sections open with Socratic questions?
+2. **Collaborative?** Are achievements credited to teams/environments, not individual?
+3. **Philosophical?** Is systems thinking and first principles depth visible?
+4. **Humble?** Is ongoing learning acknowledged ("still exploring", "lesson learned")?
+5. **Evidence-based?** Is confidence from proven work (years, companies, metrics)?
+6. **No arrogance?** Zero "I build X" claims without collaborative context?
+7. **Invitational CTAs?** Are buttons collaborative ("Explore", "Discuss") not commanding?
+
+If any answer is "no", rewrite before publishing.
+
+### Common Copy Patterns
+
+**Introducing work:**
+- ❌ "I built editorial infrastructure for Wise"
+- ✅ "At Wise, we're solving content collaboration for 20 teams"
+
+**Describing results:**
+- ❌ "I reduced collection time by 75%"
+- ✅ "We reduced collection from 16 hours to 4 concurrent collectors"
+
+**Sharing insights:**
+- ❌ "I proved that velocity and correctness aren't trade-offs"
+- ✅ "Working in high-velocity environments revealed they're complementary"
+
+**Closing statements:**
+- ❌ "I optimize for the 'why' first"
+- ✅ "Curious about the 'why' first—it often reveals the 'how'"
+
+**CTAs:**
+- ❌ "See My Work" / "Hire Me"
+- ✅ "Explore My Work" / "Start a Conversation"
 
 ---
 
