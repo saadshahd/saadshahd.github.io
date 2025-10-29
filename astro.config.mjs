@@ -28,6 +28,13 @@ export default defineConfig({
         weights: ["400", "600"],
         cssVariable: "--font-serif",
         display: "swap"
+      },
+      {
+        provider: fontProviders.google(),
+        name: "Space Grotesk",
+        weights: ["600", "700"],
+        cssVariable: "--font-display",
+        display: "swap"
       }
     ]
   },

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
 import Card from '../components/Card.astro';
 import Badge from '../components/Badge.astro';
 import Heading from '../components/typography/Heading.astro';
@@ -7,15 +8,15 @@ import Body from '../components/typography/Body.astro';
 ---
 
 <Layout title="Portfolio - Saad Shahd">
-  <div class="max-w-6xl mx-auto px-4 md:px-6 py-20">
-    <Heading level={1} as="h1" class="mb-12"><span>Portfolio</span></Heading>
-    <Body size="lg" as="p" class="text-neutral mb-16">Selected case studies showcasing technical depth and impact</Body>
+  <Container width="default">
+    <Heading level={1} as="h1" class="mb-2"><span>Portfolio</span></Heading>
+    <Body size="lg" as="p" class="text-neutral mb-8">Selected case studies showcasing technical depth and impact</Body>
 
     <div class="grid gap-8 md:gap-12">
-      <!-- StatsBomb Case Study -->
+      <!-- Statsbomb Case Study -->
       <Card variant="case-study" href="/portfolio/statsbomb">
         <div class="p-8">
-          <Heading level={2} as="h2" class="mb-3"><span>StatsBomb Real-Time Data Collection System</span></Heading>
+          <Heading level={3} as="h2" class="mb-3"><span>Statsbomb Real Time Data Collection System</span></Heading>
           <Body size="base" as="p" class="text-neutral mb-6 leading-relaxed">
             Designed a distributed system that reduced 90-minute match collection from 16 man-hours to 4 concurrent collectors.
             Built a dataspec and DSL enabling PMs to define sport collection rules without engineering involvement.
@@ -37,7 +38,7 @@ import Body from '../components/typography/Body.astro';
       <!-- Future Case Study Placeholder 1 -->
       <Card variant="case-study">
         <div class="p-8 opacity-50">
-          <Heading level={2} as="h2" class="mb-3"><span>Wise Editorial Platform</span></Heading>
+          <Heading level={3} as="h2" class="mb-3"><span>Wise Editorial Platform</span></Heading>
           <Body size="base" as="p" class="text-neutral mb-6 leading-relaxed">
             Comprehensive content system enabling 20 teams to collaborate on wise.com.
             Global→local fintech content at scale with maintained developer experience.
@@ -54,5 +55,5 @@ import Body from '../components/typography/Body.astro';
         </div>
       </Card>
     </div>
-  </div>
+  </Container>
 </Layout>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
 import Button from '../components/Button.astro';
 import Display from '../components/typography/Display.astro';
 import Body from '../components/typography/Body.astro';
@@ -7,15 +8,15 @@ import Body from '../components/typography/Body.astro';
 
 <Layout title="Saad Shahd - Software Engineer">
   <!-- Centered content on top of patterns -->
-  <div class="max-w-6xl mx-auto px-4 md:px-6 relative" style="z-index: 1;">
-    <section class="md:min-h-[calc(100vh-5rem)] min-h-[calc(100vh-10rem)] flex flex-col justify-center items-center text-center">
-      <Display level={1} as="h1" class="hero-name mb-6 leading-tight opacity-0 max-w-[42.5rem] text-balance">
+  <Container width="default" spacing="hero" class="relative flex flex-col justify-center items-center" style="z-index: 1;">
+    <section class="w-full flex flex-col items-center text-center">
+      <Display level={1} as="h1" class="hero-name mb-6 leading-tight opacity-0 max-w-150 md:max-w-170">
         Saad Shahd
       </Display>
-      <Body size="lg" as="p" class="hero-title text-accent-light mb-6 opacity-0 max-w-[42.5rem] text-balance">
+      <Body size="lg" as="p" class="hero-title text-text mb-6 opacity-0 max-w-150 md:max-w-170">
         Building realtime systems through functional architecture
       </Body>
-      <Body size="lg" as="p" class="hero-value text-neutral mb-12 leading-relaxed opacity-0 max-w-[42.5rem] text-balance">
+      <Body size="base" as="p" class="hero-value text-neutral mb-12 leading-relaxed opacity-0 max-w-150 md:max-w-170 lg:text-lg">
         I design systems where illegal states can't exist.
         When you separate behavior from state, reliability isn't a feature—it's inevitable.
         That's functional architecture in production.
@@ -29,7 +30,7 @@ import Body from '../components/typography/Body.astro';
         </Button>
       </div>
     </section>
-  </div>
+  </Container>
 </Layout>
 
 <script>

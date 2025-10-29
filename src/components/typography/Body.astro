@@ -1,12 +1,13 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 
-const bodyVariants = cva('text-accent-light', {
+const bodyVariants = cva('text-text-lighter text-balance', {
   variants: {
     size: {
-      sm: 'text-sm leading-normal',                  // 14px, 1.5 line-height
-      base: 'text-base leading-normal',              // 18px, 1.5 line-height
-      lg: 'text-lg md:text-xl leading-normal',       // 24px → 32px (reverted to original), 1.5 line-height
+      sm: 'text-sm leading-normal',              // 14px → 16.8px after scaling
+      base: 'text-base leading-relaxed',         // 16px → 19.2px after scaling
+      lg: 'text-base lg:text-xl leading-relaxed',  // Mobile/Tablet: 16px → 19.2px | Desktop: 24px → 28.8px (1.5x larger on desktop)
+      xl: 'text-xl leading-relaxed',             // 24px → 28.8px after scaling
     },
   },
   defaultVariants: {
