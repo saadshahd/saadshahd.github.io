@@ -4,9 +4,9 @@ import { cva, type VariantProps } from 'class-variance-authority';
 const headingVariants = cva('font-semibold text-text text-balance', {
   variants: {
     level: {
-      1: 'text-2xl md:text-4xl',      // 24px → 40px (page titles)
-      2: 'text-xl md:text-2xl',       // 20px → 32px (section headings)
-      3: 'text-lg md:text-xl',     // 18px → 24px (sub-section headings)
+      1: 'text-2xl md:text-3xl',      // 32px → 40px (page titles, content-first scale)
+      2: 'text-xl md:text-2xl',       // 24px → 32px (section headings)
+      3: 'text-lg md:text-xl',     // 20px → 24px (sub-section headings)
     },
   },
   defaultVariants: {

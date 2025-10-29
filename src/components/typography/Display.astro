@@ -4,8 +4,8 @@ import { cva, type VariantProps } from 'class-variance-authority';
 const displayVariants = cva('font-bold text-text text-balance tracking-tight', {
   variants: {
     level: {
-      1: 'text-3xl lg:text-5xl',  // Mobile/Tablet: 40px → 48px | Desktop: 64px → 76.8px (1.6x larger on desktop)
-      2: 'text-2xl lg:text-4xl',  // Mobile/Tablet: 32px → 38.4px | Desktop: 48px → 57.6px (1.5x larger on desktop)
+      1: 'text-2xl lg:text-3xl',  // Mobile/Tablet: 32px → 38.4px | Desktop: 40px → 48px (content-first scale max)
+      2: 'text-xl lg:text-2xl',  // Mobile/Tablet: 24px → 28.8px | Desktop: 32px → 38.4px
     },
   },
   defaultVariants: {
