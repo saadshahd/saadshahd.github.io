@@ -2,11 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Heading from '../components/typography/Heading.astro';
 import Body from '../components/typography/Body.astro';
+import Link from '../components/Link.astro';
 ---
 
 <Layout title="Contact - Saad Shahd">
   <div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
-    <Heading level={1} as="h1" class="mb-12"><span>Get in Touch</span></Heading>
+    <Heading level={1} as="h1" class="mb-16"><span>Get in Touch</span></Heading>
     <Body size="lg" as="p" class="text-neutral mb-16 leading-normal">
       Looking to collaborate on realtime systems, discuss functional thinking, or explore how to eliminate complexity before it exists? Let's talk.
     </Body>
@@ -14,23 +15,23 @@ import Body from '../components/typography/Body.astro';
     <div class="space-y-8">
       <div>
         <Heading level={2} as="h2" class="mb-2 text-accent"><span>Email</span></Heading>
-        <a href="mailto:dev.saad.shahd@gmail.com" class="text-secondary hover:underline text-lg">
+        <Link href="mailto:dev.saad.shahd@gmail.com" variant="inline" class="text-lg">
           dev.saad.shahd@gmail.com
-        </a>
+        </Link>
       </div>
 
       <div>
         <Heading level={2} as="h2" class="mb-2 text-accent"><span>LinkedIn</span></Heading>
-        <a href="https://linkedin.com/in/saadshahd" target="_blank" rel="noopener noreferrer" class="text-secondary hover:underline text-lg">
+        <Link href="https://linkedin.com/in/saadshahd" variant="external" external class="text-lg">
           linkedin.com/in/saadshahd
-        </a>
+        </Link>
       </div>
 
       <div>
         <Heading level={2} as="h2" class="mb-2 text-accent"><span>GitHub</span></Heading>
-        <a href="https://github.com/saadshahd" target="_blank" rel="noopener noreferrer" class="text-secondary hover:underline text-lg">
+        <Link href="https://github.com/saadshahd" variant="external" external class="text-lg">
           github.com/saadshahd
-        </a>
+        </Link>
       </div>
     </div>
   </div>

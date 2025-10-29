@@ -4,6 +4,7 @@ import Container from '../components/Container.astro';
 import Button from '../components/Button.astro';
 import Heading from '../components/typography/Heading.astro';
 import Body from '../components/typography/Body.astro';
+import Link from '../components/Link.astro';
 import '../styles/print-resume.css';
 ---
 
@@ -26,12 +27,11 @@ import '../styles/print-resume.css';
         </Button>
       </div>
 
-      <Body size="sm" as="div" class="flex flex-wrap gap-3 text-neutral">
-        <a href="mailto:dev.saad.shahd@gmail.com" class="hover:text-secondary-dark">dev.saad.shahd@gmail.com</a>
-        <a href="https://github.com/saadshahd" target="_blank" class="hover:text-secondary-dark">github.com/saadshahd</a>
-        <a href="https://linkedin.com/in/saadshahd" target="_blank" class="hover:text-secondary-dark">linkedin.com/in/saadshahd</a>
+      <Body size="sm" as="div" class="flex flex-wrap gap-4 text-neutral">
+        <Link href="mailto:dev.saad.shahd@gmail.com" variant="inline">dev.saad.shahd@gmail.com</Link>
+        <Link href="https://github.com/saadshahd" variant="external" external>github.com/saadshahd</Link>
+        <Link href="https://linkedin.com/in/saadshahd" variant="external" external>linkedin.com/in/saadshahd</Link>
         <span>London, United Kingdom</span>
-        <span>+447428240774</span>
       </Body>
     </div>
 
@@ -81,7 +81,7 @@ import '../styles/print-resume.css';
             </div>
             <Body size="sm" as="p" class="text-neutral">London | 03/2022 - Present</Body>
           </div>
-          <Body size="sm" as="p" class="mb-3">Building infrastructure for the world's most international account—helping 16M+ customers move money across borders.</Body>
+          <Body size="sm" as="p" class="mb-4">Building infrastructure for the world's most international account—helping 16M+ customers move money across borders.</Body>
           <Body size="base" as="ul" class="space-y-3">
             <li><strong>Increased conversion 19% through hypothesis-driven experimentation.</strong> Isolated pricing friction points through rapid A/B testing. Short iterations revealed psychological barriers traditional analytics missed—validating hunches with data, not opinions.</li>
             <li><strong>Improved team velocity 4x by eliminating accidental complexity.</strong> Refactored tangled service dependencies into composable modules with clear boundaries. Each team could now deploy independently. Reduced coordination overhead from "everyone talks to everyone" to "services talk through contracts."</li>
@@ -98,7 +98,7 @@ import '../styles/print-resume.css';
             </div>
             <Body size="sm" as="p" class="text-neutral">Bath, UK | 03/2018 - 03/2022</Body>
           </div>
-          <Body size="sm" as="p" class="mb-3">Led core data infrastructure for football analytics platform—serving Premier League clubs, international federations, and media companies.</Body>
+          <Body size="sm" as="p" class="mb-4">Led core data infrastructure for football analytics platform—serving Premier League clubs, international federations, and media companies.</Body>
           <Body size="base" as="ul" class="space-y-3">
             <li><strong>Architected realtime data streaming platform from scratch, handling 10K+ events/second.</strong> Chose event sourcing with Kafka for immutable audit trails—critical when clubs make million-pound decisions on our data. Event-driven design let us replay history, debug production issues in development, and maintain consistency across services without distributed transactions.</li>
             <li><strong>Increased data collection speed 6x through parallel processing architecture.</strong> Previous sequential pipeline became the bottleneck—one slow collector blocked everyone. Redesigned as independent stream processors with coordinated checkpoints. Tradeoff: More complex failure handling, but throughput scaled linearly with workers.</li>
@@ -116,7 +116,7 @@ import '../styles/print-resume.css';
             </div>
             <Body size="sm" as="p" class="text-neutral">Cairo, Egypt | 03/2017 - 03/2018</Body>
           </div>
-          <Body size="sm" as="p" class="mb-3">Built engagement platform for events—the leading event app provider across Middle East and North Africa.</Body>
+          <Body size="sm" as="p" class="mb-4">Built engagement platform for events—the leading event app provider across Middle East and North Africa.</Body>
           <Body size="base" as="ul" class="space-y-3">
             <li><strong>Modernized frontend stack and built event manager dashboards.</strong> Led frontend architecture decisions that enabled teams to ship features faster with better maintainability.</li>
           </Body>
@@ -131,7 +131,7 @@ import '../styles/print-resume.css';
             </div>
             <Body size="sm" as="p" class="text-neutral">Cairo, Egypt | 11/2015 - 08/2016</Body>
           </div>
-          <Body size="sm" as="p" class="mb-3">Core team member building tools for mobile developers to ship better apps—crash reporting, user feedback, and performance monitoring.</Body>
+          <Body size="sm" as="p" class="mb-4">Core team member building tools for mobile developers to ship better apps—crash reporting, user feedback, and performance monitoring.</Body>
           <Body size="base" as="ul" class="space-y-3">
             <li><strong>Built realtime crash reporting dashboard processing 100K+ events daily.</strong> Designed client SDK for minimal performance overhead while capturing rich debugging context. Challenge: Collect enough data to reproduce bugs without impacting app performance—solved through smart sampling, local aggregation, and batched uploads.</li>
           </Body>
@@ -175,15 +175,6 @@ import '../styles/print-resume.css';
             <Body size="sm" as="p"><strong>Proficient:</strong> Vue, Angular, Redux, xstate, RxJS, D3, Electron</Body>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Find Me Online -->
-    <section>
-      <Heading level={1} as="h2" class="mb-6 text-text"><span>Find Me Online</span></Heading>
-      <div class="space-y-2">
-        <Body size="sm" as="p"><strong>GitHub:</strong> <a href="https://github.com/saadshahd" target="_blank" class="text-secondary hover:text-secondary-dark hover:underline">github.com/saadshahd</a></Body>
-        <Body size="sm" as="p"><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/saadshahd" target="_blank" class="text-secondary hover:text-secondary-dark hover:underline">linkedin.com/in/saadshahd</a></Body>
       </div>
     </section>
   </Container>

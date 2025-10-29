@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
 import Button from '../components/Button.astro';
 import Heading from '../components/typography/Heading.astro';
 import Body from '../components/typography/Body.astro';
@@ -7,20 +8,20 @@ import { FileText } from '@lucide/astro';
 ---
 
 <Layout title="About - Saad Shahd">
-  <div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
-    <Heading level={1} as="h1" class="mb-12"><span>About</span></Heading>
+  <Container width="narrow">
+    <Heading level={1} as="h1" class="mb-16"><span>About</span></Heading>
 
-    <div class="prose prose-lg max-w-none">
+    <div>
       <Body size="lg" as="p" class="text-neutral mb-8 leading-normal">
-        I build systems for a reason—I chase the 'why' without fixating on the 'how.' Over 15 years, I developed a philosophy that makes the 'how' obvious.
+        Over 15 years, a pattern revealed itself: systems fail when we optimize for 'how' before understanding 'why.' When teams chase the right questions first, architecture emerges from constraints.
       </Body>
 
       <Body size="base" as="p" class="mb-6 leading-relaxed">
-        At Wise, I solve content collaboration at scale. Currently building editorial infrastructure that enables 20 teams to work on wise.com without friction, inconsistency, or incorrectness. The challenge isn't just technical—it's solving global→local fintech at scale: regulations differ by market, offerings vary by country, and cultural nuances matter.
+        At Wise, we're solving content collaboration for 20 teams at scale. Building editorial infrastructure that handles global→local fintech tension—regulations collide with cultural nuances, offerings vary by market. The problem space is architectural: how do we maintain coherence and developer experience when constraints multiply?
       </Body>
 
       <Body size="base" as="p" class="mb-6 leading-relaxed">
-        My approach is rooted in functional programming principles I learned the hard way—through production bugs in high-velocity startup environments at Instabug, Statsbomb, and Wise. Traditional thinking says you trade velocity for technical debt. I learned that functional thinking eliminates that trade-off entirely. When you separate behavior from state and make illegal states unrepresentable, you move fast <em>and</em> stay confident.
+        Functional programming principles emerged through production bugs at Instabug, Statsbomb, and Wise. Traditional thinking treats velocity and correctness as opposing forces. Working in high-velocity environments revealed they're complementary: when you separate behavior from state and make illegal states unrepresentable, both increase together. Still learning what's possible when architecture constrains failure.
       </Body>
 
       <Body size="base" as="p" class="mb-6 leading-relaxed">
@@ -32,14 +33,14 @@ import { FileText } from '@lucide/astro';
       </Body>
 
       <Body size="base" as="p" class="text-lg font-medium text-accent">
-        I optimize for the "why" first. The right question makes implementation obvious.
+        Curious about the 'why' first—it often reveals the 'how.'
       </Body>
 
       <!-- Resume CTA -->
-      <div class="mt-10 mb-12">
+      <div class="mt-10 mb-16">
         <Button href="/resume" variant="primary" size="md" class="gap-2">
           <FileText size={20} />
-          View Full Resume
+          Full Background
         </Button>
       </div>
 
@@ -55,5 +56,5 @@ import { FileText } from '@lucide/astro';
         <li>LLM-augmented development patterns</li>
       </Body>
     </div>
-  </div>
+  </Container>
 </Layout>

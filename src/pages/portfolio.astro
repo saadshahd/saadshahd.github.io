@@ -12,16 +12,16 @@ import Body from '../components/typography/Body.astro';
     <Heading level={1} as="h1" class="mb-2"><span>Portfolio</span></Heading>
     <Body size="lg" as="p" class="text-neutral mb-8">Selected case studies showcasing technical depth and impact</Body>
 
-    <div class="grid gap-8 md:gap-12">
+    <div class="grid gap-8 md:gap-16">
       <!-- Statsbomb Case Study -->
       <Card variant="case-study" href="/portfolio/statsbomb">
         <div class="p-8">
-          <Heading level={3} as="h2" class="mb-3"><span>Statsbomb Real Time Data Collection System</span></Heading>
+          <Heading level={3} as="h2" class="mb-4"><span>Statsbomb Real Time Data Collection System</span></Heading>
           <Body size="base" as="p" class="text-neutral mb-6 leading-relaxed">
-            Designed a distributed system that reduced 90-minute match collection from 16 man-hours to 4 concurrent collectors.
-            Built a dataspec and DSL enabling PMs to define sport collection rules without engineering involvement.
-            Why did it scale? The architecture separated collection rules from execution logic. New sports became configuration, not code.
-            We never had to choose between velocity and correctness.
+            How do you collect 90-minute matches without choosing between velocity and correctness?
+            We reduced collection from 16 man-hours to 4 concurrent collectors by building a DSL that let PMs define sports rules without engineering involvement.
+            The architecture separated collection rules from execution logic—new sports became configuration, not code.
+            Lesson learned: architectural separation eliminates trade-offs that feel inevitable.
           </Body>
           <div class="flex flex-wrap gap-2 mb-4">
             <Badge variant="skill">JavaScript</Badge>
@@ -38,10 +38,12 @@ import Body from '../components/typography/Body.astro';
       <!-- Future Case Study Placeholder 1 -->
       <Card variant="case-study">
         <div class="p-8 opacity-50">
-          <Heading level={3} as="h2" class="mb-3"><span>Wise Editorial Platform</span></Heading>
+          <Heading level={3} as="h2" class="mb-4"><span>Wise Editorial Platform</span></Heading>
           <Body size="base" as="p" class="text-neutral mb-6 leading-relaxed">
-            Comprehensive content system enabling 20 teams to collaborate on wise.com.
-            Global→local fintech content at scale with maintained developer experience.
+            How do 20 teams collaborate on wise.com without friction or incorrectness?
+            Building editorial infrastructure that handles global→local fintech complexity—regulations differ by market, offerings vary by country, cultural nuances matter.
+            The challenge is architectural: coherence at scale while preserving developer experience.
+            Still exploring what content collaboration looks like at 16M+ customer scale.
           </Body>
           <div class="flex flex-wrap gap-2 mb-4">
             <Badge variant="skill">TypeScript</Badge>

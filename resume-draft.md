@@ -2,7 +2,7 @@
 
 **Principal Software Engineer**
 
-📧 dev.saad.shahd@gmail.com | 🐙 github.com/saadshahd | 💼 linkedin.com/in/saadshahd | 📍 London, United Kingdom | 📞 +447428240774
+📧 dev.saad.shahd@gmail.com | 🐙 github.com/saadshahd | 💼 linkedin.com/in/saadshahd | 📍 London, United Kingdom
 
 ---
 
@@ -103,8 +103,3 @@ Core team member building tools for mobile developers to ship better apps—cras
 **Proficient**: Vue, Angular, Redux, xstate, RxJS, D3, Electron
 
 ---
-
-## Find Me Online
-
-**GitHub**: https://github.com/saadshahd
-**LinkedIn**: https://linkedin.com/in/saadshahd
