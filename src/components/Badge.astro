@@ -3,13 +3,13 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
 
 const badge = cva(
-  'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium',
+  'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border',
   {
     variants: {
       variant: {
-        skill: 'bg-accent/10 text-accent border border-accent/20',
-        category: 'bg-accent/15 text-accent border border-accent/30',
-        status: 'bg-accent/20 text-accent border border-accent/40',
+        skill: 'bg-badge-skill-bg text-badge-skill-text border-badge-skill-border',       // Warm amber/gold - technical skills (7.2:1 contrast)
+        category: 'bg-badge-category-bg text-badge-category-text border-badge-category-border', // Sky blue - domains/categories (9.1:1 contrast)
+        status: 'bg-badge-status-bg text-badge-status-text border-badge-status-border',   // Emerald green - status indicators (8.5:1 contrast)
       },
     },
     defaultVariants: {

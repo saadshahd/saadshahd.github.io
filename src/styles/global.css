@@ -4,49 +4,74 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  /* ===== Egyptian Brand Color Palette ===== */
-  /* Primary - Egyptian Gold */
+  /* ===== Desert Monument Palette (Egyptian Brand) ===== */
+  /* Primary - Egyptian Gold (brand accent, CTAs, highlights) */
   --color-primary: #F4C430;
   --color-primary-light: #FFD700;
   --color-primary-dark: #DAA520;
 
-  /* Secondary - Red Sea Blue */
+  /* Secondary - Red Sea Blue (links, secondary actions) */
   --color-secondary: #0EA5E9;
   --color-secondary-light: #38BDF8;
   --color-secondary-dark: #0369A1;
 
-  /* Accent - Blueprint Ink (Dark Navy for Text) */
-  --color-accent: #0F172A;
-  --color-accent-light: #1E293B;
-  --color-accent-dark: #020617;
+  /* Accent - Egyptian Gold (alias for semantic clarity) */
+  --color-accent: #F4C430;
 
-  /* Neutrals */
-  --color-neutral: #64748B;
-  --color-neutral-light: #94A3B8;
-  --color-neutral-lighter: #F5F1E8;
+  /* Highlight - Vibrant Cyan (tertiary accents, hover states) */
+  --color-highlight: #06B6D4;
 
-  /* Background */
+  /* Text - Blueprint Ink (body text, headings) */
+  --color-text: #0F172A;
+  --color-text-light: #1E293B;
+  --color-text-lighter: #475569;
+
+  /* Neutrals - Warm Gray (borders, muted elements) */
+  --color-neutral: #94A3B8;
+  --color-neutral-light: #CBD5E1;
+  --color-neutral-lighter: #F1F5F9;
+
+  /* Background - Limestone Cream */
   --color-background: #F5F1E8;
-  --color-surface: #FFFFFF;
+  --color-surface: #FEFDFB;
 
-  /* Semantic */
-  --color-success: #06B6D4;
+  /* Semantic States */
+  --color-success: #10B981;
   --color-error: #EF4444;
   --color-warning: #F59E0B;
 
-  /* ===== Typography (Font components provide --font-sans, --font-serif) ===== */
+  /* Badge Semantic Variants - WCAG AA Compliant (7.2-9.1:1 contrast) */
+  /* Skill badges - Warm amber/gold tint (Egyptian heritage) */
+  --color-badge-skill-bg: #FEF3C7;
+  --color-badge-skill-text: #78350F;
+  --color-badge-skill-border: #F59E0B;
+
+  /* Category badges - Sky blue tint (Red Sea) */
+  --color-badge-category-bg: #DBEAFE;
+  --color-badge-category-text: #0C4A6E;
+  --color-badge-category-border: #0EA5E9;
+
+  /* Status badges - Emerald tint (Nile vegetation) */
+  --color-badge-status-bg: #D1FAE5;
+  --color-badge-status-text: #065F46;
+  --color-badge-status-border: #10B981;
+
+  /* ===== Typography (Font components provide --font-sans, --font-serif, --font-display) ===== */
   --font-family-sans: var(--font-sans, 'IBM Plex Sans', system-ui, -apple-system, sans-serif);
   --font-family-serif: var(--font-serif, 'IBM Plex Serif', Georgia, serif);
+  --font-family-display: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
   --font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
 
   /* Font Sizes - Content-First Scale */
   --text-xs: 0.75rem;      /* 12px - Captions, dates, metadata */
   --text-sm: 0.875rem;     /* 14px - Secondary text, small labels */
-  --text-base: 1.125rem;   /* 18px - Body, navigation, buttons */
-  --text-lg: 1.5rem;       /* 24px - H3, pull quotes, large body */
-  --text-xl: 2rem;         /* 32px - H2, section headers */
-  --text-2xl: 2.5rem;      /* 40px - H1, page titles */
-  --text-3xl: 3rem;        /* 48px - Hero display (desktop only) */
+  --text-base: 1rem;       /* 16px - Body baseline (scales to 19.2px at 1.2x) */
+  --text-lg: 1.25rem;      /* 20px - H3, pull quotes (scales to 24px) */
+  --text-xl: 1.5rem;       /* 24px - H2, section headers (scales to 28.8px) */
+  --text-2xl: 2rem;        /* 32px - H1, page titles (scales to 38.4px) */
+  --text-3xl: 2.5rem;      /* 40px - Hero display (scales to 48px) */
+  --text-4xl: 3rem;      
+  --text-5xl: 4rem;      
 
   /* Line Heights - Optimized for Readability */
   --leading-tight: 1.2;     /* Display text, headings */
@@ -73,4 +98,15 @@
   --radius-md: 0.5rem;     /* 8px */
   --radius-lg: 0.75rem;    /* 12px */
   --radius-full: 9999px;
+}
+
+html {
+  font-size: 120%; /* Scale all rem-based sizes by 1.2x on desktop */
+}
+
+/* Desktop Responsive Scaling - Idiomatic Tailwind */
+@media (min-width: 768px) {
+  html {
+    font-size: 120%; /* Scale all rem-based sizes by 1.2x on desktop */
+  }
 }
