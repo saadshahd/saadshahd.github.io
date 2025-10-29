@@ -115,7 +115,7 @@ import WaterFlow from '@/components/patterns/WaterFlow.astro';
 1. Trust (battle-tested experience)
 2. Learning (deeper systems thinking)
 3. Practical (applicable patterns)
-4. Respect (principal-level thought)
+4. Respect (demonstrated technical depth)
 
 ### Case Study: Problem → Architecture → Impact → Lessons
 
@@ -139,7 +139,7 @@ import WaterFlow from '@/components/patterns/WaterFlow.astro';
 
 ## Content Structure
 
-**Homepage**: Intro (Principal Engineer, realtime systems & functional thinking), 2-3 case studies, blog preview, CTA
+**Homepage**: Intro (Building realtime systems through functional architecture), 2-3 case studies, blog preview, CTA
 **Portfolio**: 3-5 case studies (Problem→Architecture→Impact→Lessons), 2000-3000w + diagrams
 **Blog**: Monthly technical articles, start with "Real-Time Data Collection System"
 **About**: Bio 200-300w, expertise, highlights, headshot

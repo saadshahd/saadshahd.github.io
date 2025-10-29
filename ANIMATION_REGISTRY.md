@@ -414,89 +414,7 @@ Context-aware logo that morphs based on scroll position (advanced feature).
 
 ---
 
-### 6. **Custom Cursor**
-Golden circle cursor with magnetic hover effects.
-
-**Techniques Learned**:
-- LERP (Linear Interpolation) for smooth follow (Codrops: Custom Cursor Filled Circle)
-- RequestAnimationFrame loop → CSS transition alternative
-
-**Two Approaches**:
-
-#### A. CSS-Only (Recommended for v1)
-```css
-/* src/styles/cursor.css */
-.custom-cursor {
-  position: fixed;
-  width: 40px;
-  height: 40px;
-  background: var(--color-primary); /* Egyptian gold */
-  border: 2px solid var(--color-accent); /* Cyan outline */
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: transform 0.15s cubic-bezier(0.65, 0, 0.35, 1);
-  z-index: 9999;
-  mix-blend-mode: difference;
-}
-
-.custom-cursor.hover {
-  transform: translate(-50%, -50%) scale(1.5);
-}
-
-/* Hide default cursor */
-body {
-  cursor: none;
-}
-
-/* Desktop only */
-@media (pointer: coarse) {
-  .custom-cursor { display: none; }
-  body { cursor: auto; }
-}
-```
-
-```typescript
-// src/scripts/cursor.ts
-const cursor = document.querySelector('.custom-cursor');
-let mouseX = 0, mouseY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-});
-
-// Scale on hover
-const interactiveEls = document.querySelectorAll('a, button, .card');
-interactiveEls.forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
-```
-
-#### B. Motion One (Month 2+)
-```typescript
-import { animate } from "motion";
-
-// Smooth spring-based follow
-let cursorX = 0, cursorY = 0;
-
-window.addEventListener('mousemove', (e) => {
-  animate(
-    cursor,
-    { x: e.clientX, y: e.clientY },
-    { duration: 0.5, easing: "ease-out" }
-  );
-});
-```
-
-**Complexity**: 1 story point (CSS) or 3 story points (Motion One)
-**Priority**: Week 3-4 (CSS), Month 2+ (Motion One)
-
----
-
-### 7. **Scroll Progress Indicator**
+### 6. **Scroll Progress Indicator**
 Nile water metaphor - horizontal bar fills as you read.
 
 **Implementation**:
@@ -772,13 +690,11 @@ const { delay = 0, duration = 0.618, amount = 0.3 } = Astro.props;
 - [ ] `WordReveal.astro` for section headers
 - [ ] Text highlighting with `<mark>` in Markdown
 - [x] Scroll progress bar (Nile water metaphor)
-- [x] CSS-only custom cursor
 - [x] SS Logo navigation animation with AbortController pattern (UX critical)
 
 **Files Created**:
 - `src/components/animations/RevealOnScroll.astro` ✅
 - `src/components/animations/ScrollProgress.astro` ✅
-- `src/scripts/cursor.ts` ✅
 - `src/components/SSLogo.astro` ✅ (refactored with AbortController)
 
 **Next Steps**:
@@ -787,7 +703,6 @@ const { delay = 0, duration = 0.618, amount = 0.3 } = Astro.props;
 ### Month 2: Advanced (8 story points)
 - [ ] Context-aware logo morphing
 - [ ] SVG path page transitions (custom Egyptian shapes)
-- [ ] Motion One custom cursor (upgrade from CSS)
 - [ ] Blog post typography animations
 - [ ] Design custom SVG paths for transitions
 
@@ -833,7 +748,6 @@ Before shipping any animation:
 - Codrops: Preview to Full Content Page Transition
 - Codrops: Context-Aware Logo Animation on Scroll
 - Codrops: On-Scroll Text Highlight
-- Codrops: Custom Cursor Filled Circle
 
 ### Design References
 - Johannes Itten: Chromatic Circle (RYBitten color theory)

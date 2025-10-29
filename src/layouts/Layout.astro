@@ -9,7 +9,6 @@ import ScrollProgress from '../components/animations/ScrollProgress.astro';
 import { House, BriefcaseBusiness, VenetianMask, Atom, Send } from '@lucide/astro';
 import '../styles/global.css';
 import '../styles/animations.css';
-import '../styles/cursor.css';
 
 interface Props {
   title: string;
@@ -19,7 +18,7 @@ interface Props {
 
 const {
   title,
-  description = 'Principal Engineer specializing in realtime systems and functional thinking',
+  description = 'Building realtime systems that scale through functional architecture and separation of concerns',
   ogImage = '/og-image.png'
 } = Astro.props;
 
@@ -97,11 +96,6 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <!-- Scroll Progress Indicator (reading pages only, not homepage) -->
     {currentPath !== '/' && <ScrollProgress />}
 
-    <!-- Custom Cursor (Desktop only, two-element architecture) -->
-    <div class="custom-cursor-wrapper">
-      <div class="custom-cursor-circle"></div>
-    </div>
-
     <!-- Responsive Navigation: Mobile circular badge → Desktop bar -->
     <nav class="md:fixed md:mt-0 mt-8 top-2 left-2 right-2 max-w-6xl mx-auto z-50 rounded-full md:bg-surface/60 md:backdrop-blur-lg flex items-center justify-center border border-neutral-lighter">
       <div class="flex items-center justify-center md:justify-between w-full px-4">
@@ -145,10 +139,5 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <main class="md:pt-16 pb-20 md:pb-0">
       <slot />
     </main>
-
-    <!-- Custom Cursor Script -->
-    <script>
-      import '../scripts/cursor.ts';
-    </script>
   </body>
 </html>
