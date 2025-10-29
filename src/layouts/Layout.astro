@@ -58,6 +58,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <!-- Fonts -->
     <Font cssVariable="--font-sans" preload />
     <Font cssVariable="--font-serif" preload />
+    <Font cssVariable="--font-display" preload />
     <ClientRouter />
 
     <!-- Update active tab state after View Transitions -->
@@ -80,11 +81,11 @@ const ogImageURL = new URL(ogImage, Astro.site);
           const isActive = normalizedHref === currentPath;
 
           if (isActive) {
-            tab.classList.add('text-accent', 'scale-105');
+            tab.classList.add('text-text', 'scale-105');
             tab.classList.remove('text-neutral');
             tab.setAttribute('aria-current', 'page');
           } else {
-            tab.classList.remove('text-accent', 'scale-105');
+            tab.classList.remove('text-text', 'scale-105');
             tab.classList.add('text-neutral');
             tab.removeAttribute('aria-current');
           }
@@ -92,7 +93,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
       });
     </script>
   </head>
-  <body class="bg-background text-accent antialiased">
+  <body class="bg-background text-text antialiased">
     <!-- Scroll Progress Indicator (reading pages only, not homepage) -->
     {currentPath !== '/' && <ScrollProgress />}
 
