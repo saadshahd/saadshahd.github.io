@@ -1,4 +1,5 @@
 # Saad Shahd
+
 **Principal Software Engineer**
 
 📧 dev.saad.shahd@gmail.com | 🐙 github.com/saadshahd | 💼 linkedin.com/in/saadshahd | 📍 London, United Kingdom | 📞 +447428240774
@@ -7,7 +8,7 @@
 
 ## Summary
 
-Principal Software Engineer building realtime distributed systems that scale. I make architectural decisions that unlock velocity while maintaining correctness—through event-driven patterns, immutable data flows, and infrastructure designed to fail gracefully. 12+ years taking platforms from prototype to production at companies like Wise and StatsBomb, handling millions of events per second.
+Principal Software Engineer building realtime distributed systems that scale. I make architectural decisions that unlock velocity while maintaining correctness—through event-driven patterns, immutable data flows, and infrastructure designed to fail gracefully. 12+ years taking platforms from prototype to production at companies like Wise and Statsbomb, handling millions of events per second.
 
 ---
 
@@ -16,7 +17,7 @@ Principal Software Engineer building realtime distributed systems that scale. I 
 **Distributed Systems & High-Scalability Infrastructure Design**
 Architecting systems that handle millions of events while maintaining correctness guarantees and operational simplicity.
 
-**Real-Time Data Stream Processing (Kafka)**
+**Real Time Data Stream Processing (Kafka)**
 Building event-driven architectures with immutable streams, exactly-once semantics, and graceful degradation.
 
 **Microservice Architecture (DDD, CQRS, gRPC)**
@@ -30,6 +31,7 @@ Designing infrastructure that lets teams deploy confidently—through observabil
 ## Experience
 
 ### Senior Software Engineer
+
 **Wise** | London | 03/2022 - Present
 
 Building infrastructure for the world's most international account—helping 16M+ customers move money across borders.
@@ -43,7 +45,8 @@ Building infrastructure for the world's most international account—helping 16M
 ---
 
 ### Principal Software Engineer
-**StatsBomb** | Bath, UK | 03/2018 - 03/2022
+
+**Statsbomb** | Bath, UK | 03/2018 - 03/2022
 
 Led core data infrastructure for football's most trusted analytics platform—serving Premier League clubs, international federations, and media companies.
 
@@ -58,6 +61,7 @@ Led core data infrastructure for football's most trusted analytics platform—se
 ---
 
 ### Senior Software Engineer
+
 **Eventtus** | Cairo, Egypt | 03/2017 - 03/2018
 
 Built engagement platform for events—the leading event app provider across Middle East and North Africa.
@@ -67,6 +71,7 @@ Built engagement platform for events—the leading event app provider across Mid
 ---
 
 ### Senior Frontend Engineer
+
 **Instabug** | Cairo, Egypt | 11/2015 - 08/2016
 
 Core team member building tools for mobile developers to ship better apps—crash reporting, user feedback, and performance monitoring.
@@ -78,18 +83,22 @@ Core team member building tools for mobile developers to ship better apps—cras
 ## Skills
 
 ### Architecture & Systems
+
 **Expert**: Distributed Systems, Event-Driven Architecture, Microservices, DDD, CQRS
-**Proficient**: System Design, Platform Engineering, Real-Time Processing, Stream Processing
+**Proficient**: System Design, Platform Engineering, Real Time Processing, Stream Processing
 
 ### Backend & Data
+
 **Expert**: Node.js, Kafka, Redis, SQL, REST, GraphQL, gRPC
 **Proficient**: Python, Rust, Clojure, Scala, RocksDB, MongoDB, Neo4j, Druid
 
 ### DevOps & Infrastructure
+
 **Expert**: Kubernetes, Docker, AWS, Prometheus, Grafana
 **Proficient**: Helm, JenkinsX, GCP, Nginx, HAProxy
 
 ### Frontend
+
 **Expert**: TypeScript, React, HTML/CSS
 **Proficient**: Vue, Angular, Redux, xstate, RxJS, D3, Electron
 
