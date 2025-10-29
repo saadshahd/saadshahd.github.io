@@ -1,0 +1,27 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+
+const headingVariants = cva('font-semibold text-accent', {
+  variants: {
+    level: {
+      1: 'text-lg md:text-2xl',   // 24px → 40px (page titles)
+      2: 'text-lg md:text-xl',    // 24px → 32px (section headings)
+      3: 'text-base md:text-lg',  // 18px → 24px (sub-section headings)
+    },
+  },
+  defaultVariants: {
+    level: 1,
+  },
+});
+
+type Props = VariantProps<typeof headingVariants> & {
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  class?: string;
+};
+
+const { level, as: Tag = 'h2', class: className } = Astro.props;
+---
+
+<Tag class:list={[headingVariants({ level }), className]}>
+  <slot />
+</Tag>

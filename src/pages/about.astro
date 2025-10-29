@@ -1,37 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Button from '../components/Button.astro';
+import Heading from '../components/typography/Heading.astro';
+import Body from '../components/typography/Body.astro';
 import { FileText } from '@lucide/astro';
 ---
 
 <Layout title="About - Saad Shahd">
-  <div class="max-w-4xl mx-auto px-6 py-20">
-    <h1 class="text-2xl font-bold mb-12"><span>About</span></h1>
+  <div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
+    <Heading level={1} as="h1" class="mb-12"><span>About</span></Heading>
 
     <div class="prose prose-lg max-w-none">
-      <p class="text-xl text-neutral mb-8 leading-normal">
+      <Body size="lg" as="p" class="text-neutral mb-8 leading-normal">
         I build systems for a reason—I chase the 'why' without fixating on the 'how.' Over 15 years, I developed a philosophy that makes the 'how' obvious.
-      </p>
+      </Body>
 
-      <p class="text-accent-light mb-6 leading-relaxed">
+      <Body size="base" as="p" class="mb-6 leading-relaxed">
         At Wise, I solve content collaboration at scale. Currently building editorial infrastructure that enables 20 teams to work on wise.com without friction, inconsistency, or incorrectness. The challenge isn't just technical—it's solving global→local fintech at scale: regulations differ by market, offerings vary by country, and cultural nuances matter.
-      </p>
+      </Body>
 
-      <p class="text-accent-light mb-6 leading-relaxed">
+      <Body size="base" as="p" class="mb-6 leading-relaxed">
         My approach is rooted in functional programming principles I learned the hard way—through production bugs in high-velocity startup environments at Instabug, StatsBomb, and Wise. Traditional thinking says you trade velocity for technical debt. I learned that functional thinking eliminates that trade-off entirely. When you separate behavior from state and make illegal states unrepresentable, you move fast <em>and</em> stay confident.
-      </p>
+      </Body>
 
-      <p class="text-accent-light mb-6 leading-relaxed">
+      <Body size="base" as="p" class="mb-6 leading-relaxed">
         I don't predict the future—the future is ambiguous. The best we can do is embrace that ambiguity and design lean systems that adapt without breaking.
-      </p>
+      </Body>
 
-      <p class="text-accent-light mb-8 leading-relaxed">
+      <Body size="base" as="p" class="mb-8 leading-relaxed">
         I'm exploring how LLMs change what's possible in software—not as automation, but as cognitive partners for design. I work primarily in TypeScript, Python, Go, and Clojure.
-      </p>
+      </Body>
 
-      <p class="text-lg font-medium text-accent">
+      <Body size="base" as="p" class="text-lg font-medium text-accent">
         I optimize for the "why" first. The right question makes implementation obvious.
-      </p>
+      </Body>
 
       <!-- Resume CTA -->
       <div class="mt-10 mb-12">
@@ -41,8 +43,8 @@ import { FileText } from '@lucide/astro';
         </Button>
       </div>
 
-      <h2 class="text-2xl font-semibold mt-12 mb-6"><span>Technical Expertise</span></h2>
-      <ul class="space-y-2 text-accent-light">
+      <Heading level={1} as="h2" class="mt-12 mb-6"><span>Technical Expertise</span></Heading>
+      <Body size="base" as="ul" class="space-y-2">
         <li>Functional programming and separation of concerns</li>
         <li>Distributed systems correctness</li>
         <li>Real-time event processing and collection systems</li>
@@ -51,7 +53,7 @@ import { FileText } from '@lucide/astro';
         <li>Developer experience and platform thinking</li>
         <li>Architectural patterns for distributed systems</li>
         <li>LLM-augmented development patterns</li>
-      </ul>
+      </Body>
     </div>
   </div>
 </Layout>

@@ -1,0 +1,27 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+
+const bodyVariants = cva('text-accent-light', {
+  variants: {
+    size: {
+      sm: 'text-sm leading-normal',                  // 14px, 1.5 line-height
+      base: 'text-base leading-normal',              // 18px, 1.5 line-height
+      lg: 'text-lg md:text-xl leading-normal',       // 24px → 32px (reverted to original), 1.5 line-height
+    },
+  },
+  defaultVariants: {
+    size: 'base',
+  },
+});
+
+type Props = VariantProps<typeof bodyVariants> & {
+  as?: 'p' | 'span' | 'div' | 'li' | 'ul' | 'a';
+  class?: string;
+};
+
+const { size, as: Tag = 'p', class: className, ...rest } = Astro.props;
+---
+
+<Tag class:list={[bodyVariants({ size }), className]} {...rest}>
+  <slot />
+</Tag>

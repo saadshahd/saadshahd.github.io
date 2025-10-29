@@ -2,21 +2,23 @@
 import Layout from '../../layouts/Layout.astro';
 import Button from '../../components/Button.astro';
 import Badge from '../../components/Badge.astro';
+import Heading from '../../components/typography/Heading.astro';
+import Body from '../../components/typography/Body.astro';
 ---
 
 <Layout title="StatsBomb Real-Time Data Collection - Saad Shahd">
-  <div class="max-w-4xl mx-auto px-6 py-20">
+  <div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
     <!-- Hero Section -->
     <div class="mb-12">
       <Button variant="secondary" href="/portfolio" class="mb-8">
         ← Back to Portfolio
       </Button>
 
-      <h1 class="text-xl md:text-2xl font-bold mb-4"><span>StatsBomb Real-Time Data Collection System</span></h1>
-      <p class="text-xl text-neutral mb-6 leading-normal">
+      <Heading level={1} as="h1" class="mb-4"><span>StatsBomb Real-Time Data Collection System</span></Heading>
+      <Body size="lg" as="p" class="text-neutral mb-6 leading-normal">
         Designing a distributed system that separated collection rules from execution logic,
         reducing manual effort by 75% and enabling rapid sport expansion.
-      </p>
+      </Body>
 
       <div class="flex flex-wrap gap-2 mb-4">
         <Badge variant="skill">JavaScript</Badge>
@@ -25,66 +27,66 @@ import Badge from '../../components/Badge.astro';
         <Badge variant="skill">DSL Design</Badge>
       </div>
 
-      <div class="text-sm text-neutral">
+      <Body size="sm" as="div" class="text-neutral">
         Timeline: 2018-2022 • Led engineering team of 20 in Cairo
-      </div>
+      </Body>
     </div>
 
     <hr class="border-gray-200 my-12" />
 
     <!-- Problem Section -->
     <section class="mb-16">
-      <h2 class="text-xl font-semibold mb-6"><span>Problem: Manual Collection Doesn't Scale</span></h2>
+      <Heading level={2} as="h2" class="mb-6"><span>Problem: Manual Collection Doesn't Scale</span></Heading>
 
       <div class="prose prose-lg max-w-none">
-        <p class="text-accent-light mb-6 leading-relaxed">
+        <Body size="base" as="p" class="mb-6 leading-relaxed">
           StatsBomb pioneered the most detailed sports analytics data in the industry.
           Every match required trained analysts to watch video feeds and manually record 3000+ events:
           passes, shots, defensive actions, positioning data. A 90-minute soccer match took 16
           man-hours to collect completely.
-        </p>
+        </Body>
 
-        <p class="text-accent-light mb-6 leading-relaxed">
+        <Body size="base" as="p" class="mb-6 leading-relaxed">
           <strong>We knew from day one: every sport has different rules.</strong> Soccer wasn't
           American football. Even within soccer, different clients wanted different granularity—some
           needed basic event tracking, others demanded positioning data, pressure metrics, and
           defensive line heights. The existing monolithic architecture treated each variation as a
           separate application.
-        </p>
+        </Body>
 
-        <p class="text-accent-light mb-6 leading-relaxed">
+        <Body size="base" as="p" class="mb-6 leading-relaxed">
           Product managers couldn't define new collection requirements without engineering bottlenecks.
           Analysts waited weeks for tooling updates. We started with soccer, added American football,
           and the system needed to be ready for whatever came next—without rewriting tools from scratch
           each time.
-        </p>
+        </Body>
       </div>
     </section>
 
     <!-- Architecture Section -->
     <section class="mb-16">
-      <h2 class="text-xl font-semibold mb-6"><span>Architecture: Separation as First Principle</span></h2>
+      <Heading level={2} as="h2" class="mb-6"><span>Architecture: Separation as First Principle</span></Heading>
 
       <div class="prose prose-lg max-w-none">
-        <p class="text-xl text-neutral italic">TO BE WRITTEN</p>
+        <Body size="lg" as="p" class="text-neutral italic">TO BE WRITTEN</Body>
       </div>
     </section>
 
     <!-- Impact Section -->
     <section class="mb-16">
-      <h2 class="text-xl font-semibold mb-6"><span>Impact: From Bottleneck to Multiplier</span></h2>
+      <Heading level={2} as="h2" class="mb-6"><span>Impact: From Bottleneck to Multiplier</span></Heading>
 
       <div class="prose prose-lg max-w-none">
-        <p class="text-xl text-neutral italic">TO BE WRITTEN</p>
+        <Body size="lg" as="p" class="text-neutral italic">TO BE WRITTEN</Body>
       </div>
     </section>
 
     <!-- Lessons Section -->
     <section class="mb-16">
-      <h2 class="text-xl font-semibold mb-6"><span>Lessons: What Worked and What I'd Change</span></h2>
+      <Heading level={2} as="h2" class="mb-6"><span>Lessons: What Worked and What I'd Change</span></Heading>
 
       <div class="prose prose-lg max-w-none">
-        <p class="text-xl text-neutral italic">TO BE WRITTEN</p>
+        <Body size="lg" as="p" class="text-neutral italic">TO BE WRITTEN</Body>
       </div>
     </section>
 
