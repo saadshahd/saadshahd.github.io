@@ -136,7 +136,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     {showScrollProgress && <ScrollProgress />}
 
     <!-- Responsive Navigation: Mobile circular badge → Desktop bar -->
-    <nav id="desktop-nav" class="headroom md:fixed md:mt-0 mt-8 top-2 left-2 right-2 max-w-6xl mx-auto z-50 rounded-full md:bg-surface/80 md:backdrop-blur-lg flex items-center justify-center border border-neutral-lighter" data-disable-auto-hide={disableAutoHideNav}>
+    <nav id="desktop-nav" class="headroom md:fixed md:mt-0 mt-8 top-2 left-2 right-2 max-w-6xl mx-auto z-50 rounded-lg md:bg-surface/80 md:backdrop-blur-lg flex items-center justify-center border border-neutral-lighter" data-disable-auto-hide={disableAutoHideNav}>
       <div class="flex items-center justify-center md:justify-between w-full px-4">
         <a href="/" class="hover:opacity-80 transition-opacity">
           <SSLogo />
