@@ -98,6 +98,71 @@
   --radius-md: 0.5rem;     /* 8px */
   --radius-lg: 0.75rem;    /* 12px */
   --radius-full: 9999px;
+
+  /* ===== Technical Diagram System (Blueprint Authority) ===== */
+  /* Canvas & Surfaces */
+  --diagram-bg: #F5F1E8;              /* Limestone cream canvas */
+  --diagram-surface: #FEFDFB;          /* Elevated nodes */
+
+  /* Strokes & Borders */
+  --diagram-stroke: #475569;           /* Connections, borders */
+  --diagram-border-light: #CBD5E1;     /* Subtle borders */
+  --diagram-border-mid: #94A3B8;       /* Hover borders */
+
+  /* Accents */
+  --diagram-accent-gold: #F4C430;      /* Critical nodes */
+  --diagram-accent-blue: #0EA5E9;      /* Derived data */
+
+  /* Text */
+  --diagram-text: #0F172A;             /* Labels, annotations */
+  --diagram-text-muted: #64748B;       /* Secondary text */
+
+  /* Semantic Node Colors */
+  --diagram-node-default: var(--diagram-bg);
+  --diagram-node-emphasis: var(--diagram-surface);
+  --diagram-node-atomic-bg: #FEF3C7;
+  --diagram-node-atomic-border: #F59E0B;
+  --diagram-node-atomic-text: #78350F;
+  --diagram-node-derived-bg: #DBEAFE;
+  --diagram-node-derived-border: #0EA5E9;
+  --diagram-node-derived-text: #0C4A6E;
+  --diagram-node-system-bg: #D1FAE5;
+  --diagram-node-system-border: #10B981;
+  --diagram-node-system-text: #065F46;
+
+  /* Typography */
+  --diagram-font-family: var(--font-family-sans); /* Inter */
+  --diagram-font-mono: 'SF Mono', 'Consolas', 'Monaco', monospace;
+  --diagram-font-size-title: 14px;
+  --diagram-font-size-label: 12px;
+  --diagram-font-size-annotation: 11px;
+  --diagram-line-height: 1.4;
+  --diagram-letter-spacing: -0.01em;
+
+  /* Spacing */
+  --diagram-node-padding-x: 16px;
+  --diagram-node-padding-y: 12px;
+  --diagram-node-gap: 24px;
+  --diagram-cluster-padding: 16px;
+
+  /* Borders & Strokes */
+  --diagram-border-width: 1.5px;
+  --diagram-border-radius: 6px;
+  --diagram-stroke-width: 1.5px;
+  --diagram-stroke-width-emphasis: 2px;
+
+  /* Shadows */
+  --diagram-shadow-subtle: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --diagram-shadow-hover: 0 2px 8px rgba(15, 23, 42, 0.08);
+  --diagram-shadow-focus: 0 0 0 3px rgba(14, 165, 233, 0.15);
+
+  /* Transitions (Egyptian easings) */
+  --diagram-transition-base: 200ms cubic-bezier(0.65, 0, 0.35, 1); /* water */
+  --diagram-transition-slow: 400ms cubic-bezier(0.76, 0, 0.24, 1); /* monument */
+
+  /* Accessibility */
+  --diagram-focus-ring: 2px solid var(--diagram-accent-blue);
+  --diagram-focus-offset: 2px;
 }
 
 html {
@@ -108,5 +173,37 @@ html {
 @media (min-width: 768px) {
   html {
     font-size: 120%; /* Scale all rem-based sizes by 1.2x on desktop */
+  }
+}
+
+/* ===== Auto-Hide Navigation (Headroom.js) ===== */
+/* Egyptian easing: water flow (0.65, 0, 0.35, 1) */
+
+/* Desktop navigation - slides up when hidden */
+.headroom {
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.headroom--pinned {
+  transform: translateY(0);
+}
+
+.headroom--unpinned {
+  transform: translateY(-100%);
+}
+
+/* Mobile bottom bar - slides down when hidden */
+.headroom--mobile.headroom--pinned {
+  transform: translateY(0);
+}
+
+.headroom--mobile.headroom--unpinned {
+  transform: translateY(100%);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .headroom {
+    transition: none;
   }
 }

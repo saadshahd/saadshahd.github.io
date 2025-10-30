@@ -382,6 +382,32 @@ if (!prefersReducedMotion()) {
 
 Tailwind 4: Theme variables are global. Use responsive utility variants (`text-xl md:text-2xl`, `p-4 md:p-6`) in markup, not custom `@media` around tokens.
 
+### Technical Diagrams
+
+**Design System**: See `docs/plans/2025-10-30-diagram-design-system.md` for complete specifications
+**CSS Variables**: Added to `src/styles/global.css` @theme block (lines 102-165)
+
+**Quick Reference**:
+- **Palette**: Blueprint Authority (limestone cream canvas, Egyptian gold/blue accents)
+- **Node Types**: Atomic (amber), Derived (blue), System (emerald), Default (cream)
+- **Typography**: Inter 14px titles, 12px labels, 11px annotations
+- **Accessibility**: WCAG AA minimum (4.5:1 text), AAA for node backgrounds (7:1+)
+- **Implementation**: Hybrid approach - Mermaid for standard flows, custom SVG for hero diagrams
+
+**Mermaid classDef Standards** (copy-paste into diagrams):
+```mermaid
+classDef atomic fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
+classDef derived fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
+classDef system fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
+```
+
+**Accessibility Requirements**:
+- [ ] Wrap diagrams in `<figure>` with `<figcaption>` description
+- [ ] Add `<details>` with text alternative for relationships
+- [ ] Test with screen reader (VoiceOver, NVDA)
+- [ ] Verify all text meets 4.5:1 contrast minimum
+- [ ] Respect `prefers-reduced-motion` (disable animations)
+
 ---
 
 ## Done = Week 2: Shareable + animation + responsive | Month 1: Case study + bio/resume
