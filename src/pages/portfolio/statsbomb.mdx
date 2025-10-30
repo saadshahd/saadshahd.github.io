@@ -130,7 +130,7 @@ When we expanded to American football, product managers wrote drive segmentation
 <Body size="sm" as="p" class="mb-4 text-neutral">
   Domain experts don't think in code—they think in sequences. We used visual timelines to translate
   their mental models into technical architecture. This diagram shows how atomic events (Layer 0)
-  flow through time, and higher-level facts derive from event patterns.
+  flow through time, and higher-level facts derive from event patterns. Color key: <Badge variant="skill" size="xs">amber</Badge> = data layers, <Badge variant="category" size="xs">blue</Badge> = transformations, <Badge variant="status" size="xs">emerald</Badge> = final output.
 </Body>
 
 <MermaidDiagram
@@ -194,10 +194,6 @@ graph TD
 
 </MermaidDiagram>
 
-<Body size="sm" as="p" class="mb-6 text-neutral italic">
-  The functional pipeline splits into 3 paths, then recombines. Path 1: map filters events to one team. Path 2: reduce derives possession phases from team events. Path 3: reduce aggregates match statistics. The <strong>overlap</strong> function then stacks all 3 layers (events + phases + stats) onto a single timeline—like layers in Photoshop. Same temporal axis, multiple analytical dimensions visible simultaneously.
-</Body>
-
 </Accordion>
     </div>
 
@@ -214,7 +210,7 @@ GraphQL subscriptions via WebSocket enabled Google Docs-style collaboration. Mul
         <Body size="sm" as="p" class="mb-4 text-neutral">
           Concurrent collection follows a pub-sub pattern: lead collector establishes base event identity,
           specialized collectors subscribe and contribute domain-specific data. Role separation prevents conflicts—
-          each collector owns distinct data fields, no overlapping writes.
+          each collector owns distinct data fields, no overlapping writes. Color key: <Badge variant="skill" size="xs">amber</Badge> = collectors, <Badge variant="category" size="xs">blue</Badge> = subscription layer, <Badge variant="status" size="xs">emerald</Badge> = merge service.
         </Body>
 
         <MermaidDiagram
@@ -310,7 +306,7 @@ Breaking matches down by decision rather than team increased correctness while r
         <Body size="sm" as="p" class="mb-4 text-neutral">
           Events don't just flow sequentially—they form directed acyclic graphs. A foul-committed event
           might depend on a previous clearance, which itself connects to atomic pass events. The system
-          modeled both temporal relationships (PREV/NEXT) and logical dependencies (DEPENDS_ON).
+          modeled both temporal relationships (PREV/NEXT) and logical dependencies (DEPENDS_ON). Color key: <Badge variant="skill" size="xs">amber</Badge> = defense phase, <Badge variant="category" size="xs">blue</Badge> = loose phase, <Badge variant="status" size="xs">emerald</Badge> = possession phase.
         </Body>
 
         <MermaidDiagram
@@ -386,10 +382,6 @@ graph TD
 ```
 
         </MermaidDiagram>
-
-        <Body size="sm" as="p" class="mb-6 text-neutral italic">
-          Solid lines show temporal flow (PREV - what happened next). Dashed lines show phase validation rules (what transitions are legal). Only Layer 0 atomic events drive phase transitions. The state machine prevents invalid sequences—you can't pass during "loose" phase, can't recover during "possession" phase. Derived events like "carry" are computed separately from sequences of Layer 0 events.
-        </Body>
     </div>
 
     {/* Metadata Management Subsection */}
@@ -419,7 +411,7 @@ and queryable.
 
         <Body size="sm" as="p" class="mb-4 text-neutral">
           The 5-person metadata team's workflow: query for pending conflicts → review side-by-side with
-          full context → resolve once → system cascades to all dependent data.
+          full context → resolve once → system cascades to all dependent data. Color key: <Badge variant="skill" size="xs">amber</Badge> = data sources, <Badge variant="category" size="xs">blue</Badge> = claims, <Badge variant="status" size="xs">emerald</Badge> = resolution system.
         </Body>
 
         <MermaidDiagram
@@ -460,11 +452,6 @@ graph TD
 ```
 
         </MermaidDiagram>
-
-        <Body size="sm" as="p" class="mb-6 text-neutral italic">
-          Claims from data sources (amber) flow into the system. Conflicts (blue) route to a queue. The metadata
-          team (emerald) resolves ambiguity. Golden entities cascade updates to dependent systems automatically.
-        </Body>
 
 The system's design reduced duplicate entities, caught most conflicts automatically, and escalated true ambiguity. The 5-person team focused on the 1-2% of ambiguous cases requiring domain expertise (is "FC Barcelona" the same as "Barcelona FC"? yes; but "Manchester United" vs "Manchester City"? no).
     </div>

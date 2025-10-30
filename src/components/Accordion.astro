@@ -3,15 +3,20 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
 
 // CVA variant definitions
-const accordion = cva(
-  'border-b border-neutral-light'
-);
+const accordion = cva([
+  'border border-neutral-light',
+  'rounded-lg',
+  'mb-4',
+  'bg-surface',
+  'px-4',
+]);
 
 const summary = cva([
   'flex items-center justify-between gap-4',
   'py-4 cursor-pointer',
   'text-base font-medium text-text',
-  'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md',
+  'bg-neutral-lighter/0',
+  'transition-colors duration-200',
   'select-none',
 ]);
 
@@ -22,7 +27,9 @@ const chevron = cva([
 
 const content = cva([
   'accordion-content overflow-hidden',
-  'pt-2 pb-6',
+  'border-t border-neutral-light',
+  'mt-2',
+  'pt-2 pb-4',
 ]);
 
 type Props = VariantProps<typeof accordion> & {
@@ -67,6 +74,11 @@ const {
   /* Rotate chevron when expanded */
   details[open] svg {
     transform: rotate(180deg);
+  }
+
+  /* Active state: stronger border when open */
+  details[open] {
+    border-color: rgb(244 196 48 / 0.3); /* border-primary/30 */
   }
 
   /* Remove default disclosure triangle */

@@ -258,6 +258,10 @@ section p {
   line-height: 1.75;                  /* leading-relaxed */
   color: var(--color-text-lighter);   /* #475569 */
   margin-bottom: 1.5rem;              /* mb-6 */
+
+  &:last-child {
+    margin-bottom: 0
+  }
 }
 
 section p strong {
