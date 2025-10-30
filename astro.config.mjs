@@ -37,8 +37,8 @@ export default defineConfig({
         flowchart: {
           titleTopMargin: 12,        // Space above main diagram title
           subGraphTitleMargin: {     // Space around subgraph titles
-            top: 8,
-            bottom: 4
+            top: 12,
+            bottom: 6
           }
         }
       }
