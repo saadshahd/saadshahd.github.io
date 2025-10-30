@@ -218,9 +218,9 @@ html {
   ry: var(--diagram-border-radius);
 }
 
-/* Cluster/subgraph spacing - add padding between title and border */
+/* Cluster/subgraph spacing - push title down from border using transform */
 .mermaid .cluster-label {
-  padding-top: 8px;
+  transform: translateY(8px);
 }
 
 /* Node labels - use design system typography */
