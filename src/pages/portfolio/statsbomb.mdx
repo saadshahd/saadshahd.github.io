@@ -20,7 +20,7 @@ import Accordion from '../../components/Accordion.astro';
     </Button>
 
     <Heading level={1} as="h1" class="mb-4">Statsbomb Sports Data Collection</Heading>
-    <Body size="lg" as="p" class="text-neutral mb-6">Real-time sports data collection scaled from 100 to 1000+ collectors through architecture as data: domain logic as configuration, UI workflows as state machines, and claims-based metadata. What we built worked—expanding to new sports without rewriting code. The lesson came from what took longer: building distributed team ownership two years late meant racing time when external constraints intervened.</Body>
+    <Body size="lg" as="p" class="text-neutral mb-6">Real-time sports data collection achieved 10x growth through architecture-as-data: domain logic as configuration, UI workflows as state machines, and claims-based metadata. What we built worked—expanding to new sports without rewriting code. The lesson came from what took longer: building distributed team ownership two years late meant racing time when external constraints intervened.</Body>
 
     <div class="flex flex-wrap gap-2 mb-4">
       {/* System Characteristics */}
@@ -72,7 +72,7 @@ Years of daily conversations with collectors revealed their actual workflows and
 
 The dataspec itself needed to be data, not code, so product managers could express rules in one place that drove the entire system.
 
-Event storming sessions mapped the domain: match metadata, event collection, people coordination, media management, contextual aggregation. One insight stood out: arbitrary aggregation from atomic facts. Individual
+Event storming sessions mapped the domain. Five bounded contexts emerged: match metadata, event collection, people coordination, media management, contextual aggregation. One insight stood out: arbitrary aggregation from atomic facts. Individual
 passes and dribbles were atomic events. Multiple dribbles by the same player became a
 "carry"—a player-level durational fact. Team possession spanned all team durational facts
 (carry, foul-won, opponent-out) into a higher-level aggregation. Turnovers derived from possession changes.
@@ -93,7 +93,7 @@ Product managers couldn't define new collection requirements without engineering
 
 Statsbomb provided granular sports analytics to professional clubs, broadcasters, and betting operators—markets where data velocity creates competitive advantage. Teams analyzing opponent patterns hours after matches finished fell behind. Broadcasters needed same-day insights for Monday coverage. Betting markets priced faster with real-time event feeds.
 
-The 75% efficiency gain (16 hours → 4 hours) wasn't just operational—it unlocked new revenue streams. Faster collection meant Monday match analysis by Tuesday morning. Multi-sport expansion (soccer to American football) without proportional engineering cost meant entering adjacent markets with existing infrastructure. Scaling from 100 to 1000+ collectors without linear staffing growth preserved margins while growing coverage.
+The 75% efficiency gain wasn't just operational—it unlocked new revenue streams. Faster collection meant Monday match analysis by Tuesday morning. Multi-sport expansion (soccer to American football) without proportional engineering cost meant entering adjacent markets with existing infrastructure. 10x operational scale without linear staffing growth preserved margins while growing coverage.
 
 The architectural separation between rules and execution created a strategic moat: product managers could customize data specifications per client without engineering rewrites. A Premier League club wanting detailed positioning data and a Championship club needing only basic events both ran on the same system—different configurations, same codebase.
   </section>
@@ -459,14 +459,14 @@ Freeze frames (positioning data for all 22 players) were semi-automated. Collect
 
 </Accordion>
 
-This tool became the foundation. It demonstrated that architecture as data worked in practice: the dataspec drove UI validation, the DSL defined legal event sequences, the state machines enforced correctness. 16 sequential hours → 4 man-hours during the live match with near real-time (~20s latency). The backend scaled to support what the UX tool showed collectors needed.
+This tool became the foundation. The dataspec drove UI validation, the DSL defined legal event sequences, the state machines enforced correctness. Concurrent collection during live matches with sub-minute latency. The backend scaled to support what the UX tool showed collectors needed.
     </div>
 
     {/* Event Collection Subsection */}
     <div class="mb-10">
       <Heading level={3} as="h3" class="mb-4"><span>Backend Evolution: From Batch to Real-Time</span></Heading>
 
-Breaking matches down by decision rather than team increased correctness without additional effort. Computer vision assisted input, contextual keyboard mappings reduced cognitive load, and linting caught 99% of errors automatically. Collectors focused on judgment over correction—handling the 1% edge cases where human expertise mattered rather than catching preventable mistakes.
+Breaking matches down by decision rather than team increased correctness without additional effort. Computer vision assisted input, contextual keyboard mappings reduced cognitive load, and automated linting caught preventable errors. Collectors focused on judgment over correction—handling edge cases where human expertise mattered rather than catching mistakes.
 
 **Beyond Simple Sequences: Event Dependency Graphs**
 
@@ -643,15 +643,17 @@ The system prevented duplicate entities by design, caught conflicts automaticall
 
 <Accordion summary="Quantitative Results">
 
-**Real-time collection with 75% efficiency gain:** Collection shifted from 16 sequential hours post-match to 4 man-hours during the live match with near real-time (~20s latency).
+**Real-time collection:** Concurrent collection during live matches replaced post-match sequential processing.
 
 **Minimal engineering bottleneck:** When we expanded to American football, product managers wrote new dataspecs and grouping rules with minimal code changes.
 
-**99% error prevention:** Linting and contextual validation caught errors automatically.
-Collectors focused on the 1% judgment calls where human expertise mattered—event type conflicts,
+**Automated validation:** Linting and contextual validation caught errors automatically.
+Collectors focused on judgment calls where human expertise mattered—event type conflicts,
 ambiguous data points—rather than catching preventable mistakes.
 
-**Non-linear leverage:** Operations scaled from 100 to 1000+ collectors without proportional staffing increases.
+**Non-linear leverage:** Operations scaled 10x without proportional staffing increases.
+
+The system scaled horizontally. Product managers shipped features.
 
 </Accordion>
 
@@ -674,9 +676,9 @@ The architecture worked. But building it was only half the story.
 
 <Accordion summary="Year One: Finding the Core Partnership">
 
-Week one was me and Ali hand-writing sequencing rules. Early months: Adham joined and became my right hand. The foundational architecture—data as configuration, state machines, DSLs—emerged from our collaborative exploration. Adham pushed me to chase ideas I wasn't confident enough to pursue alone.
+Week one: Ali and I hand-wrote sequencing rules. Early months: Adham joined as co-architect. The foundational architecture—data as configuration, state machines, DSLs—emerged from our collaborative exploration. Adham pushed me to chase ideas I wasn't confident enough to pursue alone.
 
-Month one backend: a single Go endpoint called `sync`—batch, offline. We started building the live-collection-app together with an aircraft engineer friend who was shifting careers to software. No formal process. Just the urgent need to replace Dartfish.
+Month one backend: a single Go endpoint called `sync`—batch, offline. We started building the live-collection-app with a junior engineer transitioning from aerospace. No formal process. Just the urgent need to replace Dartfish.
 
 </Accordion>
 
@@ -755,7 +757,7 @@ Architecture shapes what's possible. But people make it real.
 
 **What Worked in This Context**
 
-Architecture emerged from observing where collectors struggled—watching hesitation, workarounds, and slowdowns. Separation of rules from execution paid off at 1000+ collectors (felt like over-engineering at 100). Designing for 80% common cases with flexible extension points prevented premature optimization.
+Architecture emerged from observing where collectors struggled—watching hesitation, workarounds, and slowdowns. Separation of rules from execution paid off at 1000+ collectors. At 100, it felt like over-engineering. Designing for 80% common cases with flexible extension points prevented premature optimization.
 
 **What I'd Change**
 
@@ -786,7 +788,7 @@ The human side of building production systems: our team in Cairo (2018-2022), wh
 
 <PhotoGallery class="mb-8" photos={statsbombPhotos} columns={3} />
 
-*Photos from 2018-2021: Team collaboration, technical discussions, and the people who took foundational concepts beyond their initial vision. (Captions to be added - photo gallery component coming soon.)*
+*Photos from 2018-2021: Team collaboration, technical discussions, and the people who took foundational concepts beyond their initial vision.*
 
   </section>
 
