@@ -132,6 +132,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     </script>
 
     <!-- Lazy load Mermaid only on pages with diagrams -->
+    <!-- Centering CSS in global.css eliminates race condition -->
     <script>
       import type { MermaidConfig } from 'mermaid';
 
@@ -180,7 +181,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
         const diagrams = document.querySelectorAll('.mermaid-wrapper [data-processed], pre.mermaid[data-processed], code.mermaid[data-processed]');
         diagrams.forEach(diagram => diagram.removeAttribute('data-processed'));
 
-        // Render diagrams
+        // Render diagrams (centering CSS from global.css applies automatically)
         await mermaidModule.default.run();
       };
 

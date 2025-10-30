@@ -216,6 +216,10 @@ pre.mermaid,
 .mermaid {
   margin: 1rem 0 !important;
   padding: 1rem 0 0 0 !important;
+  /* Centering CSS - static timing eliminates View Transitions race condition */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 /* Node rectangles - add border radius */
