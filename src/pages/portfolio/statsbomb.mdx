@@ -8,6 +8,9 @@ import Badge from '../../components/Badge.astro';
 import Heading from '../../components/typography/Heading.astro';
 import Body from '../../components/typography/Body.astro';
 import MermaidDiagram from '../../components/MermaidDiagram.astro';
+import PhotoGallery from '../../components/PhotoGallery.astro';
+import statsbombPhotos from '../../data/statsbomb-photos.json';
+import Accordion from '../../components/Accordion.astro';
 
 <div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
   {/* Hero Section */}
@@ -17,7 +20,7 @@ import MermaidDiagram from '../../components/MermaidDiagram.astro';
     </Button>
 
     <Heading level={1} as="h1" class="mb-4">Statsbomb Real-Time Data Collection</Heading>
-    <Body size="lg" as="p" class="text-neutral mb-6">Architecture as data enabled 10x scale, but building team ownership two years late meant racing geo-political constraints before completing the vision.</Body>
+    <Body size="lg" as="p" class="text-neutral mb-6">Architecture as data enabled 10x scale, but building team ownership two years late meant racing geo-political constraints before completing what the domain needed.</Body>
 
     <div class="flex flex-wrap gap-2 mb-4">
       <Badge variant="skill">XState</Badge>
@@ -76,7 +79,7 @@ We separated three concerns: **entry validation** (dataspec), **sequencing logic
 (DSL), and **aggregation rules** (grouping DSL). Product managers wrote rules in readable
 syntax. The system compiled to execution logic.
 
-**Example: Soccer Possession Rules**
+<Accordion summary="Example: Soccer Possession Rules">
 
 ```yaml
 # Topological Dependency Layers:
@@ -138,9 +141,9 @@ Derive event turnover from events sequence:
 
 ```
 
-<Body size="base" as="p" class="mb-4 leading-relaxed">
-  <strong>Example: American Football Drive Segmentation</strong>
-</Body>
+</Accordion>
+
+<Accordion summary="Example: American Football Drive Segmentation" class="mb-6">
 
 ```yaml
 # Topological Dependency Layers:
@@ -195,27 +198,29 @@ Derive event scoring-drive from events sequence:
     then touchdown team mine OR field-goal field outcome is good team mine
 ```
 
+</Accordion>
+
 When we expanded to American football, product managers wrote new dataspecs and grouping rules.
 
-**Visualizing the Data Flow**
+<Accordion summary="Visualizing the Data Flow" class="mb-6">
 
-        <Body size="sm" as="p" class="mb-4 text-neutral">
-          Domain experts don't think in code—they think in sequences. We used visual timelines to translate
-          their mental models into technical architecture. This diagram shows how atomic events (Layer 0)
-          flow through time, and higher-level facts derive from event patterns.
-        </Body>
+<Body size="sm" as="p" class="mb-4 text-neutral">
+  Domain experts don't think in code—they think in sequences. We used visual timelines to translate
+  their mental models into technical architecture. This diagram shows how atomic events (Layer 0)
+  flow through time, and higher-level facts derive from event patterns.
+</Body>
 
-        <MermaidDiagram
-          id="data-flow"
-          caption="Functional data pipeline: atomic events (Layer 0) flow through map/reduce transformations to derive team-specific facts, durational states, and compound metrics"
-          relationships={[
-            "Layer 0: Atomic event stream (pass, reception, dribble, shot, goal-keeper) with team colors",
-            "Map transformation: teamAFacts = map(getTeamFacts(teamA), layer-0) filters to black team only",
-            "Reduce transformation: teamADurationalFacts = reduce(durationalFactsReducer, teamAFacts) derives possession phases (carry, defense)",
-            "Reduce transformation: officialRecords = reduce(officialRecordsReducer, layer-0) creates match records",
-            "Overlap transformation: teamACompoundFacts = overlap(teamAFacts, teamADurationalFacts, officialRecords) combines all layers"
-          ]}
-        >
+<MermaidDiagram
+  id="data-flow"
+  caption="Functional data pipeline: atomic events (Layer 0) flow through map/reduce transformations to derive team-specific facts, durational states, and compound metrics"
+  relationships={[
+    "Layer 0: Atomic event stream (pass, reception, dribble, shot, goal-keeper) with team colors",
+    "Map transformation: teamAFacts = map(getTeamFacts(teamA), layer-0) filters to black team only",
+    "Reduce transformation: teamADurationalFacts = reduce(durationalFactsReducer, teamAFacts) derives possession phases (carry, defense)",
+    "Reduce transformation: officialRecords = reduce(officialRecordsReducer, layer-0) creates match records",
+    "Overlap transformation: teamACompoundFacts = overlap(teamAFacts, teamADurationalFacts, officialRecords) combines all layers"
+  ]}
+>
 
 ```mermaid
 graph TD
@@ -264,11 +269,13 @@ graph TD
     class L4 final
 ```
 
-        </MermaidDiagram>
+</MermaidDiagram>
 
-        <Body size="sm" as="p" class="mb-6 text-neutral italic">
-          The functional pipeline splits into 3 paths, then recombines. Path 1: map filters events to one team. Path 2: reduce derives possession phases from team events. Path 3: reduce aggregates match statistics. The <strong>overlap</strong> function then stacks all 3 layers (events + phases + stats) onto a single timeline—like layers in Photoshop. Same temporal axis, multiple analytical dimensions visible simultaneously.
-        </Body>
+<Body size="sm" as="p" class="mb-6 text-neutral italic">
+  The functional pipeline splits into 3 paths, then recombines. Path 1: map filters events to one team. Path 2: reduce derives possession phases from team events. Path 3: reduce aggregates match statistics. The <strong>overlap</strong> function then stacks all 3 layers (events + phases + stats) onto a single timeline—like layers in Photoshop. Same temporal axis, multiple analytical dimensions visible simultaneously.
+</Body>
+
+</Accordion>
     </div>
 
     {/* Live-Collection-App Subsection */}
@@ -276,75 +283,6 @@ graph TD
       <Heading level={3} as="h3" class="mb-4"><span>The Live-Collection-App: UX as First Principle</span></Heading>
 
 The first thing we built wasn't backend architecture. It was the tool collectors would use every day—an Electron desktop app that replaced Dartfish's rigid forms with keyboard-first workflows.
-
-**State Machines for Impossible States**
-
-We used XState to model collection workflows as explicit finite state machines. Traditional event handlers create implicit state explosions (`if (editing && !watching && hasBase)`). State machines make all transitions explicit and testable.
-
-```javascript
-// Main collection workflow
-{
-  id: 'main-room',
-  type: 'parallel',
-  states: {
-    videoMode: ['manual', 'loop', 'editing'],
-    collection: ['watching', 'collectingBase', 'addingPartials'],
-    freezeFrame: ['idle', 'active', 'reviewing']
-  }
-}
-```
-
-Five major state machines orchestrated the app: main room, event entry, player customization, freeze frame queue, and batch validation. This prevented illegal states by design—you couldn't enter a freeze frame without an active event, couldn't submit without required fields.
-
-**30+ Keyboard Shortcuts: Muscle Memory Over Mouse Clicks**
-
-We used Mousetrap with module scoping. Same key, different action per context:
-
-```javascript
-// Context-aware keyboard mappings
-const keyboardShortcuts = {
-  'main-room': {
-    't': 'Create new event (pass, shot, tackle)',
-    'p': 'Add player to event',
-    '/': 'Toggle video loop mode',
-    '←→': 'Rewind/forward 5 seconds'
-  },
-  'freeze-frame': {
-    't': 'Toggle team view (home/away)',
-    '1-9': 'Select player by jersey number',
-    'Enter': 'Confirm positions'
-  }
-};
-
-// Same key 't', different meaning per context
-bindShortcuts('main-room', keyboardShortcuts['main-room']);
-bindShortcuts('freeze-frame', keyboardShortcuts['freeze-frame']);
-```
-
-Collectors touch-typed events like Vim users touch-type code. Video control (arrow keys), event creation (letter keys), navigation (/, Z), editing (Shift+E), freeze frames (number keys). Hands stayed on keyboard. Eyes stayed on video.
-
-**Contextual UI Adaptation**
-
-The interface adapted based on game state and previous decisions. When a collector selected "Pass," the system showed only valid pass types for that player's position. Auto-filled mandatory fields with single valid options. Skipped irrelevant choices entirely.
-
-```javascript
-// After DSL sequence rules run and determine valid next options
-// If only one option remains valid, auto-fill and skip the question
-// Example: "Pass" event followed by rules determining only "Reception" is valid → auto-fill
-if (hasOnlyOneValidOption(currentField, validOptions)) {
-  return progressToNextField(allFields, currentField, validOptions[0]);
-}
-```
-
-Cognitive load minimization: collectors never saw irrelevant options.
-
-**Video Loop Mode**
-
-Press `/` to toggle between manual playback and auto-replay. In loop mode, the system repeated a 5-second window around the active event. No manual rewinding. Collectors filled fields while watching the replay, then pressed `/` to move forward.
-
-**Computer Vision Assistance**
-
-Freeze frames (positioning data for all 22 players) were semi-automated. Collectors triggered frame extraction, CV service detected players and ball, system overlaid predictions on pitch canvas, collectors corrected misidentifications. Hybrid approach: 80-90% automation, human correction for edge cases.
 
 **Real-Time Collaboration**
 
@@ -411,13 +349,84 @@ graph TD
 
         </MermaidDiagram>
 
-        <Body size="sm" as="p" class="mb-6 text-neutral italic">
-          The lead collector (amber) establishes event identity. GraphQL subscriptions (blue) broadcast via WebSocket.
-          Concurrent collectors (amber) contribute specialized data to distinct fields. The merge service (emerald)
-          combines contributions without conflicts—role separation ensures each collector owns unique data dimensions.
-        </Body>
+**State Machines for Impossible States**
 
-This tool became the foundation. It proved that architecture as data worked in practice: the dataspec drove UI validation, the DSL defined legal event sequences, the state machines enforced correctness. 16 sequential hours → 4 man-hours during the live match with near real-time (~20s latency). The backend scaled to support what the UX tool proved collectors needed.
+We used XState to model collection workflows as explicit finite state machines. Traditional event handlers create implicit state explosions (`if (editing && !watching && hasBase)`). State machines make all transitions explicit and testable.
+
+```javascript
+// Main collection workflow
+{
+  id: 'main-room',
+  type: 'parallel',
+  states: {
+    videoMode: ['manual', 'loop', 'editing'],
+    collection: ['watching', 'collectingBase', 'addingPartials'],
+    freezeFrame: ['idle', 'active', 'reviewing']
+  }
+}
+```
+
+Five major state machines orchestrated the app: main room, event entry, player customization, freeze frame queue, and batch validation. This prevented illegal states by design—you couldn't enter a freeze frame without an active event, couldn't submit without required fields.
+
+<Accordion summary="30+ Keyboard Shortcuts: Muscle Memory Over Mouse Clicks">
+
+We used Mousetrap with module scoping. Same key, different action per context:
+
+```javascript
+// Context-aware keyboard mappings
+const keyboardShortcuts = {
+  'main-room': {
+    't': 'Create new event (pass, shot, tackle)',
+    'p': 'Add player to event',
+    '/': 'Toggle video loop mode',
+    '←→': 'Rewind/forward 5 seconds'
+  },
+  'freeze-frame': {
+    't': 'Toggle team view (home/away)',
+    '1-9': 'Select player by jersey number',
+    'Enter': 'Confirm positions'
+  }
+};
+
+// Same key 't', different meaning per context
+bindShortcuts('main-room', keyboardShortcuts['main-room']);
+bindShortcuts('freeze-frame', keyboardShortcuts['freeze-frame']);
+```
+
+Collectors touch-typed events like Vim users touch-type code. Video control (arrow keys), event creation (letter keys), navigation (/, Z), editing (Shift+E), freeze frames (number keys). Hands stayed on keyboard. Eyes stayed on video.
+
+</Accordion>
+
+<Accordion summary="Contextual UI Adaptation">
+
+The interface adapted based on game state and previous decisions. When a collector selected "Pass," the system showed only valid pass types for that player's position. Auto-filled mandatory fields with single valid options. Skipped irrelevant choices entirely.
+
+```javascript
+// After DSL sequence rules run and determine valid next options
+// If only one option remains valid, auto-fill and skip the question
+// Example: "Pass" event followed by rules determining only "Reception" is valid → auto-fill
+if (hasOnlyOneValidOption(currentField, validOptions)) {
+  return progressToNextField(allFields, currentField, validOptions[0]);
+}
+```
+
+Cognitive load minimization: collectors never saw irrelevant options.
+
+</Accordion>
+
+<Accordion summary="Video Loop Mode">
+
+Press `/` to toggle between manual playback and auto-replay. In loop mode, the system repeated a 5-second window around the active event. No manual rewinding. Collectors filled fields while watching the replay, then pressed `/` to move forward.
+
+</Accordion>
+
+<Accordion summary="Computer Vision Assistance" class="mb-6">
+
+Freeze frames (positioning data for all 22 players) were semi-automated. Collectors triggered frame extraction, CV service detected players and ball, system overlaid predictions on pitch canvas, collectors corrected misidentifications. Hybrid approach: 80-90% automation, human correction for edge cases.
+
+</Accordion>
+
+This tool became the foundation. It demonstrated that architecture as data worked in practice: the dataspec drove UI validation, the DSL defined legal event sequences, the state machines enforced correctness. 16 sequential hours → 4 man-hours during the live match with near real-time (~20s latency). The backend scaled to support what the UX tool showed collectors needed.
     </div>
 
     {/* Event Collection Subsection */}
@@ -599,7 +608,7 @@ The system prevented duplicate entities by design, caught conflicts automaticall
         Design for the 80% common case; production iteration reveals the 20% edge cases.
       </Body>
 
-**Quantitative Results**
+<Accordion summary="Quantitative Results">
 
 **Real-time collection with 75% efficiency gain:** Collection shifted from 16 sequential hours post-match to 4 man-hours during the live match with near real-time (~20s latency).
 
@@ -611,13 +620,17 @@ ambiguous data points—rather than catching preventable mistakes.
 
 **Non-linear leverage:** Operations scaled from 100 to 1000+ collectors without proportional staffing increases.
 
-**Qualitative Changes**
+</Accordion>
+
+<Accordion summary="Qualitative Changes" class="mb-6">
 
 **Collector experience:** Keyboard flows built muscle memory. Contextual mappings reduced cognitive load. Computer vision assisted input.
 
 **Client customization:** Different granularity requirements—basic event tracking or advanced positioning data—handled through configuration.
 
 **Metadata team stayed small:** The 5-person team queried pending conflicts, reviewed side-by-side, resolved once, and the system cascaded updates.
+
+</Accordion>
   </section>
 
   {/* Team Building Section */}
@@ -626,36 +639,81 @@ ambiguous data points—rather than catching preventable mistakes.
 
 The architecture worked. But building it was only half the story.
 
-**Year One: Starting Alone**
+<Accordion summary="Year One: Finding the Core Partnership">
 
-Week one was me and Ali hand-writing rules. Month one backend: a single Go endpoint called `sync`—batch, offline. I started building the live-collection-app with an aircraft engineer friend who was shifting careers to software. No team. No process. Just the urgent need to replace Dartfish.
+Week one was me and Ali hand-writing sequencing rules. Early months: Adham joined and became my right hand. The foundational architecture—data as configuration, state machines, DSLs—emerged from our collaborative exploration. Adham pushed me to chase ideas I wasn't confident enough to pursue alone.
 
-**Years Two-Three: The Bottleneck**
+Month one backend: a single Go endpoint called `sync`—batch, offline. We started building the live-collection-app together with an aircraft engineer friend who was shifting careers to software. No formal process. Just the urgent need to replace Dartfish.
 
-It took two years before I got involved in hiring and mentoring. I was young. Doing this for the first time. Leading engineers? I didn't know how.
+</Accordion>
 
-The tension: I didn't want to compromise on the innovative ideas the domain and scale enforced us to explore. But innovation without transmission meant I became the bottleneck. Every new context, every subsystem expansion, every architectural decision required me.
+<Accordion summary="Years Two-Three: Learning to Scale Beyond Two" class="mb-6">
 
-**The Breakthrough: Team Ownership**
+Adham and I could execute together, but the domain kept expanding. We needed to go from a two-person partnership to a distributed team. That transition took longer than it should have. I was young. Doing this for the first time. Leading engineers? I didn't know how.
 
-When we finally hired engineers and built mentoring, something shifted. Adham, Hadeel, Waheed, and Abdallah didn't just implement—they took ownership and iterated beyond my original vision:
+The tension: I didn't want to compromise on the ideas the domain and scale enforced us to explore. But keeping architectural thinking between just the two of us meant we became the bottleneck. Every new subsystem, every architectural decision, required our direct involvement.
 
-- **Adham**: Built an innovative GraphQL-based web scraper. We modeled DOM operations as GraphQL queries—querying the web like an API.
-- **Hadeel**: Owned the collection service (Kafka, GraphQL, real-time subscriptions).
-- **Waheed**: Owned the metadata system (claims-based resolution, conflict detection).
-- **Abdallah**: Owned the live-collection-app (Electron, XState, UX evolution).
+It took until year three before we finally hired and built mentoring systems.
 
-They took the foundational concepts and applied them to contexts I hadn't reached yet.
+</Accordion>
 
-**The Geo-Political Constraint**
+**The Breakthrough: Distributed Ownership**
 
-In 2022, I had to leave Egypt for geo-political reasons. The timing was brutal. We'd scaled 100 → 1000+ collectors. Internal DSLs shipped. American football expansion worked. But the final vision—a customer-facing DSL letting clients define their own derived facts from atomic events—never shipped.
+When Waheed, Hadeel, and Abdallah joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with:
+
+<Accordion summary="Adham (Services Architecture Lead)">
+
+<ul class="list-disc ml-6 space-y-2">
+<li>Designed all backend services architecture</li>
+<li>Led Kafka event streaming implementation</li>
+<li>Built GraphQL-based web scraper (modeled DOM operations as GraphQL queries—querying the web like an API)</li>
+</ul>
+
+</Accordion>
+
+<Accordion summary="Waheed (Metadata System)">
+
+<ul class="list-disc ml-6 space-y-2">
+<li>Implemented claims-based entity resolution</li>
+<li>Built automatic conflict detection</li>
+<li>Owned golden entity cascade logic</li>
+</ul>
+
+</Accordion>
+
+<Accordion summary="Hadeel (Collection Service and Dataspec)">
+
+<ul class="list-disc ml-6 space-y-2">
+<li>Implemented real-time collection service</li>
+<li>Owned Kafka integration and GraphQL subscriptions</li>
+<li>Built WebSocket infrastructure for concurrent collaboration</li>
+<li>Collaborated with PMs on evolving the dataspec capabilities</li>
+</ul>
+
+</Accordion>
+
+<Accordion summary="Abdallah (Desktop Application and Dataspec)" class="mb-6">
+
+<ul class="list-disc ml-6 space-y-2">
+<li>Maintained the Electron live-collection-app</li>
+<li>Collaborated with PMs on evolving the dataspec capabilities</li>
+</ul>
+
+</Accordion>
+
+They took the foundational concepts and applied them to contexts we hadn't explored yet.
+
+<Accordion summary="The Geo-Political Constraint" class="mb-6">
+
+In 2022, I had to leave Egypt for geo-political reasons. The timing was brutal. We'd scaled 100 → 1000+ collectors. Internal DSLs shipped. American football expansion worked. But the final goal—a customer-facing DSL letting clients define their own derived facts from atomic events—never shipped.
+
+</Accordion>
 
 **The Lesson**
 
-Team building isn't separate from technical work. It's the multiplier that makes ambitious architecture sustainable. Two years building alone meant racing against time when external constraints intervened.
+Team building isn't separate from technical work. It's the multiplier that makes ambitious architecture sustainable. Waiting until year three to expand beyond the two-person partnership meant racing against time when external constraints intervened.
 
-If I could rewind: I would invest in Adham, Hadeel, Waheed, and Abdallah from day one. Not year three. The technical concepts would have propagated faster. The subsystem ownership would have emerged earlier. And maybe—maybe—we would have finished the customer-facing DSL before I left.
+If I could rewind: I would invest in Waheed, Hadeel, and Abdallah alongside Adham from year one. Not year three. The technical concepts would have propagated faster. The subsystem ownership would have emerged earlier. And maybe—maybe—we would have finished the customer-facing DSL before I left.
 
 Architecture shapes what's possible. But people make it real.
   </section>
@@ -670,11 +728,11 @@ Architecture emerged from observing where collectors struggled—watching hesita
 
 **What I'd Change**
 
-Invest in team building from day one, not year three. The two-year delay meant racing geo-political constraints before completing the customer-facing DSL. Adham, Hadeel, Waheed, and Abdallah iterated beyond my original vision—they should have started sooner.
+Invest in team building from day one, not year three. The two-year delay meant racing geo-political constraints before completing the customer-facing DSL. Adham, Waheed, Hadeel, and Abdallah iterated beyond the original design—they should have started sooner.
 
 Event storming from Day 1, not month 6. Understanding bounded contexts (match metadata, event collection, people coordination, media management, contextual aggregation) shaped every technical decision.
 
-**When These Patterns Apply**
+<Accordion summary="When These Patterns Apply" class="mb-6">
 
 These aren't universal truths—they worked because of specific conditions:
 
@@ -685,6 +743,20 @@ These aren't universal truths—they worked because of specific conditions:
 **Multi-variant requirements:** Multiple sports, client customization, regional variations. When every customer wants different behavior, configuration prevents maintaining N codebases.
 
 **The meta-lesson:** More domain knowledge → better problem diagnosis → better architectural decisions → concepts that create value instead of complexity. Context always determines what works.
+
+</Accordion>
+  </section>
+
+  {/* Behind the Scenes Section */}
+  <section class="mb-16">
+    <Heading level={2} as="h2" class="mb-6"><span>Behind the Scenes</span></Heading>
+
+The human side of building production systems: our team in Cairo (2018-2022), where "make illegal states unrepresentable" went from paper sketches to production reality.
+
+<PhotoGallery photos={statsbombPhotos} columns={3} />
+
+*Photos from 2019-2021: Team collaboration, technical discussions, and the people who took foundational concepts beyond their initial vision. (Captions to be added.)*
+
   </section>
 
   <hr class="border-neutral-light my-8" />
