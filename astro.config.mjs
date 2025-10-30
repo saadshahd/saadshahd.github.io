@@ -33,6 +33,9 @@ export default defineConfig({
           // Secondary elements
           secondaryColor: '#DBEAFE',         // Sky blue (derived nodes)
           tertiaryColor: '#FEF3C7',          // Warm amber (atomic nodes)
+        },
+        flowchart: {
+          padding: 16,  // Add padding inside subgraphs/clusters
         }
       }
     }),  // ⚠️ Must come BEFORE mdx() to process code fences first

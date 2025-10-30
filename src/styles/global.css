@@ -218,11 +218,6 @@ html {
   ry: var(--diagram-border-radius);
 }
 
-/* Cluster/subgraph spacing - push title down from border using transform */
-.mermaid .cluster-label {
-  transform: translateY(8px);
-}
-
 /* Node labels - use design system typography */
 .mermaid .nodeLabel {
   font-family: var(--diagram-font-family) !important;
