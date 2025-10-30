@@ -188,12 +188,17 @@ try {
   // Initialize PhotoSwipe on all galleries
   function initializeGalleries() {
     const galleries = document.querySelectorAll(".photo-gallery-container");
+    console.log("[PhotoGallery] Found containers:", galleries.length);
 
     galleries.forEach((container) => {
       const gallery = container.querySelector(".gallery-grid");
-      if (!gallery) return;
+      if (!gallery) {
+        console.warn("[PhotoGallery] No .gallery-grid found in container");
+        return;
+      }
 
       const galleryId = gallery.getAttribute("id") || "photo-gallery";
+      console.log("[PhotoGallery] Initializing gallery:", galleryId);
 
       const lightbox = new PhotoSwipeLightbox({
         gallery: `#${galleryId}`,
@@ -209,11 +214,17 @@ try {
       });
 
       lightbox.init();
+      console.log("[PhotoGallery] Lightbox initialized for:", galleryId);
     });
   }
 
-  // Initialize on page load
-  initializeGalleries();
+  // Initialize when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeGalleries);
+  } else {
+    // DOM already loaded
+    initializeGalleries();
+  }
 
   // Re-initialize after Astro View Transitions
   document.addEventListener("astro:after-swap", () => {
