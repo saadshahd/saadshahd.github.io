@@ -41,7 +41,7 @@ import MermaidDiagram from '../../components/MermaidDiagram.astro';
 
 Week one. Ali and I sat down with paper. We hand-wrote sequencing rules for soccer matches—which events could follow which, what validated as legal, how phases transitioned. It was painful. But necessary.
 
-The industry-standard tool—Dartfish—couldn't scale to what we needed. Rigid forms forced mouse clicks for every field. No keyboard shortcuts meant analysts couldn't build muscle memory. Two collectors per match, each following a team, manually entering 3000+ events over 16 hours. Duplicated effort. No prevention, only validation after mistakes happened.
+The industry-standard tool—Dartfish—couldn't scale to what we needed. Rigid forms forced mouse clicks for every field. No keyboard shortcuts meant collectors couldn't build muscle memory. Two collectors per match, each following a team, manually entering 3000+ events over 16 hours. Duplicated effort. No prevention, only validation after mistakes happened.
 
 Years of daily conversations with collectors revealed their actual workflows and friction points. They needed keyboard flows that built muscle memory. Contextual mappings that reduced cognitive load. Collaboration patterns that eliminated rework.
 
@@ -49,11 +49,12 @@ As Ali walked through how specs evolved—soccer v1, v2, v3—a pattern emerged.
 
 Event storming sessions mapped the domain: information, collection, operations, media,
 aggregation. One insight stood out: arbitrary aggregation from atomic facts. Individual
-passes and carries were atomic events, but multiple carries in sequence became a
-"possession"—a higher-level fact. The system needed to support any aggregation pattern,
-not just what we knew upfront.
+passes and dribbles were atomic events. Multiple dribbles by the same player became a
+"carry"—a player-level durational fact. Team possession spanned all team durational facts
+(carry, foul-won, opponent-out) into a higher-level aggregation. Turnovers derived from possession changes.
+The system needed to support any aggregation pattern, not just what we knew upfront.
 
-**Metadata was different.** Players, clubs, referees, stadiums—reference data that
+**Match Metadata was different.** Players, clubs, referees, stadiums—reference data that
 thousands of collectors needed but only 5 people managed. Crowd-sourced data meant conflicting
 information: same player, different spellings; same club, multiple sources. The system required
 automated golden entity resolution—5 people couldn't manually reconcile metadata for thousands
@@ -62,7 +63,7 @@ of collectors across hundreds of matches weekly.
 **Every sport has different rules.** Soccer wasn't American football. Different
 clients wanted different granularity—some needed basic event tracking, others demanded
 positioning data, pressure metrics, or defensive line heights. Product managers couldn't
-define new collection requirements without engineering bottlenecks. Analysts waited weeks for
+define new collection requirements without engineering bottlenecks. Collectors waited weeks for
 tooling updates. Operations needed to scale from 100 collectors to thousands without proportional
 support staff.
   </section>
@@ -88,36 +89,113 @@ It's a cool concept and v readable."
 **Example: Soccer Possession Rules**
 
 ```yaml
-Create group start from events sequence:
-  - start-pass field type is not open-play then end-pass field outcome is complete
-  - ball-recovery field state is not offensive and field outcome is complete
-  - fifty-fifty field outcome is won
-
-Create group break from events:
-  - pass field outcome is not complete and field type is open-play
-
-Ensure sequence of groups: [(start | row-chain) -> (middle | break)]
-
+# Rule 1: Successful pass completion (atomic event derivative)
+# When: Player A passes, Player B receives successfully
+# Derive: complete-pass metric with distance, angle, pressure
 Derive event complete-pass from events sequence:
-  - pass then ball-recovery field outcome complete
+  - pass team mine
+    then reception field outcome is complete team mine
+
+# Rule 2: Player carry (player-level durational from atomic events)
+# When: Same player performs multiple consecutive dribbles
+# Derive: carry (player-level durational fact)
+Derive event carry from events sequence:
+  - reception player X
+    then dribble player X +  # One or more dribbles by same player
+
+# Rule 3: Defensive recovery counter-attack (simple derived event)
+# When: Team intercepts, then successfully passes
+# Derive: counter-attack-start (high-value transition)
+Derive event counter-attack-start from events sequence:
+  - interception field outcome is won team mine
+    then pass team mine
+
+# Rule 4: Team possession (team-level aggregation of durational facts)
+# When: Team has active carry, foul-won, or ball out by opponent
+# Derive: possession (spans all team durational facts)
+Create group possession from events sequence:
+  - carry team mine +
+    ~ pass-complete team mine
+    ~ foul-committed team opponent
+    ~ out team opponent # ~ Means carries or more including team passes and play restarts
+
+# Rule 5: Tiki-taka analysis (complex sequence)
+# When: Team completes 3+ consecutive passes without loss
+# Derive: tiki-taka
+Create group tiki-taka from events sequence:
+  - complete-pass team mine +
+    ~ carry team mine # ~ Means 
+
+# Rule 6: Turnover (derived from higher-level possession changes)
+# When: Possession shifts from one team to opponent OR opponent shoots
+# Derive: turnover metric
+Derive event turnover from events sequence:
+  - possession team mine
+    then possession team opponent* # zero or more possession by the other team
+    then shot-complete team opponent
+
 ```
 
-        <Body size="base" as="p" class="mb-4 leading-relaxed">
-          <strong>Example: American Football Drive Segmentation</strong>
-        </Body>
+<Body size="base" as="p" class="mb-6 leading-relaxed">
+Each rule reads like a sports analyst explaining patterns: "When a team intercepts and then passes, that's a counter-attack." Product managers wrote these in hours, not weeks. The system compiled them to validators that ran in real-time during collection. No engineering bottleneck—the domain experts owned the logic.
+</Body>
+
+<Body size="base" as="p" class="mb-4 leading-relaxed">
+  <strong>Example: American Football Drive Segmentation</strong>
+</Body>
 
 ```yaml
-Create group drive-start from events sequence:
-  - kickoff-return field outcome is complete
-  - punt-return field outcome is complete
-  - turnover-on-downs field possession-change is true
+# Rule 1: Successful snap play (atomic event derivative)
+# When: Snap followed by successful gain (run or pass completion)
+# Derive: snap-complete metric
+Derive event snap-complete from events sequence:
+  - snap team mine
+    then run field outcome is complete team mine
 
-Derive event red-zone-efficiency from events sequence:
-  - snap field yard-line is less-than 20 then touchdown
-  - snap field yard-line is less-than 20 then field-goal field outcome is good
+# Rule 2: Offensive drive (team-level aggregation)
+# When: Team gains possession and runs offensive plays
+# Derive: offensive-drive (spans all plays until scoring/turnover)
+Create group offensive-drive from events sequence:
+  - kickoff-return field outcome is complete team mine
+    ~ punt-return field outcome is complete team mine
+    ~ turnover-recovery team mine
+    then snap team mine +
+    ~ snap-complete team mine # ~ Means snaps or more including completions
+    until touchdown team mine OR field-goal team mine OR turnover team opponent
 
-Ensure sequence of groups: [drive-start -> (play-action)+ -> (scoring-play | turnover | punt)]
+# Rule 3: Red zone conversion (simple derived event)
+# When: Team enters red zone (20-yard line) and scores touchdown
+# Derive: red-zone-conversion
+Derive event red-zone-conversion from events sequence:
+  - snap field yard-line is less-than 20 team mine
+    then touchdown team mine
+
+# Rule 4: Third-down success (derived from down resets)
+# When: Successful play on 3rd down maintains possession (first down reset)
+# Derive: third-down-success
+Derive event third-down-success from events sequence:
+  - snap field down is 3 team mine
+    then snap field down is 1 team mine # Reset to first down
+
+# Rule 5: Drive stall (complex sequence)
+# When: Team fails to convert on 4th down or punts
+# Derive: drive-stall
+Derive event drive-stall from events sequence:
+  - snap team mine +
+    then turnover-on-downs team mine OR punt team mine
+
+# Rule 6: Scoring drive (derived from higher-level drive outcome)
+# When: Offensive drive ends with touchdown or field goal
+# Derive: scoring-drive
+Derive event scoring-drive from events sequence:
+  - offensive-drive team mine
+    then touchdown team mine*  # zero or more touchdowns
+    then field-goal field outcome is good team mine
 ```
+
+<Body size="base" as="p" class="mb-6 leading-relaxed">
+American football rules are entirely different from soccer—downs, yards, drives. Yet the DSL abstraction held. Product managers familiar with the sport wrote drive segmentation rules, red-zone efficiency tracking, and third-down conversion logic without touching application code. The syntax stayed readable: "When snap at yard-line less-than 20 then touchdown, that's red-zone-conversion." Same language pattern, different sport. Versioning became iteration.
+</Body>
 
 When we expanded to American football, product managers wrote new dataspecs and grouping rules.
 Minimal engineering bottleneck. The DSL syntax stayed readable—a non-engineer could understand the
@@ -133,43 +211,107 @@ domain logic without reading code.
 
         <MermaidDiagram
           id="data-flow"
-          caption="Data flow diagram showing atomic events (pass, reception, dribble, shot, block) deriving aggregated metrics (complete-pass, shot-sequence, defensive-action)"
+          caption="Functional data pipeline: atomic events (Layer 0) flow through map/reduce transformations to derive team-specific facts, durational states, and compound metrics"
           relationships={[
-            "Pass event leads to reception event (temporal sequence)",
-            "Reception leads to dribble, dribble leads to shot, shot leads to block (event chain)",
-            "Pass and reception combine to create complete-pass metric (derived aggregation)",
-            "Dribble and shot combine to create shot-sequence metric (derived aggregation)",
-            "Block event creates defensive-action metric (derived aggregation)"
+            "Layer 0: Atomic event stream (pass, reception, dribble, shot, goal-keeper) with team colors",
+            "Map transformation: teamAFacts = map(getTeamFacts(teamA), layer-0) filters to black team only",
+            "Reduce transformation: teamADurationalFacts = reduce(durationalFactsReducer, teamAFacts) derives possession phases (carry, defense)",
+            "Reduce transformation: officialRecords = reduce(officialRecordsReducer, layer-0) creates match records",
+            "Overlap transformation: teamACompoundFacts = overlap(teamAFacts, teamADurationalFacts, officialRecords) combines all layers"
           ]}
         >
 
 ```mermaid
-graph LR
-    subgraph "Layer 0: Atomic Facts"
-        P1[pass] --> R1[reception]
-        R1 --> D1[dribble]
-        D1 --> S1[shot]
-        S1 --> B1[block]
-    end
+graph TD
+    L0["All Events
+    Both teams"]
 
-    subgraph "Derived Layer: Aggregations"
-        P1 & R1 --> CP[complete-pass]
-        D1 & S1 --> SOT[shot-sequence]
-        B1 --> DA[defensive-action]
-    end
+    MAP["map
+    Filter team"]
+    L1["Team Events
+    One team"]
 
-    classDef atomic fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
-    classDef derived fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
-    class P1,R1,D1,S1,B1 atomic
-    class CP,SOT,DA derived
+    RED1["reduce
+    Phases"]
+    L2["Possession
+    Phases"]
+
+    RED2["reduce
+    Stats"]
+    L3["Match
+    Records"]
+
+    OVL["overlap
+    3 layers"]
+    L4["Final
+    Timeline"]
+
+    L0 -->|1| MAP
+    MAP --> L1
+    L1 -->|2| RED1
+    RED1 --> L2
+
+    L0 -.->|3| RED2
+    RED2 --> L3
+
+    L2 -->|Layer 1| OVL
+    L1 -.->|Layer 2| OVL
+    L3 -.->|Layer 3| OVL
+    OVL --> L4
+
+    classDef data fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
+    classDef func fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
+    classDef final fill:#D1FAE5,stroke:#10B981,stroke-width:3px,color:#065F46
+
+    class L0,L1,L2,L3 data
+    class MAP,RED1,RED2,OVL func
+    class L4 final
 ```
 
         </MermaidDiagram>
 
         <Body size="sm" as="p" class="mb-6 text-neutral italic">
-          Atomic events (amber/gold) capture "what happened." Derived facts (blue) represent "what it means"—
-          computed through functional transformations like teamAFacts = map(getTeamFacts(teamA), layer-0).
+          The functional pipeline splits into 3 paths, then recombines. Path 1: map filters events to one team. Path 2: reduce derives possession phases from team events. Path 3: reduce aggregates match statistics. The <strong>overlap</strong> function then stacks all 3 layers (events + phases + stats) onto a single timeline—like layers in Photoshop. Same temporal axis, multiple analytical dimensions visible simultaneously.
         </Body>
+
+**The Functional Pipeline in Code**
+
+```javascript
+import { map, reduce, pipe } from 'ramda';
+
+// Pure functions - no side effects
+const getTeamFacts = (teamId) => (event) => event.teamId === teamId;
+
+const durationalFactsReducer = (acc, event) => {
+  // Derive possession phases: carry, defense, loose
+  const phase = matchPhase(event, acc.lastPhase);
+  return [...acc, { ...event, phase }];
+};
+
+const officialRecordsReducer = (acc, event) => {
+  // Aggregate match records: shots, passes, tackles
+  return updateOfficialRecords(acc, event);
+};
+
+// Compose the pipeline
+const deriveCompoundFacts = (teamId, atomicEvents) =>
+  pipe(
+    // Layer 0 → Team-specific events
+    map(getTeamFacts(teamId)),
+
+    // Team events → Durational facts
+    reduce(durationalFactsReducer, []),
+
+    // Overlap with official records
+    (teamAFacts) => overlap(
+      teamAFacts,
+      reduce(durationalFactsReducer, teamAFacts),
+      reduce(officialRecordsReducer, [], atomicEvents)
+    )
+  )(atomicEvents);
+```
+
+Every transformation is pure. Every state transition is explicit. The entire match derives from atomic facts through composition—no hidden mutations, no implicit dependencies.
     </div>
 
     {/* Live-Collection-App Subsection */}
@@ -271,53 +413,93 @@ proportional support staff.
 
         <MermaidDiagram
           id="event-dependency"
-          caption="Event dependency graph showing temporal relationships (solid lines) and logical dependencies (dashed lines) between football events"
+          caption="Phase-driven event validation: clearance triggers 'loose' phase, enabling ball-recovery or fifty-fifty. Successful recovery enables 'carry' phase with pass. State machine prevents invalid transitions."
           relationships={[
-            "Temporal flow (PREV): fifty-fifty → clearance → pass → foul-committed (sequence 1)",
-            "Logical dependency (DEPENDS_ON): fifty-fifty depends on clearance depends on pass (sequence 2)",
-            "Temporal flow (PREV): fifty-fifty → clearance → pass (sequence 3)",
-            "Solid lines represent temporal order (\"what happened next\")",
-            "Dashed lines represent logical dependencies (\"what this derives from\")"
+            "clearance (team A) triggers loose phase - neither team controls ball",
+            "Loose phase allows: ball-recovery or fifty-fifty (temporal successors)",
+            "ball-recovery (outcome: complete) triggers carry phase - team B possession",
+            "Carry phase allows: pass (type: recovery) - logical successor depends on successful recovery",
+            "fifty-fifty (outcome: won-B) also triggers carry phase - alternative path to possession",
+            "Phase state machine validates all transitions - prevents illegal sequences"
           ]}
         >
 
 ```mermaid
 graph TD
-    FF1[fifty-fifty] -->|PREV| CL1[clearance]
-    CL1 -->|PREV| P1[pass]
-    P1 -->|PREV| FC[foul-committed]
+    subgraph "Defense Phase"
+        CL["clearance
+        team: A
+        bodyPart: head"]
+    end
 
-    FF2[fifty-fifty] -.->|DEPENDS_ON| CL2[clearance]
-    CL2 -.->|DEPENDS_ON| P2[pass]
-    P2 -.->|DEPENDS_ON| FC
+    subgraph "Loose Phase (No Control)"
+        BR["ball-recovery
+        team: B
+        outcome: complete"]
+        FF["fifty-fifty
+        team: A vs B
+        outcome: won-B"]
+    end
 
-    FF3[fifty-fifty] -->|PREV| CL3[clearance]
-    CL3 -->|PREV| P3[pass]
+    subgraph "Carry Phase (Possession)"
+        PASS["pass
+        team: B
+        type: recovery"]
+    end
 
-    classDef atomic fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
-    class FF1,CL1,P1,FC,FF2,CL2,P2,FF3,CL3,P3 atomic
+    CL -->|PREV
+    triggers loose| BR
+    CL -->|PREV
+    triggers loose| FF
+    BR -->|DEPENDS_ON
+    recovery success| PASS
+    FF -->|DEPENDS_ON
+    won possession| PASS
 
-    linkStyle 0,1,2,4,5,6,7 stroke:#475569,stroke-width:2px
-    linkStyle 3 stroke:#0EA5E9,stroke-width:2px,stroke-dasharray:6 4
+    CL -.->|phase rule:
+    loose allows| BR
+    CL -.->|phase rule:
+    loose allows| FF
+    BR -.->|phase rule:
+    carry allows| PASS
+    FF -.->|phase rule:
+    carry allows| PASS
+
+    classDef defense fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
+    classDef loose fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
+    classDef carry fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
+
+    class CL defense
+    class BR,FF loose
+    class PASS carry
 ```
 
         </MermaidDiagram>
 
         <Body size="sm" as="p" class="mb-6 text-neutral italic">
-          Solid lines show temporal flow (what happened next). Dashed lines show logical dependencies
-          (what this event derives from). This graph structure let us model complex game situations
-          beyond simple timelines.
+          Solid lines show temporal flow (PREV - what happened next). Dashed lines show phase validation rules (what transitions are legal). The state machine prevents invalid sequences—you can't pass during "loose" phase, can't recover during "carry" phase. Architecture makes illegal states unrepresentable.
         </Body>
     </div>
 
     {/* Metadata Management Subsection */}
     <div class="mb-10">
-      <Heading level={3} as="h3" class="mb-4"><span>Metadata Management: Automated Entity Resolution</span></Heading>
+      <Heading level={3} as="h3" class="mb-4"><span>Match Metadata: Temporal Stages with Automated Entity Resolution</span></Heading>
 
-The metadata challenge required different architectural thinking. With thousands of collectors
-crowd-sourcing player, club, and referee data across multiple sources, a 5-person team couldn't
-manually reconcile conflicts—same entity, different spellings; different sources, conflicting
-information. The system needed to resolve golden entities automatically.
+The metadata challenge required different architectural thinking. Match metadata had **temporal stages** that preceded live collection:
+
+**Stage 1: Competition Schedules (Days/Weeks Before Kickoff)**
+
+We organized competition schedules daily and observed the web for updates—fixtures announced, kickoff times changed, venues moved. Web scrapers monitored official sources. Any schedule changes propagated automatically.
+
+**Stage 2: Matchday Lineups (Hours Before Kickoff)**
+
+Ahead of kickoff, we scraped matchday lineups and match details—starting XI, formations, referees, stadium conditions. This is where most new entities entered the system.
+
+**Stage 3: Automatic Entity Streaming**
+
+Whenever scrapers or collectors encountered a new entity—player spelling variant, unknown referee, club name mismatch—the system automatically streamed it to the **info resolution team** (5 people managing metadata for thousands of collectors). No manual data entry. No waiting for batch imports.
+
+With thousands of collectors crowd-sourcing data across multiple sources, conflicts were inevitable: same player, different spellings; same club, multiple sources. The system needed to resolve golden entities automatically—5 people couldn't manually reconcile every conflict.
 
 Rather than key-value pairs, metadata became **claims from actors** with provenance
 (who), confidence (reliability), and temporality (when). Each claim carried its source context.

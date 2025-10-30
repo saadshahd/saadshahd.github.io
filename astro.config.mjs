@@ -35,6 +35,7 @@ export default defineConfig({
           tertiaryColor: '#FEF3C7',          // Warm amber (atomic nodes)
         },
         flowchart: {
+          htmlLabels: true,          // Enable HTML in node labels (for <br/> line breaks)
           titleTopMargin: 12,        // Space above main diagram title
           subGraphTitleMargin: {     // Space around subgraph titles
             top: 12,
