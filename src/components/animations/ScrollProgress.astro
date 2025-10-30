@@ -21,19 +21,9 @@
   import { scroll, animate } from "motion";
   import { prefersReducedMotion } from "../../utils/animations";
 
-  function initScrollProgress() {
+  document.addEventListener('astro:page-load', () => {
     const progressBar = document.querySelector('.scroll-progress');
-
-    if (!progressBar || !(progressBar instanceof HTMLElement)) {
-      console.warn('ScrollProgress: Progress bar element not found');
-      return;
-    }
-
-    // Skip if already initialized
-    if (progressBar.dataset.scrollInit === 'true') {
-      return;
-    }
-    progressBar.dataset.scrollInit = 'true';
+    if (!progressBar || !(progressBar instanceof HTMLElement)) return;
 
     // If user prefers reduced motion, show full bar instantly
     if (prefersReducedMotion()) {
@@ -42,34 +32,10 @@
     }
 
     // Animate scaleX based on scroll position
-    try {
-      scroll(
-        animate(progressBar, { scaleX: [0, 1] }),
-        {
-          target: document.documentElement,
-          offset: ['start start', 'end end']
-        }
-      );
-    } catch (error) {
-      console.error('ScrollProgress: Failed to initialize scroll animation', error);
-    }
-  }
-
-  // Run on initial load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initScrollProgress);
-  } else {
-    initScrollProgress();
-  }
-
-  // Re-run after Astro View Transitions
-  document.addEventListener('astro:page-load', () => {
-    // Reset initialization flag to allow reinit
-    const progressBar = document.querySelector('.scroll-progress');
-    if (progressBar instanceof HTMLElement) {
-      delete progressBar.dataset.scrollInit;
-    }
-    initScrollProgress();
+    scroll(
+      animate(progressBar, { scaleX: [0, 1] }),
+      { target: document.documentElement, offset: ['start start', 'end end'] }
+    );
   });
 </script>
 

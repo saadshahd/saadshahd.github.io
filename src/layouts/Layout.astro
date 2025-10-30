@@ -14,12 +14,16 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  showScrollProgress?: boolean;
+  disableAutoHideNav?: boolean;
 }
 
 const {
   title,
   description = 'Building realtime systems that scale through functional architecture and separation of concerns',
-  ogImage = '/og-image.png'
+  ogImage = '/og-image.png',
+  showScrollProgress = false,
+  disableAutoHideNav = false
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -92,13 +96,47 @@ const ogImageURL = new URL(ogImage, Astro.site);
         });
       });
     </script>
+
+    <!-- Auto-hide desktop navigation on scroll -->
+    <script>
+      import Headroom from 'headroom.js';
+
+      let headroomInstance: Headroom | null = null;
+
+      document.addEventListener('astro:page-load', () => {
+        const nav = document.getElementById('desktop-nav');
+        if (!nav) return;
+
+        // Check if page opted out of auto-hide behavior
+        const disableAutoHide = nav.dataset.disableAutoHide === 'true';
+
+        // Destroy previous instance to prevent memory leaks
+        if (headroomInstance) {
+          headroomInstance.destroy();
+          headroomInstance = null;
+        }
+
+        // Skip initialization if page disabled auto-hide
+        if (disableAutoHide) return;
+
+        // Initialize headroom with threshold and tolerance settings
+        headroomInstance = new Headroom(nav, {
+          offset: 50,         // Hide after scrolling down 50px
+          tolerance: {
+            up: 10,           // Show after scrolling up 10px
+            down: 10          // Hide after scrolling down 10px past offset
+          }
+        });
+        headroomInstance.init();
+      });
+    </script>
   </head>
   <body class="bg-background text-text antialiased">
-    <!-- Scroll Progress Indicator (reading pages only, not homepage) -->
-    {currentPath !== '/' && <ScrollProgress />}
+    <!-- Scroll Progress Indicator (long-form content pages only) -->
+    {showScrollProgress && <ScrollProgress />}
 
     <!-- Responsive Navigation: Mobile circular badge → Desktop bar -->
-    <nav class="md:fixed md:mt-0 mt-8 top-2 left-2 right-2 max-w-6xl mx-auto z-50 rounded-full md:bg-surface/60 md:backdrop-blur-lg flex items-center justify-center border border-neutral-lighter">
+    <nav id="desktop-nav" class="headroom md:fixed md:mt-0 mt-8 top-2 left-2 right-2 max-w-6xl mx-auto z-50 rounded-full md:bg-surface/80 md:backdrop-blur-lg flex items-center justify-center border border-neutral-lighter" data-disable-auto-hide={disableAutoHideNav}>
       <div class="flex items-center justify-center md:justify-between w-full px-4">
         <a href="/" class="hover:opacity-80 transition-opacity">
           <SSLogo />
@@ -115,7 +153,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     </nav>
 
     <!-- Mobile Bottom Tab Bar -->
-    <BottomTabBar>
+    <BottomTabBar disableAutoHide={disableAutoHideNav}>
       <TabItem href="/" active={currentPath === '/'} label="Home">
         <House size={24} />
       </TabItem>

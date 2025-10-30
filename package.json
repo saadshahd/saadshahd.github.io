@@ -6,6 +6,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.16",
     "@types/bun": "latest",
+    "@types/headroom": "^0.12.4",
     "astro": "^5.15.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -24,8 +25,11 @@
   },
   "type": "module",
   "dependencies": {
+    "@astrojs/mdx": "^4.3.9",
     "@lucide/astro": "^0.548.0",
     "@northstarthemes/astrobook": "^0.11.1",
+    "astro-mermaid": "^1.1.0",
+    "headroom.js": "^0.12.0",
     "motion": "^12.23.24",
     "shiki": "^3.13.0"
   }

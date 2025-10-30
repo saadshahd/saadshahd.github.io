@@ -1,16 +1,57 @@
 ---
 // BottomTabBar - Composable mobile navigation container
 // Purely structural, accepts TabItem children for flexibility
+
+interface Props {
+  disableAutoHide?: boolean;
+}
+
+const { disableAutoHide = false } = Astro.props;
 ---
 
 <nav
-  class="fixed bottom-0 left-0 right-0 z-50 md:hidden
+  id="mobile-nav"
+  class="headroom headroom--mobile fixed bottom-0 left-0 right-0 z-50 md:hidden
          bg-surface/95 backdrop-blur-md border-t border-neutral-lighter
          h-16 pb-safe"
   role="navigation"
   aria-label="Mobile navigation"
+  data-disable-auto-hide={disableAutoHide}
 >
   <div class="flex items-center justify-around h-full px-4">
     <slot />
   </div>
 </nav>
+
+<script>
+  import Headroom from 'headroom.js';
+
+  let headroomInstance: Headroom | null = null;
+
+  document.addEventListener('astro:page-load', () => {
+    const nav = document.getElementById('mobile-nav');
+    if (!nav) return;
+
+    // Check if page opted out of auto-hide behavior
+    const disableAutoHide = nav.dataset.disableAutoHide === 'true';
+
+    // Destroy previous instance to prevent memory leaks
+    if (headroomInstance) {
+      headroomInstance.destroy();
+      headroomInstance = null;
+    }
+
+    // Skip initialization if page disabled auto-hide
+    if (disableAutoHide) return;
+
+    // Initialize headroom with same settings as desktop
+    headroomInstance = new Headroom(nav, {
+      offset: 50,         // Hide after scrolling down 50px
+      tolerance: {
+        up: 10,           // Show after scrolling up 10px
+        down: 10          // Hide after scrolling down 10px past offset
+      }
+    });
+    headroomInstance.init();
+  });
+</script>
