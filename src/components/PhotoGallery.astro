@@ -206,12 +206,6 @@ try {
 
         // Accessibility
         closeOnVerticalDrag: true,
-
-        // Caption parser - extract from data attribute
-        captionContent: (slide: { data: { element?: HTMLElement } }) => {
-          const caption = slide.data.element?.dataset.pswpCaption;
-          return caption || "";
-        },
       });
 
       lightbox.init();
