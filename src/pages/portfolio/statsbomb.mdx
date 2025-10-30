@@ -52,7 +52,7 @@ import Accordion from '../../components/Accordion.astro';
       <strong>Key Results:</strong> 99% error prevention, near real-time latency (~20s), 10x collector scale without proportional staffing.
     </Body>
 
-    <Body size="base" as="p" class="mb-0">
+    <Body size="base" as="div" class="mb-0">
       <strong>Core Lesson:</strong> Team building multiplies architectural leverage—waiting until year three to expand beyond two-person partnership meant racing external constraints before completing customer-facing features.
     </Body>
   </section>
@@ -62,6 +62,8 @@ import Accordion from '../../components/Accordion.astro';
     <Heading level={2} as="h2" class="mb-6">Problem: How Do You Scale Without Choosing Between Speed and Correctness?</Heading>
 
 Week one. Ali and I sat down with paper. We hand-wrote sequencing rules for soccer matches—which events could follow which, what validated as legal, how phases transitioned. It was painful. But necessary.
+
+**The business stakes:** Statsbomb's revenue model depended on data velocity and granularity—every hour saved in collection = more matches analyzed = higher data quality premium for professional clubs and broadcasters. Collector efficiency wasn't just operational; it was the constraint on market expansion.
 
 The industry-standard tool—Dartfish—couldn't scale to what we needed. Button-heavy interface forced mouse clicks for every selection. It had keyboard shortcuts, but they weren't contextual. Each key could only map to one event type—globally, across the entire data spec. No overlap possible. With 50+ event types but only 40 usable keys, we hit a ceiling. Collectors memorized which arbitrary key triggered which event, at all times, regardless of game context. Cognitive overload.
 
@@ -102,6 +104,14 @@ The architectural separation between rules and execution created a strategic moa
     <Heading level={2} as="h2" class="mb-6">Architecture: Separation as First Principle</Heading>
 
 Architecture emerges when you chase why/where users struggle, not what features they request.
+
+**We built three systems in parallel, not sequentially:**
+
+1. **Domain Logic as Configuration** → Rules without code deploys
+2. **Live-Collection-App** → UX that makes errors impossible
+3. **Backend Evolution** → Event graphs + claims-based metadata
+
+**Why this order matters:** Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.
 
     {/* DSL Subsection */}
     <div class="mb-4">
@@ -464,9 +474,11 @@ The system's design reduced duplicate entities, caught most conflicts automatica
   <section class="mb-16">
     <Heading level={2} as="h2" class="mb-6"><span>Impact: What Changed When Architecture Met Distributed Ownership?</span></Heading>
 
-      <Body size="base" as="p" class="mb-8 leading-relaxed italic">
-        Design for the 80% common case; production iteration reveals the 20% edge cases.
-      </Body>
+    <Heading level={3} as="h3" class="mb-4">The 80/20 Lesson</Heading>
+
+    <Body size="base" as="p" class="mb-8">
+      Design for the 80% common case; production iteration reveals the 20% edge cases. This principle drove every architectural decision—from DSL syntax to state machine transitions to metadata resolution logic.
+    </Body>
 
 <Accordion summary="Quantitative Results">
 
@@ -499,7 +511,9 @@ The system scaled horizontally as load increased. Product managers could ship ne
   <section class="mb-16">
     <Heading level={2} as="h2" class="mb-6"><span>The Team Building Challenge: Learning to Lead</span></Heading>
 
-The architecture worked. But building it was only half the story.
+The technical architecture above—DSLs, state machines, claims-based metadata—took three years to evolve. **But technical patterns without team transmission = bottleneck.**
+
+The harder lesson wasn't about architecture. It was about building a team that could iterate beyond my initial vision.
 
 <Accordion summary="Year One: Finding the Core Partnership">
 
