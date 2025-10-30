@@ -211,10 +211,11 @@ html {
 /* ===== Mermaid Diagram Styling ===== */
 /* Apply Blueprint Authority design system to Mermaid's generated SVG elements */
 
-/* Mermaid container spacing */
+/* Mermaid container spacing - higher specificity to override defaults */
+pre.mermaid,
 .mermaid {
-  margin: 1rem 0;
-  padding: 1rem 0 0 0;
+  margin: 1rem 0 !important;
+  padding: 1rem 0 0 0 !important;
 }
 
 /* Node rectangles - add border radius */
