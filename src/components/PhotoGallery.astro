@@ -54,8 +54,9 @@ let photos;
 try {
   photos = validatePhotos(rawPhotos);
 } catch (error) {
+  const message = error instanceof Error ? error.message : String(error);
   throw new Error(
-    `PhotoGallery: Invalid photo data\n${error.message}\n` +
+    `PhotoGallery: Invalid photo data\n${message}\n` +
       `Check your JSON file for schema violations (src, alt, caption, width, height)`,
   );
 }
