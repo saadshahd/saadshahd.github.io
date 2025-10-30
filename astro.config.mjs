@@ -35,7 +35,11 @@ export default defineConfig({
           tertiaryColor: '#FEF3C7',          // Warm amber (atomic nodes)
         },
         flowchart: {
-          padding: 16,  // Add padding inside subgraphs/clusters
+          titleTopMargin: 12,        // Space above main diagram title
+          subGraphTitleMargin: {     // Space around subgraph titles
+            top: 8,
+            bottom: 4
+          }
         }
       }
     }),  // ⚠️ Must come BEFORE mdx() to process code fences first
