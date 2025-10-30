@@ -159,7 +159,7 @@ Ensure sequence of groups: [drive-start -> (play-action)+ -> (scoring-play | tur
           flow through time, and higher-level facts derive from event patterns.
         </Body>
 
-        <figure role="img" aria-labelledby="diagram-data-flow" class="my-8 bg-surface border border-neutral-light rounded-lg p-6">
+        <figure role="img" aria-labelledby="diagram-data-flow" class="my-8 bg-surface border border-neutral-light rounded-lg px-6 pb-6">
           <figcaption id="diagram-data-flow" class="sr-only">
             Data flow diagram showing atomic events (pass, reception, dribble, shot, block) deriving aggregated metrics (complete-pass, shot-sequence, defensive-action)
           </figcaption>
@@ -186,8 +186,8 @@ graph LR
 ```
 
           <details class="mt-4">
-            <summary class="cursor-pointer text-sm text-neutral-light hover:text-accent">Text description of relationships</summary>
-            <ul class="mt-2 ml-4 text-sm text-neutral space-y-1">
+            <summary class="cursor-pointer text-xs font-normal text-text-lighter hover:text-accent">Text description of relationships</summary>
+            <ul class="mt-2 ml-4 text-xs font-light text-text-lighter space-y-1">
               <li>Pass event leads to reception event (temporal sequence)</li>
               <li>Reception leads to dribble, dribble leads to shot, shot leads to block (event chain)</li>
               <li>Pass and reception combine to create complete-pass metric (derived aggregation)</li>
@@ -247,7 +247,7 @@ graph LR
           modeled both temporal relationships (PREV/NEXT) and logical dependencies (DEPENDS_ON).
         </Body>
 
-        <figure role="img" aria-labelledby="diagram-event-dependency" class="my-8 bg-surface border border-neutral-light rounded-lg p-6">
+        <figure role="img" aria-labelledby="diagram-event-dependency" class="my-8 bg-surface border border-neutral-light rounded-lg px-6 pb-6">
           <figcaption id="diagram-event-dependency" class="sr-only">
             Event dependency graph showing temporal relationships (solid lines) and logical dependencies (dashed lines) between football events
           </figcaption>
@@ -273,8 +273,8 @@ graph TD
 ```
 
           <details class="mt-4">
-            <summary class="cursor-pointer text-sm text-neutral-light hover:text-accent">Text description of relationships</summary>
-            <ul class="mt-2 ml-4 text-sm text-neutral space-y-1">
+            <summary class="cursor-pointer text-xs font-normal text-text-lighter hover:text-accent">Text description of relationships</summary>
+            <ul class="mt-2 ml-4 text-xs font-light text-text-lighter space-y-1">
               <li><strong>Temporal flow (PREV):</strong> fifty-fifty → clearance → pass → foul-committed (sequence 1)</li>
               <li><strong>Logical dependency (DEPENDS_ON):</strong> fifty-fifty depends on clearance depends on pass (sequence 2)</li>
               <li><strong>Temporal flow (PREV):</strong> fifty-fifty → clearance → pass (sequence 3)</li>
@@ -316,7 +316,7 @@ graph TD
           full context → resolve once → system cascades to all dependent data.
         </Body>
 
-        <figure role="img" aria-labelledby="diagram-metadata-claims" class="my-8 bg-surface border border-neutral-light rounded-lg p-6">
+        <figure role="img" aria-labelledby="diagram-metadata-claims" class="my-8 bg-surface border border-neutral-light rounded-lg px-6 pb-6">
           <figcaption id="diagram-metadata-claims" class="sr-only">
             Metadata claims flow showing data sources (collectors, scrapers, APIs) submitting claims that resolve into golden entities with automatic conflict resolution
           </figcaption>
@@ -346,8 +346,8 @@ graph TD
 ```
 
           <details class="mt-4">
-            <summary class="cursor-pointer text-sm text-neutral-light hover:text-accent">Text description of relationships</summary>
-            <ul class="mt-2 ml-4 text-sm text-neutral space-y-1">
+            <summary class="cursor-pointer text-xs font-normal text-text-lighter hover:text-accent">Text description of relationships</summary>
+            <ul class="mt-2 ml-4 text-xs font-light text-text-lighter space-y-1">
               <li><strong>Data sources (amber):</strong> Collector A, Scraped Source, and Third-party API submit nationality claims</li>
               <li><strong>Claims (blue):</strong> "Nationality: Egypt" and "Nationality: UK" represent conflicting data</li>
               <li><strong>Conflict resolution:</strong> Conflicting claim (Nationality: UK) routes to Pending Conflicts Queue</li>
