@@ -130,26 +130,6 @@ const ogImageURL = new URL(ogImage, Astro.site);
         headroomInstance.init();
       });
     </script>
-
-    <!-- Re-initialize Mermaid diagrams after View Transitions -->
-    <script>
-      import mermaid from 'mermaid';
-
-      function initMermaid() {
-        // Remove data-processed attributes from any previously rendered diagrams
-        // (prevents Mermaid from skipping them on re-initialization)
-        const processedDiagrams = document.querySelectorAll('.mermaid[data-processed="true"]');
-        processedDiagrams.forEach((diagram) => {
-          diagram.removeAttribute('data-processed');
-        });
-
-        // Re-initialize Mermaid to process all unprocessed diagrams
-        mermaid.contentLoaded();
-      }
-
-      // Run on initial page load and after every View Transition
-      document.addEventListener('astro:page-load', initMermaid);
-    </script>
   </head>
   <body class="bg-background text-text antialiased">
     <!-- Scroll Progress Indicator (long-form content pages only) -->
