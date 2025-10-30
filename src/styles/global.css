@@ -207,3 +207,25 @@ html {
     transition: none;
   }
 }
+
+/* ===== Mermaid Diagram Styling ===== */
+/* Apply Blueprint Authority design system to Mermaid's generated SVG elements */
+
+/* Node rectangles - add border radius */
+.mermaid .node rect,
+.mermaid .cluster rect {
+  rx: var(--diagram-border-radius);
+  ry: var(--diagram-border-radius);
+}
+
+/* Node labels - use design system typography */
+.mermaid .nodeLabel {
+  font-family: var(--diagram-font-family) !important;
+  font-size: var(--diagram-font-size-title) !important;
+}
+
+/* Edge labels - smaller text */
+.mermaid .edgeLabel {
+  font-family: var(--diagram-font-family) !important;
+  font-size: var(--diagram-font-size-annotation) !important;
+}
