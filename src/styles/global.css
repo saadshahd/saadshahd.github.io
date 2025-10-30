@@ -236,3 +236,34 @@ pre.mermaid,
   font-family: var(--diagram-font-family) !important;
   font-size: var(--diagram-font-size-annotation) !important;
 }
+
+/* Reset paragraph styles inside Mermaid diagrams */
+/* Prevents section p { font-size: 1rem } from overriding diagram font sizes */
+.mermaid p {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+/* ===== MDX Native Paragraph Styling ===== */
+/* Style bare <p> tags from markdown (not inside components) */
+section p {
+  font-size: 1rem;                    /* text-base */
+  line-height: 1.75;                  /* leading-relaxed */
+  color: var(--color-text-lighter);   /* #475569 */
+  margin-bottom: 1.5rem;              /* mb-6 */
+}
+
+section p strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Code blocks in sections */
+section pre {
+  padding: 1rem 1.5rem;               /* 16px 24px */
+  border-radius: 0.5rem;              /* 8px */
+  margin-bottom: 1.5rem;              /* mb-6 */
+}
