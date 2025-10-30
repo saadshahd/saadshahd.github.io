@@ -18,10 +18,11 @@ import Body from '../components/typography/Body.astro';
         <div class="p-8">
           <Heading level={3} as="h2" class="mb-4">Statsbomb Collection</Heading>
           <Body size="base" as="p" class="text-neutral mb-6 leading-relaxed">
-            How do you collect 90-minute matches without choosing between velocity and correctness?
-            We reduced collection from 16 man-hours to 4 concurrent collectors by building a DSL that let PMs define sports rules without engineering involvement.
-            The architecture separated collection rules from execution logic—new sports became configuration, not code.
-            Lesson learned: architectural separation eliminates trade-offs that feel inevitable.
+            How do you scale real-time sports data collection without sacrificing correctness?
+            Started with an Electron app (XState state machines, 30+ contextual keyboard shortcuts) that reduced 16 sequential hours to 4 concurrent collectors.
+            Then built backend DSLs so product managers could define sports rules as configuration—new sports became data, not code.
+            But architecture alone isn't enough: learning to build team ownership took until year three, and geo-political constraints meant the final piece—customer-facing DSLs—never shipped.
+            Lessons: Architectural separation eliminates false trade-offs. Team building shapes what's sustainable. Context determines what works.
           </Body>
           <div class="flex flex-wrap gap-2 mb-4">
             <Badge variant="skill">JavaScript</Badge>
