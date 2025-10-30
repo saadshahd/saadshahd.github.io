@@ -26,16 +26,15 @@ import Accordion from '../../components/Accordion.astro';
       {/* System Characteristics */}
       <Badge variant="category">Real-Time Data Collection</Badge>
       <Badge variant="category">Collaborative Workflows</Badge>
-      <Badge variant="category">Contextual UI Adaptation</Badge>
-
+      
       {/* Key Technologies */}
-      <Badge variant="skill">XState</Badge>
-      <Badge variant="skill">Kafka</Badge>
+      <Badge variant="status">XState</Badge>
+      <Badge variant="status">Kafka</Badge>
       <Badge variant="skill">ANTLR</Badge>
     </div>
 
     <Body size="sm" as="div" class="text-neutral">
-      Timeline: 2018-2022 • Principal engineer championing initiatives, Cairo team of 20
+      Timeline: 2018-2022 • Founding engineer leading data collection system, Cairo team of 20
     </Body>
   </div>
 
@@ -60,7 +59,7 @@ import Accordion from '../../components/Accordion.astro';
 
   {/* Problem Section */}
   <section class="mb-8">
-    <Heading level={2} as="h2" class="mb-6">Problem: Manual Collection Doesn't Scale</Heading>
+    <Heading level={2} as="h2" class="mb-6">Problem: How Do You Scale Without Choosing Between Speed and Correctness?</Heading>
 
 Week one. Ali and I sat down with paper. We hand-wrote sequencing rules for soccer matches—which events could follow which, what validated as legal, how phases transitioned. It was painful. But necessary.
 
@@ -112,128 +111,9 @@ We separated three concerns: **entry validation** (dataspec), **sequencing logic
 (DSL), and **aggregation rules** (grouping DSL). Product managers wrote rules in readable
 syntax. The system compiled to execution logic.
 
-<Accordion summary="Example: Soccer Possession Rules">
+The DSL let product managers define domain logic as sequences and dependencies. For soccer, they could express that possession meant a team had active carry (player dribbling), received fouls, or forced the ball out—spans of time aggregated from atomic events. Individual passes became complete-pass metrics. Multiple dribbles by the same player became a carry. Turnovers derived from possession changes. The rules formed dependency layers: atomic events (passes, shots), player-level facts (carries), team-level aggregations (possession), and higher-level derivatives (turnovers).
 
-```yaml
-# Topological Dependency Layers:
-# Layer 1: complete-pass, shot-complete, carry, counter-attack-start (atomic derivatives)
-# Layer 2: possession, tiki-taka (depend on carry)
-# Layer 3: turnover (depends on shot-complete, possession)
-
-# Rule 1: Successful pass completion (atomic event derivative - Layer 1)
-# When: Player A passes, Player B receives successfully
-# Derive: complete-pass metric with distance, angle, pressure
-Derive event complete-pass from events sequence:
-  - pass team mine
-    then reception field outcome is complete team mine
-
-# Rule 2: Shot on target (atomic event derivative - Layer 1)
-# When: Shot followed by goalkeeper save or goal
-# Derive: shot-complete (distinguishes blocked/off-target from on-target)
-Derive event shot-complete from events sequence:
-  - shot team mine
-    then goal-keeper field outcome is won team opponent OR goal team mine
-
-# Rule 3: Player carry (player-level durational - Layer 1)
-# When: Same player performs multiple consecutive dribbles
-# Derive: carry (player-level durational fact)
-Derive event carry from events sequence:
-  - reception player X
-    then dribble player X +  # One or more dribbles by same player
-
-# Rule 4: Defensive recovery counter-attack (simple derived - Layer 1)
-# When: Team intercepts, then successfully passes
-# Derive: counter-attack-start (high-value transition)
-Derive event counter-attack-start from events sequence:
-  - interception field outcome is won team mine
-    then pass team mine
-
-# Rule 5: Team possession (team-level aggregation - Layer 2, depends on Rule 3)
-# When: Team has active carry, foul-won, or ball out by opponent
-# Derive: possession (spans all team durational facts)
-Derive event possession from events sequence:
-  - carry team mine +
-    ~ reception team mine
-    ~ foul-committed team opponent
-    ~ out team opponent # ~ Means carries or more including team passes and play restarts
-
-# Rule 6: Tiki-taka analysis (complex sequence - Layer 2, depends on Rule 3)
-# When: Team completes 3+ consecutive passes without loss
-# Derive: tiki-taka
-Derive event tiki-taka from events sequence:
-  - pass team mine +
-    ~ carry team mine # ~ Means passes or more including carries between passes
-
-# Rule 7: Turnover (higher-level derivative - Layer 3, depends on Rules 2 & 5)
-# When: Possession shifts from one team to opponent OR opponent shoots on target
-# Derive: turnover metric
-Derive event turnover from events sequence:
-  - possession team mine
-    then possession team opponent* # zero or more possessions by the other team
-    then shot-complete team opponent
-
-```
-
-</Accordion>
-
-<Accordion summary="Example: American Football Drive Segmentation" class="mb-6">
-
-```yaml
-# Topological Dependency Layers:
-# Layer 1: snap-complete, red-zone-conversion, third-down-success, drive-stall (atomic derivatives)
-# Layer 2: offensive-drive (depends on snap-complete)
-# Layer 3: scoring-drive (depends on offensive-drive)
-
-# Rule 1: Successful snap play (atomic event derivative - Layer 1)
-# When: Snap followed by successful gain (run or pass completion)
-# Derive: snap-complete
-Derive event snap-complete from events sequence:
-  - snap team mine
-    then run field outcome is complete team mine
-
-# Rule 2: Red zone conversion (atomic derivative - Layer 1)
-# When: Team enters red zone (20-yard line) and scores touchdown
-# Derive: red-zone-conversion
-Derive event red-zone-conversion from events sequence:
-  - snap field yard-line is less-than 20 team mine
-    then touchdown team mine
-
-# Rule 3: Third-down success (atomic derivative - Layer 1)
-# When: Successful play on 3rd down maintains possession (first down reset)
-# Derive: third-down-success
-Derive event third-down-success from events sequence:
-  - snap field down is 3 team mine
-    then snap field down is 1 team mine # Reset to first down
-
-# Rule 4: Drive stall (atomic derivative - Layer 1)
-# When: Team fails to convert on 4th down or punts
-# Derive: drive-stall
-Derive event drive-stall from events sequence:
-  - snap team mine +
-    then turnover-on-downs team mine OR punt team mine
-
-# Rule 5: Offensive drive (team-level aggregation - Layer 2, depends on Rule 1)
-# When: Team gains possession and runs offensive plays
-# Derive: offensive-drive (spans all plays until scoring/turnover)
-Derive event offensive-drive from events sequence:
-  - kickoff-return field outcome is complete team mine
-    ~ punt-return field outcome is complete team mine
-    ~ turnover-recovery team mine
-    then snap team mine +
-    ~ snap-complete team mine # ~ Means snaps or more including completions
-    until touchdown team mine OR field-goal team mine OR turnover team opponent
-
-# Rule 6: Scoring drive (higher-level derivative - Layer 3, depends on Rule 5)
-# When: Offensive drive ends with touchdown or field goal
-# Derive: scoring-drive
-Derive event scoring-drive from events sequence:
-  - offensive-drive team mine
-    then touchdown team mine OR field-goal field outcome is good team mine
-```
-
-</Accordion>
-
-When we expanded to American football, product managers wrote new dataspecs and grouping rules.
+When we expanded to American football, product managers wrote drive segmentation rules using the same DSL patterns. Offensive drives derived from snap sequences until scoring or turnover. Red zone conversions tracked touchdown efficiency. Third-down success measured possession maintenance. The execution engine didn't change—new sport, same architectural separation. No engineering bottleneck.
 
 <Accordion summary="Visualizing the Data Flow" class="mb-6">
 
@@ -384,68 +264,15 @@ graph TD
 
 **State Machines for Impossible States**
 
-We used XState to model collection workflows as explicit finite state machines. Traditional event handlers create implicit state explosions (`if (editing && !watching && hasBase)`). State machines make all transitions explicit and testable.
+We used XState to model collection workflows as explicit finite state machines. Five major state machines orchestrated the app: video mode (manual playback, loop, editing), collection flow (watching, collecting base event, adding details), freeze frame handling (idle, active, reviewing), player customization, and batch validation. This prevented illegal states by design—you couldn't enter a freeze frame without an active event, couldn't submit without required fields. In our context, traditional event handlers created implicit state explosions—tracking state across event handlers made correctness fragile. State machines helped us make transitions explicit and testable, though this added complexity that only paid off at scale.
 
-```javascript
-// Main collection workflow
-{
-  id: 'main-room',
-  type: 'parallel',
-  states: {
-    videoMode: ['manual', 'loop', 'editing'],
-    collection: ['watching', 'collectingBase', 'addingPartials'],
-    freezeFrame: ['idle', 'active', 'reviewing']
-  }
-}
-```
+**30+ Keyboard Shortcuts: Muscle Memory Over Mouse Clicks**
 
-Five major state machines orchestrated the app: main room, event entry, player customization, freeze frame queue, and batch validation. This prevented illegal states by design—you couldn't enter a freeze frame without an active event, couldn't submit without required fields.
+Contextual keyboard mappings with module scoping meant the same key could trigger different actions depending on context. In the main collection view, `t` created new events (pass, shot, tackle), `/` toggled video loop mode, and arrow keys controlled playback. In freeze frame mode, `t` toggled team view, number keys selected players by jersey, Enter confirmed positions. Collectors touch-typed events like Vim users touch-type code. Hands stayed on keyboard. Eyes stayed on video.
 
-<Accordion summary="30+ Keyboard Shortcuts: Muscle Memory Over Mouse Clicks">
+**Contextual UI Adaptation**
 
-We used Mousetrap with module scoping. Same key, different action per context:
-
-```javascript
-// Context-aware keyboard mappings
-const keyboardShortcuts = {
-  'main-room': {
-    't': 'Create new event (pass, shot, tackle)',
-    'p': 'Add player to event',
-    '/': 'Toggle video loop mode',
-    '←→': 'Rewind/forward 5 seconds'
-  },
-  'freeze-frame': {
-    't': 'Toggle team view (home/away)',
-    '1-9': 'Select player by jersey number',
-    'Enter': 'Confirm positions'
-  }
-};
-
-// Same key 't', different meaning per context
-bindShortcuts('main-room', keyboardShortcuts['main-room']);
-bindShortcuts('freeze-frame', keyboardShortcuts['freeze-frame']);
-```
-
-Collectors touch-typed events like Vim users touch-type code. Video control (arrow keys), event creation (letter keys), navigation (/, Z), editing (Shift+E), freeze frames (number keys). Hands stayed on keyboard. Eyes stayed on video.
-
-</Accordion>
-
-<Accordion summary="Contextual UI Adaptation">
-
-The interface adapted based on game state and previous decisions. When a collector selected "Pass," the system showed only valid pass types for that player's position. Auto-filled mandatory fields with single valid options. Skipped irrelevant choices entirely.
-
-```javascript
-// After DSL sequence rules run and determine valid next options
-// If only one option remains valid, auto-fill and skip the question
-// Example: "Pass" event followed by rules determining only "Reception" is valid → auto-fill
-if (hasOnlyOneValidOption(currentField, validOptions)) {
-  return progressToNextField(allFields, currentField, validOptions[0]);
-}
-```
-
-Cognitive load minimization: collectors never saw irrelevant options.
-
-</Accordion>
+The interface adapted based on game state and previous decisions. When a collector selected "Pass," the system showed only valid pass types for that player's position. DSL sequence rules determined valid next options. If only one option remained valid, the system auto-filled and skipped the question entirely. Cognitive load minimization—collectors never saw irrelevant options.
 
 <Accordion summary="Video Loop Mode">
 
@@ -459,14 +286,14 @@ Freeze frames (positioning data for all 22 players) were semi-automated. Collect
 
 </Accordion>
 
-This tool became the foundation. The dataspec drove UI validation, the DSL defined legal event sequences, the state machines enforced correctness. Concurrent collection during live matches with sub-minute latency. The backend scaled to support what the UX tool showed collectors needed.
+This tool became the foundation. The dataspec drove UI validation, the DSL defined legal event sequences, the state machines constrained invalid states. We still found edge cases in production, but the architecture caught most errors before they reached collectors. Concurrent collection during live matches with sub-minute latency. The backend scaled to support what the UX tool showed collectors needed.
     </div>
 
     {/* Event Collection Subsection */}
     <div class="mb-10">
       <Heading level={3} as="h3" class="mb-4"><span>Backend Evolution: From Batch to Real-Time</span></Heading>
 
-Breaking matches down by decision rather than team increased correctness without additional effort. Computer vision assisted input, contextual keyboard mappings reduced cognitive load, and automated linting caught preventable errors. Collectors focused on judgment over correction—handling edge cases where human expertise mattered rather than catching mistakes.
+Breaking matches down by decision rather than team increased correctness while reducing collector coordination overhead. Computer vision assisted input, contextual keyboard mappings reduced cognitive load, and automated linting caught preventable errors. Collectors focused on judgment over correction—handling edge cases where human expertise mattered rather than catching mistakes.
 
 **Beyond Simple Sequences: Event Dependency Graphs**
 
@@ -629,13 +456,13 @@ graph TD
           team (emerald) resolves ambiguity. Golden entities cascade updates to dependent systems automatically.
         </Body>
 
-The system prevented duplicate entities by design, caught conflicts automatically, and escalated true ambiguity. The 5-person team focused on the 1-2% of ambiguous cases requiring domain expertise (is "FC Barcelona" the same as "Barcelona FC"? yes; but "Manchester United" vs "Manchester City"? no).
+The system's design reduced duplicate entities, caught most conflicts automatically, and escalated true ambiguity. The 5-person team focused on the 1-2% of ambiguous cases requiring domain expertise (is "FC Barcelona" the same as "Barcelona FC"? yes; but "Manchester United" vs "Manchester City"? no).
     </div>
   </section>
 
   {/* Impact Section */}
   <section class="mb-16">
-    <Heading level={2} as="h2" class="mb-6"><span>Impact: From Bottleneck to Multiplier</span></Heading>
+    <Heading level={2} as="h2" class="mb-6"><span>Impact: What Changed When Architecture Met Distributed Ownership?</span></Heading>
 
       <Body size="base" as="p" class="mb-8 leading-relaxed italic">
         Design for the 80% common case; production iteration reveals the 20% edge cases.
@@ -653,7 +480,7 @@ ambiguous data points—rather than catching preventable mistakes.
 
 **Non-linear leverage:** Operations scaled 10x without proportional staffing increases.
 
-The system scaled horizontally. Product managers shipped features.
+The system scaled horizontally as load increased. Product managers could ship new dataspecs without engineering bottlenecks, though some edge cases still required technical collaboration.
 
 </Accordion>
 
@@ -684,7 +511,7 @@ Month one backend: a single Go endpoint called `sync`—batch, offline. We start
 
 <Accordion summary="Years Two-Three: Scaling from Partnership to Distributed Team" class="mb-6">
 
-Adham and I could execute together, but the domain kept expanding. The transition from two-person partnership to distributed team took longer than it needed—I was learning how to lead engineers while building production systems. The tension: I didn't want to compromise on the architectural ideas the domain required, but keeping that thinking between just us became a bottleneck. Every new subsystem, every architectural decision, required our direct involvement.
+Adham and I could execute together, but the domain kept expanding. The transition from two-person partnership to distributed team took longer than it needed—I was learning how to lead engineers while building production systems. The tension: we were protective of architectural integrity while the domain kept expanding, and limiting that thinking to just us became a bottleneck. Every new subsystem, every architectural decision, required our direct involvement.
 
 By year three, we had built the hiring and mentoring systems needed to scale beyond the core partnership.
 
@@ -753,7 +580,7 @@ Architecture shapes what's possible. But people make it real.
 
   {/* Lessons Section */}
   <section class="mb-16">
-    <Heading level={2} as="h2" class="mb-6"><span>Lessons: Context Shapes What Works</span></Heading>
+    <Heading level={2} as="h2" class="mb-6"><span>Lessons: What Transfers? What Only Worked Here?</span></Heading>
 
 **What Worked in This Context**
 
