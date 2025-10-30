@@ -1,0 +1,206 @@
+---
+/**
+ * MermaidDiagram Component
+ *
+ * Reusable wrapper for Mermaid diagrams with:
+ * - WCAG AA accessibility (role="img", figcaption, aria-labelledby)
+ * - Egyptian design system colors (atomic, derived, system)
+ * - Hover/focus interaction to reveal text description
+ * - Slide-up animation (respects prefers-reduced-motion)
+ *
+ * @example
+ * <MermaidDiagram
+ *   id="data-flow"
+ *   caption="Data flow diagram showing atomic events deriving aggregated metrics"
+ *   relationships={[
+ *     "Event leads to metric (temporal sequence)",
+ *     "Metric aggregates event data"
+ *   ]}
+ * >
+ *   ```mermaid
+ *   graph LR
+ *     A[Event] --> B[Metric]
+ *     classDef atomic fill:#FEF3C7,stroke:#F59E0B
+ *     class A atomic
+ *   ```
+ * </MermaidDiagram>
+ */
+
+interface Props {
+  /** Unique ID for aria-labelledby (e.g., "data-flow") */
+  id: string;
+  /** Screen reader description of diagram content */
+  caption: string;
+  /** Array of relationship descriptions (shown on hover) */
+  relationships: string[];
+}
+
+const { id, caption, relationships } = Astro.props;
+
+// Generate unique IDs for accessibility
+const figcaptionId = `diagram-${id}`;
+const descriptionId = `diagram-${id}-description`;
+---
+
+<figure
+  role="img"
+  aria-labelledby={figcaptionId}
+  aria-describedby={descriptionId}
+  class="diagram-container group relative my-8 bg-surface border border-neutral-light rounded-lg px-6 pb-6 overflow-hidden"
+>
+  <!-- Screen reader caption (visually hidden) -->
+  <figcaption id={figcaptionId} class="sr-only">
+    {caption}
+  </figcaption>
+
+  <!-- Mermaid diagram (slot allows remark plugin to process markdown) -->
+  <div class="mermaid-wrapper">
+    <slot />
+  </div>
+
+  <!-- Text description (slides up on hover/focus) -->
+  <div
+    id={descriptionId}
+    class="diagram-description"
+    aria-label="Text description of diagram relationships"
+  >
+    <details>
+      <summary class="description-label">
+        Text description of relationships
+      </summary>
+      <ul class="description-list">
+        {relationships.map((relationship) => (
+          <li>{relationship}</li>
+        ))}
+      </ul>
+    </details>
+  </div>
+</figure>
+
+<style>
+  /* Container */
+  .diagram-container {
+    transition: border-color 0.2s ease;
+  }
+
+  .diagram-container:hover,
+  .diagram-container:focus-within {
+    border-color: var(--color-neutral);
+  }
+
+  /* Mermaid wrapper */
+  .mermaid-wrapper {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Text description - hidden by default */
+  .diagram-description {
+    margin-top: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.3s cubic-bezier(0.65, 0, 0.35, 1),
+      transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+    pointer-events: none;
+  }
+
+  /* Reveal on hover/focus OR when details is open */
+  .diagram-container:hover .diagram-description,
+  .diagram-container:focus-within .diagram-description,
+  .diagram-description:has(details[open]) {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Details container */
+  details {
+    margin: 0;
+  }
+
+  /* Description label (summary) */
+  .description-label {
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 400; /* font-normal */
+    color: var(--color-text-lighter);
+    cursor: pointer;
+    transition: color 0.2s ease;
+    list-style: none; /* Remove default disclosure triangle */
+    position: relative;
+    padding-right: 1.25rem; /* Space for chevron */
+  }
+
+  /* Remove default disclosure triangle in WebKit/Blink */
+  .description-label::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Chevron indicator */
+  .description-label::after {
+    content: '▼';
+    position: absolute;
+    right: 0;
+    font-size: 0.625rem; /* Smaller than text */
+    transition: transform 0.2s ease;
+  }
+
+  /* Rotate chevron when details is open */
+  details[open] .description-label::after {
+    transform: rotate(180deg);
+  }
+
+  /* Darker gray on hover (not accent) */
+  .diagram-container:hover .description-label,
+  .diagram-container:focus-within .description-label,
+  .description-label:hover {
+    color: var(--color-neutral);
+  }
+
+  /* Description list */
+  .description-list {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    margin-left: 1rem;
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 300; /* font-light */
+    color: var(--color-text-lighter);
+    list-style-type: disc;
+  }
+
+  .description-list li {
+    margin-bottom: 0.25rem;
+  }
+
+  .description-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Respect prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .diagram-description {
+      transition: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .diagram-container:hover .diagram-description,
+    .diagram-container:focus-within .diagram-description {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Screen reader only class */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>

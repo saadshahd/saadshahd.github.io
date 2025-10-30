@@ -7,6 +7,7 @@ import Button from '../../components/Button.astro';
 import Badge from '../../components/Badge.astro';
 import Heading from '../../components/typography/Heading.astro';
 import Body from '../../components/typography/Body.astro';
+import MermaidDiagram from '../../components/MermaidDiagram.astro';
 
 <div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
   {/* Hero Section */}
@@ -159,10 +160,17 @@ Ensure sequence of groups: [drive-start -> (play-action)+ -> (scoring-play | tur
           flow through time, and higher-level facts derive from event patterns.
         </Body>
 
-        <figure role="img" aria-labelledby="diagram-data-flow" class="my-8 bg-surface border border-neutral-light rounded-lg px-6 pb-6">
-          <figcaption id="diagram-data-flow" class="sr-only">
-            Data flow diagram showing atomic events (pass, reception, dribble, shot, block) deriving aggregated metrics (complete-pass, shot-sequence, defensive-action)
-          </figcaption>
+        <MermaidDiagram
+          id="data-flow"
+          caption="Data flow diagram showing atomic events (pass, reception, dribble, shot, block) deriving aggregated metrics (complete-pass, shot-sequence, defensive-action)"
+          relationships={[
+            "Pass event leads to reception event (temporal sequence)",
+            "Reception leads to dribble, dribble leads to shot, shot leads to block (event chain)",
+            "Pass and reception combine to create complete-pass metric (derived aggregation)",
+            "Dribble and shot combine to create shot-sequence metric (derived aggregation)",
+            "Block event creates defensive-action metric (derived aggregation)"
+          ]}
+        >
 
 ```mermaid
 graph LR
@@ -185,17 +193,7 @@ graph LR
     class CP,SOT,DA derived
 ```
 
-          <details class="mt-4">
-            <summary class="cursor-pointer text-xs font-normal text-text-lighter hover:text-accent">Text description of relationships</summary>
-            <ul class="mt-2 ml-4 text-xs font-light text-text-lighter space-y-1">
-              <li>Pass event leads to reception event (temporal sequence)</li>
-              <li>Reception leads to dribble, dribble leads to shot, shot leads to block (event chain)</li>
-              <li>Pass and reception combine to create complete-pass metric (derived aggregation)</li>
-              <li>Dribble and shot combine to create shot-sequence metric (derived aggregation)</li>
-              <li>Block event creates defensive-action metric (derived aggregation)</li>
-            </ul>
-          </details>
-        </figure>
+        </MermaidDiagram>
 
         <Body size="sm" as="p" class="mb-6 text-neutral italic">
           Atomic events (amber/gold) capture "what happened." Derived facts (blue) represent "what it means"—
@@ -247,10 +245,17 @@ graph LR
           modeled both temporal relationships (PREV/NEXT) and logical dependencies (DEPENDS_ON).
         </Body>
 
-        <figure role="img" aria-labelledby="diagram-event-dependency" class="my-8 bg-surface border border-neutral-light rounded-lg px-6 pb-6">
-          <figcaption id="diagram-event-dependency" class="sr-only">
-            Event dependency graph showing temporal relationships (solid lines) and logical dependencies (dashed lines) between football events
-          </figcaption>
+        <MermaidDiagram
+          id="event-dependency"
+          caption="Event dependency graph showing temporal relationships (solid lines) and logical dependencies (dashed lines) between football events"
+          relationships={[
+            "Temporal flow (PREV): fifty-fifty → clearance → pass → foul-committed (sequence 1)",
+            "Logical dependency (DEPENDS_ON): fifty-fifty depends on clearance depends on pass (sequence 2)",
+            "Temporal flow (PREV): fifty-fifty → clearance → pass (sequence 3)",
+            "Solid lines represent temporal order (\"what happened next\")",
+            "Dashed lines represent logical dependencies (\"what this derives from\")"
+          ]}
+        >
 
 ```mermaid
 graph TD
@@ -272,17 +277,7 @@ graph TD
     linkStyle 3 stroke:#0EA5E9,stroke-width:2px,stroke-dasharray:6 4
 ```
 
-          <details class="mt-4">
-            <summary class="cursor-pointer text-xs font-normal text-text-lighter hover:text-accent">Text description of relationships</summary>
-            <ul class="mt-2 ml-4 text-xs font-light text-text-lighter space-y-1">
-              <li><strong>Temporal flow (PREV):</strong> fifty-fifty → clearance → pass → foul-committed (sequence 1)</li>
-              <li><strong>Logical dependency (DEPENDS_ON):</strong> fifty-fifty depends on clearance depends on pass (sequence 2)</li>
-              <li><strong>Temporal flow (PREV):</strong> fifty-fifty → clearance → pass (sequence 3)</li>
-              <li>Solid lines represent temporal order ("what happened next")</li>
-              <li>Dashed lines represent logical dependencies ("what this derives from")</li>
-            </ul>
-          </details>
-        </figure>
+        </MermaidDiagram>
 
         <Body size="sm" as="p" class="mb-6 text-neutral italic">
           Solid lines show temporal flow (what happened next). Dashed lines show logical dependencies
@@ -316,10 +311,18 @@ graph TD
           full context → resolve once → system cascades to all dependent data.
         </Body>
 
-        <figure role="img" aria-labelledby="diagram-metadata-claims" class="my-8 bg-surface border border-neutral-light rounded-lg px-6 pb-6">
-          <figcaption id="diagram-metadata-claims" class="sr-only">
-            Metadata claims flow showing data sources (collectors, scrapers, APIs) submitting claims that resolve into golden entities with automatic conflict resolution
-          </figcaption>
+        <MermaidDiagram
+          id="metadata-claims"
+          caption="Metadata claims flow showing data sources (collectors, scrapers, APIs) submitting claims that resolve into golden entities with automatic conflict resolution"
+          relationships={[
+            "Data sources (amber): Collector A, Scraped Source, and Third-party API submit nationality claims",
+            "Claims (blue): \"Nationality: Egypt\" and \"Nationality: UK\" represent conflicting data",
+            "Conflict resolution: Conflicting claim (Nationality: UK) routes to Pending Conflicts Queue",
+            "System nodes (emerald): Metadata Team Review resolves conflicts and updates Golden Entity",
+            "Cascade: Golden Entity (Player X) automatically updates dependent systems (Match Data, Historical Stats)",
+            "Agreed claims resolve directly to golden entity; conflicts require human review"
+          ]}
+        >
 
 ```mermaid
 graph TD
@@ -345,18 +348,7 @@ graph TD
     class QUEUE,MT,GE,DEP1,DEP2 system
 ```
 
-          <details class="mt-4">
-            <summary class="cursor-pointer text-xs font-normal text-text-lighter hover:text-accent">Text description of relationships</summary>
-            <ul class="mt-2 ml-4 text-xs font-light text-text-lighter space-y-1">
-              <li><strong>Data sources (amber):</strong> Collector A, Scraped Source, and Third-party API submit nationality claims</li>
-              <li><strong>Claims (blue):</strong> "Nationality: Egypt" and "Nationality: UK" represent conflicting data</li>
-              <li><strong>Conflict resolution:</strong> Conflicting claim (Nationality: UK) routes to Pending Conflicts Queue</li>
-              <li><strong>System nodes (emerald):</strong> Metadata Team Review resolves conflicts and updates Golden Entity</li>
-              <li><strong>Cascade:</strong> Golden Entity (Player X) automatically updates dependent systems (Match Data, Historical Stats)</li>
-              <li>Agreed claims resolve directly to golden entity; conflicts require human review</li>
-            </ul>
-          </details>
-        </figure>
+        </MermaidDiagram>
 
         <Body size="sm" as="p" class="mb-6 text-neutral italic">
           Claims from data sources (amber) flow into the system. Conflicts (blue) route to a queue. The metadata
