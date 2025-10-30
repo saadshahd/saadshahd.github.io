@@ -38,9 +38,7 @@ import '../styles/print-resume.css';
     <!-- Summary -->
     <section class="mb-16">
       <Body size="base" as="p" class="text-lg leading-relaxed">
-        Building realtime distributed systems that scale through architectural decisions that unlock velocity while maintaining correctness—event-driven patterns, immutable data flows, and infrastructure designed to fail gracefully.
-        12+ years taking platforms from prototype to production at companies like Wise and Statsbomb,
-        handling millions of events per second.
+        Building realtime distributed systems that scale through architectural separation—DSLs for domain experts, state machines for correctness, event-driven patterns for operational simplicity. Making illegal states unrepresentable through type systems and formal validation. 12+ years architecting platforms that handle millions of events while maintaining both velocity and correctness guarantees.
       </Body>
     </section>
 
@@ -64,6 +62,10 @@ import '../styles/print-resume.css';
           <Heading level={3} as="h3" class="mb-2"><span>Platform Engineering & Infrastructure Evolution</span></Heading>
           <Body size="sm" as="p">Designing infrastructure that lets teams deploy confidently—through observability, automated testing, and progressive delivery.</Body>
         </div>
+        <div>
+          <Heading level={3} as="h3" class="mb-2"><span>Domain-Specific Language Design & State Machine Modeling</span></Heading>
+          <Body size="sm" as="p">Designing DSLs that let domain experts express complex rules without code—using formal grammars (ANTLR), state machines (XState), and topological compilation. Making illegal states unrepresentable through type systems and finite state machines.</Body>
+        </div>
       </div>
     </section>
 
@@ -84,7 +86,7 @@ import '../styles/print-resume.css';
           <Body size="sm" as="p" class="mb-4">Building infrastructure for the world's most international account—helping 16M+ customers move money across borders.</Body>
           <Body size="base" as="ul" class="space-y-3">
             <li><strong>Increased conversion 19% through hypothesis-driven experimentation.</strong> Isolated pricing friction points through rapid A/B testing. Short iterations revealed psychological barriers traditional analytics missed—validating hunches with data, not opinions.</li>
-            <li><strong>Improved team velocity 4x by eliminating accidental complexity.</strong> Refactored tangled service dependencies into composable modules with clear boundaries. Each team could now deploy independently. Reduced coordination overhead from "everyone talks to everyone" to "services talk through contracts."</li>
+            <li><strong>Improved team velocity 4x by decomposing tangled service dependencies into bounded contexts with explicit contracts (DDD principles).</strong> Previous architecture forced coordination across 8 teams for every change. Refactored to message-driven boundaries where services communicate through immutable events. Each team could deploy independently. Tradeoff: Added complexity in event schema evolution, but eliminated coordination tax and reduced deployment risk.</li>
             <li><strong>Increased user satisfaction 26% by consolidating fragmented product components.</strong> Migrated six inconsistent UIs into a unified design system backed by shared state management. Users no longer learned different interactions for similar actions—cognitive load dropped, satisfaction rose.</li>
           </Body>
         </div>
@@ -100,10 +102,11 @@ import '../styles/print-resume.css';
           </div>
           <Body size="sm" as="p" class="mb-4">Led core data infrastructure for football analytics platform—serving Premier League clubs, international federations, and media companies.</Body>
           <Body size="base" as="ul" class="space-y-3">
-            <li><strong>Architected realtime data streaming platform from scratch, handling 10K+ events/second.</strong> Chose event sourcing with Kafka for immutable audit trails—critical when clubs make million-pound decisions on our data. Event-driven design let us replay history, debug production issues in development, and maintain consistency across services without distributed transactions.</li>
-            <li><strong>Increased data collection speed 6x through parallel processing architecture.</strong> Previous sequential pipeline became the bottleneck—one slow collector blocked everyone. Redesigned as independent stream processors with coordinated checkpoints. Tradeoff: More complex failure handling, but throughput scaled linearly with workers.</li>
-            <li><strong>Improved data quality 8x by making validation impossible to skip.</strong> Moved from "trust but verify" post-processing to typed schemas with compile-time guarantees. Invalid data couldn't enter the system—structural correctness over runtime checks. Quality issues dropped from daily firefighting to rare edge cases.</li>
-            <li><strong>These platform improvements drove 3x increase in client satisfaction.</strong> Faster turnaround meant clubs received insights before match deadlines. Better quality meant fewer "wait, this can't be right" conversations. Technical decisions directly impacted renewal rates—architecture has business consequences.</li>
+            <li><strong>Designed domain-specific language (ANTLR grammar) enabling product managers to define sports rules as configuration.</strong> Topological dependency resolution compiled declarative sequences ("pass then reception") into validation logic. Expanded from soccer to American football with zero code changes. Pattern: Separation of rules from execution unlocked non-linear scaling (100 → 1000+ collectors without proportional engineering).</li>
+            <li><strong>Built collaborative collection system (Electron + XState + Apollo GraphQL) replacing 16-hour sequential workflows with 4-hour concurrent collection.</strong> XState state machines prevented illegal states by design—collectors couldn't submit without required fields, couldn't enter freeze frames without active events. 30+ contextual keyboard shortcuts (Mousetrap with module scoping) built muscle memory—same key, different action per context.</li>
+            <li><strong>Architected claims-based metadata graph for automatic entity resolution across crowd-sourced data.</strong> 5-person team resolved conflicts once—golden entities cascaded to dependent systems automatically. 99% error prevention through structural correctness (typed schemas, compile-time guarantees) vs runtime validation.</li>
+            <li><strong>Event sourcing with Kafka provided immutable audit trails—critical when clubs make million-pound decisions.</strong> Architecture enabled replay for debugging, consistency without distributed transactions, and linear throughput scaling. Reduced match collection from 16 sequential hours to 4 concurrent hours with near real-time (~20s latency).</li>
+            <li><strong>Scaled from 2-person partnership to distributed subsystem ownership across Cairo team.</strong> Engineers took foundational concepts (DSLs, state machines, event sourcing) and evolved them to contexts we hadn't explored—claims-based metadata resolution, concurrent collection workflows, desktop app state management. Pattern: Use production libraries (Apollo, Kafka, ANTLR) for infrastructure; focus engineering on domain problems. Lesson learned: Team building is the multiplier for ambitious architecture. Waiting until year 3 meant racing geo-political constraints before shipping customer-facing DSL.</li>
           </Body>
         </div>
 
@@ -144,7 +147,7 @@ import '../styles/print-resume.css';
         <div>
           <Heading level={3} as="h3" class="mb-2"><span>Architecture & Systems</span></Heading>
           <div class="space-y-1">
-            <Body size="sm" as="p"><strong>Expert:</strong> Distributed Systems, Event-Driven Architecture, Microservices, DDD, CQRS</Body>
+            <Body size="sm" as="p"><strong>Expert:</strong> Distributed Systems, Event-Driven Architecture, Microservices, DDD, CQRS, DSL Design, State Machine Modeling</Body>
             <Body size="sm" as="p"><strong>Proficient:</strong> System Design, Platform Engineering, Real Time Processing, Stream Processing</Body>
           </div>
         </div>
@@ -152,7 +155,7 @@ import '../styles/print-resume.css';
         <div>
           <Heading level={3} as="h3" class="mb-2"><span>Backend & Data</span></Heading>
           <div class="space-y-1">
-            <Body size="sm" as="p"><strong>Expert:</strong> Node.js, Kafka, Redis, SQL, REST, GraphQL, gRPC</Body>
+            <Body size="sm" as="p"><strong>Expert:</strong> Node.js, Kafka, Redis, SQL, REST, GraphQL, gRPC, ANTLR</Body>
             <Body size="sm" as="p"><strong>Proficient:</strong> Python, Rust, Clojure, Scala, RocksDB, MongoDB, Neo4j, Druid</Body>
           </div>
         </div>
@@ -168,8 +171,8 @@ import '../styles/print-resume.css';
         <div>
           <Heading level={3} as="h3" class="mb-2"><span>Frontend</span></Heading>
           <div class="space-y-1">
-            <Body size="sm" as="p"><strong>Expert:</strong> TypeScript, React, HTML/CSS</Body>
-            <Body size="sm" as="p"><strong>Proficient:</strong> Vue, Angular, Redux, xstate, RxJS, D3, Electron</Body>
+            <Body size="sm" as="p"><strong>Expert:</strong> TypeScript, React, XState, HTML/CSS, Electron</Body>
+            <Body size="sm" as="p"><strong>Proficient:</strong> Vue, Angular, Redux, RxJS, D3</Body>
           </div>
         </div>
       </div>

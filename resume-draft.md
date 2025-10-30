@@ -8,7 +8,7 @@
 
 ## Summary
 
-Principal Software Engineer building realtime distributed systems that scale. I make architectural decisions that unlock velocity while maintaining correctness—through event-driven patterns, immutable data flows, and infrastructure designed to fail gracefully. 12+ years taking platforms from prototype to production at companies like Wise and Statsbomb, handling millions of events per second.
+Building realtime distributed systems that scale through architectural separation—DSLs for domain experts, state machines for correctness, event-driven patterns for operational simplicity. Making illegal states unrepresentable through type systems and formal validation. 12+ years architecting platforms that handle millions of events while maintaining both velocity and correctness guarantees.
 
 ---
 
@@ -26,6 +26,9 @@ Decomposing monoliths into bounded contexts with clear interfaces, reducing coup
 **Platform Engineering & Infrastructure Evolution**
 Designing infrastructure that lets teams deploy confidently—through observability, automated testing, and progressive delivery.
 
+**Domain-Specific Language Design & State Machine Modeling**
+Designing DSLs that let domain experts express complex rules without code—using formal grammars (ANTLR), state machines (XState), and topological compilation. Making illegal states unrepresentable through type systems and finite state machines.
+
 ---
 
 ## Experience
@@ -38,7 +41,7 @@ Building infrastructure for the world's most international account—helping 16M
 
 - **Increased conversion 19% through hypothesis-driven experimentation.** Isolated pricing friction points through rapid A/B testing. Short iterations revealed psychological barriers traditional analytics missed—validating hunches with data, not opinions.
 
-- **Improved team velocity 4x by eliminating accidental complexity.** Refactored tangled service dependencies into composable modules with clear boundaries. Each team could now deploy independently. Reduced coordination overhead from "everyone talks to everyone" to "services talk through contracts."
+- **Improved team velocity 4x by decomposing tangled service dependencies into bounded contexts with explicit contracts (DDD principles).** Previous architecture forced coordination across 8 teams for every change. Refactored to message-driven boundaries where services communicate through immutable events. Each team could deploy independently. Tradeoff: Added complexity in event schema evolution, but eliminated coordination tax and reduced deployment risk.
 
 - **Increased user satisfaction 26% by consolidating fragmented product components.** Migrated six inconsistent UIs into a unified design system backed by shared state management. Users no longer learned different interactions for similar actions—cognitive load dropped, satisfaction rose.
 
@@ -48,15 +51,17 @@ Building infrastructure for the world's most international account—helping 16M
 
 **Statsbomb** | Bath, UK | 03/2018 - 03/2022
 
-Led core data infrastructure for football's most trusted analytics platform—serving Premier League clubs, international federations, and media companies.
+Led core data infrastructure for football analytics platform—serving Premier League clubs, international federations, and media companies.
 
-- **Architected realtime data streaming platform from scratch, handling 10K+ events/second.** Chose event sourcing with Kafka for immutable audit trails—critical when clubs make million-pound decisions on our data. Event-driven design let us replay history, debug production issues in development, and maintain consistency across services without distributed transactions.
+- **Designed domain-specific language (ANTLR grammar) enabling product managers to define sports rules as configuration.** Topological dependency resolution compiled declarative sequences ("pass then reception") into validation logic. Expanded from soccer to American football with zero code changes. Pattern: Separation of rules from execution unlocked non-linear scaling (100 → 1000+ collectors without proportional engineering).
 
-- **Increased data collection speed 6x through parallel processing architecture.** Previous sequential pipeline became the bottleneck—one slow collector blocked everyone. Redesigned as independent stream processors with coordinated checkpoints. Tradeoff: More complex failure handling, but throughput scaled linearly with workers.
+- **Built collaborative collection system (Electron + XState + Apollo GraphQL) replacing 16-hour sequential workflows with 4-hour concurrent collection.** XState state machines prevented illegal states by design—collectors couldn't submit without required fields, couldn't enter freeze frames without active events. 30+ contextual keyboard shortcuts (Mousetrap with module scoping) built muscle memory—same key, different action per context.
 
-- **Improved data quality 8x by making validation impossible to skip.** Moved from "trust but verify" post-processing to typed schemas with compile-time guarantees. Invalid data couldn't enter the system—structural correctness over runtime checks. Quality issues dropped from daily firefighting to rare edge cases.
+- **Architected claims-based metadata graph for automatic entity resolution across crowd-sourced data.** 5-person team resolved conflicts once—golden entities cascaded to dependent systems automatically. 99% error prevention through structural correctness (typed schemas, compile-time guarantees) vs runtime validation.
 
-- **These platform improvements drove 3x increase in client satisfaction.** Faster turnaround meant clubs received insights before match deadlines. Better quality meant fewer "wait, this can't be right" conversations. Technical decisions directly impacted renewal rates—architecture has business consequences.
+- **Event sourcing with Kafka provided immutable audit trails—critical when clubs make million-pound decisions.** Architecture enabled replay for debugging, consistency without distributed transactions, and linear throughput scaling. Reduced match collection from 16 sequential hours to 4 concurrent hours with near real-time (~20s latency).
+
+- **Scaled from 2-person partnership to distributed subsystem ownership across Cairo team.** Engineers took foundational concepts (DSLs, state machines, event sourcing) and evolved them to contexts we hadn't explored—claims-based metadata resolution, concurrent collection workflows, desktop app state management. Pattern: Use production libraries (Apollo, Kafka, ANTLR) for infrastructure; focus engineering on domain problems. Lesson learned: Team building is the multiplier for ambitious architecture. Waiting until year 3 meant racing geo-political constraints before shipping customer-facing DSL.
 
 ---
 
@@ -82,12 +87,12 @@ Core team member building tools for mobile developers to ship better apps—cras
 
 ### Architecture & Systems
 
-**Expert**: Distributed Systems, Event-Driven Architecture, Microservices, DDD, CQRS
+**Expert**: Distributed Systems, Event-Driven Architecture, Microservices, DDD, CQRS, DSL Design, State Machine Modeling
 **Proficient**: System Design, Platform Engineering, Real Time Processing, Stream Processing
 
 ### Backend & Data
 
-**Expert**: Node.js, Kafka, Redis, SQL, REST, GraphQL, gRPC
+**Expert**: Node.js, Kafka, Redis, SQL, REST, GraphQL, gRPC, ANTLR
 **Proficient**: Python, Rust, Clojure, Scala, RocksDB, MongoDB, Neo4j, Druid
 
 ### DevOps & Infrastructure
@@ -97,7 +102,7 @@ Core team member building tools for mobile developers to ship better apps—cras
 
 ### Frontend
 
-**Expert**: TypeScript, React, HTML/CSS
-**Proficient**: Vue, Angular, Redux, xstate, RxJS, D3, Electron
+**Expert**: TypeScript, React, XState, HTML/CSS, Electron
+**Proficient**: Vue, Angular, Redux, RxJS, D3
 
 ---
