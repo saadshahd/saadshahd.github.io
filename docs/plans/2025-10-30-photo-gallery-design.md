@@ -11,12 +11,14 @@ Add reusable photo gallery component for Statsbomb case study's "Behind the Scen
 ## Requirements
 
 ### Functional
+
 - Display 6 photos in responsive grid (1 col mobile, 3 col desktop)
 - Click to open lightbox modal for full-size viewing
 - Short captions (1-2 sentences) for context
 - Placement: Dedicated "Behind the Scenes" section at end of Statsbomb case study
 
 ### Non-Functional
+
 - **Accessibility**: WCAG AA compliance (4.5:1 contrast, alt text, keyboard navigation, screen reader support)
 - **Performance**: Images <200KB each (total <1.2MB), lazy loading below fold
 - **Animation**: Egyptian easing (water cubic-bezier), respect `prefers-reduced-motion`
@@ -54,18 +56,18 @@ docs/
 ```typescript
 // PhotoGallery.astro interface
 interface Props {
-  photos: Photo[];           // Array of photo objects
-  columns?: 2 | 3;          // Grid columns (default: 3)
-  variant?: 'default' | 'compact';  // CVA variant (future extension)
+  photos: Photo[]; // Array of photo objects
+  columns?: 2 | 3; // Grid columns (default: 3)
+  variant?: "default" | "compact"; // CVA variant (future extension)
 }
 
 // Photo type (gallery.ts)
 interface Photo {
-  src: string;              // Path to image (e.g., '/images/statsbomb/team-01.jpg')
-  alt: string;              // Accessibility description (10-200 chars)
-  caption: string;          // 1-2 sentence caption (20-300 chars)
-  width: number;            // Original width (for PhotoSwipe aspect ratio)
-  height: number;           // Original height
+  src: string; // Path to image (e.g., '/images/statsbomb/team-01.jpg')
+  alt: string; // Accessibility description (10-200 chars)
+  caption: string; // 1-2 sentence caption (20-300 chars)
+  width: number; // Original width (for PhotoSwipe aspect ratio)
+  height: number; // Original height
 }
 ```
 
@@ -91,6 +93,7 @@ import photos from '@/data/statsbomb-photos.json';
 **Decision**: Use PhotoSwipe 5 over GLightbox (90% confident)
 
 **Rationale**:
+
 - **Battle-tested**: 329,073 weekly downloads, used by NY Times, Medium
 - **Accessibility**: WCAG AA out-of-box (keyboard nav, screen reader, focus management)
 - **Performance**: Modular ~25KB gzipped (core only), tree-shakeable
@@ -109,12 +112,14 @@ import photos from '@/data/statsbomb-photos.json';
 **Decision**: PhotoGallery.astro component accepts photos array, data lives in JSON
 
 **Rationale**:
+
 - **Reusability**: Future case studies import PhotoGallery with different JSON
 - **Type-safety**: Zod validation at build time prevents invalid data
 - **Content-first**: Non-technical editors can update JSON without touching components
 - **Library-first**: Leverages Astro's component model (no custom framework)
 
 **Alternatives Considered**:
+
 - Inline data in MDX (rejected: not reusable, couples content to presentation)
 - Content Collections (rejected: overkill for 6 photos, adds build complexity)
 - Raw HTML in MDX (rejected: violates component-first principle, no type safety)
@@ -126,11 +131,13 @@ import photos from '@/data/statsbomb-photos.json';
 **Decision**: Node.js script using `sharp` library to convert/resize images
 
 **Process**:
+
 1. Input: `tmp-images/*.jpg` (4-5MB each, 5184x3456px Canon EOS photos)
 2. Output: `public/images/statsbomb/*.webp` (1200px wide, quality 85, ~150KB)
 3. Fallback: `public/images/statsbomb/*.jpg` (same dimensions for `<picture>` tag)
 
 **Rationale**:
+
 - **Performance**: 96% file size reduction (4MB → 150KB)
 - **Quality**: 1200px wide supports Retina displays (600px CSS @ 2x)
 - **Compatibility**: WebP with JPEG fallback covers all browsers
@@ -174,6 +181,7 @@ import photos from '@/data/statsbomb-photos.json';
 ### Egyptian Easing Integration
 
 **PhotoSwipe CSS Override**:
+
 ```css
 /* Custom animations with Egyptian easing */
 .pswp__img {
@@ -195,17 +203,23 @@ import photos from '@/data/statsbomb-photos.json';
 ```
 
 **Gallery Entrance Animation** (InView):
+
 ```typescript
-import { inView, animate } from 'motion';
-import { prefersReducedMotion } from '@/utils/animations';
+import { inView, animate } from "motion";
+import { prefersReducedMotion } from "@/utils/animations";
 
 if (!prefersReducedMotion()) {
-  inView('.gallery-grid', (info) => {
-    animate(info.target,
-      { opacity: [0, 1], y: [20, 0] },
-      { duration: 0.8, ease: [0.65, 0, 0.35, 1] } // Egyptian water
-    );
-  }, { amount: 0.3 });
+  inView(
+    ".gallery-grid",
+    (info) => {
+      animate(
+        info.target,
+        { opacity: [0, 1], y: [20, 0] },
+        { duration: 0.8, ease: [0.65, 0, 0.35, 1] } // Egyptian water
+      );
+    },
+    { amount: 0.3 }
+  );
 }
 ```
 
@@ -232,14 +246,14 @@ if (!prefersReducedMotion()) {
 
 ```typescript
 // src/utils/gallery.ts
-import { z } from 'zod';
+import { z } from "zod";
 
 export const PhotoSchema = z.object({
   src: z.string().regex(/^\/images\/.+\.(jpg|jpeg|png|webp)$/),
   alt: z.string().min(10).max(200),
   caption: z.string().min(20).max(300),
   width: z.number().positive(),
-  height: z.number().positive()
+  height: z.number().positive(),
 });
 
 export const PhotosSchema = z.array(PhotoSchema).min(1).max(20);
@@ -274,6 +288,7 @@ try {
 ```
 
 **Why Zod?**
+
 - **Correctness**: Invalid data = build failure (no runtime surprises)
 - **Make illegal states unrepresentable**: Schema prevents malformed data
 - **Type inference**: `Photo` type auto-generated from schema
@@ -293,10 +308,12 @@ try {
 ### Animation Rules
 
 **✅ DO Animate**:
+
 - Gallery entrance (InView): opacity 0→1, y 20→0, 0.8s water easing
 - Lightbox open/close: PhotoSwipe default with Egyptian easing override
 
 **❌ DON'T Animate**:
+
 - Hover states (use CSS transitions only)
 - During reading (gallery is end of article, not mid-content)
 - If `prefers-reduced-motion` is true (apply final state instantly)
@@ -305,15 +322,15 @@ try {
 
 ```typescript
 // PhotoGallery.astro <script>
-import PhotoSwipeLightbox from 'photoswipe/lightbox';
-import 'photoswipe/style.css';
-import { prefersReducedMotion } from '@/utils/animations';
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import "photoswipe/style.css";
+import { prefersReducedMotion } from "@/utils/animations";
 
 if (!prefersReducedMotion()) {
   const lightbox = new PhotoSwipeLightbox({
-    gallery: '#statsbomb-gallery',
-    children: 'a',
-    pswpModule: () => import('photoswipe'),
+    gallery: "#statsbomb-gallery",
+    children: "a",
+    pswpModule: () => import("photoswipe"),
 
     // Egyptian easing (via CSS, see above)
     showAnimationDuration: 400,
@@ -321,7 +338,7 @@ if (!prefersReducedMotion()) {
 
     // Accessibility
     closeOnVerticalDrag: true,
-    ariaLabel: 'Photo gallery lightbox'
+    ariaLabel: "Photo gallery lightbox",
   });
 
   lightbox.init();
@@ -388,6 +405,7 @@ if (!prefersReducedMotion()) {
 ```
 
 **Why `<picture>`?**
+
 - **WebP first**: 30% smaller than JPEG (150KB vs 220KB)
 - **Fallback**: JPEG for Safari <14, older browsers
 - **Explicit dimensions**: Prevents layout shift during load
@@ -405,12 +423,13 @@ try {
 } catch (error) {
   throw new Error(
     `Invalid photo data: ${error.message}\n` +
-    `Check src/data/statsbomb-photos.json for schema violations`
+      `Check src/data/statsbomb-photos.json for schema violations`
   );
 }
 ```
 
 **Validation Errors**:
+
 - Missing required fields → Build fails with field name
 - Invalid file extension → Build fails with regex pattern
 - Caption too short/long → Build fails with length requirements
@@ -430,6 +449,7 @@ try {
 ### Manual Testing Checklist
 
 **Desktop (Chrome, Safari, Firefox)**:
+
 - [ ] Gallery renders in 3-column grid
 - [ ] Hover effects work (scale-102, shadow, border)
 - [ ] PhotoSwipe opens on click
@@ -438,6 +458,7 @@ try {
 - [ ] Focus indicators appear correctly (3px offset)
 
 **Mobile (iOS Safari, Chrome Android)**:
+
 - [ ] Gallery renders in single column
 - [ ] Touch interactions work (tap to open lightbox)
 - [ ] Pinch-to-zoom works in PhotoSwipe
@@ -445,6 +466,7 @@ try {
 - [ ] Images lazy-load below fold
 
 **Accessibility (VoiceOver, NVDA)**:
+
 - [ ] Alt text announced correctly
 - [ ] Captions readable by screen reader
 - [ ] Lightbox controls accessible via keyboard
@@ -452,6 +474,7 @@ try {
 - [ ] Color contrast meets WCAG AA (4.5:1 minimum)
 
 **Performance (Lighthouse)**:
+
 - [ ] Performance score >90
 - [ ] Accessibility score 100
 - [ ] CLS <0.1 (no layout shift)
@@ -467,6 +490,7 @@ try {
 
 ```markdown
 ## Lessons Learned
+
 [existing content...]
 
 ---
@@ -477,7 +501,7 @@ The human side of building production systems: our team in Cairo (2018-2022), wh
 
 <PhotoGallery photos={statsbombPhotos} columns={3} />
 
-*Photos from 2019-2021: Early architecture sessions, live data collection workflows, and the team that took foundational concepts beyond their initial vision.*
+_Photos from 2018-2021: Early architecture sessions, live data collection workflows, and the team that took foundational concepts beyond their initial vision._
 ```
 
 ### Design System Story
@@ -545,12 +569,12 @@ The human side of building production systems: our team in Cairo (2018-2022), wh
 
 ## Risks & Mitigations
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| PhotoSwipe bundle size too large | HIGH | Use tree-shaking, dynamic import |
-| Images still too large after optimization | MEDIUM | Reduce quality to 75, try AVIF format |
-| Accessibility issues in PhotoSwipe | HIGH | Audit with screen reader, add ARIA overrides |
-| Layout shift during image load | MEDIUM | Use explicit width/height, blur placeholder |
+| Risk                                             | Impact | Mitigation                                   |
+| ------------------------------------------------ | ------ | -------------------------------------------- |
+| PhotoSwipe bundle size too large                 | HIGH   | Use tree-shaking, dynamic import             |
+| Images still too large after optimization        | MEDIUM | Reduce quality to 75, try AVIF format        |
+| Accessibility issues in PhotoSwipe               | HIGH   | Audit with screen reader, add ARIA overrides |
+| Layout shift during image load                   | MEDIUM | Use explicit width/height, blur placeholder  |
 | PhotoSwipe conflicts with Astro View Transitions | MEDIUM | Test page transitions, add cleanup in script |
 
 ---
