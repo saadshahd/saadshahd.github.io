@@ -1,0 +1,275 @@
+---
+/**
+ * Photo Gallery Component
+ *
+ * Reusable gallery with PhotoSwipe lightbox integration.
+ * Features:
+ * - Responsive grid (1 col mobile, 2-3 col desktop)
+ * - Egyptian design system styling
+ * - WCAG AA accessibility (keyboard nav, screen reader)
+ * - Respects prefers-reduced-motion
+ * - Lazy loading below fold
+ */
+
+import { validatePhotos } from "../utils/gallery";
+import { cva, type VariantProps } from "class-variance-authority";
+import type { HTMLAttributes } from "astro/types";
+
+// CVA Variants
+const galleryVariants = cva("gallery-grid", {
+  variants: {
+    columns: {
+      2: "md:grid-cols-2",
+      3: "md:grid-cols-3",
+    },
+    variant: {
+      default: "gap-6 md:gap-10",
+      compact: "gap-4 md:gap-6",
+    },
+  },
+  defaultVariants: {
+    columns: 3,
+    variant: "default",
+  },
+});
+
+interface Props
+  extends HTMLAttributes<"div">,
+    VariantProps<typeof galleryVariants> {
+  photos: unknown; // Accept unknown, validate at runtime
+  id?: string; // Gallery ID for PhotoSwipe targeting
+}
+
+const {
+  photos: rawPhotos,
+  columns = 3,
+  variant = "default",
+  id = "photo-gallery",
+  class: className,
+  ...rest
+} = Astro.props;
+
+// Validate photos at build time (fail fast if invalid)
+let photos;
+try {
+  photos = validatePhotos(rawPhotos);
+} catch (error) {
+  throw new Error(
+    `PhotoGallery: Invalid photo data\n${error.message}\n` +
+      `Check your JSON file for schema violations (src, alt, caption, width, height)`,
+  );
+}
+---
+
+<div class="photo-gallery-container" {...rest}>
+  <div
+    class={galleryVariants({ columns, variant, className })}
+    id={id}
+    role="list"
+  >
+    {
+      photos.map((photo, index) => (
+        <figure class="photo-card" role="listitem">
+          <a
+            href={photo.src}
+            data-pswp-width={photo.width}
+            data-pswp-height={photo.height}
+            data-pswp-caption={photo.caption}
+            aria-label={`View full size: ${photo.alt}`}
+            class="photo-link"
+          >
+            <picture>
+              <source
+                srcset={photo.src.replace(/\.(jpg|jpeg|png)$/, ".webp")}
+                type="image/webp"
+              />
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                loading={index < 3 ? "eager" : "lazy"}
+                decoding="async"
+                width={photo.width}
+                height={photo.height}
+                class="photo-image"
+              />
+            </picture>
+          </a>
+        </figure>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  /* Masonry Gallery (CSS Columns) */
+  .gallery-grid {
+    column-count: 1;
+    column-gap: var(--spacing-sm); /* 8px */
+  }
+
+  /* 2 columns on tablet */
+  @media (min-width: 640px) {
+    .gallery-grid {
+      column-count: 2;
+    }
+  }
+
+  /* 3 columns on desktop */
+  @media (min-width: 768px) {
+    .gallery-grid {
+      column-count: 3;
+      column-gap: var(--spacing-md); /* 16px */
+    }
+  }
+
+  /* Photo Card */
+  .photo-card {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 var(--spacing-sm) 0; /* Minimal vertical spacing (8px) */
+    break-inside: avoid; /* Prevent splitting across columns */
+  }
+
+  /* Photo Link */
+  .photo-link {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-neutral-light);
+    transition: all 0.2s cubic-bezier(0.65, 0, 0.35, 1); /* Egyptian water */
+  }
+
+  .photo-link:hover {
+    transform: scale(1.02);
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border-color: var(--color-primary);
+  }
+
+  .photo-link:focus {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Photo Image */
+  .photo-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .photo-link {
+      transition: none;
+    }
+
+    .photo-link:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  import PhotoSwipeLightbox from "photoswipe/lightbox";
+  import PhotoSwipe from "photoswipe";
+  import "photoswipe/style.css";
+
+  // Check for reduced motion preference
+  function prefersReducedMotion(): boolean {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  // Initialize PhotoSwipe on all galleries
+  function initializeGalleries() {
+    const galleries = document.querySelectorAll(".photo-gallery-container");
+
+    galleries.forEach((container) => {
+      const gallery = container.querySelector(".gallery-grid");
+      if (!gallery) return;
+
+      const galleryId = gallery.getAttribute("id") || "photo-gallery";
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: `#${galleryId}`,
+        children: "a",
+        pswpModule: PhotoSwipe,
+
+        // Animation durations (will be overridden by CSS if reduced motion)
+        showAnimationDuration: prefersReducedMotion() ? 0 : 400,
+        hideAnimationDuration: prefersReducedMotion() ? 0 : 400,
+
+        // Accessibility
+        closeOnVerticalDrag: true,
+        ariaLabel: "Photo gallery lightbox",
+
+        // Caption parser - extract from data attribute
+        captionContent: (slide: { data: { element?: HTMLElement } }) => {
+          const caption = slide.data.element?.dataset.pswpCaption;
+          return caption || "";
+        },
+      });
+
+      lightbox.init();
+    });
+  }
+
+  // Initialize on page load
+  initializeGalleries();
+
+  // Re-initialize after Astro View Transitions
+  document.addEventListener("astro:after-swap", () => {
+    initializeGalleries();
+  });
+</script>
+
+<!-- PhotoSwipe Egyptian Easing Overrides -->
+<style is:global>
+  /* Egyptian easing for PhotoSwipe animations */
+  .pswp__img {
+    transition-timing-function: cubic-bezier(
+      0.65,
+      0,
+      0.35,
+      1
+    ) !important; /* water */
+  }
+
+  .pswp--open {
+    animation-timing-function: cubic-bezier(
+      0.76,
+      0,
+      0.24,
+      1
+    ) !important; /* monument */
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .pswp__img,
+    .pswp--open,
+    .pswp__bg {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* PhotoSwipe UI customization (Egyptian colors) */
+  .pswp__button {
+    background-color: var(--color-surface) !important;
+    border: 1px solid var(--color-neutral-light) !important;
+  }
+
+  .pswp__button:hover {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+  }
+
+  .pswp__bg {
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+</style>

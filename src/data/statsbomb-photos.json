@@ -1,0 +1,86 @@
+[
+  {
+    "src": "/images/statsbomb/IMG_20180326_132547.jpg",
+    "alt": "Team photo from Statsbomb Cairo office showing engineering workspace",
+    "caption": "TODO: Add caption describing this photo - team meeting, workspace, or technical discussion context (1-2 sentences).",
+    "width": 1200,
+    "height": 1603
+  },
+  {
+    "src": "/images/statsbomb/IMG_20180410_163253.jpg",
+    "alt": "Engineering team working on live-collection-app initial development",
+    "caption": "TODO: Add caption - April 2018 context, Electron app development, XState implementation.",
+    "width": 1200,
+    "height": 1603
+  },
+  {
+    "src": "/images/statsbomb/IMG_20180813_133937.jpg",
+    "alt": "Statsbomb engineering team collaborating on live data collection system",
+    "caption": "TODO: Add caption describing this photo - architectural sessions, code reviews, or team collaboration moments.",
+    "width": 1200,
+    "height": 1601
+  },
+  {
+    "src": "/images/statsbomb/IMG_20180814_180157.jpg",
+    "alt": "Team collaboration during backend DSL development phase",
+    "caption": "TODO: Add caption - August 2018 context, DSL design, backend evolution.",
+    "width": 1200,
+    "height": 1601
+  },
+  {
+    "src": "/images/statsbomb/IMG_20190625_113053.jpg",
+    "alt": "Team members working on Electron app development and DSL implementation",
+    "caption": "TODO: Add caption describing this photo - technical work, product development, or system architecture discussions.",
+    "width": 1200,
+    "height": 1601
+  },
+  {
+    "src": "/images/statsbomb/IMG_20190815_190736.jpg",
+    "alt": "Cairo engineering team during live-collection-app development phase",
+    "caption": "TODO: Add caption describing this photo - development workflow, team dynamics, or product iteration context.",
+    "width": 1200,
+    "height": 1601
+  },
+  {
+    "src": "/images/statsbomb/_MG_0011.jpg",
+    "alt": "Team technical discussion at Cairo office",
+    "caption": "TODO: Add caption - architectural decisions, technical debates, collaborative problem solving.",
+    "width": 1200,
+    "height": 800
+  },
+  {
+    "src": "/images/statsbomb/_MG_0017.jpg",
+    "alt": "Engineering workspace Cairo office",
+    "caption": "TODO: Add caption - daily workflow, pair programming, code reviews.",
+    "width": 1200,
+    "height": 800
+  },
+  {
+    "src": "/images/statsbomb/IMG_0570.jpg",
+    "alt": "Team meeting and planning session",
+    "caption": "TODO: Add caption - sprint planning, architecture discussions, roadmap alignment.",
+    "width": 1200,
+    "height": 1327
+  },
+  {
+    "src": "/images/statsbomb/IMG_5279.jpg",
+    "alt": "Engineering team members discussing sports data collection workflows",
+    "caption": "TODO: Add caption describing this photo - data collection process, workflow optimization, or team learning moments.",
+    "width": 1200,
+    "height": 900
+  },
+  {
+    "src": "/images/statsbomb/df52f41a-686e-4989-8f34-08b1487920b6.jpg",
+    "alt": "Statsbomb team celebrating milestone in real-time data collection system",
+    "caption": "TODO: Add caption describing this photo - project milestone, team achievement, or cultural moment from 2018-2022 era.",
+    "width": 1200,
+    "height": 675
+  },
+  {
+    "src": "/images/statsbomb/IMG_5078.jpg",
+    "alt": "Engineering team workspace view",
+    "caption": "TODO: Add caption - office environment, team setup, collaborative space.",
+    "width": 1200,
+    "height": 900
+  }
+]

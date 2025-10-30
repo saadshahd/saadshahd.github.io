@@ -81,7 +81,7 @@ const {
 
 <script>
   import { animate } from "motion";
-  import type { AnimationControls } from "motion";
+  import type { DOMKeyframesDefinition, AnimationOptions } from "motion";
   import { goldenTiming, egyptianEasing, prefersReducedMotion } from "../utils/animations";
 
   function initAccordions() {
@@ -107,14 +107,13 @@ const {
           content.style.height = '0px';
           content.style.overflow = 'hidden';
 
-          animate(
-            content,
-            { height: [`0px`, `${fullHeight}px`] },
-            {
-              duration: goldenTiming.fast,
-              easing: egyptianEasing.water
-            }
-          ).finished.then(() => {
+          const keyframes: DOMKeyframesDefinition = { height: [`0px`, `${fullHeight}px`] };
+          const options: AnimationOptions = {
+            duration: goldenTiming.fast,
+            ease: egyptianEasing.water
+          };
+
+          animate(content, keyframes, options).finished.then(() => {
             // Reset to auto for dynamic content
             content.style.height = 'auto';
             content.style.overflow = 'visible';
@@ -128,14 +127,13 @@ const {
           // Force reflow to ensure starting height is applied
           void content.offsetHeight;
 
-          animate(
-            content,
-            { height: [`${currentHeight}px`, `0px`] },
-            {
-              duration: goldenTiming.fast,
-              easing: egyptianEasing.water
-            }
-          );
+          const keyframes: DOMKeyframesDefinition = { height: [`${currentHeight}px`, `0px`] };
+          const options: AnimationOptions = {
+            duration: goldenTiming.fast,
+            ease: egyptianEasing.water
+          };
+
+          animate(content, keyframes, options);
         }
       });
     });
