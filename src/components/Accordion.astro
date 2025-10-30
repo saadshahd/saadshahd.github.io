@@ -1,0 +1,147 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { clsx } from 'clsx';
+
+// CVA variant definitions
+const accordion = cva(
+  'border-b border-neutral-light'
+);
+
+const summary = cva([
+  'flex items-center justify-between gap-4',
+  'py-4 cursor-pointer',
+  'text-base font-medium text-text',
+  'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md',
+  'select-none',
+]);
+
+const chevron = cva([
+  'w-5 h-5 text-neutral shrink-0',
+  'transition-transform duration-200',
+]);
+
+const content = cva([
+  'accordion-content overflow-hidden',
+  'pt-2 pb-6',
+]);
+
+type Props = VariantProps<typeof accordion> & {
+  summary: string;
+  defaultOpen?: boolean;
+  class?: string;
+};
+
+const {
+  summary: summaryText,
+  defaultOpen = false,
+  class: className,
+} = Astro.props;
+---
+
+<details
+  class={clsx(accordion(), className)}
+  data-accordion
+  open={defaultOpen}
+>
+  <summary class={summary()}>
+    {summaryText}
+    <svg
+      class={chevron()}
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  </summary>
+
+  <div class={content()} role="region">
+    <slot />
+  </div>
+</details>
+
+<style>
+  /* Rotate chevron when expanded */
+  details[open] svg {
+    transform: rotate(180deg);
+  }
+
+  /* Remove default disclosure triangle */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::marker {
+    display: none;
+  }
+</style>
+
+<script>
+  import { animate } from "motion";
+  import type { AnimationControls } from "motion";
+  import { goldenTiming, egyptianEasing, prefersReducedMotion } from "../utils/animations";
+
+  function initAccordions() {
+    const details = document.querySelectorAll<HTMLDetailsElement>('details[data-accordion]');
+
+    details.forEach(detail => {
+      // Prevent double initialization (View Transitions support)
+      if (detail.hasAttribute('data-accordion-init')) return;
+      detail.setAttribute('data-accordion-init', 'true');
+
+      const content = detail.querySelector('.accordion-content') as HTMLElement;
+      if (!content) return;
+
+      detail.addEventListener('toggle', () => {
+        if (prefersReducedMotion()) {
+          // Instant toggle - no animation
+          return;
+        }
+
+        if (detail.open) {
+          // Expanding: measure full height, animate from 0
+          const fullHeight = content.scrollHeight;
+          content.style.height = '0px';
+          content.style.overflow = 'hidden';
+
+          animate(
+            content,
+            { height: [`0px`, `${fullHeight}px`] },
+            {
+              duration: goldenTiming.fast,
+              easing: egyptianEasing.water
+            }
+          ).finished.then(() => {
+            // Reset to auto for dynamic content
+            content.style.height = 'auto';
+            content.style.overflow = 'visible';
+          });
+        } else {
+          // Collapsing: measure current height, animate to 0
+          const currentHeight = content.scrollHeight;
+          content.style.height = `${currentHeight}px`;
+          content.style.overflow = 'hidden';
+
+          // Force reflow to ensure starting height is applied
+          void content.offsetHeight;
+
+          animate(
+            content,
+            { height: [`${currentHeight}px`, `0px`] },
+            {
+              duration: goldenTiming.fast,
+              easing: egyptianEasing.water
+            }
+          );
+        }
+      });
+    });
+  }
+
+  // Initialize on page load AND Astro View Transitions
+  document.addEventListener('DOMContentLoaded', initAccordions);
+  document.addEventListener('astro:page-load', initAccordions);
+</script>
