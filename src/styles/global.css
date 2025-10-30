@@ -218,6 +218,11 @@ html {
   ry: var(--diagram-border-radius);
 }
 
+/* Cluster/subgraph spacing - add padding between title and border */
+.mermaid .cluster-label {
+  padding-top: 8px;
+}
+
 /* Node labels - use design system typography */
 .mermaid .nodeLabel {
   font-family: var(--diagram-font-family) !important;
