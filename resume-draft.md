@@ -76,8 +76,6 @@ Built engagement platform for events—the leading event app provider across Mid
 
 Core team member building tools for mobile developers to ship better apps—crash reporting, user feedback, and performance monitoring.
 
-- **Built realtime crash reporting dashboard processing 100K+ events daily.** Designed client SDK for minimal performance overhead while capturing rich debugging context. Challenge: Collect enough data to reproduce bugs without impacting app performance—solved through smart sampling, local aggregation, and batched uploads.
-
 ---
 
 ## Skills
