@@ -20,7 +20,7 @@ import Accordion from '../../components/Accordion.astro';
     </Button>
 
     <Heading level={1} as="h1" class="mb-4">Statsbomb Sports Data Collection</Heading>
-    <Body size="lg" as="p" class="text-neutral mb-6">Architecture as data enabled 10x scale, but building team ownership two years late meant racing geo-political constraints before completing what the domain needed.</Body>
+    <Body size="lg" as="p" class="text-neutral mb-6">Real-time sports data collection scaled from 100 to 1000+ collectors through architecture as data: domain logic as configuration, UI workflows as state machines, and claims-based metadata. What we built worked—expanding to new sports without rewriting code. The lesson came from what took longer: building distributed team ownership two years late meant racing time when external constraints intervened.</Body>
 
     <div class="flex flex-wrap gap-2 mb-4">
       {/* System Characteristics */}
@@ -40,6 +40,23 @@ import Accordion from '../../components/Accordion.astro';
   </div>
 
   <hr class="border-neutral-light my-8" />
+
+  {/* TL;DR Executive Summary */}
+  <section class="mb-12 p-6 bg-surface rounded-lg border border-neutral-light">
+    <Heading level={2} as="h2" class="mb-4">TL;DR: What We Built</Heading>
+
+    <Body size="base" as="p" class="mb-4">
+      Real-time sports data collection system that scaled from 100 to 1000+ collectors while reducing collection time by 75% (16 hours → 4 hours). Achieved through architecture-as-data: domain logic as configuration (DSLs), UI workflows as state machines, and claims-based metadata resolution. Expanded from soccer to American football with minimal code changes.
+    </Body>
+
+    <Body size="base" as="p" class="mb-4">
+      <strong>Key Results:</strong> 99% error prevention, near real-time latency (~20s), 10x collector scale without proportional staffing.
+    </Body>
+
+    <Body size="base" as="p" class='mb-0'>
+      <strong>Core Lesson:</strong> Team building multiplies architectural leverage—waiting until year three to expand beyond two-person partnership meant racing external constraints before completing customer-facing features.
+    </Body>
+  </section>
 
   {/* Problem Section */}
   <section class="mb-8">
@@ -68,6 +85,17 @@ automated golden entity resolution—5 people couldn't manually reconcile metada
 of collectors across hundreds of matches weekly.
 
 Product managers couldn't define new collection requirements without engineering bottlenecks. Collectors waited weeks for tooling updates. Operations needed to scale from 100 collectors to thousands without proportional support staff.
+  </section>
+
+  {/* Business Context Section */}
+  <section class="mb-8">
+    <Heading level={2} as="h2" class="mb-6">Why This Mattered to Statsbomb's Business</Heading>
+
+Statsbomb provided granular sports analytics to professional clubs, broadcasters, and betting operators—markets where data velocity creates competitive advantage. Teams analyzing opponent patterns hours after matches finished fell behind. Broadcasters needed same-day insights for Monday coverage. Betting markets priced faster with real-time event feeds.
+
+The 75% efficiency gain (16 hours → 4 hours) wasn't just operational—it unlocked new revenue streams. Faster collection meant Monday match analysis by Tuesday morning. Multi-sport expansion (soccer to American football) without proportional engineering cost meant entering adjacent markets with existing infrastructure. Scaling from 100 to 1000+ collectors without linear staffing growth preserved margins while growing coverage.
+
+The architectural separation between rules and execution created a strategic moat: product managers could customize data specifications per client without engineering rewrites. A Premier League club wanting detailed positioning data and a Championship club needing only basic events both ran on the same system—different configurations, same codebase.
   </section>
 
   {/* Architecture Section */}
@@ -652,13 +680,11 @@ Month one backend: a single Go endpoint called `sync`—batch, offline. We start
 
 </Accordion>
 
-<Accordion summary="Years Two-Three: Learning to Scale Beyond Two" class="mb-6">
+<Accordion summary="Years Two-Three: Scaling from Partnership to Distributed Team" class="mb-6">
 
-Adham and I could execute together, but the domain kept expanding. We needed to go from a two-person partnership to a distributed team. That transition took longer than it should have. I was young. Doing this for the first time. Leading engineers? I didn't know how.
+Adham and I could execute together, but the domain kept expanding. The transition from two-person partnership to distributed team took longer than it needed—I was learning how to lead engineers while building production systems. The tension: I didn't want to compromise on the architectural ideas the domain required, but keeping that thinking between just us became a bottleneck. Every new subsystem, every architectural decision, required our direct involvement.
 
-The tension: I didn't want to compromise on the ideas the domain and scale enforced us to explore. But keeping architectural thinking between just the two of us meant we became the bottleneck. Every new subsystem, every architectural decision, required our direct involvement.
-
-It took until year three before we finally hired and built mentoring systems.
+By year three, we had built the hiring and mentoring systems needed to scale beyond the core partnership.
 
 </Accordion>
 
@@ -708,9 +734,9 @@ When Waheed, Hadeel, and Abdallah joined, something shifted. They didn't just im
 
 They took the foundational concepts and applied them to contexts we hadn't explored yet.
 
-<Accordion summary="The Geo-Political Constraint" class="mb-6">
+<Accordion summary="The External Constraint" class="mb-6">
 
-In 2022, I had to leave Egypt for geo-political reasons. The timing was brutal. We'd scaled 100 → 1000+ collectors. Internal DSLs shipped. American football expansion worked. But the final goal—a customer-facing DSL letting clients define their own derived facts from atomic events—never shipped.
+In 2022, I left Egypt. By then: 1000+ collectors, internal DSLs shipped, American football expansion worked. The customer-facing DSL that would let clients define their own derived facts remained unfinished—not because the architecture couldn't support it, but because team building started too late.
 
 </Accordion>
 
