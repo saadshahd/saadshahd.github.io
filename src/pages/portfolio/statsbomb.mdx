@@ -45,10 +45,9 @@ The industry-standard tool—Dartfish—couldn't scale to what we needed. Rigid 
 
 Years of daily conversations with collectors revealed their actual workflows and friction points. They needed keyboard flows that built muscle memory. Contextual mappings that reduced cognitive load. Collaboration patterns that eliminated rework.
 
-As Ali walked through how specs evolved—soccer v1, v2, v3—a pattern emerged. Soccer v1→v2 was the same problem as NFL v6→soccer v16. Versioning IS iteration. The dataspec itself needed to be data, not code, so product managers could express rules in one place that drove the entire system.
+The dataspec itself needed to be data, not code, so product managers could express rules in one place that drove the entire system.
 
-Event storming sessions mapped the domain: information, collection, operations, media,
-aggregation. One insight stood out: arbitrary aggregation from atomic facts. Individual
+Event storming sessions mapped the domain: match metadata, event collection, people coordination, media management, contextual aggregation. One insight stood out: arbitrary aggregation from atomic facts. Individual
 passes and dribbles were atomic events. Multiple dribbles by the same player became a
 "carry"—a player-level durational fact. Team possession spanned all team durational facts
 (carry, foul-won, opponent-out) into a higher-level aggregation. Turnovers derived from possession changes.
@@ -60,12 +59,7 @@ information: same player, different spellings; same club, multiple sources. The 
 automated golden entity resolution—5 people couldn't manually reconcile metadata for thousands
 of collectors across hundreds of matches weekly.
 
-**Every sport has different rules.** Soccer wasn't American football. Different
-clients wanted different granularity—some needed basic event tracking, others demanded
-positioning data, pressure metrics, or defensive line heights. Product managers couldn't
-define new collection requirements without engineering bottlenecks. Collectors waited weeks for
-tooling updates. Operations needed to scale from 100 collectors to thousands without proportional
-support staff.
+Product managers couldn't define new collection requirements without engineering bottlenecks. Collectors waited weeks for tooling updates. Operations needed to scale from 100 collectors to thousands without proportional support staff.
   </section>
 
   {/* Architecture Section */}
@@ -82,80 +76,110 @@ We separated three concerns: **entry validation** (dataspec), **sequencing logic
 (DSL), and **aggregation rules** (grouping DSL). Product managers wrote rules in readable
 syntax. The system compiled to execution logic.
 
-As I explained to our Head of Product: "By this we move the domain soul/logic/meaning from the
-developers mind to the hands of the domain people." Ali's response was immediate: "I understand yeah.
-It's a cool concept and v readable."
-
 **Example: Soccer Possession Rules**
 
 ```yaml
-# Rule 1: Successful pass completion (atomic event derivative)
+# Topological Dependency Layers:
+# Layer 1: complete-pass, shot-complete, carry, counter-attack-start (atomic derivatives)
+# Layer 2: possession, tiki-taka (depend on carry)
+# Layer 3: turnover (depends on shot-complete, possession)
+
+# Rule 1: Successful pass completion (atomic event derivative - Layer 1)
 # When: Player A passes, Player B receives successfully
 # Derive: complete-pass metric with distance, angle, pressure
 Derive event complete-pass from events sequence:
   - pass team mine
     then reception field outcome is complete team mine
 
-# Rule 2: Player carry (player-level durational from atomic events)
+# Rule 2: Shot on target (atomic event derivative - Layer 1)
+# When: Shot followed by goalkeeper save or goal
+# Derive: shot-complete (distinguishes blocked/off-target from on-target)
+Derive event shot-complete from events sequence:
+  - shot team mine
+    then goal-keeper field outcome is won team opponent OR goal team mine
+
+# Rule 3: Player carry (player-level durational - Layer 1)
 # When: Same player performs multiple consecutive dribbles
 # Derive: carry (player-level durational fact)
 Derive event carry from events sequence:
   - reception player X
     then dribble player X +  # One or more dribbles by same player
 
-# Rule 3: Defensive recovery counter-attack (simple derived event)
+# Rule 4: Defensive recovery counter-attack (simple derived - Layer 1)
 # When: Team intercepts, then successfully passes
 # Derive: counter-attack-start (high-value transition)
 Derive event counter-attack-start from events sequence:
   - interception field outcome is won team mine
     then pass team mine
 
-# Rule 4: Team possession (team-level aggregation of durational facts)
+# Rule 5: Team possession (team-level aggregation - Layer 2, depends on Rule 3)
 # When: Team has active carry, foul-won, or ball out by opponent
 # Derive: possession (spans all team durational facts)
-Create group possession from events sequence:
+Derive event possession from events sequence:
   - carry team mine +
-    ~ pass-complete team mine
+    ~ reception team mine
     ~ foul-committed team opponent
     ~ out team opponent # ~ Means carries or more including team passes and play restarts
 
-# Rule 5: Tiki-taka analysis (complex sequence)
+# Rule 6: Tiki-taka analysis (complex sequence - Layer 2, depends on Rule 3)
 # When: Team completes 3+ consecutive passes without loss
 # Derive: tiki-taka
-Create group tiki-taka from events sequence:
-  - complete-pass team mine +
-    ~ carry team mine # ~ Means 
+Derive event tiki-taka from events sequence:
+  - pass team mine +
+    ~ carry team mine # ~ Means passes or more including carries between passes
 
-# Rule 6: Turnover (derived from higher-level possession changes)
-# When: Possession shifts from one team to opponent OR opponent shoots
+# Rule 7: Turnover (higher-level derivative - Layer 3, depends on Rules 2 & 5)
+# When: Possession shifts from one team to opponent OR opponent shoots on target
 # Derive: turnover metric
 Derive event turnover from events sequence:
   - possession team mine
-    then possession team opponent* # zero or more possession by the other team
+    then possession team opponent* # zero or more possessions by the other team
     then shot-complete team opponent
 
 ```
-
-<Body size="base" as="p" class="mb-6 leading-relaxed">
-Each rule reads like a sports analyst explaining patterns: "When a team intercepts and then passes, that's a counter-attack." Product managers wrote these in hours, not weeks. The system compiled them to validators that ran in real-time during collection. No engineering bottleneck—the domain experts owned the logic.
-</Body>
 
 <Body size="base" as="p" class="mb-4 leading-relaxed">
   <strong>Example: American Football Drive Segmentation</strong>
 </Body>
 
 ```yaml
-# Rule 1: Successful snap play (atomic event derivative)
+# Topological Dependency Layers:
+# Layer 1: snap-complete, red-zone-conversion, third-down-success, drive-stall (atomic derivatives)
+# Layer 2: offensive-drive (depends on snap-complete)
+# Layer 3: scoring-drive (depends on offensive-drive)
+
+# Rule 1: Successful snap play (atomic event derivative - Layer 1)
 # When: Snap followed by successful gain (run or pass completion)
-# Derive: snap-complete metric
+# Derive: snap-complete
 Derive event snap-complete from events sequence:
   - snap team mine
     then run field outcome is complete team mine
 
-# Rule 2: Offensive drive (team-level aggregation)
+# Rule 2: Red zone conversion (atomic derivative - Layer 1)
+# When: Team enters red zone (20-yard line) and scores touchdown
+# Derive: red-zone-conversion
+Derive event red-zone-conversion from events sequence:
+  - snap field yard-line is less-than 20 team mine
+    then touchdown team mine
+
+# Rule 3: Third-down success (atomic derivative - Layer 1)
+# When: Successful play on 3rd down maintains possession (first down reset)
+# Derive: third-down-success
+Derive event third-down-success from events sequence:
+  - snap field down is 3 team mine
+    then snap field down is 1 team mine # Reset to first down
+
+# Rule 4: Drive stall (atomic derivative - Layer 1)
+# When: Team fails to convert on 4th down or punts
+# Derive: drive-stall
+Derive event drive-stall from events sequence:
+  - snap team mine +
+    then turnover-on-downs team mine OR punt team mine
+
+# Rule 5: Offensive drive (team-level aggregation - Layer 2, depends on Rule 1)
 # When: Team gains possession and runs offensive plays
 # Derive: offensive-drive (spans all plays until scoring/turnover)
-Create group offensive-drive from events sequence:
+Derive event offensive-drive from events sequence:
   - kickoff-return field outcome is complete team mine
     ~ punt-return field outcome is complete team mine
     ~ turnover-recovery team mine
@@ -163,43 +187,15 @@ Create group offensive-drive from events sequence:
     ~ snap-complete team mine # ~ Means snaps or more including completions
     until touchdown team mine OR field-goal team mine OR turnover team opponent
 
-# Rule 3: Red zone conversion (simple derived event)
-# When: Team enters red zone (20-yard line) and scores touchdown
-# Derive: red-zone-conversion
-Derive event red-zone-conversion from events sequence:
-  - snap field yard-line is less-than 20 team mine
-    then touchdown team mine
-
-# Rule 4: Third-down success (derived from down resets)
-# When: Successful play on 3rd down maintains possession (first down reset)
-# Derive: third-down-success
-Derive event third-down-success from events sequence:
-  - snap field down is 3 team mine
-    then snap field down is 1 team mine # Reset to first down
-
-# Rule 5: Drive stall (complex sequence)
-# When: Team fails to convert on 4th down or punts
-# Derive: drive-stall
-Derive event drive-stall from events sequence:
-  - snap team mine +
-    then turnover-on-downs team mine OR punt team mine
-
-# Rule 6: Scoring drive (derived from higher-level drive outcome)
+# Rule 6: Scoring drive (higher-level derivative - Layer 3, depends on Rule 5)
 # When: Offensive drive ends with touchdown or field goal
 # Derive: scoring-drive
 Derive event scoring-drive from events sequence:
   - offensive-drive team mine
-    then touchdown team mine*  # zero or more touchdowns
-    then field-goal field outcome is good team mine
+    then touchdown team mine OR field-goal field outcome is good team mine
 ```
 
-<Body size="base" as="p" class="mb-6 leading-relaxed">
-American football rules are entirely different from soccer—downs, yards, drives. Yet the DSL abstraction held. Product managers familiar with the sport wrote drive segmentation rules, red-zone efficiency tracking, and third-down conversion logic without touching application code. The syntax stayed readable: "When snap at yard-line less-than 20 then touchdown, that's red-zone-conversion." Same language pattern, different sport. Versioning became iteration.
-</Body>
-
 When we expanded to American football, product managers wrote new dataspecs and grouping rules.
-Minimal engineering bottleneck. The DSL syntax stayed readable—a non-engineer could understand the
-domain logic without reading code.
 
 **Visualizing the Data Flow**
 
@@ -273,45 +269,6 @@ graph TD
         <Body size="sm" as="p" class="mb-6 text-neutral italic">
           The functional pipeline splits into 3 paths, then recombines. Path 1: map filters events to one team. Path 2: reduce derives possession phases from team events. Path 3: reduce aggregates match statistics. The <strong>overlap</strong> function then stacks all 3 layers (events + phases + stats) onto a single timeline—like layers in Photoshop. Same temporal axis, multiple analytical dimensions visible simultaneously.
         </Body>
-
-**The Functional Pipeline in Code**
-
-```javascript
-import { map, reduce, pipe } from 'ramda';
-
-// Pure functions - no side effects
-const getTeamFacts = (teamId) => (event) => event.teamId === teamId;
-
-const durationalFactsReducer = (acc, event) => {
-  // Derive possession phases: carry, defense, loose
-  const phase = matchPhase(event, acc.lastPhase);
-  return [...acc, { ...event, phase }];
-};
-
-const officialRecordsReducer = (acc, event) => {
-  // Aggregate match records: shots, passes, tackles
-  return updateOfficialRecords(acc, event);
-};
-
-// Compose the pipeline
-const deriveCompoundFacts = (teamId, atomicEvents) =>
-  pipe(
-    // Layer 0 → Team-specific events
-    map(getTeamFacts(teamId)),
-
-    // Team events → Durational facts
-    reduce(durationalFactsReducer, []),
-
-    // Overlap with official records
-    (teamAFacts) => overlap(
-      teamAFacts,
-      reduce(durationalFactsReducer, teamAFacts),
-      reduce(officialRecordsReducer, [], atomicEvents)
-    )
-  )(atomicEvents);
-```
-
-Every transformation is pure. Every state transition is explicit. The entire match derives from atomic facts through composition—no hidden mutations, no implicit dependencies.
     </div>
 
     {/* Live-Collection-App Subsection */}
@@ -344,9 +301,24 @@ Five major state machines orchestrated the app: main room, event entry, player c
 We used Mousetrap with module scoping. Same key, different action per context:
 
 ```javascript
-// Context-aware shortcuts
-traps['main-room'].bind('t', () => addEvent(x: pass | shot | ...));
-traps['freeze-frame'].bind('t', () => toggleTeamView());
+// Context-aware keyboard mappings
+const keyboardShortcuts = {
+  'main-room': {
+    't': 'Create new event (pass, shot, tackle)',
+    'p': 'Add player to event',
+    '/': 'Toggle video loop mode',
+    '←→': 'Rewind/forward 5 seconds'
+  },
+  'freeze-frame': {
+    't': 'Toggle team view (home/away)',
+    '1-9': 'Select player by jersey number',
+    'Enter': 'Confirm positions'
+  }
+};
+
+// Same key 't', different meaning per context
+bindShortcuts('main-room', keyboardShortcuts['main-room']);
+bindShortcuts('freeze-frame', keyboardShortcuts['freeze-frame']);
 ```
 
 Collectors touch-typed events like Vim users touch-type code. Video control (arrow keys), event creation (letter keys), navigation (/, Z), editing (Shift+E), freeze frames (number keys). Hands stayed on keyboard. Eyes stayed on video.
@@ -356,9 +328,11 @@ Collectors touch-typed events like Vim users touch-type code. Video control (arr
 The interface adapted based on game state and previous decisions. When a collector selected "Pass," the system showed only valid pass types for that player's position. Auto-filled mandatory fields with single valid options. Skipped irrelevant choices entirely.
 
 ```javascript
-// Progressive field collection
-if (fieldIsSingle && validOptionsCount === 1) {
-  return getNewFields(fields, fieldSpec, head(options).value);
+// After DSL sequence rules run and determine valid next options
+// If only one option remains valid, auto-fill and skip the question
+// Example: "Pass" event followed by rules determining only "Reception" is valid → auto-fill
+if (hasOnlyOneValidOption(currentField, validOptions)) {
+  return progressToNextField(allFields, currentField, validOptions[0]);
 }
 ```
 
@@ -374,34 +348,83 @@ Freeze frames (positioning data for all 22 players) were semi-automated. Collect
 
 **Real-Time Collaboration**
 
-GraphQL subscriptions via WebSocket enabled Google Docs-style collaboration. Multiple collectors worked concurrently—one on base events, another on player assignments. Changes appeared instantly. Conflicts resolved through telemetry tracking.
+GraphQL subscriptions via WebSocket enabled Google Docs-style collaboration. Multiple collectors worked concurrently—one collector led by publishing the base event name, others contributed their assigned data pieces (player positions, freeze frames, detailed attributes). Role separation by design meant no conflicts were possible. Freeze frame positioning and manual location data coexisted as valid refinements at different granularities.
 
-This tool became the foundation. It proved that architecture as data worked in practice: the dataspec drove UI validation, the DSL defined legal event sequences, the state machines enforced correctness. 16 hours → 4 hours per match. The backend scaled to support what the UX tool proved collectors needed.
+        <Body size="sm" as="p" class="mb-4 text-neutral">
+          Concurrent collection follows a pub-sub pattern: lead collector establishes base event identity,
+          specialized collectors subscribe and contribute domain-specific data. Role separation prevents conflicts—
+          each collector owns distinct data fields, no overlapping writes.
+        </Body>
+
+        <MermaidDiagram
+          id="concurrent-collection"
+          caption="Real-time collaborative collection: lead collector publishes base event via GraphQL subscription, concurrent collectors contribute specialized data pieces (positions, freeze frames, attributes) without conflicts"
+          relationships={[
+            "Lead Collector (amber) publishes base event (shot, event_id: abc123, timestamp, team)",
+            "GraphQL Subscription (blue) broadcasts base event to all active collectors via WebSocket",
+            "Position Collector (amber) subscribes and contributes player_positions data field",
+            "Freeze Frame Collector (amber) subscribes and contributes freeze_frame_data field",
+            "Attributes Collector (amber) subscribes and contributes detailed_attributes field",
+            "Merge Service (emerald) combines all contributions into complete event record",
+            "No conflicts possible: each collector writes to distinct data fields (role separation by design)"
+          ]}
+        >
+
+```mermaid
+graph TD
+    LEAD[Lead Collector
+    Creates base event] -->|GraphQL
+    subscription| SUB[Base Event Published
+    shot: abc123
+    team: A, time: 45:30]
+
+    SUB -->|WebSocket
+    broadcast| POS[Position Collector
+    Subscribes]
+    SUB -->|WebSocket
+    broadcast| FREEZE[Freeze Frame Collector
+    Subscribes]
+    SUB -->|WebSocket
+    broadcast| ATTR[Attributes Collector
+    Subscribes]
+
+    POS -->|Contributes
+    player_positions| MERGE[Merge Service
+    Combines data]
+    FREEZE -->|Contributes
+    freeze_frame_data| MERGE
+    ATTR -->|Contributes
+    detailed_attributes| MERGE
+
+    MERGE --> FINAL[Complete Event
+    shot: abc123
+    All data pieces merged]
+
+    classDef atomic fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
+    classDef derived fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
+    classDef system fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
+
+    class LEAD,POS,FREEZE,ATTR atomic
+    class SUB derived
+    class MERGE,FINAL system
+```
+
+        </MermaidDiagram>
+
+        <Body size="sm" as="p" class="mb-6 text-neutral italic">
+          The lead collector (amber) establishes event identity. GraphQL subscriptions (blue) broadcast via WebSocket.
+          Concurrent collectors (amber) contribute specialized data to distinct fields. The merge service (emerald)
+          combines contributions without conflicts—role separation ensures each collector owns unique data dimensions.
+        </Body>
+
+This tool became the foundation. It proved that architecture as data worked in practice: the dataspec drove UI validation, the DSL defined legal event sequences, the state machines enforced correctness. 16 sequential hours → 4 man-hours during the live match with near real-time (~20s latency). The backend scaled to support what the UX tool proved collectors needed.
     </div>
 
     {/* Event Collection Subsection */}
     <div class="mb-10">
       <Heading level={3} as="h3" class="mb-4"><span>Backend Evolution: From Batch to Real-Time</span></Heading>
 
-Architecture emerged from interpreting workflow friction, not transcribing requests. Breaking
-matches down by decision rather than team—something no collector explicitly asked for—increased
-correctness without additional effort. The collection experience was redesigned to be valid by
-default: computer vision assisted input, contextual keyboard mappings reduced cognitive load,
-and linting caught 99% of errors automatically.
-
-This shifted validation to prevention. Collectors focused on judgment over correction—handling
-the 1% edge cases where human expertise mattered (event type conflicts, judgment calls on data
-points) rather than catching preventable mistakes. Systems designed for human capability let
-practitioners work within their actual limits, not aspirational ones.
-
-The technical architecture separated collection rules from execution logic. We built a DSL that
-let product managers define sports rules without engineering involvement. The system treated
-each sport's requirements as configuration, not code. When new sports arrived or client needs
-changed, updates became data changes instead of application rewrites.
-
-Making illegal states unrepresentable meant the system rejected invalid data by design.
-Prevention, not validation. Operations scaled from 100 collectors to thousands without
-proportional support staff.
+Breaking matches down by decision rather than team increased correctness without additional effort. Computer vision assisted input, contextual keyboard mappings reduced cognitive load, and linting caught 99% of errors automatically. Collectors focused on judgment over correction—handling the 1% edge cases where human expertise mattered rather than catching preventable mistakes.
 
 **Beyond Simple Sequences: Event Dependency Graphs**
 
@@ -413,14 +436,14 @@ proportional support staff.
 
         <MermaidDiagram
           id="event-dependency"
-          caption="Phase-driven event validation: clearance triggers 'loose' phase, enabling ball-recovery or fifty-fifty. Successful recovery enables 'carry' phase with pass. State machine prevents invalid transitions."
+          caption="Phase-driven event validation: clearance (Layer 0) triggers 'loose' phase, enabling ball-recovery or fifty-fifty (Layer 0). Successful recovery triggers 'possession' phase, enabling pass/dribble (Layer 0). Only atomic events determine phases."
           relationships={[
-            "clearance (team A) triggers loose phase - neither team controls ball",
-            "Loose phase allows: ball-recovery or fifty-fifty (temporal successors)",
-            "ball-recovery (outcome: complete) triggers carry phase - team B possession",
-            "Carry phase allows: pass (type: recovery) - logical successor depends on successful recovery",
-            "fifty-fifty (outcome: won-B) also triggers carry phase - alternative path to possession",
-            "Phase state machine validates all transitions - prevents illegal sequences"
+            "clearance (team A, Layer 0 atomic) triggers loose phase - neither team controls ball",
+            "Loose phase allows: ball-recovery or fifty-fifty (Layer 0 atomic temporal successors)",
+            "ball-recovery (outcome: complete, Layer 0) triggers possession phase - team B controls ball",
+            "Possession phase allows: pass, dribble, reception (Layer 0 atomic events only)",
+            "fifty-fifty (outcome: won-B, Layer 0) also triggers possession phase - alternative path",
+            "Phase state machine uses only Layer 0 events - derived events (carry, turnover) computed separately"
           ]}
         >
 
@@ -429,55 +452,64 @@ graph TD
     subgraph "Defense Phase"
         CL["clearance
         team: A
-        bodyPart: head"]
+        Layer 0"]
     end
 
     subgraph "Loose Phase (No Control)"
         BR["ball-recovery
         team: B
-        outcome: complete"]
+        outcome: complete
+        Layer 0"]
         FF["fifty-fifty
         team: A vs B
-        outcome: won-B"]
+        outcome: won-B
+        Layer 0"]
     end
 
-    subgraph "Carry Phase (Possession)"
+    subgraph "Possession Phase (Team B)"
         PASS["pass
         team: B
-        type: recovery"]
+        Layer 0"]
+        DRIB["dribble
+        team: B
+        Layer 0"]
     end
 
     CL -->|PREV
     triggers loose| BR
     CL -->|PREV
     triggers loose| FF
-    BR -->|DEPENDS_ON
-    recovery success| PASS
-    FF -->|DEPENDS_ON
-    won possession| PASS
+    BR -->|triggers
+    possession| PASS
+    BR -->|triggers
+    possession| DRIB
+    FF -->|triggers
+    possession| PASS
 
     CL -.->|phase rule:
     loose allows| BR
     CL -.->|phase rule:
     loose allows| FF
     BR -.->|phase rule:
-    carry allows| PASS
+    possession allows| PASS
+    BR -.->|phase rule:
+    possession allows| DRIB
     FF -.->|phase rule:
-    carry allows| PASS
+    possession allows| PASS
 
     classDef defense fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
     classDef loose fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
-    classDef carry fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
+    classDef possession fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
 
     class CL defense
     class BR,FF loose
-    class PASS carry
+    class PASS,DRIB possession
 ```
 
         </MermaidDiagram>
 
         <Body size="sm" as="p" class="mb-6 text-neutral italic">
-          Solid lines show temporal flow (PREV - what happened next). Dashed lines show phase validation rules (what transitions are legal). The state machine prevents invalid sequences—you can't pass during "loose" phase, can't recover during "carry" phase. Architecture makes illegal states unrepresentable.
+          Solid lines show temporal flow (PREV - what happened next). Dashed lines show phase validation rules (what transitions are legal). Only Layer 0 atomic events drive phase transitions. The state machine prevents invalid sequences—you can't pass during "loose" phase, can't recover during "possession" phase. Derived events like "carry" are computed separately from sequences of Layer 0 events.
         </Body>
     </div>
 
@@ -555,14 +587,7 @@ graph TD
           team (emerald) resolves ambiguity. Golden entities cascade updates to dependent systems automatically.
         </Body>
 
-The same principle as event collection: shift validation to prevention, let humans focus on
-judgment over correction. The system prevented duplicate entities by design, caught conflicts
-automatically, and escalated true ambiguity. The 5-person team focused on the 1-2% of ambiguous
-cases requiring domain expertise (is "FC Barcelona" the same as "Barcelona FC"? yes; but
-"Manchester United" vs "Manchester City"? no).
-
-Architecture as multiplier, not bottleneck: 5 people supporting thousands through claims-based
-systems designed for small teams at massive scale.
+The system prevented duplicate entities by design, caught conflicts automatically, and escalated true ambiguity. The 5-person team focused on the 1-2% of ambiguous cases requiring domain expertise (is "FC Barcelona" the same as "Barcelona FC"? yes; but "Manchester United" vs "Manchester City"? no).
     </div>
   </section>
 
@@ -576,44 +601,23 @@ systems designed for small teams at massive scale.
 
 **Quantitative Results**
 
-**75% reduction in manual effort:** Collection time dropped from 16 hours to 4 hours
-per match through decision-based splitting (not team-based). Breaking matches by decision rather
-than team—something no collector explicitly asked for—increased correctness without additional
-effort.
+**Real-time collection with 75% efficiency gain:** Collection shifted from 16 sequential hours post-match to 4 man-hours during the live match with near real-time (~20s latency).
 
-**Minimal engineering bottleneck:** When we expanded to American football, product managers
-wrote new dataspecs and grouping rules. Minimal code changes required. The DSL investment paid off when
-we hit scale and needed sport flexibility.
+**Minimal engineering bottleneck:** When we expanded to American football, product managers wrote new dataspecs and grouping rules with minimal code changes.
 
 **99% error prevention:** Linting and contextual validation caught errors automatically.
 Collectors focused on the 1% judgment calls where human expertise mattered—event type conflicts,
 ambiguous data points—rather than catching preventable mistakes.
 
-**Non-linear leverage:** Operations scaled from 100 to 1000+ collectors without
-proportional staffing increases. The architecture created leverage that only materialized at
-scale (1000+, not 100).
+**Non-linear leverage:** Operations scaled from 100 to 1000+ collectors without proportional staffing increases.
 
 **Qualitative Changes**
 
-**Collector experience improved:** Keyboard flows built muscle memory. Contextual
-mappings reduced cognitive load. Computer vision assisted input. The shift from correction to
-judgment meant collectors worked within their actual capabilities, not aspirational ones. Systems
-designed for human constraints, not against them.
+**Collector experience:** Keyboard flows built muscle memory. Contextual mappings reduced cognitive load. Computer vision assisted input.
 
-**Client customization became self-service:** Different granularity requirements—basic
-event tracking or advanced positioning data—handled through configuration. Clients could define
-custom aggregations without engineering involvement. The DSL syntax stayed readable enough that
-domain experts could understand the logic.
+**Client customization:** Different granularity requirements—basic event tracking or advanced positioning data—handled through configuration.
 
-**Metadata team stayed small despite 10x growth:** The claims-based architecture with
-automated conflict detection meant the 5-person team queried pending conflicts, reviewed side-by-side,
-resolved once, and the system cascaded updates. They focused on the 1-2% of ambiguous cases requiring
-domain expertise.
-
-**The leverage principle:** Small teams achieve massive scale when architecture is
-designed around human constraints. Separation of rules from execution creates non-linear leverage—but
-only at scale. The same patterns that feel like over-engineering at 100 collectors become essential
-at 1000+.
+**Metadata team stayed small:** The 5-person team queried pending conflicts, reviewed side-by-side, resolved once, and the system cascaded updates.
   </section>
 
   {/* Team Building Section */}
@@ -624,13 +628,13 @@ The architecture worked. But building it was only half the story.
 
 **Year One: Starting Alone**
 
-Week one was me and Ali hand-writing rules. Month one backend: a single Go endpoint called `sync`—batch, offline. I started building the live-collection-app with an airplane engineer friend who was shifting careers to software. No team. No process. Just the urgent need to replace Dartfish.
+Week one was me and Ali hand-writing rules. Month one backend: a single Go endpoint called `sync`—batch, offline. I started building the live-collection-app with an aircraft engineer friend who was shifting careers to software. No team. No process. Just the urgent need to replace Dartfish.
 
 **Years Two-Three: The Bottleneck**
 
 It took two years before I got involved in hiring and mentoring. I was young. Doing this for the first time. Leading engineers? I didn't know how.
 
-The tension: I didn't want to compromise on the innovative ideas the domain and scale enforced us to explore. "Architecture as data" wasn't optional—it was structural. But innovation without transmission meant I became the bottleneck. Every new context, every subsystem expansion, every architectural decision required me.
+The tension: I didn't want to compromise on the innovative ideas the domain and scale enforced us to explore. But innovation without transmission meant I became the bottleneck. Every new context, every subsystem expansion, every architectural decision required me.
 
 **The Breakthrough: Team Ownership**
 
@@ -641,7 +645,7 @@ When we finally hired engineers and built mentoring, something shifted. Adham, H
 - **Waheed**: Owned the metadata system (claims-based resolution, conflict detection).
 - **Abdallah**: Owned the live-collection-app (Electron, XState, UX evolution).
 
-They took the foundational concepts—architecture as data, separation of rules from execution, prevention over validation—and applied them to contexts I hadn't reached yet.
+They took the foundational concepts and applied them to contexts I hadn't reached yet.
 
 **The Geo-Political Constraint**
 
@@ -658,66 +662,29 @@ Architecture shapes what's possible. But people make it real.
 
   {/* Lessons Section */}
   <section class="mb-16">
-    <Heading level={2} as="h2" class="mb-6"><span>Lessons: What Worked and What I'd Change</span></Heading>
+    <Heading level={2} as="h2" class="mb-6"><span>Lessons: Context Shapes What Works</span></Heading>
 
-**What Worked: Validation Through 4 Years**
+**What Worked in This Context**
 
-The core approach held from soccer through American football expansion. Three principles proven
-in production:
-
-      <Body size="base" as="p" class="mb-4 leading-relaxed pl-6">
-        <strong>1. Architecture emerges when you chase why/where users struggle, not what features they request.</strong>
-      </Body>
-
-      <Body size="base" as="p" class="mb-6 leading-relaxed pl-6">
-        Breaking matches by decision (not team) came from observing collector friction, not explicit
-        requests. The best insights came from watching where people slowed down, what made them hesitate,
-        where they needed workarounds—patterns no feature request would reveal.
-      </Body>
-
-      <Body size="base" as="p" class="mb-4 leading-relaxed pl-6">
-        <strong>2. Separation of rules from execution creates non-linear leverage at scale.</strong>
-      </Body>
-
-      <Body size="base" as="p" class="mb-6 leading-relaxed pl-6">
-        The DSL investment paid off when we hit 1000+ collectors and needed American football support.
-        At 100 collectors, the separation felt like over-engineering. At 1000+, it became the only path
-        forward. Product managers could write new sport rules without engineering bottlenecks—exactly what
-        we needed when scaling.
-      </Body>
-
-      <Body size="base" as="p" class="mb-4 leading-relaxed pl-6">
-        <strong>3. Design for the 80% common case; production iteration reveals the 20% edge cases.</strong>
-      </Body>
-
-      <Body size="base" as="p" class="mb-6 leading-relaxed pl-6">
-        We didn't predict every aggregation pattern upfront—we built the system to handle arbitrary patterns
-        as they emerged. The DSL syntax was flexible enough that new requirements became configuration
-        changes, not architecture rewrites. This prevented premature optimization while staying adaptable.
-      </Body>
+Architecture emerged from observing where collectors struggled—watching hesitation, workarounds, and slowdowns. Separation of rules from execution paid off at 1000+ collectors (felt like over-engineering at 100). Designing for 80% common cases with flexible extension points prevented premature optimization.
 
 **What I'd Change**
 
-**Invest in team building from day one, not year three.** The two-year delay in hiring and mentoring meant racing against geo-political constraints when they hit. Adham, Hadeel, Waheed, and Abdallah proved that engineers with ownership iterate beyond the original vision—but they came too late to complete the customer-facing DSL before I left Egypt.
+Invest in team building from day one, not year three. The two-year delay meant racing geo-political constraints before completing the customer-facing DSL. Adham, Hadeel, Waheed, and Abdallah iterated beyond my original vision—they should have started sooner.
 
-**Event storming sooner.** We did domain modeling 6 months in—I'd start Day 1 next time. Understanding bounded contexts (information, collection, operations, media, aggregation) shaped every technical decision afterward.
+Event storming from Day 1, not month 6. Understanding bounded contexts (match metadata, event collection, people coordination, media management, contextual aggregation) shaped every technical decision.
 
-The separation principle itself held under production load for 4 years. The approach—listen for friction, separate rules from execution, design for 80% and iterate for 20%—proved resilient across sports, client needs, and scale. But architecture alone isn't enough. Team transmission matters as much as technical innovation.
+**When These Patterns Apply**
 
-**When to Apply These Principles**
+These aren't universal truths—they worked because of specific conditions:
 
-**Scale threshold matters:** Separation creates leverage at 1000+, not 100. Don't
-over-engineer for small scale. If you're at 50 users with stable requirements, build directly.
-If you're projecting 10x growth with variant needs, invest in separation early.
+**Scale threshold:** Separation creates leverage at 1000+ users, not 100. At 50 users with stable requirements, build directly. At 10x growth projections with variant needs, invest in separation.
 
-**Human-in-the-loop domains:** When experts have tacit knowledge worth capturing in
-systems—sports analytics, medical diagnosis, legal review. These domains benefit from DSLs that
-let domain experts express rules without coding. The more complex the domain expertise, the more
-value in externalizing logic as configuration.
+**Domain complexity:** Sports analytics, medical diagnosis, legal review—domains where experts have tacit knowledge worth externalizing. The more complex the expertise, the more value in DSLs that let non-engineers express rules.
 
-**Multi-tenant/multi-variant requirements:** When configuration beats code—multiple
-sports, client customization needs, regional variations. If every customer wants slightly different
-behavior, separation prevents maintaining N codebases. One system, many configurations.
+**Multi-variant requirements:** Multiple sports, client customization, regional variations. When every customer wants different behavior, configuration prevents maintaining N codebases.
+
+**The meta-lesson:** More domain knowledge → better problem diagnosis → better architectural decisions → concepts that create value instead of complexity. Context always determines what works.
   </section>
 
   <hr class="border-neutral-light my-8" />
