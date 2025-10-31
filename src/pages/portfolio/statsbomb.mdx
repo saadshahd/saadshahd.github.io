@@ -200,29 +200,20 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
     {/* System 1: Domain Logic */}
-    <Card variant="minimal" href="#domain-config" class="border-l-4 border-l-skill hover:shadow-lg transition-shadow">
-      <div class="flex items-center gap-3 mb-3">
-        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill" aria-label="Step 1 of 3">1</span>
-        <Heading level={4} as="h4" class="text-base font-semibold" style="text-wrap: balance;">Domain Configuration</Heading>
-      </div>
+    <Card variant="minimal" href="#technical-sections" data-target="domain-config" class="border-l-4 border-l-skill hover:shadow-lg transition-shadow">
+      <Heading level={4} as="h4" class="text-base font-semibold mb-3" style="text-wrap: balance;">Domain Configuration</Heading>
       <Body size="sm" as="p" class="text-text-lighter">Product managers ship dataspec rules without engineering deploys—configuration over code</Body>
     </Card>
 
     {/* System 2: Live-Collection-App */}
-    <Card variant="minimal" href="#collection-app" class="border-l-4 border-l-category hover:shadow-lg transition-shadow">
-      <div class="flex items-center gap-3 mb-3">
-        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category" aria-label="Step 2 of 3">2</span>
-        <Heading level={4} as="h4" class="text-base font-semibold" style="text-wrap: balance;">Live-Collection-App</Heading>
-      </div>
+    <Card variant="minimal" href="#technical-sections" data-target="collection-app" class="border-l-4 border-l-category hover:shadow-lg transition-shadow">
+      <Heading level={4} as="h4" class="text-base font-semibold mb-3" style="text-wrap: balance;">Live-Collection-App</Heading>
       <Body size="sm" as="p" class="text-text-lighter">Prevention over validation—state machines make illegal workflows impossible structurally</Body>
     </Card>
 
     {/* System 3: Backend Evolution */}
-    <Card variant="minimal" href="#backend-evolution" class="border-l-4 border-l-status hover:shadow-lg transition-shadow">
-      <div class="flex items-center gap-3 mb-3">
-        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status" aria-label="Step 3 of 3">3</span>
-        <Heading level={4} as="h4" class="text-base font-semibold" style="text-wrap: balance;">Backend Evolution</Heading>
-      </div>
+    <Card variant="minimal" href="#technical-sections" data-target="backend-evolution" class="border-l-4 border-l-status hover:shadow-lg transition-shadow">
+      <Heading level={4} as="h4" class="text-base font-semibold mb-3" style="text-wrap: balance;">Backend Evolution</Heading>
       <Body size="sm" as="p" class="text-text-lighter">Temporal dependencies and provenance tracking—event graphs resolve causality at scale</Body>
     </Card>
   </div>
@@ -240,15 +231,19 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
     </Fragment>
   </Callout>
 
-    {/* DSL Subsection - Narrative Mode */}
-    <div class="mb-10" id="domain-config">
-      <div class="flex items-start gap-3 mb-6">
-        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill mt-1" aria-label="System 1 of 3">1</span>
-        <div class="flex-1">
-          <Heading level={3} as="h3" class="mb-1">Domain Logic as Configuration</Heading>
-          <Body size="sm" as="p" class="text-text-lighter italic">Bounded context: Event collection dataspec</Body>
-        </div>
-      </div>
+  {/* Technical sections wrapper for card link scroll target */}
+  <div id="technical-sections" aria-label="Technical architecture sections">
+    <Accordion
+      grouped
+      position="first"
+      id="domain-config"
+      summary="Domain Logic as Configuration"
+      variant="default"
+      defaultOpen={false}
+    >
+      <Body size="sm" as="p" class="text-text-lighter italic mb-4">
+        Bounded context: Event collection dataspec
+      </Body>
 
 Product managers needed to express domain logic—entry validation, sequencing logic, aggregation rules—in readable syntax that compiled to execution logic. The dataspec as configuration, not code.
 
@@ -257,17 +252,19 @@ Atomic events (passes, shots) aggregated into derived facts (possession phases, 
 **The payoff came in 2020.** When we expanded to American football, product managers wrote drive segmentation rules using the same DSL patterns. New sport, same architectural separation. Zero engineering bottleneck.
 
 Without DSLs, every new rule required engineering deploys. With DSLs, product managers shipped dataspec changes independently—velocity without correctness trade-offs.
-    </div>
+    </Accordion>
 
-    {/* Live-Collection-App Subsection - Narrative Mode */}
-    <div class="mb-10" id="collection-app">
-      <div class="flex items-start gap-3 mb-6">
-        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category mt-1" aria-label="System 2 of 3">2</span>
-        <div class="flex-1">
-          <Heading level={3} as="h3" class="mb-1">The Live-Collection-App: UX as First Principle</Heading>
-          <Body size="sm" as="p" class="text-text-lighter italic">Bounded context: Collector workflows and real-time collaboration</Body>
-        </div>
-      </div>
+    <Accordion
+      grouped
+      position="middle"
+      id="collection-app"
+      summary="The Live-Collection-App: UX as First Principle"
+      variant="default"
+      defaultOpen={false}
+    >
+      <Body size="sm" as="p" class="text-text-lighter italic mb-4">
+        Bounded context: Collector workflows and real-time collaboration
+      </Body>
 
 The first thing we built was the tool collectors would use every day—an Electron desktop app replacing Dartfish's rigid forms with keyboard-first workflows.
 
@@ -280,24 +277,27 @@ The first thing we built was the tool collectors would use every day—an Electr
 **Concurrent Collection**: Hadeel implemented GraphQL subscriptions via WebSocket. One collector published the base event, others subscribed with specialized contributions (positions, attributes, timing). Zero overlapping responsibility = zero merge conflicts.
 
 The dataspec drove UI validation, DSL defined legal sequences, state machines constrained invalid states. Architecture caught errors before collectors saw them.
-    </div>
+    </Accordion>
 
-    {/* Backend + Metadata Subsection - Narrative Mode */}
-    <div class="mb-10" id="backend-evolution">
-      <div class="flex items-start gap-3 mb-6">
-        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status mt-1" aria-label="System 3 of 3">3</span>
-        <div class="flex-1">
-          <Heading level={3} as="h3" class="mb-1">Backend Evolution: Event Graphs + Claims-Based Metadata</Heading>
-          <Body size="sm" as="p" class="text-text-lighter italic">Bounded contexts: Event graphs, match metadata, temporal resolution</Body>
-        </div>
-      </div>
+    <Accordion
+      grouped
+      position="last"
+      id="backend-evolution"
+      summary="Backend Evolution: Event Graphs + Claims-Based Metadata"
+      variant="default"
+      defaultOpen={false}
+    >
+      <Body size="sm" as="p" class="text-text-lighter italic mb-4">
+        Bounded contexts: Event graphs, match metadata, temporal resolution
+      </Body>
 
 **Event Graphs**: Sequential event logs couldn't answer "what caused this turnover?" We needed both temporal relationships (clearance BEFORE recovery) AND logical relationships (clearance CAUSED loose phase). Events formed directed acyclic graphs with typed edges—enabling timeline replay and root-cause analysis for data quality debugging.
 
 **Waheed's Claims Breakthrough**: Match metadata from thousands of collectors meant inevitable conflicts—same player, different spellings. Waheed built claims-based metadata resolution. **The insight: metadata isn't key-value pairs, it's claims from actors.** System detected conflicts automatically, routed 1-2% ambiguous cases to the 5-person metadata team. They resolved once via claims interface—system cascaded to all dependent data. The team handled ambiguity; the system handled scale.
 
 **Backend Evolution**: Month one: Omar Negm built the single Go endpoint called `sync`—batch, offline. In year two (2019), when Omar left to teach kids software, Adham joined and designed the evolution to Kafka as persistence center, event logs as foundation—enabling real-time collection at broadcaster scale.
-    </div>
+    </Accordion>
+  </div>
   </section>
 
   <SectionDivider spacing="major" />
