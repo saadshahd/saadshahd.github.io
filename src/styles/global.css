@@ -62,6 +62,13 @@
   --color-category: var(--color-badge-category-border); /* #0EA5E9 - Blue */
   --color-status: var(--color-badge-status-border);    /* #10B981 - Emerald */
 
+  /* Callout Variant Backgrounds - WCAG AA Compliant */
+  --color-callout-insight-bg: #FEF9E7;     /* Lightest gold tint */
+  --color-callout-context-bg: #EFF6FF;     /* Light blue tint */
+  --color-callout-warning-bg: #FFFBEB;     /* Amber tint */
+  --color-callout-technical-bg: #ECFDF5;   /* Lightest emerald tint */
+  --color-callout-subtle-bg: var(--color-surface); /* Surface color */
+
   /* ===== Typography (Font components provide --font-sans, --font-serif, --font-display) ===== */
   --font-family-sans: var(--font-sans, 'IBM Plex Sans', system-ui, -apple-system, sans-serif);
   --font-family-serif: var(--font-serif, 'IBM Plex Serif', Georgia, serif);

@@ -22,7 +22,7 @@ import Accordion from '../../components/Accordion.astro';
     <Body size="base" as="p" class="text-neutral mb-6">Code examples, state machine configurations, functional pipeline patterns, and technical specifications from the real-time sports data collection system.</Body>
   </div>
 
-  <Callout variant="insight" title="Prerequisites">
+  <Callout variant="context" size="default" title="Prerequisites">
     <p>This appendix assumes you've read the <a href="/portfolio/statsbomb" class="text-primary hover:underline">main case study</a>. It provides implementation details for engineers interested in DSL design, state machine architecture, and functional data pipelines.</p>
   </Callout>
 
@@ -49,6 +49,11 @@ import Accordion from '../../components/Accordion.astro';
     <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
       The Domain-Specific Language (DSL) evolved through three stages: hand-written rules (week one), minimal parser (month one), ANTLR grammar (year two). This section shows the final ANTLR-based implementation and execution model.
     </Body>
+
+    <Callout variant="technical" size="default" title="System 1 of 3: Domain Logic as Configuration">
+      <p><strong>Bounded context:</strong> Event collection dataspec</p>
+      <p>The DSL separated validation rules from execution logic. Product managers wrote declarative rules ("pass THEN reception"), which compiled to runtime constraints in the collection UI.</p>
+    </Callout>
 
     <Heading level={4} as="h3" class="mb-4">Grammar Structure</Heading>
 
@@ -175,6 +180,10 @@ WS: [ \t\r\n]+ -> skip;
 
 </Accordion>
 
+    <Callout variant="insight" size="compact" title="Why this order matters">
+      <p>Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.</p>
+    </Callout>
+
     <Heading level={4} as="h3" class="mb-4 mt-8">Execution Model: Rule Engine Architecture</Heading>
 
     <Body size="sm" as="p" class="mb-4 text-neutral">
@@ -288,6 +297,11 @@ function evaluateAggregations(
     <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
       The live-collection-app used XState to model collection workflows as explicit finite state machines. Five major machines orchestrated the app: **video mode**, **collection flow**, **freeze frame handling**, **player customization**, and **batch validation**.
     </Body>
+
+    <Callout variant="technical" size="compact" title="System 2 of 3: State Machines as UI Controller">
+      <p><strong>Bounded context:</strong> Collection workflow UI</p>
+      <p>XState machines made illegal UI states impossible. Can't submit without required fields. Can't enter edit mode while video plays. State transitions became testable without rendering components.</p>
+    </Callout>
 
     <Accordion summary="Collection Flow State Machine (XState Configuration)">
 
@@ -482,6 +496,11 @@ Collectors pressed `/` to toggle loop mode—video replayed 5-second window whil
     <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
       Event aggregation followed functional programming patterns: **map** (filter to team), **reduce** (derive phases), **overlap** (combine layers). This made data transformations composable and testable.
     </Body>
+
+    <Callout variant="technical" size="compact" title="System 3 of 3: Functional Pipelines for Data Transformation">
+      <p><strong>Bounded context:</strong> Event aggregation and analytics</p>
+      <p>Pure functions over immutable streams. Map filtered to teams, reduce derived phases, overlap combined layers. Same pattern scaled from soccer to American football without rewriting core logic.</p>
+    </Callout>
 
     <MermaidDiagram
       id="functional-pipeline"
@@ -865,6 +884,10 @@ const buildEventGraph = (events: AtomicEvent[]): EventGraph => {
       Rather than key-value pairs, metadata became **claims from actors** with provenance (who), confidence (reliability), and temporality (when). When multiple sources asserted conflicting facts, the graph structure made conflicts explicit and queryable.
     </Body>
 
+    <Callout variant="insight" size="compact" title="Architectural Leverage">
+      <p>Claims-based metadata turned data quality from bottleneck into asset. Five-person team reviewed only 1-2% ambiguous conflicts. Automatic resolution handled 98% of updates. Provenance made bugs traceable to source.</p>
+    </Callout>
+
     <MermaidDiagram
       id="metadata-claims-graph"
       caption="Metadata claims flow showing data sources (collectors, scrapers, APIs) submitting claims that resolve into golden entities with automatic conflict resolution"
@@ -1218,6 +1241,10 @@ collectionFlowMachine.onTransition((state) => {
     <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
       Freeze frames (positioning data for all 22 players) were semi-automated. Collectors triggered frame extraction, CV service detected players and ball, system overlaid predictions on pitch canvas, collectors corrected misidentifications. Hybrid approach: 80-90% automation, human correction for edge cases.
     </Body>
+
+    <Callout variant="warning" size="compact" title="Trade-off: Full Automation vs. Quality">
+      <p>Full automation would require 10x model complexity for diminishing returns. Edge cases (occlusion, unusual angles, poor lighting) failed ~10-20% of the time. Semi-automated approach: 30 seconds vs. 2-3 minutes manual, 99%+ accuracy with human verification.</p>
+    </Callout>
 
     <Accordion summary="CV Pipeline Architecture">
 

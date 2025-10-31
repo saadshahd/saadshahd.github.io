@@ -1,37 +1,52 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
+import { Triangle, Waves, AlertTriangle, Code2 } from '@lucide/astro';
 
 // CVA variant definitions
 const callout = cva(
   [
     'rounded-lg',
-    'p-6',
     '[&:not(:last-child)]:mb-6',
-    'border-l-4',
   ],
   {
     variants: {
       variant: {
         insight: [
-          'bg-[#FEF9E7]', // Lightest gold tint from Egyptian gold
+          'bg-callout-insight-bg', // Lightest gold tint from Egyptian gold
           'border-primary', // Egyptian gold (#F4C430)
           'text-text',
         ],
         context: [
-          'bg-[#EFF6FF]', // Light blue tint
+          'bg-callout-context-bg', // Light blue tint
           'border-secondary', // Red Sea blue (#0EA5E9)
           'text-text',
         ],
         warning: [
-          'bg-[#FFFBEB]', // Amber tint
-          'border-[#F59E0B]', // Amber border (from badge system)
+          'bg-callout-warning-bg', // Amber tint
+          'border-warning', // Amber border (from semantic colors)
           'text-text',
         ],
+        technical: [
+          'bg-callout-technical-bg', // Lightest emerald tint
+          'border-success', // Emerald border (from semantic colors)
+          'text-text',
+        ],
+        subtle: [
+          'bg-surface', // Existing surface token
+          'border-neutral-light',
+          'text-text',
+        ],
+      },
+      size: {
+        default: ['p-6', 'border-l-4'],
+        compact: ['p-4', 'border-l-3', 'text-sm'],
+        inline: ['p-3', 'border-l-2', 'text-sm'],
       },
     },
     defaultVariants: {
       variant: 'insight',
+      size: 'default',
     },
   }
 );
@@ -53,17 +68,38 @@ const content = cva([
 type Props = VariantProps<typeof callout> & {
   title?: string;
   class?: string;
+  showIcon?: boolean; // Optional icon display
 };
 
 const {
-  variant,
+  variant = 'insight',
+  size = 'default',
   title: titleText,
   class: className,
+  showIcon = true, // Icons enabled by default
 } = Astro.props;
+
+// Icon mapping for variants (Egyptian-themed Lucide icons)
+const iconMap = {
+  insight: Triangle,      // Pyramid → architectural wisdom
+  context: Waves,         // Water → background/domain
+  warning: AlertTriangle, // Sun/caution → attention
+  technical: Code2,       // Lotus/code → implementation
+  subtle: undefined,      // No icon for subtle variant
+};
+
+const IconComponent = iconMap[variant];
 ---
 
-<aside class={clsx(callout({ variant }), className)} role="note">
-  {titleText && <div class={title()}>{titleText}</div>}
+<aside class={clsx(callout({ variant, size }), className)} role="note">
+  {titleText && (
+    <div class={clsx(title(), 'flex items-center gap-2')}>
+      {showIcon && IconComponent && (
+        <IconComponent class="w-5 h-5 flex-shrink-0" />
+      )}
+      <span>{titleText}</span>
+    </div>
+  )}
   <div class={content()}>
     <slot />
   </div>
