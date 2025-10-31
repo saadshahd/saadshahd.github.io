@@ -1,6 +1,6 @@
 # Saad Shahd - Production Portfolio
 
-**Live Site:** [saad-shahd.github.io](https://saad-shahd.github.io)
+**Live Site:** [saadshahd.github.io](https://saadshahd.github.io)
 
 This portfolio showcases functional architecture patterns through production-quality implementation. Built entirely through AI-native development—pairing and thinking with Claude Code—to demonstrate systems thinking at every layer.
 
@@ -100,9 +100,9 @@ Mermaid diagrams with custom theme using semantic node taxonomy (atomic/derived/
 4. Review git history - clean narrative arc (no WIP commits)
 
 **For Technical Recruiters:**
-- [Live portfolio](https://saad-shahd.github.io) - deployed via GitHub Pages
-- [Case study: Statsbomb](https://saad-shahd.github.io/portfolio/statsbomb) - 25-min read on real-time data collection
-- [About page](https://saad-shahd.github.io/about) - 15 years production systems experience
+- [Live portfolio](https://saadshahd.github.io) - deployed via GitHub Pages
+- [Case study: Statsbomb](https://saadshahd.github.io/portfolio/statsbomb) - 25-min read on real-time data collection
+- [About page](https://saadshahd.github.io/about) - 15 years production systems experience
 
 ---
 
@@ -151,8 +151,8 @@ Mermaid diagrams with custom theme using semantic node taxonomy (atomic/derived/
 
 ```bash
 # Clone repository
-git clone https://github.com/saad-shahd/saad-shahd-portfolio.git
-cd saad-shahd-portfolio
+git clone https://github.com/saadshahd/saadshahd.github.io.git
+cd saadshahd.github.io
 
 # Install dependencies
 bun install
@@ -213,7 +213,7 @@ All design tokens defined in [`src/styles/global.css`](./src/styles/global.css) 
 
 ### Statsbomb Real-Time Data Collection (2018-2022)
 
-**Live:** [/portfolio/statsbomb](https://saad-shahd.github.io/portfolio/statsbomb)
+**Live:** [/portfolio/statsbomb](https://saadshahd.github.io/portfolio/statsbomb)
 
 **Tech:** XState state machines, ANTLR grammar, Kafka, GraphQL, functional architecture
 
@@ -270,7 +270,7 @@ All design tokens defined in [`src/styles/global.css`](./src/styles/global.css) 
 **Workflow:** `.github/workflows/deploy.yml`
 **Trigger:** Push to `main` branch
 **Build:** Astro static site generation
-**URL:** https://saad-shahd.github.io
+**URL:** https://saadshahd.github.io
 
 ### Deploy Your Own
 
@@ -329,8 +329,8 @@ Personal portfolio - all rights reserved.
 ## Contact
 
 **Email:** [dev.saad.shahd@gmail.com](mailto:dev.saad.shahd@gmail.com)
-**LinkedIn:** [linkedin.com/in/saad-shahd](https://linkedin.com/in/saad-shahd)
-**GitHub:** [@saad-shahd](https://github.com/saad-shahd)
+**LinkedIn:** [linkedin.com/in/saadshahd](https://linkedin.com/in/saadshahd)
+**GitHub:** [@saadshahd](https://github.com/saadshahd)
 
 ---
 
