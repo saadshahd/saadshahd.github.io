@@ -47,32 +47,24 @@ import ComparisonCard from '../../components/ComparisonCard.astro';
       <summary class="cursor-pointer font-semibold text-text hover:text-text-light transition-colors">TL;DR: What We Built (2 min)</summary>
 
       {/* Hook - outcome-focused, concrete impact */}
-      <Body size="lg" as="p" class="my-6 text-text font-medium leading-relaxed">Built a real-time sports data collection system (2018-2022) that enabled 1000+ concurrent collectors across multiple sports through configuration-driven architecture.</Body>
+      <Body size="lg" as="p" class="my-6 text-text font-medium leading-relaxed">Built a real-time sports data collection system (2018-2022) through configuration-driven architecture that scaled from 2 founding engineers to distributed teams across multiple sports.</Body>
 
       <ul class="space-y-3 mb-6 text-text-lighter">
-        <li><strong>What Shipped:</strong> Real-time collection system enabling 1000+ concurrent collectors across multiple sports—replacing 16-hour sequential processing with 4-hour parallel workflows during live matches</li>
+        <li><strong>What Shipped:</strong> Concurrent collection at scale across multiple sports during live matches</li>
         <li><strong>Core Architecture:</strong> Separated domain rules (DSLs) from execution (state machines), enabling configuration-driven expansion without code rewrites for each new sport</li>
-        <li><strong>Business Impact:</strong> Product managers shipped American football expansion in 3 weeks (zero engineering), 5-person metadata team scaled to 1000+ collectors, automated validation prevented 99% of data quality issues</li>
+        <li><strong>Business Impact:</strong> Product managers shipped new sports independently, 5-person metadata team scaled to 1000+ collectors, automated validation prevented errors before they happened</li>
       </ul>
 
       {/* Core lesson callout */}
       <Callout variant="primary" icon="lightbulb" title="Core Lesson">
         <p>Team building multiplies architectural leverage—waiting until year three to expand beyond two-person partnership meant racing external constraints before completing customer-facing features.</p>
       </Callout>
-
-      {/* Technical Appendix Link */}
-      <Callout variant="secondary" title="For Engineers: Technical Deep Dive Available" icon="code" class="mt-6">
-        <Body size="sm">ANTLR grammar, XState machines, functional pipelines, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</Body>
-        <Fragment slot="cta">
-          <Button variant="ghost" size="sm" href="/portfolio/statsbomb-technical-appendix">View Technical Appendix →</Button>
-        </Fragment>
-      </Callout>
     </details>
   </section>
 
-  {/* Week One: The Freezeframe Tool - NEW SECTION */}
-  <section class="mb-12" id="week-one">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Week One: The Freezeframe Tool</Heading>
+  {/* Origins: Week One Partnership */}
+  <section class="mb-12" id="origins">
+    <Heading level={3} as="h2" class="mb-6 text-navy">Origins: Week One Partnership</Heading>
 
 We shipped twice daily. Every morning, I'd push a new build of the freezeframe tool—replacing Dartfish's 12-minute manual clicking with computer vision-assisted positioning. By afternoon, collectors would test it during matches. By evening, I'd see their feedback in Slack.
 
@@ -80,13 +72,19 @@ We shipped twice daily. Every morning, I'd push a new build of the freezeframe t
 *"My hand doesn't cramp anymore."*
 *"Eyes stay on video, not the mouse."*
 
-I felt like a star. Not from Ali, not from product—from the collectors. The people doing the work thanked me. I felt like one of them. They felt like I was there to help.
+I felt like a star. Not from Ali, not from product—from the collectors. The people doing the work thanked me. That feeling—that mutual trust—became the foundation for everything we built over four years. When you ship for people who thank you, architecture stops being abstract.
 
-That feeling—that mutual trust—became the foundation for everything we built over four years. When you ship for people who thank you, architecture stops being abstract. Every decision becomes: does this help them, or does it help my resume?
+**The Partnership: Domain Expertise Meets Systems Thinking**
 
-The freezeframe tool was just the beginning. Omar Negm (shifting from aerospace to software engineering) and I built it on a simple backend—a single Go endpoint called `sync`. Batch processing, offline. Nothing fancy. But it worked, and collectors felt the difference immediately.
+Ali had spent years analyzing sports data—he could articulate possession rules, drive sequences, phase transitions. I'd been thinking about systems since I was 14, reading "Pragmatic Programmer" on Egyptian buses, squinting at my phone screen.
 
-That first week taught me something I'd carry through the entire journey: **build for people who thank you.**
+Week one, Ali and I sat with VSCode open. He spoke rules aloud, I typed them as text:
+
+`start → [middle] → break`
+
+As I typed what Ali dictated, I realized: I wasn't writing documentation. I was encoding his mental model as executable text. **That's when it clicked: the dataspec can't be code. It has to be data we can iterate without deploys.**
+
+That partnership—domain expert + systems thinker—is why the DSL approach worked. Without Ali's mental models, I'd have built generic forms. Without my systems thinking, his knowledge would've stayed tacit.
 
 {/* Visual proof: Week One sketches */}
 <div class="grid md:grid-cols-2 gap-4 my-6 max-w-4xl mx-auto">
@@ -121,29 +119,6 @@ That first week taught me something I'd carry through the entire journey: **buil
 
   <SectionDivider spacing="minor" />
 
-  {/* Why Ali and I Could Build This - NEW SECTION */}
-  <section class="mb-12" id="ali-partnership">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Why Ali and I Could Build This</Heading>
-
-Ali had spent years analyzing sports data. He could articulate possession rules, drive sequences, phase transitions—the tacit knowledge experts carry but rarely externalize.
-
-I'd been thinking about systems since I was 14, reading "Pragmatic Programmer" on Egyptian buses, squinting at my phone screen. How to make complexity manageable. How to iterate without rewriting. One lesson stuck: perfectionism fails. Ship the 80%.
-
-Week one, Ali and I sat with VSCode open. He spoke rules aloud, I typed them as text:
-
-`start → [middle*] → break`
-
-Grouping events into chains—possession phases, drive sequences. As I typed what Ali dictated, I realized something: I wasn't writing documentation. I was encoding his mental model as executable text.
-
-That's when it clicked: if the sport evolves, if we experiment with collection speed, these rules will change. The dataspec can't be code. It has to be data we can iterate without deploys.
-
-Later, when I'd stay until 3am debugging WebSocket failures during live matches, Ali would stay for company. Not to supervise—he wasn't technical in that way. But he understood the stakes. Broadcasters needed real-time. Collectors needed tools that didn't break at 2am when fatigue set in.
-
-That partnership—domain expert + systems thinker—is why the DSL approach worked. Without Ali's mental models, I'd have built generic forms. Without my systems thinking, Ali's knowledge would've stayed tacit, locked in his head.
-  </section>
-
-  <SectionDivider spacing="minor" />
-
   {/* Problem Section */}
   <section class="mb-8" id="problem">
     <Heading level={3} as="h2" class="mb-6 text-navy">The 70% Hell: When Ambiguity Costs Time</Heading>
@@ -164,99 +139,17 @@ Two collectors per match, each following a team, manually entering 3000+ events 
 
 The industry-standard tool—Dartfish—couldn't scale to what we needed. Button-heavy interface forced mouse clicks for every selection. It had keyboard shortcuts, but they weren't contextual. Each key could only map to one event type—globally, across the entire data spec. No overlap possible. With 50+ event types but only 40 usable keys, we hit a ceiling. Collectors memorized which arbitrary key triggered which event, at all times, regardless of game context. **Cognitive overload**.
 
-Two collectors per match, each following a team, manually entering 3000+ events over 16 hours. Duplicated effort. No prevention, only validation after mistakes happened.
-
 <Heading level={4} as="h4" class="mb-4 mt-8">What Collectors Actually Needed</Heading>
 
-Years of daily conversations with collectors revealed their actual workflows and friction points. **The dataspec itself needed to be data, not code**, so product managers could express rules in one place that drove the entire system.
+Years of daily conversations with collectors revealed their actual workflows and friction points: contextual keyboard mappings that adapted to game state, automated validation to prevent errors before they happened, and clear definitions so two collectors watching the same play would record the same events.
 
 <Heading level={4} as="h4" class="mb-4 mt-8">Why This Mattered to Statsbomb's Business</Heading>
 
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  Statsbomb provided granular sports analytics to professional clubs and broadcasters—markets where data velocity creates competitive advantage.
-</Body>
+Statsbomb provided granular sports analytics to professional clubs and broadcasters—markets where data velocity creates competitive advantage. Broadcasters needed live insights during matches for real-time commentary. Clubs needed opponent patterns within minutes, not hours, to adjust tactics. **The constraint: real-time collection with zero compromise on correctness.** Most systems choose one—velocity or correctness. We needed both.
 
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "Professional Clubs",
-      definition: "Teams analyzing opponent patterns hours after matches finished fell behind. Real-time collection enabled tracking opponent tactics in-match for immediate tactical adjustments."
-    },
-    {
-      term: "Broadcasters",
-      definition: "Needed live insights for real-time commentary. Could now comment on possession patterns as they emerged during live matches."
-    }
-  ]}
-/>
+The efficiency gains weren't just operational—they unlocked strategic capabilities. Operations scaled 10x (100 → 1000+ collectors) without proportional staffing increases, preserving margins while growing coverage. Client customization happened through configuration: Premier League club wanting detailed positioning data and Championship club needing basic events ran on same system—different configurations, same codebase.
 
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  The efficiency gains weren't just operational—they unlocked strategic capabilities:
-</Body>
-
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "10x Operational Scale Without Linear Staffing",
-      definition: "100 → 1000+ collectors with distributed system architecture. Preserved margins while growing coverage."
-    },
-    {
-      term: "Client Customization Without Code Rewrites",
-      definition: "Product managers could customize data specifications per client. Premier League club wanting detailed positioning data and Championship club needing basic events ran on same system—different configurations, same codebase."
-    }
-  ]}
-/>
-
-<Body size="sm" as="p" class="mb-6 text-text-lighter leading-relaxed italic">
-  <strong>Strategic Moat:</strong> The architectural separation between rules and execution created a strategic moat: product managers shipped new sports and client configurations without engineering bottlenecks. Architecture became competitive advantage.
-</Body>
-
-<Heading level={4} as="h4" class="mb-4 mt-8">Discovering the Domain Structure Through Event Storming</Heading>
-
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  Event storming sessions mapped the domain. Five bounded contexts emerged: match metadata, event collection, people coordination, media management (Chris handled streaming infrastructure), contextual aggregation.
-</Body>
-
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  <strong>One insight stood out:</strong> arbitrary aggregation from atomic facts.
-</Body>
-
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "Atomic Events",
-      definition: "Individual passes and dribbles—the base facts collectors recorded"
-    },
-    {
-      term: "Player-Level Durational Facts",
-      definition: "Multiple dribbles by the same player became a 'carry'—aggregated from atomic events"
-    },
-    {
-      term: "Team-Level Aggregations",
-      definition: "Team possession spanned all team durational facts (carry, foul-won, opponent-out) into higher-level aggregation"
-    },
-    {
-      term: "Derived Facts",
-      definition: "Turnovers derived from possession changes—computed from other aggregations"
-    }
-  ]}
-/>
-
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
-  The system needed to support any aggregation pattern, not just what we knew upfront.
-</Body>
-
-<Callout variant="neutral" icon="info" title="Why Match Metadata Was Different" class="my-6">
-  <p>Players, clubs, referees, stadiums—reference data that thousands of collectors needed but only 5 people managed. Crowd-sourced data meant conflicting information: same player, different spellings; same club, multiple sources. The system required automated golden entity resolution—5 people couldn't manually reconcile metadata for thousands of collectors across hundreds of matches weekly.</p>
-</Callout>
-
-**The Scaling Challenge**
-
-Product managers couldn't define new collection requirements without engineering bottlenecks. Collectors waited weeks for tooling updates. Operations needed to scale from 100 collectors to thousands without proportional support staff. At 100 collectors, two product managers manually coordinated match assignments, answered dataspec questions in Slack, and resolved conflicting interpretations. At 1000+? That model breaks—support requests would consume entire workdays, blocking actual dataspec evolution.
-
-**Three architectural requirements emerged:** Rules without code deploys, UX that prevents errors, metadata that resolves conflicts automatically.
+**The Scaling Challenge**: Product managers couldn't define new collection requirements without engineering bottlenecks. Operations needed to scale from 100 collectors to thousands without proportional support staff. At 100 collectors, two product managers coordinated manually. At 1000+? Support requests would consume entire workdays, blocking evolution.
   </section>
 
   <SectionDivider spacing="major" />
@@ -272,10 +165,6 @@ I'd start at 10am, leave at 3am. Not grinding for grinding's sake—I needed to 
 Ali stayed nights for company. Not to supervise—he wasn't debugging TypeScript with me. But he understood the stakes. Broadcasters needed real-time commentary data. Collectors needed tools that didn't break at 2am when fatigue set in.
 
 That's when we'd debug together: Adham tracing the Kafka lag, me testing state machine transitions with a tired collector who just wanted to finish the match and go home.
-
-**GraphQL subscriptions via WebSocket enabled concurrent collection—but only after we'd seen it fail at 2am and fixed what mattered.**
-
-The architecture worked because we witnessed it under production load, not because we'd designed it perfectly upfront. Real-time isn't a checkbox. It's thousands of decisions about timeouts, reconnection logic, state recovery after network failures. You can't spec that in advance. You have to watch it break.
   </section>
 
   {/* Visual proof: 2am debugging */}
@@ -344,15 +233,14 @@ The architecture worked because we witnessed it under production load, not becau
   </Body>
 
   {/* Link to Technical Appendix */}
-  <Callout variant="secondary" title="Technical Deep Dive Available" icon="code" class="my-8">
-    <Body size="sm">For implementation details—DSL syntax, state machine configuration, functional pipeline patterns, and code examples.</Body>
-    <Body size="sm" class="mt-2 text-text-lighter">Covers: ANTLR grammar, XState machines, map/reduce transformations, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</Body>
+  <Callout variant="secondary" title="Implementation Details in Technical Appendix" icon="code" class="my-8">
+    <Body size="sm">This section focuses on architectural decisions under constraint—the "why" behind technical choices. For implementation details (ANTLR grammar, XState configuration, functional pipelines, complete code examples), see the Technical Appendix.</Body>
     <Fragment slot="cta">
       <Button variant="ghost" size="sm" href="/portfolio/statsbomb-technical-appendix">View Technical Appendix →</Button>
     </Fragment>
   </Callout>
 
-    {/* DSL Subsection - Slimmed Down */}
+    {/* DSL Subsection - Narrative Mode */}
     <div class="mb-10" id="domain-config">
       <div class="flex items-start gap-3 mb-6">
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill mt-1" aria-label="System 1 of 3">1</span>
@@ -362,50 +250,16 @@ The architecture worked because we witnessed it under production load, not becau
         </div>
       </div>
 
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  **We separated three concerns: entry validation (dataspec), sequencing logic (DSL), and aggregation rules (grouping DSL)**. Product managers wrote rules in readable syntax. The system compiled to execution logic.
-</Body>
+Product managers needed to express domain logic—entry validation, sequencing logic, aggregation rules—in readable syntax that compiled to execution logic. The dataspec as configuration, not code.
 
-<Heading level={4} as="h4" class="mb-4 mt-6">Dependency Layers: From Atomic Events to Derived Facts</Heading>
+Atomic events (passes, shots) aggregated into derived facts (possession phases, drives, turnovers). Store unchanging truth, recompute everything else when rules evolved.
 
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  The DSL let product managers define domain logic as sequences and dependencies. For soccer, possession derived from multiple event types aggregated over time:
-</Body>
+**The payoff came in 2020.** When we expanded to American football, product managers wrote drive segmentation rules using the same DSL patterns. New sport, same architectural separation. Zero engineering bottleneck.
 
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "Atomic Events → Player-Level Facts",
-      definition: "Passes, shots recorded as base events. Multiple dribbles became 'carry' (player-level durational fact)."
-    },
-    {
-      term: "Player-Level Facts → Team Aggregations",
-      definition: "Possession meant team had active carry (player dribbling), received fouls, or forced ball out—spans of time aggregated from atomic events."
-    },
-    {
-      term: "Team Aggregations → Higher-Level Derivatives",
-      definition: "Turnovers derived from possession changes—computed from team-level aggregations."
-    }
-  ]}
-/>
-
-<Heading level={4} as="h4" class="mb-4 mt-6">Multi-Sport Expansion: Same DSL, New Rules</Heading>
-
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  When we expanded to American football, product managers wrote drive segmentation rules using the same DSL patterns:
-</Body>
-
-<Body size="sm" as="p" class="mb-6 text-text-lighter">
-  Offensive drives derived from snap sequences until scoring or turnover. The execution engine didn't change—new sport, same architectural separation. No engineering bottleneck.
-</Body>
-
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
-  Without DSLs, every new rule required engineering deploys. With DSLs, product managers shipped dataspec changes independently—velocity without correctness trade-offs.
-</Body>
+Without DSLs, every new rule required engineering deploys. With DSLs, product managers shipped dataspec changes independently—velocity without correctness trade-offs.
     </div>
 
-    {/* Live-Collection-App Subsection */}
+    {/* Live-Collection-App Subsection - Narrative Mode */}
     <div class="mb-10" id="collection-app">
       <div class="flex items-start gap-3 mb-6">
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category mt-1" aria-label="System 2 of 3">2</span>
@@ -415,88 +269,20 @@ The architecture worked because we witnessed it under production load, not becau
         </div>
       </div>
 
-<Body size="sm" as="p" class="mb-6 text-text-lighter">
-  The first thing we built wasn't backend architecture. It was the tool collectors would use every day—an Electron desktop app that replaced Dartfish's rigid forms with keyboard-first workflows.
-</Body>
+The first thing we built was the tool collectors would use every day—an Electron desktop app replacing Dartfish's rigid forms with keyboard-first workflows.
 
-<Heading level={4} as="h4" class="mb-4 mt-6">Real-Time Collaboration: Google Docs for Sports Data</Heading>
+**State Machines for Prevention**: We modeled collection workflows as explicit finite state machines with XState. Define workflows as explicit states with clear transitions, and illegal states become structurally impossible. Can't skip steps. Can't submit incomplete data. Prevention, not validation.
 
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  GraphQL subscriptions via WebSocket enabled concurrent collection. Multiple collectors worked simultaneously without conflicts.
-</Body>
+**Context-Aware Keyboard Mappings**: Same key, different actions per context. Press 'P' for pass—the DSL determined valid pass types for that player's position. If only one option remained, auto-filled and skipped. Collectors touch-typed like Vim users. Eyes on video, hands on keyboard.
 
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "Pub-Sub Pattern",
-      definition: "Lead collector published base event name (pass, shot, tackle), others subscribed and contributed domain-specific data."
-    },
-    {
-      term: "Role Separation by Design",
-      definition: "One collector owned player positions (freeze frames), another tracked detailed attributes, third handled timing. No overlapping responsibility meant zero conflicts."
-    },
-    {
-      term: "Concurrent Collection Without Merging",
-      definition: "Specialized collectors contributed their pieces to shared event identity. No manual merge conflicts—architecture prevented them."
-    }
-  ]}
-/>
+**Computer Vision Integration**: Ashmawy, Andrew, and Shash built the CV service for automated player position detection. Collectors corrected edge cases.
 
-<Heading level={4} as="h4" class="mb-4 mt-6">State Machines for Impossible States</Heading>
+**Concurrent Collection**: Hadeel implemented GraphQL subscriptions via WebSocket. One collector published the base event, others subscribed with specialized contributions (positions, attributes, timing). Zero overlapping responsibility = zero merge conflicts.
 
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  XState modeled collection workflows as explicit finite state machines. **Five major state machines orchestrated the app**, preventing illegal states by design.
-</Body>
-
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "Video Mode State Machine",
-      definition: "Manual playback, loop mode, editing mode—mutually exclusive states with defined transitions."
-    },
-    {
-      term: "Collection Flow State Machine",
-      definition: "Watching → Collecting base event → Adding details. Couldn't skip steps or submit incomplete data."
-    },
-    {
-      term: "Freeze Frame Handler",
-      definition: "Idle → Active → Reviewing. Couldn't enter freeze frame mode without active event, couldn't exit without validation."
-    },
-    {
-      term: "Batch Validation State Machine",
-      definition: "Prevented submission with missing required fields. Form validation encoded in state transitions, not runtime checks."
-    }
-  ]}
-/>
-
-<Heading level={4} as="h4" class="mb-4 mt-6">Three UX Patterns That Scaled</Heading>
-
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "Keyboard-First Workflows",
-      definition: "Context-aware mappings (same key, different actions per context). Collectors touch-typed events like Vim users—hands stayed on keyboard, eyes stayed on video."
-    },
-    {
-      term: "Contextual UI Adaptation",
-      definition: "When you selected 'Pass,' system showed only valid pass types for that player's position. DSL sequence rules determined valid options. If only one remained, auto-filled and skipped."
-    },
-    {
-      term: "Semi-Automated Freeze Frames",
-      definition: "CV service (Ashmawy, Andrew, Shash) detected 80-90% of player positions, collectors corrected edge cases. 30 seconds vs. 3 minutes fully manual."
-    }
-  ]}
-/>
-
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
-  The dataspec drove UI validation, DSL defined legal event sequences, state machines constrained invalid states. Architecture caught most errors before collectors saw them. Concurrent collection during live matches with sub-minute latency.
-</Body>
+The dataspec drove UI validation, DSL defined legal sequences, state machines constrained invalid states. Architecture caught errors before collectors saw them.
     </div>
 
-    {/* Backend + Metadata Subsection */}
+    {/* Backend + Metadata Subsection - Narrative Mode */}
     <div class="mb-10" id="backend-evolution">
       <div class="flex items-start gap-3 mb-6">
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status mt-1" aria-label="System 3 of 3">3</span>
@@ -506,93 +292,11 @@ The architecture worked because we witnessed it under production load, not becau
         </div>
       </div>
 
-<Heading level={4} as="h4" class="mb-4 mt-4">Event Dependency Graphs</Heading>
+**Event Graphs**: Sequential event logs couldn't answer "what caused this turnover?" We needed both temporal relationships (clearance BEFORE recovery) AND logical relationships (clearance CAUSED loose phase). Events formed directed acyclic graphs with typed edges—enabling timeline replay and root-cause analysis for data quality debugging.
 
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  A clearance triggers "loose phase" (neither team controls ball), enabling ball-recovery or fifty-fifty. Successful recovery triggers "possession phase," enabling pass/dribble. This flow encoded two relationship types:
-</Body>
+**Waheed's Claims Breakthrough**: Match metadata from thousands of collectors meant inevitable conflicts—same player, different spellings. Waheed built claims-based metadata resolution. **The insight: metadata isn't key-value pairs, it's claims from actors.** System detected conflicts automatically, routed 1-2% ambiguous cases to the 5-person metadata team. They resolved once via claims interface—system cascaded to all dependent data. The team handled ambiguity; the system handled scale.
 
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "Temporal Relationships (PREV/NEXT)",
-      definition: "Sequential time-based flow—clearance happened before ball-recovery, recovery before possession phase"
-    },
-    {
-      term: "Logical Relationships (DEPENDS_ON)",
-      definition: "Causal dependencies—clearance caused loose phase, recovery caused possession phase"
-    },
-    {
-      term: "Directed Acyclic Graph Structure",
-      definition: "Events form graph nodes with typed edges. No cycles, query-able dependencies for root-cause analysis."
-    }
-  ]}
-/>
-
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
-  Sequential processing couldn't answer "what caused this turnover?" Graph structure enabled temporal + causal queries for data quality debugging.
-</Body>
-
-**Match Metadata: Temporal Stages + Automated Conflict Resolution**
-
-The metadata challenge required different architectural thinking. Match metadata had **temporal stages** that preceded live collection:
-
-<Heading level={4} as="h4" class="mb-4 mt-6">Three Temporal Stages</Heading>
-
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "Competition Schedules (days/weeks before)",
-      definition: "Web scrapers monitored official sources. Fixture changes propagated automatically."
-    },
-    {
-      term: "Matchday Lineups (hours before)",
-      definition: "Scraped starting XI, formations, referees. Most new entities entered here."
-    },
-    {
-      term: "Automatic Entity Streaming",
-      definition: "New entities (player spelling variants, unknown referees) automatically streamed to info resolution team—no manual data entry."
-    }
-  ]}
-/>
-
-<Heading level={4} as="h4" class="mb-4 mt-6">Claims-Based Architecture</Heading>
-
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  With thousands of collectors crowd-sourcing data, conflicts were inevitable: same player, different spellings; same club, multiple sources. Rather than key-value pairs, metadata became claims from actors with three core attributes:
-</Body>
-
-<DefinitionList
-  class="mb-6"
-  items={[
-    {
-      term: "Provenance (Who)",
-      definition: "Which collector or scraper asserted this fact—trusted scrapers weighted higher than new collectors"
-    },
-    {
-      term: "Confidence (Reliability)",
-      definition: "Source reliability score based on historical accuracy—automated ranking reduced manual review burden"
-    },
-    {
-      term: "Temporality (When)",
-      definition: "When the claim was made—later assertions could override earlier ones if confidence higher"
-    }
-  ]}
-/>
-
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  When multiple sources asserted conflicting facts, the system detected conflicts automatically and routed to the 5-person metadata team.
-</Body>
-
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  <strong>Team Workflow:</strong> Query pending conflicts → review side-by-side with full context → resolve once → system cascades to all dependent data.
-</Body>
-
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
-  The 5-person team focused on the 1-2% of ambiguous cases requiring domain expertise ("FC Barcelona" vs. "Barcelona FC"? same; "Manchester United" vs. "Manchester City"? different). System resolved the other 98% automatically.
-</Body>
+**Backend Evolution**: Month one: Omar Negm built the single Go endpoint called `sync`—batch, offline. In year two (2019), when Omar left to teach kids software, Adham joined and designed the evolution to Kafka as persistence center, event logs as foundation—enabling real-time collection at broadcaster scale.
     </div>
   </section>
 
@@ -606,14 +310,61 @@ By 2020, we had two years of historical matches. Thousands of games, millions of
 
 Most systems would version the data: v1 events stay v1, new matches use v2. But that breaks analysis—you can't compare 2018 Liverpool to 2020 Liverpool if possession definitions changed between them.
 
-The solution: **tiered evolution.** When the dataspec changed, we'd backfill historical data through the new rules—recomputing derived facts from atomic events. The graph structure made this possible: events had dependencies, so we knew what cascaded when one definition changed.
+The solution: **tiered evolution.** When the dataspec changed, we'd backfill historical data through the new rules—recomputing derived facts from the atomic events we stored. The graph structure made this possible: we knew what cascaded when one definition changed.
 
-This is why atomic events mattered. They were the unchanging truth—a pass happened at timestamp X, player Y to player Z, location coordinates (x,y). Everything else—possession phases, drives, turnovers—was computed, version-able, evolvable.
-
-The dataspec itself had to be uncertain. I knew from week one we'd iterate, have versions, experiment. As our understanding of the sport evolved, our historical data needed to evolve with it in tiers. Not versioned snapshots frozen in time, but living data that grew smarter as we did.
+The dataspec itself had to be uncertain. I knew from week one we'd iterate, have versions, experiment. Our historical data needed to evolve with our understanding—not versioned snapshots frozen in time, but living data that grew smarter as we did.
   </section>
 
-  <SectionDivider spacing="minor" />
+  <SectionDivider spacing="major" />
+
+  {/* Team Building Section */}
+  <section class="mb-16" id="team-building">
+    <Heading level={3} as="h2" class="mb-6 text-navy">The Team Building Challenge: From Week One to Distributed Ownership</Heading>
+
+Remember that first-week feeling? Shipping the freezeframe tool twice daily, getting thanked by collectors, feeling like I was there to help. **That feeling needed to scale.**
+
+I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
+
+<Accordion variant="status" summary="Year One: Finding the Core Partnership">
+
+Year one (2018): Omar Negm had already built foundational systems when I joined. Working with Ali and Omar, we developed the live-collection-app—data as configuration, state machines, DSLs.
+
+Year two (2019): Omar left to teach kids software. Adham joined and took ownership of backend evolution.
+
+</Accordion>
+
+<Accordion variant="status" summary="Years Two-Three: Scaling from Partnership to Distributed Team" class="mb-6">
+
+Adham and I could execute together, but the domain kept expanding. The transition from two-person partnership to distributed team took longer than it needed—I was learning how to lead engineers while building production systems. By year three, we had built the hiring and mentoring systems needed to scale beyond the core partnership.
+
+</Accordion>
+
+<Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
+
+**Adham** joined in year two (2019) when Omar left to teach kids software. He took ownership of backend development and advocated for Kafka as persistence center, event logs as foundation. I hesitated—felt like complexity. He was right. That decision enabled real-time collection at broadcaster scale. He built the backend services, Kafka streaming, and GraphQL scraper architecture that let product managers define dataspecs without engineering deploys.
+
+When **Waheed, Hadeel, and Abdallah** joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with. They felt the same urgency to serve collectors, product managers, and ops teams directly.
+
+Waheed built claims-based metadata resolution—the automated conflict detection system we'd only sketched conceptually. He took provenance + confidence + temporality and made it production-ready, enabling 5 people to resolve conflicts for 1000+ collectors.
+
+Hadeel implemented real-time GraphQL subscriptions—the concurrent collection we'd prototyped but hadn't hardened for 1000+ collectors working simultaneously on live matches.
+
+Abdallah maintained the Electron app state machines and evolved keyboard workflows, including handling NFL-specific edge cases (possession turnover during penalty review) we hadn't mapped when we started. He kept the collector experience smooth as we expanded sports.
+
+<Accordion variant="status" summary="The External Constraint" class="mb-6">
+
+In 2022, I left Egypt. By then: 1000+ collectors, internal DSLs shipped, American football expansion worked. The customer-facing DSL that would let clients define their own derived facts remained unfinished when I left—team scaling became the bottleneck, not the architecture.
+
+</Accordion>
+
+<Callout variant="primary" icon="lightbulb" title="The Team Building Lesson">
+  <p>Team building isn't separate from technical work. It's the multiplier that makes ambitious architecture sustainable. Waiting until year three to expand beyond the two-person partnership meant racing against time when external constraints intervened.</p>
+  <p>The lesson: distributed ownership from day one, not year three. The architecture proved its value—scaling to 1000+ collectors across multiple sports. The team multiplied that value. Waheed, Hadeel, and Abdallah should have joined alongside Adham in year two, not year three. The technical concepts would have propagated faster, subsystem ownership would have emerged earlier, and the customer-facing DSL would have shipped.</p>
+  <p><strong>Architecture shapes what's possible. But people make it real.</strong></p>
+</Callout>
+  </section>
+
+  <SectionDivider spacing="major" />
 
   {/* Impact Section */}
   <section class="mb-16" id="impact">
@@ -658,7 +409,7 @@ The dataspec itself had to be uncertain. I knew from week one we'd iterate, have
   items={[
     {
       term: "Non-linear leverage",
-      definition: "Operations (Muhanad led ops context) scaled 10x (100 → 1000+ collectors) without proportional staffing increases. The 5-person metadata team queried pending conflicts, resolved once via claims interface, and the system cascaded updates to all affected events."
+      definition: "Non-linear scaling without proportional staffing increases. The 5-person metadata team (Muhanad led ops context) queried pending conflicts, resolved once via claims interface, and the system cascaded updates to all affected events."
     },
     {
       term: "Minimal engineering bottleneck",
@@ -690,115 +441,8 @@ In 2024, two years after I left Egypt, Hudl acquired Statsbomb.
 
 Hudl is the industry standard—the platform most college and professional teams use globally for video analysis and performance tracking. They didn't acquire Statsbomb for the data alone. They acquired the collection system, the DSLs, the real-time infrastructure that enabled 1000+ collectors to work concurrently.
 
-The thing Ali and I sketched in VSCode during week one—`start → [middle*] → break`—the architecture that emerged from watching collectors struggle at 2am, from shipping the freezeframe tool twice daily, from learning that 70% of time was lost to post-validation conflicts—became valuable enough for an industry leader to buy.
-
-That validates something: **when you build for people who thank you, the system you create has legs.**
-
-Not building for your resume. Not chasing the latest architectural trend. Building because collectors said "my hand doesn't cramp anymore" and you felt like one of them.
+The patterns Ali and I sketched in VSCode during week one became valuable enough for an industry leader to buy. The architecture that emerged from serving collectors directly, from watching what slowed them down and making it faster, had legs beyond what we imagined.
   </section>
-
-  <SectionDivider spacing="minor" />
-
-  {/* Team Building Section */}
-  <section class="mb-16" id="team-building">
-    <Heading level={3} as="h2" class="mb-6 text-navy">The Team Building Challenge: From Week One to Distributed Ownership</Heading>
-
-Remember that first-week feeling? Shipping the freezeframe tool twice daily, getting thanked by collectors, feeling like I was there to help. **That feeling needed to scale.**
-
-I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
-
-<Accordion variant="status" summary="Year One: Finding the Core Partnership">
-
-Week one: Ali and I sat with VSCode, encoding his mental models. Early months: Adham joined as co-architect. The foundational architecture—data as configuration, state machines, DSLs—emerged from our collaborative exploration. **Adham pushed me to chase ideas I wasn't confident enough to pursue alone**.
-
-He read "Designing Data-Intensive Applications" and saw what I didn't: Kafka as the center of persistence, event logs as foundation. I hesitated—felt like complexity. He was right. That decision enabled real-time collection at the scale broadcasters needed.
-
-Month one backend: a single Go endpoint called `sync`—batch, offline. We started building the live-collection-app with Omar Negm, an engineer shifting from aerospace. No formal process. Just the urgent need to replace Dartfish.
-
-</Accordion>
-
-<Accordion variant="status" summary="Years Two-Three: Scaling from Partnership to Distributed Team" class="mb-6">
-
-Adham and I could execute together, but the domain kept expanding. The transition from two-person partnership to distributed team took longer than it needed—I was learning how to lead engineers while building production systems. The tension: we were protective of architectural integrity while the domain kept expanding, and limiting that thinking to just us became a bottleneck. Every new subsystem, every architectural decision, required our direct involvement.
-
-By year three, we had built the hiring and mentoring systems needed to scale beyond the core partnership.
-
-</Accordion>
-
-<Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
-
-When Waheed, Hadeel, and Abdallah joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with. They felt the same thing I felt week one: **build for people who thank you.** Collectors, product managers, ops teams.
-
-**Waheed** built claims-based metadata resolution—the automated conflict detection system we'd only sketched conceptually. He took provenance + confidence + temporality and made it production-ready.
-
-**Hadeel** implemented real-time GraphQL subscriptions—the concurrent collection we'd prototyped but hadn't hardened for 1000+ collectors simultaneously.
-
-**Abdallah** maintained the Electron app state machines and evolved keyboard workflows, including handling NFL-specific edge cases (possession turnover during penalty review) we hadn't mapped when we started.
-
-<div class="grid md:grid-cols-2 gap-6 mb-8">
-  <Card variant="default" class="p-6">
-    <div class="flex items-start gap-3">
-      <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill">A</span>
-      <div>
-        <Heading level={5} as="h5" class="text-base font-semibold mb-0">Adham</Heading>
-        <p class="text-xs text-text-lighter italic mb-2">Services Architecture Lead</p>
-        <Body size="sm" as="p" class="text-text-lighter">Designed backend services, Kafka streaming, and GraphQL scraper architecture</Body>
-      </div>
-    </div>
-  </Card>
-
-  <Card variant="default" class="p-6">
-    <div class="flex items-start gap-3">
-      <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category">W</span>
-      <div>
-        <Heading level={5} as="h5" class="text-base font-semibold mb-0">Waheed</Heading>
-        <p class="text-xs text-text-lighter italic mb-2">Metadata System</p>
-        <Body size="sm" as="p" class="text-text-lighter">Built claims-based entity resolution and metadata conflict detection system</Body>
-      </div>
-    </div>
-  </Card>
-
-  <Card variant="default" class="p-6">
-    <div class="flex items-start gap-3">
-      <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status">H</span>
-      <div>
-        <Heading level={5} as="h5" class="text-base font-semibold mb-0">Hadeel</Heading>
-        <p class="text-xs text-text-lighter italic mb-2">Collection Service and Dataspec</p>
-        <Body size="sm" as="p" class="text-text-lighter">Implemented real-time collection service with GraphQL subscriptions</Body>
-      </div>
-    </div>
-  </Card>
-
-  <Card variant="default" class="p-6">
-    <div class="flex items-start gap-3">
-      <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill">A</span>
-      <div>
-        <Heading level={5} as="h5" class="text-base font-semibold mb-0">Abdallah</Heading>
-        <p class="text-xs text-text-lighter italic mb-2">Desktop Application and Dataspec</p>
-        <Body size="sm" as="p" class="text-text-lighter">Maintained Electron app state machines and keyboard workflow UX</Body>
-      </div>
-    </div>
-  </Card>
-</div>
-
-<Body size="sm" as="p" class="mb-6 text-text-lighter">
-  They took the foundational concepts and applied them to contexts we hadn't explored yet.
-</Body>
-
-<Accordion variant="status" summary="The External Constraint" class="mb-6">
-
-In 2022, I left Egypt. By then: 1000+ collectors, internal DSLs shipped, American football expansion worked. The customer-facing DSL that would let clients define their own derived facts remained unfinished when I left—team scaling became the bottleneck, not the architecture.
-
-</Accordion>
-
-<Callout variant="primary" icon="lightbulb" title="The Team Building Lesson">
-  <p>Team building isn't separate from technical work. It's the multiplier that makes ambitious architecture sustainable. Waiting until year three to expand beyond the two-person partnership meant racing against time when external constraints intervened.</p>
-  <p>The lesson: distributed ownership from day one, not year three. The architecture proved its value—scaling to 1000+ collectors across multiple sports. The team multiplied that value. Waheed, Hadeel, and Abdallah should have started alongside Adham from year one. The technical concepts would have propagated faster, subsystem ownership would have emerged earlier, and the customer-facing DSL would have shipped.</p>
-  <p><strong>Architecture shapes what's possible. But people make it real.</strong></p>
-</Callout>
-  </section>
-
-  <SectionDivider spacing="major" />
 
   {/* Lessons Section */}
   <section class="mb-16" id="lessons">
@@ -818,9 +462,9 @@ Architecture emerged from observing where collectors struggled—watching hesita
 
 **What I'd Change**
 
-Invest in team building from day one, not year three. The two-year delay meant racing time when I relocated. Adham, Waheed, Hadeel, and Abdallah iterated beyond the original design—they should have started sooner.
+**Team building from day one**, not year three (covered in Team Building section above). The harder lesson: architecture multiplies through people, not just abstractions.
 
-Event storming from Day 1, not month 6. Understanding bounded contexts (match metadata, event collection, people coordination, media management, contextual aggregation) shaped every technical decision.
+**Event storming from Day 1**, not month 6. Understanding bounded contexts (match metadata, event collection, people coordination, media management, contextual aggregation) shaped every technical decision.
 
 **When These Patterns Apply**
 
