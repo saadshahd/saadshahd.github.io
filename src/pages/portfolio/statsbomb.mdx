@@ -233,7 +233,7 @@ Product managers couldn't define new collection requirements without engineering
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
     {/* System 1: Domain Logic */}
-    <Card variant="minimal" class="border-l-4 border-l-skill hover:shadow-lg transition-shadow">
+    <Card variant="minimal" href="#domain-config" class="border-l-4 border-l-skill hover:shadow-lg transition-shadow">
       <div class="flex items-center gap-3 mb-3">
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill" aria-label="Step 1 of 3">1</span>
         <Heading level={4} as="h4" class="text-base font-semibold" style="text-wrap: balance;">Domain Configuration</Heading>
@@ -242,7 +242,7 @@ Product managers couldn't define new collection requirements without engineering
     </Card>
 
     {/* System 2: Live-Collection-App */}
-    <Card variant="minimal" class="border-l-4 border-l-category hover:shadow-lg transition-shadow">
+    <Card variant="minimal" href="#collection-app" class="border-l-4 border-l-category hover:shadow-lg transition-shadow">
       <div class="flex items-center gap-3 mb-3">
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category" aria-label="Step 2 of 3">2</span>
         <Heading level={4} as="h4" class="text-base font-semibold" style="text-wrap: balance;">Live-Collection-App</Heading>
@@ -251,7 +251,7 @@ Product managers couldn't define new collection requirements without engineering
     </Card>
 
     {/* System 3: Backend Evolution */}
-    <Card variant="minimal" class="border-l-4 border-l-status hover:shadow-lg transition-shadow">
+    <Card variant="minimal" href="#backend-evolution" class="border-l-4 border-l-status hover:shadow-lg transition-shadow">
       <div class="flex items-center gap-3 mb-3">
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status" aria-label="Step 3 of 3">3</span>
         <Heading level={4} as="h4" class="text-base font-semibold" style="text-wrap: balance;">Backend Evolution</Heading>
@@ -275,7 +275,7 @@ Product managers couldn't define new collection requirements without engineering
   </CalloutCTA>
 
     {/* DSL Subsection - Slimmed Down */}
-    <div class="mb-10">
+    <div class="mb-10" id="domain-config">
       <div class="flex items-start gap-3 mb-6">
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill mt-1" aria-label="System 1 of 3">1</span>
         <div class="flex-1">
@@ -328,7 +328,7 @@ Product managers couldn't define new collection requirements without engineering
     </div>
 
     {/* Live-Collection-App Subsection */}
-    <div class="mb-10">
+    <div class="mb-10" id="collection-app">
       <div class="flex items-start gap-3 mb-6">
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category mt-1" aria-label="System 2 of 3">2</span>
         <div class="flex-1">
@@ -419,7 +419,7 @@ Product managers couldn't define new collection requirements without engineering
     </div>
 
     {/* Backend + Metadata Subsection */}
-    <div class="mb-10">
+    <div class="mb-10" id="backend-evolution">
       <div class="flex items-start gap-3 mb-6">
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status mt-1" aria-label="System 3 of 3">3</span>
         <div class="flex-1">

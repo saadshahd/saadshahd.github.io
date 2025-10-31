@@ -180,6 +180,7 @@
 
 html {
   font-size: 120%; /* Scale all rem-based sizes by 1.2x on desktop */
+  scroll-behavior: smooth; /* Smooth anchor navigation */
 }
 
 /* Desktop Responsive Scaling - Idiomatic Tailwind */
