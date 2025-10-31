@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
+import Heading from '../components/typography/Heading.astro';
+import Body from '../components/typography/Body.astro';
+import TextHighlight from '../components/TextHighlight.astro';
+---
+
+<Layout title="Text Highlight Demo - Saad Shahd">
+  <Container width="default">
+    <Heading level={1} as="h1" class="mb-4">Text Highlight Animation Demo</Heading>
+    <Body size="lg" as="p" class="text-text-lighter mb-12">
+      Scroll-triggered character-level highlighting for long-form case study content.
+      Scroll down to see animations trigger as elements enter the viewport.
+    </Body>
+
+    <!-- Spacer to test scroll triggering -->
+    <div class="h-screen flex items-center justify-center">
+      <Body size="lg" as="p" class="text-center text-text-lighter">
+        ↓ Scroll down to see highlights animate in ↓
+      </Body>
+    </div>
+
+    <!-- Test Section 1: Subtle Gold (Default) -->
+    <div class="mb-32">
+      <Heading level={2} as="h2" class="mb-6">Variant: Subtle Gold (Egyptian Heritage)</Heading>
+      <Body size="lg" as="p" class="mb-8 leading-relaxed">
+        How do you scale <TextHighlight variant="subtle-gold">real-time data collection</TextHighlight> without sacrificing
+        <TextHighlight variant="subtle-gold">correctness</TextHighlight>?
+        Started with an Electron app (<TextHighlight variant="subtle-gold">XState</TextHighlight> state machines)
+        that reduced collection time significantly.
+      </Body>
+
+      <Body size="base" as="p" class="text-text-lighter leading-relaxed">
+        The key insight was <TextHighlight variant="subtle-gold">architectural separation</TextHighlight>:
+        building <TextHighlight variant="subtle-gold">DSLs</TextHighlight> so product managers could define sports rules as configuration—new sports became data, not code.
+      </Body>
+    </div>
+
+    <!-- Spacer -->
+    <div class="h-96"></div>
+
+    <!-- Test Section 2: Subtle Blue -->
+    <div class="mb-32">
+      <Heading level={2} as="h2" class="mb-6">Variant: Subtle Blue (Red Sea)</Heading>
+      <Body size="lg" as="p" class="mb-8 leading-relaxed">
+        How do 20 teams collaborate on <TextHighlight variant="subtle-blue">wise.com</TextHighlight> without friction or incorrectness?
+        Building <TextHighlight variant="subtle-blue">editorial infrastructure</TextHighlight> that handles global→local fintech complexity.
+      </Body>
+
+      <Body size="base" as="p" class="text-text-lighter leading-relaxed">
+        <TextHighlight variant="subtle-blue">Puck</TextHighlight> and <TextHighlight variant="subtle-blue">Payload</TextHighlight> became foundations for structured flexibility—schema-driven boundaries let teams compose freely without breaking each other.
+      </Body>
+    </div>
+
+    <!-- Spacer -->
+    <div class="h-96"></div>
+
+    <!-- Test Section 3: Emphasis -->
+    <div class="mb-32">
+      <Heading level={2} as="h2" class="mb-6">Variant: Emphasis (Bold + Gold)</Heading>
+      <Body size="lg" as="p" class="mb-8 leading-relaxed">
+        Lessons: <TextHighlight variant="emphasis">Architectural separation eliminates false trade-offs</TextHighlight>.
+        Team building shapes what's sustainable. Context determines what works.
+      </Body>
+
+      <Body size="base" as="p" class="text-text-lighter leading-relaxed">
+        The challenge is architectural: <TextHighlight variant="emphasis">coherence at scale</TextHighlight> while preserving
+        <TextHighlight variant="emphasis">developer experience</TextHighlight>.
+      </Body>
+    </div>
+
+    <!-- Spacer -->
+    <div class="h-96"></div>
+
+    <!-- Test Section 4: Fade In (No Color Change) -->
+    <div class="mb-32">
+      <Heading level={2} as="h2" class="mb-6">Variant: Fade In (Subtle - No Color)</Heading>
+      <Body size="lg" as="p" class="mb-8 leading-relaxed">
+        How do you build <TextHighlight variant="fade-in">systems that scale</TextHighlight> without sacrificing
+        <TextHighlight variant="fade-in">correctness</TextHighlight>?
+        The answer lies in <TextHighlight variant="fade-in">architectural separation</TextHighlight> and
+        <TextHighlight variant="fade-in">making illegal states unrepresentable</TextHighlight>.
+      </Body>
+
+      <Body size="base" as="p" class="text-text-lighter leading-relaxed">
+        This variant uses only <TextHighlight variant="fade-in">opacity and scale</TextHighlight> for a gentler effect—no color change means
+        less visual disruption while still <TextHighlight variant="fade-in">guiding attention</TextHighlight> through reading flow.
+      </Body>
+    </div>
+
+    <!-- Spacer -->
+    <div class="h-96"></div>
+
+    <!-- Test Section 5: Mixed Usage (Realistic Case Study) -->
+    <div class="mb-32">
+      <Heading level={2} as="h2" class="mb-6">Realistic Example: Case Study Content</Heading>
+
+      <Body size="lg" as="p" class="mb-6 leading-relaxed">
+        <TextHighlight variant="emphasis">How do you collect 90-minute matches without choosing between velocity and correctness?</TextHighlight>
+      </Body>
+
+      <Body size="base" as="p" class="text-text-lighter mb-6 leading-relaxed">
+        Starting in 2018, Statsbomb needed to scale real-time sports data collection from 100 to 1000+ collectors.
+        The solution involved three architectural layers:
+      </Body>
+
+      <Body size="base" as="ol" class="text-text-lighter mb-6 leading-relaxed space-y-4">
+        <li>1. <TextHighlight variant="subtle-gold">Electron app with XState</TextHighlight> - 30+ contextual keyboard shortcuts reduced cognitive load</li>
+        <li>2. <TextHighlight variant="subtle-gold">ANTLR-based DSL</TextHighlight> - Product managers defined sports rules without engineering bottleneck</li>
+        <li>3. <TextHighlight variant="subtle-gold">Kafka event streams</TextHighlight> - Real-time validation prevented errors before they became data quality issues</li>
+      </Body>
+
+      <Body size="base" as="p" class="text-text-lighter leading-relaxed">
+        Result: <TextHighlight variant="emphasis">16 hours → 4 concurrent collectors</TextHighlight>.
+        But architecture alone wasn't enough—learning to <TextHighlight variant="emphasis">build team ownership</TextHighlight> took until year three.
+      </Body>
+    </div>
+
+    <!-- Footer Spacer -->
+    <div class="h-screen"></div>
+  </Container>
+</Layout>
