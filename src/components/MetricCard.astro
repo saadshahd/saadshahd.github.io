@@ -2,19 +2,20 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
 
-// CVA variant definitions - Maps to badge semantic colors
+// CVA variant definitions - Neutral background + accent left border (Callout pattern)
 const metricCard = cva(
   [
     'p-4',
     'rounded-lg',
-    'border',
+    'bg-surface',
+    'border-l-4',
   ],
   {
     variants: {
       variant: {
-        skill: 'bg-skill/30 border-skill',       // Amber/gold: Technical capabilities
-        category: 'bg-category/30 border-category', // Blue: System characteristics
-        status: 'bg-status/30 border-status',    // Emerald: Success/completion
+        skill: 'border-l-skill',       // Amber accent: Technical capabilities
+        category: 'border-l-category', // Blue accent: System characteristics
+        status: 'border-l-status',     // Emerald accent: Success/completion
       },
     },
     defaultVariants: {
@@ -40,11 +41,11 @@ const descriptionStyles = cva([
   'text-text-lighter',
 ]);
 
-// Variant-specific text colors (WCAG AA compliant, 7.2-9.1:1 contrast)
+// Variant-specific text colors (muted for neutral background)
 const textColorMap = {
-  skill: 'text-[#78350F]',    // Amber text on light amber background
-  category: 'text-[#0C4A6E]', // Blue text on light blue background
-  status: 'text-[#065F46]',   // Emerald text on light emerald background
+  skill: 'text-text',         // Primary text (no color emphasis)
+  category: 'text-text',      // Primary text
+  status: 'text-text',        // Primary text
 } as const;
 
 type Props = VariantProps<typeof metricCard> & {

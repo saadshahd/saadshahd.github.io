@@ -32,13 +32,11 @@ import ComparisonCard from '../../components/ComparisonCard.astro';
     <Body size="base" as="p" class="text-text-lighter mb-6">aka Arqam (2018-2022): What if 1000 collectors could work concurrently without choosing between speed and correctness?</Body>
 
     <div class="flex flex-wrap gap-2 mb-8">
-      {/* System Characteristics */}
+      {/* Core system characteristic */}
       <Badge variant="category">Real-Time Data Collection</Badge>
-      <Badge variant="category">Collaborative Workflows</Badge>
 
-      {/* Key Technologies */}
+      {/* Differentiating technologies */}
       <Badge variant="status">XState</Badge>
-      <Badge variant="status">Kafka</Badge>
       <Badge variant="skill">ANTLR</Badge>
     </div>
 
@@ -164,9 +162,9 @@ Years of daily conversations with collectors revealed their actual workflows and
   ]}
 />
 
-<Callout variant="primary" icon="lightbulb" title="Strategic Moat" class="mb-6">
-  <p>The architectural separation between rules and execution created a strategic moat: product managers shipped new sports and client configurations without engineering bottlenecks. Architecture became competitive advantage.</p>
-</Callout>
+<Body size="sm" as="p" class="mb-6 text-text-lighter leading-relaxed italic">
+  <strong>Strategic Moat:</strong> The architectural separation between rules and execution created a strategic moat: product managers shipped new sports and client configurations without engineering bottlenecks. Architecture became competitive advantage.
+</Body>
 
 <Heading level={4} as="h4" class="mb-4 mt-8">Discovering the Domain Structure Through Event Storming</Heading>
 
@@ -262,10 +260,10 @@ Product managers couldn't define new collection requirements without engineering
     </Card>
   </div>
 
-  {/* Callout for "Why this order matters" */}
-  <Callout variant="success" icon="code" title="Why this order matters">
-    <Body size="sm" as="p" class="text-text-lighter leading-relaxed">Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.</Body>
-  </Callout>
+  {/* Plain paragraph - less visual weight */}
+  <Body size="sm" as="p" class="mb-8 text-text-lighter leading-relaxed italic">
+    <strong>Why this order matters:</strong> Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.
+  </Body>
 
   {/* Link to Technical Appendix */}
   <CalloutCTA variant="secondary" title="Technical Deep Dive Available" icon="code" class="my-8">
@@ -278,9 +276,7 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* DSL Subsection - Slimmed Down */}
     <div class="mb-10">
-      <Callout variant="secondary" icon="layers" title="System 1 of 3: Domain Logic as Configuration">
-        <p>Bounded context: Event collection dataspec</p>
-      </Callout>
+      <Body size="sm" as="p" class="mb-4 text-text-lighter italic">System 1 of 3: Domain Logic as Configuration (Bounded context: Event collection dataspec)</Body>
 
       <Heading level={3} as="h3" class="mb-4">Domain Logic as Configuration</Heading>
 
@@ -329,9 +325,7 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* Live-Collection-App Subsection */}
     <div class="mb-10">
-      <Callout variant="secondary" icon="layers" title="System 2 of 3: Live-Collection-App">
-        <p>Bounded context: Collector workflows and real-time collaboration</p>
-      </Callout>
+      <Body size="sm" as="p" class="mb-4 text-text-lighter italic">System 2 of 3: Live-Collection-App (Bounded context: Collector workflows and real-time collaboration)</Body>
 
       <Heading level={3} as="h3" class="mb-4">The Live-Collection-App: UX as First Principle</Heading>
 
@@ -418,9 +412,7 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* Backend + Metadata Subsection */}
     <div class="mb-10">
-      <Callout variant="secondary" icon="layers" title="System 3 of 3: Backend + Metadata">
-        <p>Bounded contexts: Event graphs, match metadata, temporal resolution</p>
-      </Callout>
+      <Body size="sm" as="p" class="mb-4 text-text-lighter italic">System 3 of 3: Backend + Metadata (Bounded contexts: Event graphs, match metadata, temporal resolution)</Body>
 
       <Heading level={3} as="h3" class="mb-4">Backend Evolution: Event Graphs + Claims-Based Metadata</Heading>
 
