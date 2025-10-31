@@ -241,10 +241,6 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
       variant="default"
       defaultOpen={false}
     >
-      <Body size="sm" as="p" class="text-text-lighter italic mb-4">
-        Bounded context: Event collection dataspec
-      </Body>
-
 Product managers needed to express domain logic—entry validation, sequencing logic, aggregation rules—in readable syntax that compiled to execution logic. The dataspec as configuration, not code.
 
 Atomic events (passes, shots) aggregated into derived facts (possession phases, drives, turnovers). Store unchanging truth, recompute everything else when rules evolved.
@@ -262,10 +258,6 @@ Without DSLs, every new rule required engineering deploys. With DSLs, product ma
       variant="default"
       defaultOpen={false}
     >
-      <Body size="sm" as="p" class="text-text-lighter italic mb-4">
-        Bounded context: Collector workflows and real-time collaboration
-      </Body>
-
 The first thing we built was the tool collectors would use every day—an Electron desktop app replacing Dartfish's rigid forms with keyboard-first workflows.
 
 **State Machines for Prevention**: We modeled collection workflows as explicit finite state machines with XState. Define workflows as explicit states with clear transitions, and illegal states become structurally impossible. Can't skip steps. Can't submit incomplete data. Prevention, not validation.
@@ -287,10 +279,6 @@ The dataspec drove UI validation, DSL defined legal sequences, state machines co
       variant="default"
       defaultOpen={false}
     >
-      <Body size="sm" as="p" class="text-text-lighter italic mb-4">
-        Bounded contexts: Event graphs, match metadata, temporal resolution
-      </Body>
-
 **Event Graphs**: Sequential event logs couldn't answer "what caused this turnover?" We needed both temporal relationships (clearance BEFORE recovery) AND logical relationships (clearance CAUSED loose phase). Events formed directed acyclic graphs with typed edges—enabling timeline replay and root-cause analysis for data quality debugging.
 
 **Waheed's Claims Breakthrough**: Match metadata from thousands of collectors meant inevitable conflicts—same player, different spellings. Waheed built claims-based metadata resolution. **The insight: metadata isn't key-value pairs, it's claims from actors.** System detected conflicts automatically, routed 1-2% ambiguous cases to the 5-person metadata team. They resolved once via claims interface—system cascaded to all dependent data. The team handled ambiguity; the system handled scale.
@@ -325,19 +313,31 @@ Remember that first-week feeling? Shipping the freezeframe tool twice daily, get
 
 I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
 
-<Accordion variant="status" summary="Year One: Finding the Core Partnership">
-
+<div id="team-timeline" aria-label="Team building timeline">
+  <Accordion
+    grouped
+    position="first"
+    id="year-one"
+    variant="status"
+    summary="Year One: Finding the Core Partnership"
+    defaultOpen={false}
+  >
 Year one (2018): Omar Negm had already built foundational systems when I joined. Working with Ali and Omar, we developed the live-collection-app—data as configuration, state machines, DSLs.
 
 Year two (2019): Omar left to teach kids software. Adham joined and took ownership of backend evolution.
+  </Accordion>
 
-</Accordion>
-
-<Accordion variant="status" summary="Years Two-Three: Scaling from Partnership to Distributed Team" class="mb-6">
-
+  <Accordion
+    grouped
+    position="last"
+    id="years-two-three"
+    variant="status"
+    summary="Years Two-Three: Scaling from Partnership to Distributed Team"
+    defaultOpen={false}
+  >
 Adham and I could execute together, but the domain kept expanding. The transition from two-person partnership to distributed team took longer than it needed—I was learning how to lead engineers while building production systems. By year three, we had built the hiring and mentoring systems needed to scale beyond the core partnership.
-
-</Accordion>
+  </Accordion>
+</div>
 
 <Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
 
