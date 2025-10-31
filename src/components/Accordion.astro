@@ -228,7 +228,51 @@ if (grouped && !position) {
     });
   }
 
+  function initCardLinks() {
+    const cardLinks = document.querySelectorAll<HTMLAnchorElement>('a[data-target]');
+
+    cardLinks.forEach(link => {
+      // Prevent double initialization (View Transitions support)
+      if (link.hasAttribute('data-card-init')) return;
+      link.setAttribute('data-card-init', 'true');
+
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const targetId = link.getAttribute('data-target');
+        const groupId = link.getAttribute('href')?.replace('#', '');
+
+        if (!targetId || !groupId) return;
+
+        // Step 1: Scroll to group container
+        const groupElement = document.getElementById(groupId);
+        if (groupElement) {
+          groupElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Step 2: Wait for scroll to complete, then expand target accordion
+        setTimeout(() => {
+          const targetAccordion = document.getElementById(targetId)?.closest('details') as HTMLDetailsElement;
+
+          if (targetAccordion && !targetAccordion.open) {
+            // Trigger expansion (existing animation logic will handle it)
+            targetAccordion.open = true;
+
+            // Manually trigger toggle event for animation
+            targetAccordion.dispatchEvent(new Event('toggle'));
+          }
+        }, 600); // Match smooth scroll duration
+      });
+    });
+  }
+
   // Initialize on page load AND Astro View Transitions
-  document.addEventListener('DOMContentLoaded', initAccordions);
-  document.addEventListener('astro:page-load', initAccordions);
+  document.addEventListener('DOMContentLoaded', () => {
+    initAccordions();
+    initCardLinks();  // NEW
+  });
+  document.addEventListener('astro:page-load', () => {
+    initAccordions();
+    initCardLinks();  // NEW
+  });
 </script>
