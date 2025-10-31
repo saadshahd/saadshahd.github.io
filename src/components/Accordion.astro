@@ -5,7 +5,6 @@ import { clsx } from 'clsx';
 // CVA variant definitions
 const accordion = cva([
   'rounded-lg',
-  'mb-4',
   'px-4',
 ], {
   variants: {
@@ -14,11 +13,57 @@ const accordion = cva([
       category: 'border-l-4 border-badge-category-border bg-badge-category-bg/10',
       status: 'border-l-4 border-badge-status-border bg-badge-status-bg/10',
       default: 'border border-neutral-light',
-    }
+    },
+    // NEW: Grouped variant for spacing
+    grouped: {
+      true: 'mb-2',   // Tight spacing for grouped accordions
+      false: 'mb-4',  // Normal spacing (default)
+    },
+    // NEW: Position variants for grouped container styling
+    position: {
+      first: [
+        'border border-neutral-light',
+        'bg-surface/30',
+        'rounded-t-lg rounded-b-none',
+        'pt-6',
+      ],
+      middle: [
+        'border-l border-r border-neutral-light',
+        'bg-surface/30',
+        'rounded-none',
+      ],
+      last: [
+        'border border-neutral-light',
+        'bg-surface/30',
+        'rounded-b-lg rounded-t-none',
+        'pb-6',
+        'mb-0',  // Override grouped mb-2 for last element
+      ],
+      only: [
+        'border border-neutral-light',
+        'bg-surface/30',
+        'rounded-lg',
+        'py-6',
+      ],
+    },
   },
   defaultVariants: {
-    variant: 'default'
-  }
+    variant: 'default',
+    grouped: false,  // NEW
+  },
+  // NEW: Compound variants for border removal
+  compoundVariants: [
+    {
+      grouped: true,
+      position: 'first',
+      class: 'border-b-0',  // Remove bottom border to connect to next
+    },
+    {
+      grouped: true,
+      position: 'middle',
+      class: 'border-b-0',  // Remove bottom border to connect to next
+    },
+  ],
 });
 
 const summary = cva([
@@ -76,7 +121,7 @@ if (grouped && !position) {
 ---
 
 <details
-  class={clsx(accordion({ variant }), className)}
+  class={clsx(accordion({ variant, grouped, position }), className)}
   data-accordion
   open={defaultOpen}
 >
