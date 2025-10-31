@@ -27,7 +27,6 @@ import { clsx } from 'clsx';
 // CVA variant definitions
 const accordion = cva([
   'rounded-lg',
-  'px-4',
 ], {
   variants: {
     variant: {
@@ -47,7 +46,6 @@ const accordion = cva([
         'border border-primary/15',
         'bg-surface/40',
         'rounded-t-lg rounded-b-none',
-        'pt-6',
       ],
       middle: [
         'border-l border-r border-primary/15',
@@ -58,22 +56,33 @@ const accordion = cva([
         'border border-primary/15',
         'bg-surface/40',
         'rounded-b-lg rounded-t-none',
-        'pb-6',
         'mb-0',  // Override for last element
       ],
       only: [
         'border border-primary/15',
         'bg-surface/40',
         'rounded-lg',
-        'py-6',
+      ],
+    },
+    // NEW: Size variant for inline editorial style
+    size: {
+      default: [
+        'px-4',      // Normal padding
+      ],
+      inline: [
+        'px-0',              // Zero padding for editorial flow
+        'mb-0',              // No spacing - handled by container
+        'border-none',       // No border
+        'bg-transparent',    // Transparent background
       ],
     },
   },
   defaultVariants: {
     variant: 'default',
-    grouped: false,  // NEW
+    grouped: false,
+    size: 'default',
   },
-  // NEW: Compound variants for border removal
+
   compoundVariants: [
     {
       grouped: true,
@@ -89,25 +98,67 @@ const accordion = cva([
 });
 
 const summary = cva([
-  'flex items-center justify-between gap-4',
-  'py-5 pl-6 pr-4 cursor-pointer',
-  'text-base font-medium text-text',
-  'bg-neutral-lighter/0',
-  'transition-colors duration-200',
-  'select-none',
-]);
+  'flex items-center cursor-pointer select-none',
+], {
+  variants: {
+    size: {
+      default: [
+        'justify-between gap-4',
+        'py-5 pl-6 pr-4',
+        'text-base font-medium text-text',
+        'bg-neutral-lighter/0',
+        'transition-colors duration-200',
+      ],
+      inline: [
+        'gap-2',                        // Tight gap (8px) - chevron right next to text
+        'p-0',                    // Minimal padding (4px vertical, 0 horizontal)
+        'text-sm font-normal',          // Light weight - not bold/semibold
+        'text-text',                    // Same color as DL terms - no hover change
+      ],
+    },
+  },
+  defaultVariants: {
+    size: 'default',
+  },
+});
 
 const chevron = cva([
-  'w-5 h-5 text-neutral shrink-0',
+  'text-neutral shrink-0',
   'transition-transform duration-200',
-]);
+], {
+  variants: {
+    size: {
+      default: 'w-5 h-5',      // 20px
+      inline: 'w-3.5 h-3.5',   // 14px (proportional to text-sm)
+    },
+  },
+  defaultVariants: {
+    size: 'default',
+  },
+});
 
 const content = cva([
   'accordion-content overflow-hidden',
-  'border-t border-neutral/20',
-  'mt-2',
-  'pt-2 pb-4',
-]);
+], {
+  variants: {
+    size: {
+      default: [
+        'border-t border-neutral/20',
+        'mt-2',
+        'pt-2 pb-4',
+      ],
+      inline: [
+        'border-none',               // No border separator
+        'mt-1 pt-1 pb-2',           // Minimal spacing (4px top, 8px bottom)
+        'text-sm text-text-lighter', // Match DefinitionList definition style
+        'leading-relaxed',           // Match DL line-height
+      ],
+    },
+  },
+  defaultVariants: {
+    size: 'default',
+  },
+});
 
 type Props = VariantProps<typeof accordion> & {
   summary?: string;
@@ -117,6 +168,7 @@ type Props = VariantProps<typeof accordion> & {
   variant?: 'skill' | 'category' | 'status' | 'default';
   grouped?: boolean;  // NEW: Is this part of a visual group?
   position?: 'first' | 'middle' | 'last' | 'only';  // NEW: Position in group
+  size?: 'default' | 'inline';  // NEW: Size variant for editorial style
   class?: string;
 };
 
@@ -128,6 +180,7 @@ const {
   variant,
   grouped = false,  // NEW
   position,          // NEW
+  size = 'default',  // NEW
   class: className,
 } = Astro.props;
 
@@ -143,12 +196,12 @@ if (grouped && !position) {
 ---
 
 <details
-  class={clsx(accordion({ variant, grouped, position }), className)}
+  class={clsx(accordion({ variant, grouped, position, size }), className)}
   data-accordion
   data-grouped={grouped || undefined}
   open={defaultOpen}
 >
-  <summary class={summary()}>
+  <summary class={summary({ size })}>
     {name ? (
       <div class="flex flex-col md:flex-row md:items-baseline md:gap-2">
         <span class="font-semibold text-text">{name}</span>
@@ -158,7 +211,7 @@ if (grouped && !position) {
       summaryText
     )}
     <svg
-      class={chevron()}
+      class={chevron({ size })}
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -170,7 +223,7 @@ if (grouped && !position) {
     </svg>
   </summary>
 
-  <div class={content()} role="region">
+  <div class={content({ size })} role="region">
     <slot />
   </div>
 </details>
