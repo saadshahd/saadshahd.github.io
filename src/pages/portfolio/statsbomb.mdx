@@ -159,7 +159,7 @@ Years of daily conversations with collectors revealed their actual workflows and
 <Heading level={4} as="h4" class="mb-4 mt-8">Discovering the Domain Structure Through Event Storming</Heading>
 
 <Body size="sm" as="p" class="mb-4 text-text-lighter">
-  Event storming sessions mapped the domain. Five bounded contexts emerged: match metadata, event collection, people coordination, media management, contextual aggregation.
+  Event storming sessions mapped the domain. Five bounded contexts emerged: match metadata, event collection, people coordination, media management (Chris handled streaming infrastructure), contextual aggregation.
 </Body>
 
 <Body size="sm" as="p" class="mb-4 text-text-lighter">
@@ -394,7 +394,7 @@ Product managers couldn't define new collection requirements without engineering
     },
     {
       term: "Semi-Automated Freeze Frames",
-      definition: "CV service detected 80-90% of player positions, collectors corrected edge cases. 30 seconds vs. 3 minutes fully manual."
+      definition: "CV service (Ashmawy, Andrew, Shash) detected 80-90% of player positions, collectors corrected edge cases. 30 seconds vs. 3 minutes fully manual."
     }
   ]}
 />
@@ -549,7 +549,7 @@ The metadata challenge required different architectural thinking. Match metadata
   items={[
     {
       term: "Non-linear leverage",
-      definition: "Operations scaled 10x (100 → 1000+ collectors) without proportional staffing increases. The 5-person metadata team queried pending conflicts, resolved once via claims interface, and the system cascaded updates to all affected events."
+      definition: "Operations (Muhanad led ops context) scaled 10x (100 → 1000+ collectors) without proportional staffing increases. The 5-person metadata team queried pending conflicts, resolved once via claims interface, and the system cascaded updates to all affected events."
     },
     {
       term: "Minimal engineering bottleneck",
