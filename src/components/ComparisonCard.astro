@@ -14,12 +14,12 @@ type Props = {
 
 const { variant, title, class: className } = Astro.props;
 
-// Map variants to icon components and semantic colors
+// Map variants to icon components and muted colors
 const iconMap = {
-  before: { Icon: AlertTriangle, color: 'text-warning' },    // Challenges/constraints
-  problem: { Icon: AlertTriangle, color: 'text-warning' },   // Same as before
-  after: { Icon: CheckCircle, color: 'text-success' },       // Solutions/achievements
-  solution: { Icon: CheckCircle, color: 'text-success' },    // Same as after
+  before: { Icon: AlertTriangle, color: 'text-text-lighter' },    // Challenges/constraints
+  problem: { Icon: AlertTriangle, color: 'text-text-lighter' },   // Same as before
+  after: { Icon: CheckCircle, color: 'text-text-lighter' },       // Solutions/achievements
+  solution: { Icon: CheckCircle, color: 'text-text-lighter' },    // Same as after
 } as const;
 
 const { Icon, color } = iconMap[variant];
