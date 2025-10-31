@@ -192,7 +192,7 @@ Years of daily conversations with collectors revealed their actual workflows and
   The system needed to support any aggregation pattern, not just what we knew upfront.
 </Body>
 
-<Callout variant="insight" title="Why Match Metadata Was Different" class="my-6">
+<Callout variant="context" title="Why Match Metadata Was Different" class="my-6">
   <p>Players, clubs, referees, stadiums—reference data that thousands of collectors needed but only 5 people managed. Crowd-sourced data meant conflicting information: same player, different spellings; same club, multiple sources. The system required automated golden entity resolution—5 people couldn't manually reconcile metadata for thousands of collectors across hundreds of matches weekly.</p>
 </Callout>
 
@@ -251,7 +251,7 @@ Product managers couldn't define new collection requirements without engineering
   </div>
 
   {/* Callout for "Why this order matters" */}
-  <Callout variant="insight">
+  <Callout variant="technical">
     <Body size="sm" as="p" class="font-medium mb-2">
       <strong>Why this order matters:</strong>
     </Body>
@@ -259,14 +259,14 @@ Product managers couldn't define new collection requirements without engineering
   </Callout>
 
   {/* Link to Technical Appendix */}
-  <Callout variant="insight" title="Technical Deep Dive Available" class="my-8">
+  <Callout variant="subtle" title="Technical Deep Dive Available" class="my-8">
     <p class="mb-2">For implementation details—DSL syntax, state machine configuration, functional pipeline patterns, and code examples—see the <a href="/portfolio/statsbomb-technical-appendix" class="text-secondary hover:text-secondary-dark underline font-semibold">Technical Appendix</a>.</p>
     <p class="text-sm text-neutral">Covers: ANTLR grammar, XState machines, map/reduce transformations, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</p>
   </Callout>
 
     {/* DSL Subsection - Slimmed Down */}
     <div class="mb-10">
-      <Callout variant="insight" title="System 1 of 3: Domain Logic as Configuration">
+      <Callout variant="context" title="System 1 of 3: Domain Logic as Configuration">
         <p>Bounded context: Event collection dataspec</p>
       </Callout>
 
@@ -317,7 +317,7 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* Live-Collection-App Subsection */}
     <div class="mb-10">
-      <Callout variant="insight" title="System 2 of 3: Live-Collection-App">
+      <Callout variant="context" title="System 2 of 3: Live-Collection-App">
         <p>Bounded context: Collector workflows and real-time collaboration</p>
       </Callout>
 
@@ -406,7 +406,7 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* Backend + Metadata Subsection */}
     <div class="mb-10">
-      <Callout variant="insight" title="System 3 of 3: Backend + Metadata">
+      <Callout variant="context" title="System 3 of 3: Backend + Metadata">
         <p>Bounded contexts: Event graphs, match metadata, temporal resolution</p>
       </Callout>
 
@@ -532,7 +532,7 @@ The metadata challenge required different architectural thinking. Match metadata
   </Card>
 </div>
 
-<Callout variant="insight" title="Collector Voice" class="mb-6">
+<Callout variant="technical" title="Collector Voice" class="mb-6">
   <p class="mb-2"><strong>Before (Dartfish):</strong> "12 minutes per freeze frame clicking 22 player positions manually. By minute 60, my hand cramped from mouse clicks."</p>
   <p><strong>After (CV-assisted UI):</strong> "Computer vision detected 90%, I corrected edge cases in 3 minutes. Eyes stayed on video, hands on keyboard."</p>
   <p class="text-xs text-text-lighter mt-3">— A.Magdy, 360 Collection Lead</p>
