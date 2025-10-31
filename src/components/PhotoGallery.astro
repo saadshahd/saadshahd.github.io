@@ -173,6 +173,18 @@ try {
       transform: none;
     }
   }
+
+  /* PhotoSwipe Caption Styling */
+  :global(.pswp__caption-content) {
+    padding: var(--spacing-md);
+    background: rgba(15, 23, 42, 0.9); /* text-text with alpha */
+    color: var(--color-background);
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    font-style: italic;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
 </style>
 
 <script>
@@ -204,6 +216,18 @@ try {
         gallery: `#${galleryId}`,
         children: "a",
         pswpModule: PhotoSwipe,
+
+        // Enable captions from data-pswp-caption attribute
+        captionContent: (slide) => {
+          const caption = slide.data.element?.getAttribute('data-pswp-caption');
+          if (!caption) return '';
+
+          // Create caption element with proper styling
+          const captionEl = document.createElement('div');
+          captionEl.className = 'pswp__caption-content';
+          captionEl.textContent = caption;
+          return captionEl;
+        },
 
         // Animation durations (will be overridden by CSS if reduced motion)
         showAnimationDuration: prefersReducedMotion() ? 0 : 400,

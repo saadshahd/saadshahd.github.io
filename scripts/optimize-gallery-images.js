@@ -20,7 +20,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configuration
-const INPUT_DIR = join(__dirname, '../tmp-images');
+const INPUT_DIR = join(__dirname, '../public/images/statsbomb');
 const OUTPUT_DIR = join(__dirname, '../public/images/statsbomb');
 const TARGET_WIDTH = 1200;
 const QUALITY = 85;
@@ -70,31 +70,43 @@ async function optimizeImages() {
       const metadata = await sharp(inputPath).metadata();
       console.log(`  Original: ${metadata.width}x${metadata.height} (${(metadata.size / 1024 / 1024).toFixed(2)}MB)`);
 
-      // Convert to WebP
+      // Convert to WebP (skip if already exists)
       const webpPath = join(OUTPUT_DIR, `${fileBasename}.webp`);
-      await sharp(inputPath)
-        .resize(TARGET_WIDTH, null, {
-          withoutEnlargement: true,
-          fit: 'inside'
-        })
-        .webp({ quality: QUALITY })
-        .toFile(webpPath);
+      if (!file.endsWith('.webp')) {
+        await sharp(inputPath)
+          .resize(TARGET_WIDTH, null, {
+            withoutEnlargement: true,
+            fit: 'inside'
+          })
+          .webp({ quality: QUALITY })
+          .toFile(webpPath);
 
-      const webpSize = await sharp(webpPath).metadata();
-      console.log(`  → WebP: ${webpSize.width}x${webpSize.height} (${(webpSize.size / 1024).toFixed(0)}KB)`);
+        const webpSize = await sharp(webpPath).metadata();
+        console.log(`  → WebP: ${webpSize.width}x${webpSize.height} (${(webpSize.size / 1024).toFixed(0)}KB)`);
+      }
 
-      // Create JPEG fallback
+      // Create JPEG fallback (only if input is not already JPEG in output dir)
       const jpegPath = join(OUTPUT_DIR, `${fileBasename}.jpg`);
-      await sharp(inputPath)
-        .resize(TARGET_WIDTH, null, {
-          withoutEnlargement: true,
-          fit: 'inside'
-        })
-        .jpeg({ quality: QUALITY })
-        .toFile(jpegPath);
+      const needsJpegConversion = inputPath !== jpegPath;
 
-      const jpegSize = await sharp(jpegPath).metadata();
-      console.log(`  → JPEG: ${jpegSize.width}x${jpegSize.height} (${(jpegSize.size / 1024).toFixed(0)}KB)`);
+      if (needsJpegConversion) {
+        await sharp(inputPath)
+          .resize(TARGET_WIDTH, null, {
+            withoutEnlargement: true,
+            fit: 'inside'
+          })
+          .jpeg({ quality: QUALITY })
+          .toFile(jpegPath + '.tmp');
+
+        // Rename temp file to final
+        const { rename } = await import('fs/promises');
+        await rename(jpegPath + '.tmp', jpegPath);
+
+        const jpegSize = await sharp(jpegPath).metadata();
+        console.log(`  → JPEG: ${jpegSize.width}x${jpegSize.height} (${(jpegSize.size / 1024).toFixed(0)}KB)`);
+      } else {
+        console.log(`  → JPEG: Already optimized (skipped)`);
+      }
 
       console.log(`  ✅ Saved to ${OUTPUT_DIR}\n`);
 
