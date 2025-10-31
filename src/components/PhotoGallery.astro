@@ -174,23 +174,28 @@ try {
     }
   }
 
-  /* PhotoSwipe Caption Styling */
-  :global(.pswp__caption-content) {
-    padding: var(--spacing-md);
-    background: rgba(15, 23, 42, 0.9); /* text-text with alpha */
-    color: var(--color-background);
-    font-size: 14px;
-    line-height: 1.5;
-    text-align: center;
-    font-style: italic;
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  /* PhotoSwipe Dynamic Caption Plugin - Egyptian Design System Override */
+  :global(.pswp__dynamic-caption) {
+    background: rgba(15, 23, 42, 0.9) !important; /* text-text with alpha */
+    color: var(--color-background) !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    padding: var(--spacing-md) !important;
+    font-style: italic !important;
+  }
+
+  /* Ensure caption text is readable */
+  :global(.pswp__dynamic-caption a) {
+    color: var(--color-primary) !important;
   }
 </style>
 
 <script>
   import PhotoSwipeLightbox from "photoswipe/lightbox";
   import PhotoSwipe from "photoswipe";
+  import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption-plugin';
   import "photoswipe/style.css";
+  import 'photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css';
 
   // Check for reduced motion preference
   function prefersReducedMotion(): boolean {
@@ -217,24 +222,20 @@ try {
         children: "a",
         pswpModule: PhotoSwipe,
 
-        // Enable captions from data-pswp-caption attribute
-        captionContent: (slide) => {
-          const caption = slide.data.element?.getAttribute('data-pswp-caption');
-          if (!caption) return '';
-
-          // Create caption element with proper styling
-          const captionEl = document.createElement('div');
-          captionEl.className = 'pswp__caption-content';
-          captionEl.textContent = caption;
-          return captionEl;
-        },
-
         // Animation durations (will be overridden by CSS if reduced motion)
         showAnimationDuration: prefersReducedMotion() ? 0 : 400,
         hideAnimationDuration: prefersReducedMotion() ? 0 : 400,
 
         // Accessibility
         closeOnVerticalDrag: true,
+      });
+
+      // Initialize official caption plugin
+      const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
+        type: 'auto', // 'auto' = aside on desktop, below on mobile
+        captionContent: (slide) => {
+          return slide.data.element?.getAttribute('data-pswp-caption') || '';
+        },
       });
 
       lightbox.init();
