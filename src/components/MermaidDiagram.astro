@@ -46,7 +46,7 @@ const descriptionId = `diagram-${id}-description`;
   role="img"
   aria-labelledby={figcaptionId}
   aria-describedby={descriptionId}
-  class="diagram-container group relative my-8 bg-surface border border-neutral-light rounded-lg px-6 pb-6 overflow-hidden"
+  class="diagram-container group relative my-8 overflow-hidden"
 >
   <!-- Screen reader caption (visually hidden) -->
   <figcaption id={figcaptionId} class="sr-only">
@@ -56,24 +56,6 @@ const descriptionId = `diagram-${id}-description`;
   <!-- Mermaid diagram (slot allows remark plugin to process markdown) -->
   <div class="mermaid-wrapper">
     <slot />
-  </div>
-
-  <!-- Text description (slides up on hover/focus) -->
-  <div
-    id={descriptionId}
-    class="diagram-description"
-    aria-label="Text description of diagram relationships"
-  >
-    <details>
-      <summary class="description-label">
-        Text description of relationships
-      </summary>
-      <ul class="description-list">
-        {relationships.map((relationship) => (
-          <li>{relationship}</li>
-        ))}
-      </ul>
-    </details>
   </div>
 </figure>
 

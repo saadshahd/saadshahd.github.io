@@ -136,85 +136,98 @@ Post-match, they'd sit for hours resolving conflicts. One thought event X was va
 Two collectors per match, each following a team, manually entering 3000+ events over 16 hours. Duplicated effort. No prevention through design—only validation after mistakes happened. The business stakes were real: Statsbomb's revenue model depended on data velocity and granularity. Every hour saved in collection = more matches analyzed = higher data quality premium for professional clubs and broadcasters. Collector efficiency wasn't just operational; it was the constraint on market expansion.
 
 {/* Workflow Comparison: Before vs. After */}
-<div class="grid md:grid-cols-2 gap-6 my-8">
-  <ComparisonCard variant="before" title="Before: Offline Sequential Collection">
+<div class="grid md:grid-cols-2 my-8">
+  <div class="border-r border-neutral-light pr-6">
+    <div class="flex items-center gap-2 mb-6">
+      <svg class="w-5 h-5 text-text-lighter" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <Heading level={4} as="h4" class="text-base font-semibold text-text">Before: Sequential Collection</Heading>
+    </div>
     <figure>
       <MermaidDiagram
         id="workflow-before"
-        caption="Offline sequential workflow: 2 collectors work independently for 16 hours each, then spend hours resolving conflicts"
+        caption="8-10h total: 2h collection (4 man-hours), then 6-8h post-processing (validation, conflicts, freeze frames)"
         relationships={[
-          "Collector A: Hours 0-16 collecting Team A events independently",
-          "Collector B: Hours 0-16 collecting Team B events independently",
-          "Hours 16-24: Post-match validation resolving interpretation conflicts (the 70% Hell)",
-          "Hours 16-24: Slack messages clarifying dataspec ambiguities (10% overhead)",
-          "Total: 32-40 hours per match with quality uncertainty until post-validation"
+          "Collection: 2 collectors × 2h = 4 man-hours",
+          "Post-processing: 6-8h for validation, conflict resolution, freeze frames",
+          "Total: 8-10h wall-clock = 16-20 man-hours",
+          "Sequential dependency creates bottleneck"
         ]}
       >
+
 ```mermaid
-gantt
-    title Sequential Collection (32-40h total)
-    dateFormat HH
-    axisFormat %Hh
+graph TD
+    Start["Match begins"] --> Collect["Collection phase
+    2 collectors × 2h
+    4 man-hours"]
+    Collect --> Post["Post-processing
+    6-8 hours"]
+    Post --> Valid["Validation +
+    Conflict resolution +
+    Freeze frames"]
+    Valid --> Complete["Match complete
+    8-10h total
+    16-20 man-hours"]
 
-    section Collector A
-    Team A Collection    :a1, 00, 16h
-
-    section Collector B
-    Team B Collection    :b1, 00, 16h
-
-    section Post-Match
-    Resolve Conflicts    :crit, p1, 16, 8h
-    Slack Clarifications :crit, p2, 16, 2h
+    classDef problem fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
+    class Start,Collect,Post,Valid,Complete problem
 ```
+
       </MermaidDiagram>
-      <details class="mt-2 text-xs text-text-lighter">
-        <summary class="cursor-pointer hover:text-text">Text alternative for screen readers</summary>
-        <p class="mt-1">Timeline showing two collectors working independently for 16 hours each (hours 0-16), followed by 8-10 hours of post-match conflict resolution and clarifications (hours 16-24). Total time: 32-40 hours per match.</p>
+      <details class="mt-2 text-xs text-text-lighter text-center">
+        <summary class="cursor-pointer hover:text-text">Text alternative</summary>
+        <p class="mt-1">Sequential workflow: 2 collectors work 2h in parallel for collection (4 man-hours), then 6-8h post-processing for validation, conflict resolution, and freeze frames. Total: 8-10h wall-clock = 16-20 man-hours.</p>
       </details>
     </figure>
-  </ComparisonCard>
+  </div>
 
-  <ComparisonCard variant="after" title="After: Concurrent Parallel Collection">
+  <div class="pl-6">
+    <div class="flex items-center gap-2 mb-6">
+      <svg class="w-5 h-5 text-text-lighter" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <Heading level={4} as="h4" class="text-base font-semibold text-text">After: Concurrent Collection</Heading>
+    </div>
     <figure>
       <MermaidDiagram
         id="workflow-after"
-        caption="Concurrent parallel workflow: 4 collectors work simultaneously for 4 hours with automated prevention, no post-validation needed"
+        caption="~2h total: Base events created during match, enriched in parallel (Extras, Location, FreezeFrame)"
         relationships={[
-          "Collector 1-4: All work hours 0-4 concurrently with real-time validation",
-          "State machines prevent illegal workflows (XState phase constraints)",
-          "DSL rules prevent ambiguity (clear dataspec definitions)",
-          "Automated merge: No post-match conflicts to resolve",
-          "Total: 4 hours per match with structural correctness guaranteed"
+          "Base event creation happens first (name, timestamp)",
+          "3 parallel enrichments: Extras, Location, FreezeFrame",
+          "Real-time validation prevents conflicts during match",
+          "Automated merge at match end (~2h)"
         ]}
       >
+
 ```mermaid
-gantt
-    title Concurrent Collection (4h total)
-    dateFormat HH
-    axisFormat %Hh
+graph TD
+    Start["Match begins"] --> Base["Base event creation
+    (name, timestamp)"]
+    Base --> E1["Extras enrichment"]
+    Base --> E2["Location enrichment"]
+    Base --> E3["FreezeFrame enrichment"]
+    E1 --> M["Match ends
+    ~2 hours"]
+    E2 --> M
+    E3 --> M
+    M --> N["Automated merge
+    5 minutes"]
+    N --> O["Match complete
+    ~2h total"]
 
-    section Collector 1
-    Team A Events    :done, c1, 00, 4h
-
-    section Collector 2
-    Team A Events    :done, c2, 00, 4h
-
-    section Collector 3
-    Team B Events    :done, c3, 00, 4h
-
-    section Collector 4
-    Team B Events    :done, c4, 00, 4h
-
-    section System
-    Auto Merge       :done, m1, 04, 5m
+    classDef success fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
+    class Start,Base,E1,E2,E3,M,N,O success
 ```
+
       </MermaidDiagram>
-      <details class="mt-2 text-xs text-text-lighter">
-        <summary class="cursor-pointer hover:text-text">Text alternative for screen readers</summary>
-        <p class="mt-1">Timeline showing four collectors working simultaneously for 4 hours (hours 0-4), followed by 5-minute automated merge with no conflicts. Total time: 4 hours per match with prevention-based quality.</p>
+      <details class="mt-2 text-xs text-text-lighter text-center">
+        <summary class="cursor-pointer hover:text-text">Text alternative</summary>
+        <p class="mt-1">Concurrent workflow: Base events (name, timestamp) created during match with 3 parallel enrichments (Extras, Location, FreezeFrame), followed by 5-minute automated merge at match end. Total: ~2 hours.</p>
       </details>
     </figure>
-  </ComparisonCard>
+  </div>
 </div>
 
 <Heading level={4} as="h4" class="mb-4 mt-8">The Industry Baseline: Dartfish's Limitations</Heading>
