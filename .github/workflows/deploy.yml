@@ -30,6 +30,8 @@ jobs:
         run: bun install
 
       - name: Build with Astro
+        env:
+          NODE_OPTIONS: --max-old-space-size=2048
         run: bun run build
 
       - name: Upload artifact
