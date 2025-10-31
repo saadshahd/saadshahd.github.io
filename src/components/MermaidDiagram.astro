@@ -46,7 +46,7 @@ const descriptionId = `diagram-${id}-description`;
   role="img"
   aria-labelledby={figcaptionId}
   aria-describedby={descriptionId}
-  class="diagram-container group relative my-8 overflow-hidden"
+  class="diagram-container group relative overflow-hidden"
 >
   <!-- Screen reader caption (visually hidden) -->
   <figcaption id={figcaptionId} class="sr-only">
@@ -74,6 +74,13 @@ const descriptionId = `diagram-${id}-description`;
   .mermaid-wrapper {
     position: relative;
     z-index: 1;
+  }
+
+  /* Remove default pre/code padding and margin */
+  .mermaid-wrapper pre,
+  .mermaid-wrapper code {
+    margin: 0;
+    padding: 0;
   }
 
   /* Text description - hidden by default */
