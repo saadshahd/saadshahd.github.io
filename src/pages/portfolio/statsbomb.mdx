@@ -138,7 +138,7 @@ Two collectors per match, each following a team, manually entering 3000+ events 
 {/* Workflow Comparison: Before vs. After */}
 <div class="grid md:grid-cols-2 my-8">
   <div class="border-r border-neutral-light pr-6">
-    <div class="flex items-center justify-center gap-2 mb-6">
+    <div class="flex items-center justify-center gap-2 mb-2">
       <svg class="w-5 h-5 text-text-lighter" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
       </svg>
@@ -158,17 +158,16 @@ Two collectors per match, each following a team, manually entering 3000+ events 
 
 ```mermaid
 graph TD
-    Start["Match begins"] --> Collect["Collection phase
-    2 collectors × 2h
-    4 man-hours"]
+    Start["Match begins"] --> Collect["Collection
+    2 collectors × 4h"]
     Collect --> Post["Post-processing
-    6-8 hours"]
+    ~8 hours"]
     Post --> Valid["Validation +
     Conflict resolution +
     Freeze frames"]
     Valid --> Complete["Match complete
-    8-10h total
-    16-20 man-hours"]
+    ~8h total
+    ~16 man-hours"]
 
     classDef problem fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
     class Start,Collect,Post,Valid,Complete problem
@@ -183,7 +182,7 @@ graph TD
   </div>
 
   <div class="pl-6">
-    <div class="flex items-center justify-center gap-2 mb-6">
+    <div class="flex items-center justify-center gap-2 mb-2">
       <svg class="w-5 h-5 text-text-lighter" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
@@ -203,19 +202,17 @@ graph TD
 
 ```mermaid
 graph TD
-    Start["Match begins"] --> Base["Base event creation
+    Start["Match begins"] --> Base["Base Event
     (name, timestamp)"]
-    Base --> E1["Extras enrichment"]
-    Base --> E2["Location enrichment"]
-    Base --> E3["FreezeFrame enrichment"]
-    E1 --> M["Match ends
-    ~2 hours"]
+    Base --> E1["Extras"]
+    Base --> E2["Location"]
+    Base --> E3["FreezeFrame"]
+    E1 --> M["Automated merge"]
     E2 --> M
     E3 --> M
-    M --> N["Automated merge
-    5 minutes"]
-    N --> O["Match complete
-    ~2h total"]
+    M --> N["Match ends
+    ~2 hours"]
+    N --> O["Complete Analysis"]
 
     classDef success fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
     class Start,Base,E1,E2,E3,M,N,O success
