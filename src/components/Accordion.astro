@@ -48,6 +48,8 @@ type Props = VariantProps<typeof accordion> & {
   role?: string;
   defaultOpen?: boolean;
   variant?: 'skill' | 'category' | 'status' | 'default';
+  grouped?: boolean;  // NEW: Is this part of a visual group?
+  position?: 'first' | 'middle' | 'last' | 'only';  // NEW: Position in group
   class?: string;
 };
 
@@ -57,12 +59,19 @@ const {
   role,
   defaultOpen = false,
   variant,
+  grouped = false,  // NEW
+  position,          // NEW
   class: className,
 } = Astro.props;
 
 // Validation: must provide either summary OR (name + role)
 if (!summaryText && !name) {
   throw new Error('Accordion requires either "summary" or "name" prop');
+}
+
+// NEW: Validation for grouped props
+if (grouped && !position) {
+  throw new Error('Accordion with grouped=true requires "position" prop (first, middle, last, or only)');
 }
 ---
 
