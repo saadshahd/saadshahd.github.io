@@ -54,7 +54,7 @@ import Body from '../components/typography/Body.astro';
 
       animate('.hero-name, .hero-title, .hero-value, .hero-ctas', keyframes, {
         duration: 0.8,
-        delay: stagger(0.15, { startDelay: isDesktop ? 0.6 : 0 }) // Wait for patterns on desktop
+        delay: stagger(0.15, { startDelay: isDesktop ? 0.6 : 0.3 }) // Desktop: wait for patterns, Mobile: smoother entry
       });
     } else {
       // If reduced motion, just show content immediately

@@ -93,6 +93,13 @@ import SectionDivider from '../../components/SectionDivider.astro';
       <Callout variant="insight" title="Core Lesson">
         <p>Team building multiplies architectural leverage—waiting until year three to expand beyond two-person partnership meant racing external constraints before completing customer-facing features.</p>
       </Callout>
+
+      {/* Technical Appendix Link */}
+      <div class="mt-6 p-4 bg-surface rounded-lg border border-neutral-light">
+        <Body size="sm" as="p" class="mb-2 font-medium">📐 For Engineers: Technical Deep Dive Available</Body>
+        <Body size="sm" as="p" class="mb-3 text-text-lighter">ANTLR grammar, XState machines, functional pipelines, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</Body>
+        <Button variant="secondary" size="sm" href="/portfolio/statsbomb-technical-appendix">View Technical Appendix →</Button>
+      </div>
     </details>
   </section>
 
@@ -228,7 +235,7 @@ Product managers couldn't define new collection requirements without engineering
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill" aria-label="Step 1 of 3">1</span>
         <Heading level={4} as="h4" class="text-base font-semibold">Domain Logic as Configuration</Heading>
       </div>
-      <Body size="sm" as="p" class="text-neutral">Rules without code deploys—product managers define dataspec logic in readable DSL syntax</Body>
+      <Body size="sm" as="p" class="text-text-lighter">Rules without code deploys—product managers define dataspec logic in readable DSL syntax</Body>
     </Card>
 
     {/* System 2: Live-Collection-App */}
@@ -237,7 +244,7 @@ Product managers couldn't define new collection requirements without engineering
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category" aria-label="Step 2 of 3">2</span>
         <Heading level={4} as="h4" class="text-base font-semibold">Live-Collection-App</Heading>
       </div>
-      <Body size="sm" as="p" class="text-neutral">UX that makes errors impossible—state machines constrain invalid workflows, keyboard flows build muscle memory</Body>
+      <Body size="sm" as="p" class="text-text-lighter">UX that makes errors impossible—state machines constrain invalid workflows, keyboard flows build muscle memory</Body>
     </Card>
 
     {/* System 3: Backend Evolution */}
@@ -246,7 +253,7 @@ Product managers couldn't define new collection requirements without engineering
         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status" aria-label="Step 3 of 3">3</span>
         <Heading level={4} as="h4" class="text-base font-semibold">Backend Evolution</Heading>
       </div>
-      <Body size="sm" as="p" class="text-neutral">Event graphs + claims-based metadata—temporal dependencies and provenance tracking at scale</Body>
+      <Body size="sm" as="p" class="text-text-lighter">Event graphs + claims-based metadata—temporal dependencies and provenance tracking at scale</Body>
     </Card>
   </div>
 
@@ -255,13 +262,13 @@ Product managers couldn't define new collection requirements without engineering
     <Body size="sm" as="p" class="font-medium mb-2">
       <strong>Why this order matters:</strong>
     </Body>
-    <Body size="sm" as="p" class="text-neutral leading-relaxed">Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.</Body>
+    <Body size="sm" as="p" class="text-text-lighter leading-relaxed">Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.</Body>
   </Callout>
 
   {/* Link to Technical Appendix */}
   <Callout variant="subtle" title="Technical Deep Dive Available" class="my-8">
     <p class="mb-2">For implementation details—DSL syntax, state machine configuration, functional pipeline patterns, and code examples—see the <a href="/portfolio/statsbomb-technical-appendix" class="text-secondary hover:text-secondary-dark underline font-semibold">Technical Appendix</a>.</p>
-    <p class="text-sm text-neutral">Covers: ANTLR grammar, XState machines, map/reduce transformations, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</p>
+    <p class="text-sm text-text-lighter">Covers: ANTLR grammar, XState machines, map/reduce transformations, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</p>
   </Callout>
 
     {/* DSL Subsection - Slimmed Down */}

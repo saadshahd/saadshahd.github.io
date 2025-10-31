@@ -19,7 +19,7 @@ import Accordion from '../../components/Accordion.astro';
 
     <p class="text-sm text-neutral font-medium uppercase tracking-wide mb-1">Technical Deep Dive</p>
     <h1 class="text-base md:text-lg text-navy font-medium mb-2">Statsbomb Architecture: Implementation Details</h1>
-    <Body size="base" as="p" class="text-neutral mb-6">Code examples, state machine configurations, functional pipeline patterns, and technical specifications from the real-time sports data collection system.</Body>
+    <Body size="base" as="p" class="text-text-lighter mb-6">Code examples, state machine configurations, functional pipeline patterns, and technical specifications from the real-time sports data collection system.</Body>
   </div>
 
   <Callout variant="context" size="default" title="Prerequisites">
@@ -46,7 +46,7 @@ import Accordion from '../../components/Accordion.astro';
   <section class="mb-16" id="dsl-implementation">
     <Heading level={3} as="h2" class="mb-6">DSL Implementation: From Parser to Execution</Heading>
 
-    <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
+    <Body size="base" as="p" class="mb-6 text-text-lighter leading-relaxed">
       The Domain-Specific Language (DSL) evolved through three stages: hand-written rules (week one), minimal parser (month one), ANTLR grammar (year two). This section shows the final ANTLR-based implementation and execution model.
     </Body>
 
@@ -57,7 +57,7 @@ import Accordion from '../../components/Accordion.astro';
 
     <Heading level={4} as="h3" class="mb-4">Grammar Structure</Heading>
 
-    <Body size="sm" as="p" class="mb-4 text-neutral">
+    <Body size="sm" as="p" class="mb-4 text-text-lighter">
       The DSL grammar separated three concerns: **entry validation** (dataspec), **sequencing logic** (rule definitions), and **aggregation rules** (grouping). Product managers wrote rules in readable syntax that compiled to execution logic.
     </Body>
 
