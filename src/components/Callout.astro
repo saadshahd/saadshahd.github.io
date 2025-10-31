@@ -1,0 +1,70 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { clsx } from 'clsx';
+
+// CVA variant definitions
+const callout = cva(
+  [
+    'rounded-lg',
+    'p-6',
+    '[&:not(:last-child)]:mb-6',
+    'border-l-4',
+  ],
+  {
+    variants: {
+      variant: {
+        insight: [
+          'bg-[#FEF9E7]', // Lightest gold tint from Egyptian gold
+          'border-primary', // Egyptian gold (#F4C430)
+          'text-text',
+        ],
+        context: [
+          'bg-[#EFF6FF]', // Light blue tint
+          'border-secondary', // Red Sea blue (#0EA5E9)
+          'text-text',
+        ],
+        warning: [
+          'bg-[#FFFBEB]', // Amber tint
+          'border-[#F59E0B]', // Amber border (from badge system)
+          'text-text',
+        ],
+      },
+    },
+    defaultVariants: {
+      variant: 'insight',
+    },
+  }
+);
+
+const title = cva([
+  'font-semibold',
+  'text-text',
+  'mb-3',
+  'text-base',
+]);
+
+const content = cva([
+  'text-text-lighter',
+  'leading-relaxed',
+  '[&>p]:mb-4',
+  '[&>p:last-child]:mb-0', // Remove bottom margin from last paragraph
+]);
+
+type Props = VariantProps<typeof callout> & {
+  title?: string;
+  class?: string;
+};
+
+const {
+  variant,
+  title: titleText,
+  class: className,
+} = Astro.props;
+---
+
+<aside class={clsx(callout({ variant }), className)} role="note">
+  {titleText && <div class={title()}>{titleText}</div>}
+  <div class={content()}>
+    <slot />
+  </div>
+</aside>

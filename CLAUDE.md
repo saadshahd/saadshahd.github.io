@@ -336,11 +336,28 @@ if (!prefersReducedMotion()) {
 - Backgrounds: `bg-primary`, `bg-secondary`, `bg-surface`, `bg-background`
 - Borders: `border-accent`, `border-neutral`, `border-primary`
 
+**Text Color Hierarchy** (WCAG AA compliance on white/surface backgrounds):
+- `text-text` (`#0F172A`, 17.56:1) - Primary body text, headings
+- `text-text-light` (`#1E293B`, 14.39:1) - Secondary text, subheadings
+- `text-text-lighter` (`#475569`, 7.45:1 WCAG AAA) - **Tertiary text, muted content on Cards/surfaces, metadata**
+- `text-text-navy` (`#0C4A6E`, 9.8:1 WCAG AAA) - Egyptian brand case study titles
+- ❌ `text-neutral` (`#94A3B8`, 2.52:1) - **ONLY for borders/icons, NEVER for text**
+- ❌ `text-neutral-light` (`#CBD5E1`, 1.8:1) - **ONLY for borders, NEVER for text**
+
+**Critical Rule**: Always use `text-text-lighter` (NOT `text-neutral` or `text-neutral-light`) for muted text on Card components or any white/surface backgrounds. The `neutral` color tokens are designed exclusively for borders and visual elements, NOT for readable text.
+
 ### Typography Scale
 
 **Display Scale** (Space Grotesk, hero headers only): `text-4xl/5xl` (48-64px)
 **Content-First Scale** (all body/headings): `text-xs` to `text-3xl` (12-40px)
 **Rationale**: Display for impact, content-first for readability at 120% line-height
+
+**Heading Hierarchy:**
+- `<Heading level={1}>` (h1): Display scale, hero only (48-64px)
+- `<Heading level={2}>` (h2): Major section headings (32-40px)
+- `<Heading level={3}>` (h3): Subsections (24-32px)
+- `<Heading level={4}>` (h4): **Subsection details, technical breakdowns** (18-20px, semibold, `text-navy` for Egyptian brand coherence when used as case study subsections)
+- `<Heading level={5}>` (h5): Tertiary headings if needed (16px)
 
 ### Spacing System
 

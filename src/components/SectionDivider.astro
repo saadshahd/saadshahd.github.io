@@ -1,0 +1,22 @@
+---
+interface Props {
+  spacing?: 'major' | 'subsection' | 'minor';
+}
+
+const { spacing = 'major' } = Astro.props;
+
+// Fibonacci-aligned spacing tokens from design system
+const spacingMap = {
+  major: 'my-10',       // 40px (spacing-xl in Fibonacci scale)
+  subsection: 'my-8',   // 32px (standard section breaks)
+  minor: 'my-6'         // 24px (tight grouping)
+};
+---
+
+<div
+  class={`section-divider ${spacingMap[spacing]}`}
+  role="separator"
+  aria-hidden="true"
+>
+  <hr class="border-neutral-light" />
+</div>

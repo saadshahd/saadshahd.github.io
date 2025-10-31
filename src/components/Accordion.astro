@@ -7,7 +7,6 @@ const accordion = cva([
   'border border-neutral-light',
   'rounded-lg',
   'mb-4',
-  'bg-surface',
   'px-4',
 ]);
 
@@ -33,16 +32,25 @@ const content = cva([
 ]);
 
 type Props = VariantProps<typeof accordion> & {
-  summary: string;
+  summary?: string;
+  name?: string;
+  role?: string;
   defaultOpen?: boolean;
   class?: string;
 };
 
 const {
   summary: summaryText,
+  name,
+  role,
   defaultOpen = false,
   class: className,
 } = Astro.props;
+
+// Validation: must provide either summary OR (name + role)
+if (!summaryText && !name) {
+  throw new Error('Accordion requires either "summary" or "name" prop');
+}
 ---
 
 <details
@@ -51,7 +59,14 @@ const {
   open={defaultOpen}
 >
   <summary class={summary()}>
-    {summaryText}
+    {name ? (
+      <div class="flex flex-col md:flex-row md:items-baseline md:gap-2">
+        <span class="font-semibold text-text">{name}</span>
+        {role && <span class="text-sm text-text-lighter">{role}</span>}
+      </div>
+    ) : (
+      summaryText
+    )}
     <svg
       class={chevron()}
       aria-hidden="true"

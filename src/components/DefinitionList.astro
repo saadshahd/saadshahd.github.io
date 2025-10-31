@@ -1,0 +1,45 @@
+---
+import { cva } from 'class-variance-authority';
+import { clsx } from 'clsx';
+
+const list = cva([
+  'space-y-4',
+]);
+
+const item = cva([
+  'grid gap-2',
+]);
+
+const termStyle = cva([
+  'font-semibold',
+  'text-text',
+  'text-sm',
+]);
+
+const definitionStyle = cva([
+  'text-text-lighter',
+  'text-sm',
+  'leading-relaxed',
+]);
+
+type DefinitionItem = {
+  term: string;
+  definition: string;
+};
+
+type Props = {
+  items: DefinitionItem[];
+  class?: string;
+};
+
+const { items, class: className } = Astro.props;
+---
+
+<dl class={clsx(list(), className)}>
+  {items.map(({ term, definition }) => (
+    <div class={item()}>
+      <dt class={termStyle()}>{term}</dt>
+      <dd class={definitionStyle()}>{definition}</dd>
+    </div>
+  ))}
+</dl>

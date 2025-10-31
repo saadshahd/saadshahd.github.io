@@ -25,6 +25,7 @@
   --color-text: #0F172A;
   --color-text-light: #1E293B;
   --color-text-lighter: #475569;
+  --color-text-navy: #0C4A6E;  /* Egyptian heritage navy for case study titles */
 
   /* Neutrals - Warm Gray (borders, muted elements) */
   --color-neutral: #94A3B8;
@@ -55,6 +56,11 @@
   --color-badge-status-bg: #D1FAE5;
   --color-badge-status-text: #065F46;
   --color-badge-status-border: #10B981;
+
+  /* Semantic color utilities (for text/borders) - maps badge colors to utility classes */
+  --color-skill: var(--color-badge-skill-border);     /* #F59E0B - Amber/Gold */
+  --color-category: var(--color-badge-category-border); /* #0EA5E9 - Blue */
+  --color-status: var(--color-badge-status-border);    /* #10B981 - Emerald */
 
   /* ===== Typography (Font components provide --font-sans, --font-serif, --font-display) ===== */
   --font-family-sans: var(--font-sans, 'IBM Plex Sans', system-ui, -apple-system, sans-serif);
