@@ -7,18 +7,16 @@ import Link from '../components/Link.astro';
 
 <Layout title="Blog - Saad Shahd">
   <div class="max-w-6xl mx-auto px-6 py-20">
-    <Heading level={1} as="h1" class="mb-16"><span>Blog</span></Heading>
-    <Body size="xl" as="p" class="text-text-lighter mb-16">
+    <Heading level={1} as="h1" class="mb-4"><span>Blog</span></Heading>
+    <Body size="xl" as="p" class="text-text-lighter mb-8">
       Technical articles on systems, architecture, and engineering practices
     </Body>
 
-    <div class="max-w-2xl">
-      <Body size="base" as="p" class="text-text mb-6 leading-relaxed">
-        <strong>First post coming soon:</strong> Real-Time Data Collection System — how DSLs, state machines, and event sourcing scaled Statsbomb from 100 to 1000+ collectors without engineering bottlenecks.
-      </Body>
-      <Body size="sm" as="p" class="text-text-lighter">
-        Want to discuss systems architecture, functional programming patterns, or eliminating complexity before it exists? <Link href="/contact" variant="inline">Start a conversation →</Link>
-      </Body>
-    </div>
+    <Body size="base" as="p" class="text-text mb-6 leading-relaxed">
+      <strong>First post coming soon:</strong> Real-Time Data Collection System — how DSLs, state machines, and event sourcing scaled Statsbomb from 100 to 1000+ collectors without engineering bottlenecks.
+    </Body>
+    <Body size="sm" as="p" class="text-text-lighter">
+      Want to discuss systems architecture, functional programming patterns, or eliminating complexity before it exists? <Link href="/contact" variant="inline">Start a conversation →</Link>
+    </Body>
   </div>
 </Layout>

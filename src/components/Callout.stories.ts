@@ -65,7 +65,7 @@ export const ContextDefault = {
     title: "Prerequisites",
   },
   slots: {
-    default: `<p>This appendix assumes you've read the <a href="#" class="text-primary hover:underline">main case study</a>. It provides implementation details for engineers interested in DSL design, state machine architecture, and functional data pipelines.</p>`,
+    default: `<p>This appendix assumes you've read the <a href="#" class="text-secondary hover:text-secondary-dark underline">main case study</a>. It provides implementation details for engineers interested in DSL design, state machine architecture, and functional data pipelines.</p>`,
   },
 };
 
