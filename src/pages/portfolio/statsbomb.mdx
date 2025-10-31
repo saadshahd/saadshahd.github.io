@@ -7,7 +7,6 @@ import Button from '../../components/Button.astro';
 import Badge from '../../components/Badge.astro';
 import Card from '../../components/Card.astro';
 import Callout from '../../components/Callout.astro';
-import CalloutCTA from '../../components/CalloutCTA.astro';
 import Heading from '../../components/typography/Heading.astro';
 import Body from '../../components/typography/Body.astro';
 import MermaidDiagram from '../../components/MermaidDiagram.astro';
@@ -97,12 +96,12 @@ import ComparisonCard from '../../components/ComparisonCard.astro';
       </Callout>
 
       {/* Technical Appendix Link */}
-      <CalloutCTA variant="secondary" title="For Engineers: Technical Deep Dive Available" icon="code" class="mt-6">
+      <Callout variant="secondary" title="For Engineers: Technical Deep Dive Available" icon="code" class="mt-6">
         <Body size="sm">ANTLR grammar, XState machines, functional pipelines, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</Body>
         <Fragment slot="cta">
           <Button variant="ghost" size="sm" href="/portfolio/statsbomb-technical-appendix">View Technical Appendix →</Button>
         </Fragment>
-      </CalloutCTA>
+      </Callout>
     </details>
   </section>
 
@@ -266,13 +265,13 @@ Product managers couldn't define new collection requirements without engineering
   </Body>
 
   {/* Link to Technical Appendix */}
-  <CalloutCTA variant="secondary" title="Technical Deep Dive Available" icon="code" class="my-8">
+  <Callout variant="secondary" title="Technical Deep Dive Available" icon="code" class="my-8">
     <Body size="sm">For implementation details—DSL syntax, state machine configuration, functional pipeline patterns, and code examples.</Body>
     <Body size="sm" class="mt-2 text-text-lighter">Covers: ANTLR grammar, XState machines, map/reduce transformations, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</Body>
     <Fragment slot="cta">
       <Button variant="ghost" size="sm" href="/portfolio/statsbomb-technical-appendix">View Technical Appendix →</Button>
     </Fragment>
-  </CalloutCTA>
+  </Callout>
 
     {/* DSL Subsection - Slimmed Down */}
     <div class="mb-10" id="domain-config">

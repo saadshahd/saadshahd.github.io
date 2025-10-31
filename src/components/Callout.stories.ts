@@ -230,3 +230,46 @@ export const VisualRhythmExample = {
 </div>`,
   },
 };
+
+// =============================================================================
+// CTA SLOT EXAMPLES (Optional Action Section)
+// =============================================================================
+
+export const PrimaryWithCTA = {
+  args: {
+    variant: "primary",
+    size: "default",
+    title: "For Engineers: Technical Deep Dive",
+    icon: "code",
+  },
+  slots: {
+    default: `<p class="text-text-lighter">ANTLR grammar, XState machines, functional pipelines, event graphs, and production debugging strategies.</p>`,
+    cta: `<a href="#technical" class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-transparent border border-primary text-primary hover:bg-primary hover:text-background transition-colors">View Technical Appendix →</a>`,
+  },
+};
+
+export const SecondaryWithCTA = {
+  args: {
+    variant: "secondary",
+    size: "default",
+    title: "Ready to discuss your project?",
+    icon: "info",
+  },
+  slots: {
+    default: `<p class="text-text-lighter">Let's explore how functional architecture patterns can solve your team's engineering challenges.</p>`,
+    cta: `<a href="/contact" class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-secondary text-background hover:bg-secondary/90 transition-colors">Start a Conversation</a>`,
+  },
+};
+
+export const WarningWithCTA = {
+  args: {
+    variant: "warning",
+    size: "default",
+    title: "⚠️ Breaking Change Notice",
+    icon: "alert",
+  },
+  slots: {
+    default: `<p class="text-text-lighter">The authentication API will be updated next week. Please review the migration guide and update your integration before the deadline.</p>`,
+    cta: `<a href="#migration" class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-transparent border border-warning text-warning hover:bg-warning hover:text-background transition-colors">View Migration Guide</a>`,
+  },
+};

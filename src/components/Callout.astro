@@ -45,6 +45,37 @@ const content = cva([
   '[&>p:last-child]:mb-0', // Remove bottom margin from last paragraph
 ]);
 
+// CTA section styling - cohesive with parent Callout variant
+const ctaSection = cva(
+  [
+    'flex',
+    'flex-wrap',
+    'gap-3',
+    'items-center',
+    'border-t',
+  ],
+  {
+    variants: {
+      variant: {
+        primary: 'border-primary/20',      // Gold accent (matches callout left border)
+        secondary: 'border-secondary/20',  // Blue accent
+        warning: 'border-warning/20',      // Amber accent
+        success: 'border-success/20',      // Emerald accent
+        neutral: 'border-neutral/30',      // Gray (higher opacity for visibility)
+      },
+      size: {
+        default: 'pt-6 mt-6',  // 24px Fibonacci spacing
+        compact: 'pt-4 mt-4',  // 16px Fibonacci spacing
+        inline: 'pt-3 mt-3',   // 12px Fibonacci spacing
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'default',
+    },
+  }
+);
+
 // Icon type - SEMANTIC ONLY
 type IconName = 'lightbulb' | 'layers' | 'alert' | 'code' | 'quote' | 'info' | 'none';
 
@@ -88,4 +119,10 @@ const IconComponent = iconMap[icon];
   <div class={content()}>
     <slot />
   </div>
+
+  {Astro.slots.has('cta') && (
+    <div class={clsx(ctaSection({ variant, size }))} role="group" aria-label="Actions">
+      <slot name="cta" />
+    </div>
+  )}
 </aside>

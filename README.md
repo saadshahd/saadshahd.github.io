@@ -22,12 +22,12 @@ This entire codebase was developed through iterative collaboration with Claude C
 ```astro
 <Button variant="primary" size="md" href="/portfolio">
 <Badge variant="skill">TypeScript</Badge>
-<CalloutCTA variant="secondary" title="Explore">
+<Callout variant="secondary" title="Explore">
   <Body>Content with semantic typography...</Body>
   <Fragment slot="cta">
     <Button variant="ghost" size="sm" href="#">Action →</Button>
   </Fragment>
-</CalloutCTA>
+</Callout>
 ```
 
 ### Egyptian Heritage Design Language
@@ -52,7 +52,7 @@ Mermaid diagrams with custom theme using semantic node taxonomy (atomic/derived/
 │   ├── components/          # 30+ production components
 │   │   ├── Button.astro     # CVA variants: primary, secondary, ghost
 │   │   ├── Badge.astro      # Semantic: skill, category, status
-│   │   ├── CalloutCTA.astro # Compound component with action slot
+│   │   ├── Callout.astro    # With optional CTA slot composition
 │   │   ├── patterns/        # Egyptian geometric patterns
 │   │   │   ├── PyramidGrid.astro
 │   │   │   └── WaterFlow.astro
@@ -295,7 +295,7 @@ Why story points? Time lies. AI acceleration unpredictable. Complexity is stable
 **Examples from this project:**
 - Responsive design system: 8 points (cross-cutting architecture)
 - Diagram design system: 6 points (new visual taxonomy)
-- CalloutCTA component: 3 points (compound component with slots)
+- Callout with optional CTA slot: 3 points (composition pattern)
 - Scroll progress redesign: 3 points (mobile/desktop variants)
 
 ---

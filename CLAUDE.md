@@ -415,12 +415,13 @@ if (!prefersReducedMotion()) {
 <Card variant="default">Content</Card>
 <Link href="/about">About</Link>
 <Callout variant="primary" title="Insight">Info without action</Callout>
-<CalloutCTA variant="secondary" title="Title" icon="code">
+
+<Callout variant="secondary" title="Title" icon="code">
   <Body size="sm">Content with primary action...</Body>
   <Fragment slot="cta">
     <Button variant="ghost" size="sm" href="#">Action →</Button>
   </Fragment>
-</CalloutCTA>
+</Callout>
 ```
 
 **Typography Components:**
@@ -479,7 +480,7 @@ if (!prefersReducedMotion()) {
 - Arbitrary colors: `text-gray-*`, `bg-[#...]`, `text-slate-*`
 - Arbitrary sizes: `text-[22px]`, `p-[18px]`, `mb-13`
 - Custom CTA wrappers: `<div class="bg-surface ...">` with manual buttons
-- Inline action links in Callout: Use CalloutCTA with Button in cta slot instead
+- Inline action links instead of CTA slot: Use CTA slot for dedicated action sections with visual separation
 
 **Why**: Type-safe CVA variants prevent class drift, ensure WCAG AA compliance
 
@@ -557,7 +558,7 @@ classDef system fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
 - ✅ Statsbomb case study (25-min read, 6 sections, complete)
 - ✅ Photo gallery with PhotoSwipe integration
 - ✅ Bio, resume, contact pages
-- ✅ CalloutCTA component (3 story points)
+- ✅ Callout with optional CTA slot (3 story points)
 - ✅ Scroll progress redesign (3 story points)
 - ✅ LinkedIn announcement published
 
