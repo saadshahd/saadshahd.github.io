@@ -12,36 +12,16 @@ const callout = cva(
   {
     variants: {
       variant: {
-        insight: [
-          'bg-callout-insight-bg', // Lightest gold tint from Egyptian gold
-          'border-primary', // Egyptian gold (#F4C430)
-          'text-text',
-        ],
-        context: [
-          'bg-callout-context-bg', // Light blue tint
-          'border-secondary', // Red Sea blue (#0EA5E9)
-          'text-text',
-        ],
-        warning: [
-          'bg-callout-warning-bg', // Amber tint
-          'border-warning', // Amber border (from semantic colors)
-          'text-text',
-        ],
-        technical: [
-          'bg-callout-technical-bg', // Lightest emerald tint
-          'border-success', // Emerald border (from semantic colors)
-          'text-text',
-        ],
-        subtle: [
-          'bg-surface', // Existing surface token
-          'border-neutral-light',
-          'text-text',
-        ],
+        insight: 'bg-callout-insight-bg border-primary text-text', // Gold: Egyptian brand heritage
+        context: 'bg-callout-context-bg border-secondary text-text', // Blue: Red Sea contextual information
+        warning: 'bg-callout-warning-bg border-warning text-text', // Amber: Attention-requiring trade-offs
+        technical: 'bg-callout-technical-bg border-success text-text', // Emerald: Implementation details
+        subtle: 'bg-surface border-neutral-light text-text', // Neutral: Low-priority notes
       },
       size: {
-        default: ['p-6', 'border-l-4'],
-        compact: ['p-4', 'border-l-3', 'text-sm'],
-        inline: ['p-3', 'border-l-2', 'text-sm'],
+        default: 'p-6 border-l-4',
+        compact: 'p-4 border-l-3 text-sm',
+        inline: 'p-3 border-l-2 text-sm',
       },
     },
     defaultVariants: {
@@ -86,9 +66,9 @@ const iconMap = {
   warning: AlertTriangle, // Sun/caution → attention
   technical: Code2,       // Lotus/code → implementation
   subtle: undefined,      // No icon for subtle variant
-};
+} as const;
 
-const IconComponent = iconMap[variant];
+const IconComponent = variant ? iconMap[variant] : undefined;
 ---
 
 <aside class={clsx(callout({ variant, size }), className)} role="note">
