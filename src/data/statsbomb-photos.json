@@ -1,82 +1,88 @@
 [
   {
-    "src": "/images/statsbomb/IMG_20180410_163253.jpg",
-    "alt": "Ali in our first meeting ever getting into the building process",
-    "caption": "2018: Ali in our first meeting ever getting into the building process - The first office was tiny for us and the colloctors",
+    "src": "/images/statsbomb/IMG_20180326_132547.jpg",
+    "alt": "Omar Negm resting during early days of building Statsbomb collection tools",
+    "caption": "2018: Omar Negm during Week One, transitioning from aerospace engineering to building tools collectors would thank us for",
     "width": 1200,
     "height": 1603
   },
 
   {
-    "src": "/images/statsbomb/IMG_20180326_132547.jpg",
-    "alt": "Negm pertending to sleep to skip work",
-    "caption": "2018: Omar Negm pertending to be asleep after eating fish on lunch with me for the first time",
+    "src": "/images/statsbomb/IMG_20180410_163253.jpg",
+    "alt": "Ali during first meeting at Statsbomb's original office",
+    "caption": "2018: Week One with Ali, when collectors scaled so fast we shared a tiny office—the freezeframe tool shipped twice daily",
     "width": 1200,
     "height": 1603
+  },
+
+  {
+    "src": "/images/statsbomb/IMG_20180813_133937.jpg",
+    "alt": "Ali and Adham working in single-room workspace as collectors scaled",
+    "caption": "2018: Ali and Adham working together as collectors scaled to take our room—the partnership that would define Year One",
+    "width": 1200,
+    "height": 1601
+  },
+
+  {
+    "src": "/images/statsbomb/IMG_20180814_180157.jpg",
+    "alt": "Adham demonstrating collection tool features to Ali",
+    "caption": "2018: Adham demoing iteration to Ali—the tight feedback loop that made shipping twice daily possible during Year One",
+    "width": 1200,
+    "height": 1601
+  },
+
+  {
+    "src": "/images/statsbomb/IMG_20190625_113053.jpg",
+    "alt": "Waheed joining the team with Adham onboarding him",
+    "caption": "2019: Waheed joining the team—Adham onboarding his university friend who'd help tackle the metadata challenges",
+    "width": 1200,
+    "height": 1601
   },
 
   {
     "src": "/images/statsbomb/IMG_20190815_190736.jpg",
-    "alt": "Me with Mo'emen the fastest collector and Bassel the most feedback looping collector in the early early days in Cairo downtown after buying literature books",
-    "caption": "2018: Me with Mo'emen the fastest collector and Bassel the most feedback looping collectors in Egypt downtown after buying literature books",
+    "alt": "With collectors Mo'emen and Bassel in downtown Cairo",
+    "caption": "2019: With Mo'emen and Bassel, two collectors whose feedback shaped how we built the system",
     "width": 1200,
     "height": 1601
   },
 
   {
     "src": "/images/statsbomb/collection-leadership-night.jpg",
-    "alt": "Collection leadership team during night shift discussing their ambitions and dreams",
-    "caption": "2020: Collection leadership team during night shift discussing their ambitions and dreams, Hegazy, Ramdan, Adham Nasser",
+    "alt": "Collection leadership team Hegazy, Ramadan, and Adham Nasser during night shift",
+    "caption": "2020: Collection leadership team—Hegazy, Ramadan, and Adham Nasser—during night shift discussions about ambitions and scaling collector operations to 1000+",
     "width": 1240,
     "height": 1654
   },
-  {
-    "src": "/images/statsbomb/IMG_20180813_133937.jpg",
-    "alt": "Ali and adham hyper focused when we had to work from a workspace in a single room as collectors scaled to take our room in the office",
-    "caption": "2019: Ali and adham hyper focused when we had to work from a workspace in a single room as collectors scaled to take our room in the office",
-    "width": 1200,
-    "height": 1601
-  },
-  {
-    "src": "/images/statsbomb/IMG_20180814_180157.jpg",
-    "alt": "Adham demoing the outcome to Ali and getting feedback with a smile",
-    "caption": "2019: Adham demoing the outcome to Ali and getting feedback with a smile",
-    "width": 1200,
-    "height": 1601
-  },
-  {
-    "src": "/images/statsbomb/IMG_20190625_113053.jpg",
-    "alt": "Waheed joined us, and Adham was up to onboarding Waheed  which who know from university and refered to the team",
-    "caption": "2020: Waheed joined us, and Adham was up to onboarding Waheed  which who know from university and refered to the team",
-    "width": 1200,
-    "height": 1601
-  },
-  {
-    "src": "/images/statsbomb/_MG_0011.jpg",
-    "alt": "Adham, Saad, Waheed in Ali's Sahel beach house",
-    "caption": "2020: We got together to say good bye to muhanad who was getting ready to enroll in the military",
-    "width": 1200,
-    "height": 800
-  },
-  {
-    "src": "/images/statsbomb/_MG_0017.jpg",
-    "alt": "Team sharing dreams and values in Muhanad farwell night",
-    "caption": "2020: Team sharing dreams and values in Muhanad farwell night at Ali's sahel beach house",
-    "width": 1200,
-    "height": 800
-  },
+
   {
     "src": "/images/statsbomb/IMG_0570.jpg",
-    "alt": "Abdallah, Me and Hesham",
-    "caption": "2020: The live collection early exploration planning",
+    "alt": "Abdallah, Saad, and Hesham planning live collection architecture",
+    "caption": "2020: Planning live collection with Abdallah and Hesham—exploring how real-time architecture would scale American football from offline to concurrent collection",
     "width": 1200,
     "height": 1327
   },
 
   {
+    "src": "/images/statsbomb/_MG_0011.jpg",
+    "alt": "Adham, Saad, and Waheed at Ali's Sahel beach house",
+    "caption": "2020: Team gathering at Ali's Sahel house for Muhanad's farewell before military enrollment—reflecting on how far we'd come together",
+    "width": 1200,
+    "height": 800
+  },
+
+  {
+    "src": "/images/statsbomb/_MG_0017.jpg",
+    "alt": "Team sharing dreams and values during Muhanad's farewell gathering",
+    "caption": "2020: Sharing dreams and values during Muhanad's farewell—the moment partnership became something bigger",
+    "width": 1200,
+    "height": 800
+  },
+
+  {
     "src": "/images/statsbomb/IMG_5078.jpg",
-    "alt": "We had Ramadan Iftar together as a team",
-    "caption": "2023: Ramadan Iftar together as a product, tech and ops leadership teams",
+    "alt": "Product, tech, and ops leadership teams during Ramadan Iftar 2023",
+    "caption": "2023: Ramadan Iftar with product, tech, and ops leadership teams—now supporting 1000+ collectors together",
     "width": 1200,
     "height": 900
   }
