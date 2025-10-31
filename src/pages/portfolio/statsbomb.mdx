@@ -541,7 +541,7 @@ The metadata challenge required different architectural thinking. Match metadata
     <ul class="space-y-3">
       <li><strong>NFL dataspecs shipped in 3 weeks:</strong> Product managers wrote drive rules, zero engineering involvement</li>
       <li><strong>New event type:</strong> JSON config + UI test, deployed same day through DSL system</li>
-      <li><strong>Automated resolution:</strong> System answered 98% of dataspec questions, 5-person team handled only ambiguous 2%</li>
+      <li><strong>Automated resolution:</strong> System resolved 98% automatically, 5-person team handled ambiguous cases</li>
     </ul>
   </ComparisonCard>
 </div>
@@ -595,7 +595,7 @@ The metadata challenge required different architectural thinking. Match metadata
   The technical architecture—DSLs, state machines, claims-based metadata—took three years to evolve. The harder lesson wasn't technical. It was building a team that could iterate beyond my initial vision while learning to lead for the first time.
 </Body>
 
-<Accordion summary="Year One: Finding the Core Partnership">
+<Accordion variant="status" summary="Year One: Finding the Core Partnership">
 
 Week one: Ali and I hand-wrote sequencing rules. Early months: Adham joined as co-architect. The foundational architecture—data as configuration, state machines, DSLs—emerged from our collaborative exploration. Adham pushed me to chase ideas I wasn't confident enough to pursue alone.
 
@@ -624,7 +624,7 @@ By year three, we had built the hiring and mentoring systems needed to scale bey
     <ul class="space-y-2 text-sm text-text-lighter">
       <li>Designed all backend services architecture</li>
       <li>Led Kafka event streaming implementation</li>
-      <li>Built GraphQL-based web scraper (modeled DOM operations as GraphQL queries—querying the web like an API)</li>
+      <li>Built GraphQL-based web scraper modeling DOM as queryable API</li>
     </ul>
   </Card>
 
@@ -642,10 +642,9 @@ By year three, we had built the hiring and mentoring systems needed to scale bey
     <Heading level={5} as="h5" class="mb-2">Hadeel</Heading>
     <p class="text-sm text-text-lighter mb-3 italic">Collection Service and Dataspec</p>
     <ul class="space-y-2 text-sm text-text-lighter">
-      <li>Implemented real-time collection service</li>
-      <li>Owned Kafka integration and GraphQL subscriptions</li>
-      <li>Integrated Apollo GraphQL subscriptions for real-time collaboration</li>
-      <li>Collaborated with PMs on evolving the dataspec capabilities</li>
+      <li>Implemented real-time collection service with Kafka and Apollo GraphQL</li>
+      <li>Owned GraphQL subscriptions infrastructure for real-time collaboration</li>
+      <li>Collaborated with PMs on evolving dataspec capabilities</li>
     </ul>
   </Card>
 
@@ -653,8 +652,9 @@ By year three, we had built the hiring and mentoring systems needed to scale bey
     <Heading level={5} as="h5" class="mb-2">Abdallah</Heading>
     <p class="text-sm text-text-lighter mb-3 italic">Desktop Application and Dataspec</p>
     <ul class="space-y-2 text-sm text-text-lighter">
-      <li>Maintained the Electron live-collection-app</li>
-      <li>Collaborated with PMs on evolving the dataspec capabilities</li>
+      <li>Maintained the Electron live-collection-app and state machine logic</li>
+      <li>Implemented keyboard workflow improvements based on collector feedback</li>
+      <li>Collaborated with PMs on evolving dataspec capabilities</li>
     </ul>
   </Card>
 </div>
