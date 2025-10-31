@@ -1,0 +1,84 @@
+---
+// ScrollProgressMobile.astro
+// Horizontal scroll progress indicator for mobile (<768px)
+// Displays at bottom of viewport with centered section title
+---
+
+<!-- Horizontal progress bar: minimal scroll indicator -->
+<div class="scroll-progress-mobile fixed bottom-0 left-0 right-0 z-30 pb-safe h-1 bg-neutral-light/30">
+  <div
+    class="absolute top-0 left-0 bottom-0 bg-primary transition-[width] duration-100"
+    data-progress-bar-mobile
+    style="width: 0%;"
+  ></div>
+</div>
+
+<style>
+  /* Entrance animation: slide up from bottom */
+  @keyframes slideInUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .scroll-progress-mobile {
+    animation: slideInUp 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  /* Accessibility: disable animations for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-progress-mobile {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  // Prevent double initialization
+  let isInitialized = false;
+
+  const initScrollProgress = () => {
+    // Guard: Prevent double initialization
+    if (isInitialized) {
+      return;
+    }
+
+    // DOM elements
+    const progressBar = document.querySelector('[data-progress-bar-mobile]') as HTMLElement | null;
+
+    if (!progressBar) {
+      return;
+    }
+
+    isInitialized = true;
+
+    // Progress tracking using native scroll events
+    const updateProgress = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollTop = window.scrollY;
+      const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
+
+      progressBar.style.width = `${progress * 100}%`;
+    };
+
+    // Attach scroll listener
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress(); // Set initial progress
+
+    // Cleanup for Astro View Transitions
+    const cleanup = () => {
+      window.removeEventListener('scroll', updateProgress);
+      isInitialized = false; // Reset for next page
+    };
+
+    document.addEventListener('astro:before-swap', cleanup, { once: true });
+  };
+
+  // Initialize on page load (handles both initial load + View Transitions)
+  document.addEventListener('astro:page-load', initScrollProgress);
+</script>

@@ -1,506 +1,585 @@
 ---
 layout: ../../layouts/MDXLayout.astro
 title: "Statsbomb Real Time Data Collection - Saad Shahd"
-showScrollProgress: true
+showScrollProgress: false
 ---
 import Button from '../../components/Button.astro';
 import Badge from '../../components/Badge.astro';
+import Card from '../../components/Card.astro';
+import Callout from '../../components/Callout.astro';
 import Heading from '../../components/typography/Heading.astro';
 import Body from '../../components/typography/Body.astro';
 import MermaidDiagram from '../../components/MermaidDiagram.astro';
 import PhotoGallery from '../../components/PhotoGallery.astro';
 import statsbombPhotos from '../../data/statsbomb-photos.json';
 import Accordion from '../../components/Accordion.astro';
+import DefinitionList from '../../components/DefinitionList.astro';
+import ScrollProgress from '../../components/ScrollProgress.astro';
+import SectionDivider from '../../components/SectionDivider.astro';
+
+<ScrollProgress />
 
 <div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
-  {/* Hero Section */}
-  <div class="mb-8">
-    <Button variant="secondary" href="/portfolio" class="mb-8">
-      ← Back to Portfolio
-    </Button>
+  {/* Hero Section with integrated TL;DR */}
+  <section class="mb-12">
 
-    <Heading level={1} as="h1" class="mb-4">Statsbomb Sports Data Collection</Heading>
-    <Body size="lg" as="p" class="text-neutral mb-6">Real-time sports data collection achieved 10x growth through architecture-as-data: domain logic as configuration, UI workflows as state machines, and claims-based metadata. What we built worked—expanding to new sports without rewriting code. The lesson came from what took longer: building distributed team ownership two years late meant racing time when external constraints intervened.</Body>
+    <p class="text-sm text-neutral font-medium uppercase tracking-wide mb-1">Case Study</p>
+    <h1 class="text-base md:text-lg text-navy font-medium mb-2">Statsbomb Sports Data Collection</h1>
+    <Body size="base" as="p" class="text-text-lighter mb-6">aka Arqam (2018-2022): What if 1000 collectors could work concurrently without choosing between speed and correctness?</Body>
 
-    <div class="flex flex-wrap gap-2 mb-4">
+    <div class="flex flex-wrap gap-2 mb-8">
       {/* System Characteristics */}
       <Badge variant="category">Real-Time Data Collection</Badge>
       <Badge variant="category">Collaborative Workflows</Badge>
-      
+
       {/* Key Technologies */}
       <Badge variant="status">XState</Badge>
       <Badge variant="status">Kafka</Badge>
       <Badge variant="skill">ANTLR</Badge>
     </div>
 
-    <Body size="sm" as="div" class="text-neutral">
-      Timeline: 2018-2022 • Founding engineer leading data collection system, Cairo team of 20
-    </Body>
-  </div>
+    {/* Reading metadata */}
+    <div class="flex flex-wrap gap-4 mb-8 text-sm text-text-lighter">
+      <span>📖 ~25 min read</span>
+      <span>🏗️ 6 sections</span>
+    </div>
 
-  <hr class="border-neutral-light my-8" />
+    {/* Integrated TL;DR as expandable details */}
+    <details class="mb-8 p-6 bg-surface rounded-lg border border-neutral-light" open>
+      <summary class="cursor-pointer font-semibold text-text hover:text-text-light transition-colors">TL;DR: What We Built (2 min)</summary>
 
-  {/* TL;DR Executive Summary */}
-  <section class="mb-12 p-6 bg-surface rounded-lg border border-neutral-light">
-    <Heading level={2} as="h2" class="mb-4">TL;DR: What We Built</Heading>
+      {/* Hook - outcome-focused, concrete impact */}
+      <Body size="lg" as="p" class="my-6 text-text font-medium leading-relaxed">Built a real-time sports data collection system (2018-2022) that enabled 1000+ concurrent collectors across multiple sports through configuration-driven architecture.</Body>
 
-    <Body size="base" as="p" class="mb-4">
-      Real-time sports data collection system that scaled from 100 to 1000+ collectors while reducing collection time by 75% (16 hours → 4 hours). Achieved through architecture-as-data: domain logic as configuration (DSLs), UI workflows as state machines, and claims-based metadata resolution. Expanded from soccer to American football with minimal code changes.
-    </Body>
+      {/* Outcome-focused summary - what shipped and what it enabled */}
+      <DefinitionList
+        class="mb-6"
+        items={[
+          {
+            term: "What Shipped",
+            definition: "Real-time collection system enabling 1000+ concurrent collectors across multiple sports—replacing 16-hour sequential processing with 4-hour parallel workflows during live matches"
+          },
+          {
+            term: "What It Enabled",
+            definition: "Product managers shipped new sports (American football) in 3 weeks without engineering bottlenecks. Metadata team of 5 scaled to 1000+ collectors. Automated linting prevented 99% of data quality issues."
+          },
+          {
+            term: "How (Architecture Pattern)",
+            definition: "Separated domain rules (DSLs) from execution (state machines), enabling configuration-driven expansion instead of code rewrites for each new sport or client customization"
+          }
+        ]}
+      />
 
-    <Body size="base" as="p" class="mb-4">
-      <strong>Key Results:</strong> 99% error prevention, near real-time latency (~20s), 10x collector scale without proportional staffing.
-    </Body>
+      {/* Metric cards - scannable tiles with semantic colors and context */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="p-4 bg-[#D1FAE5]/30 border border-[#10B981] rounded-lg">
+          <div class="text-2xl font-bold text-[#065F46] mb-1">99%</div>
+          <div class="text-xs font-semibold text-[#065F46] mb-1">Error prevention through linting</div>
+          <div class="text-xs text-text-lighter">Automated validation caught mistakes before they became data quality issues</div>
+        </div>
+        <div class="p-4 bg-[#DBEAFE]/30 border border-[#0EA5E9] rounded-lg">
+          <div class="text-2xl font-bold text-[#0C4A6E] mb-1">~20s</div>
+          <div class="text-xs font-semibold text-[#0C4A6E] mb-1">Event collection latency</div>
+          <div class="text-xs text-text-lighter">Coaches received detailed match analytics in near real-time to adjust tactics during live matches</div>
+        </div>
+        <div class="p-4 bg-[#FEF3C7]/30 border border-[#F59E0B] rounded-lg">
+          <div class="text-2xl font-bold text-[#78350F] mb-1">10x</div>
+          <div class="text-xs font-semibold text-[#78350F] mb-1">Collector scaling (100 → 1000+)</div>
+          <div class="text-xs text-text-lighter">Non-linear leverage without proportional staffing increases</div>
+        </div>
+      </div>
 
-    <Body size="base" as="div" class="mb-0">
-      <strong>Core Lesson:</strong> Team building multiplies architectural leverage—waiting until year three to expand beyond two-person partnership meant racing external constraints before completing customer-facing features.
-    </Body>
+      {/* Core lesson callout */}
+      <Callout variant="insight" title="Core Lesson">
+        <p>Team building multiplies architectural leverage—waiting until year three to expand beyond two-person partnership meant racing external constraints before completing customer-facing features.</p>
+      </Callout>
+    </details>
   </section>
 
   {/* Problem Section */}
-  <section class="mb-8">
-    <Heading level={2} as="h2" class="mb-6">Problem: How Do You Scale Without Choosing Between Speed and Correctness?</Heading>
+  <section class="mb-8" id="problem">
+    <Heading level={3} as="h2" class="mb-6 text-navy">Problem: How Do You Scale Without Choosing Between Speed and Correctness?</Heading>
 
 Week one. Ali and I sat down with paper. We hand-wrote sequencing rules for soccer matches—which events could follow which, what validated as legal, how phases transitioned. It was painful. But necessary.
 
 **The business stakes:** Statsbomb's revenue model depended on data velocity and granularity—every hour saved in collection = more matches analyzed = higher data quality premium for professional clubs and broadcasters. Collector efficiency wasn't just operational; it was the constraint on market expansion.
 
+<Heading level={4} as="h4" class="mb-4 mt-8">The Industry Baseline: Dartfish's Limitations</Heading>
+
 The industry-standard tool—Dartfish—couldn't scale to what we needed. Button-heavy interface forced mouse clicks for every selection. It had keyboard shortcuts, but they weren't contextual. Each key could only map to one event type—globally, across the entire data spec. No overlap possible. With 50+ event types but only 40 usable keys, we hit a ceiling. Collectors memorized which arbitrary key triggered which event, at all times, regardless of game context. Cognitive overload.
 
 Two collectors per match, each following a team, manually entering 3000+ events over 16 hours. Duplicated effort. No prevention, only validation after mistakes happened.
 
-Years of daily conversations with collectors revealed their actual workflows and friction points. They needed keyboard flows that built muscle memory. Contextual mappings that reduced cognitive load. Collaboration patterns that eliminated rework.
+<Heading level={4} as="h4" class="mb-4 mt-8">What Collectors Actually Needed</Heading>
 
-The dataspec itself needed to be data, not code, so product managers could express rules in one place that drove the entire system.
+Years of daily conversations with collectors revealed their actual workflows and friction points. The dataspec itself needed to be data, not code, so product managers could express rules in one place that drove the entire system.
 
-Event storming sessions mapped the domain. Five bounded contexts emerged: match metadata, event collection, people coordination, media management, contextual aggregation. One insight stood out: arbitrary aggregation from atomic facts. Individual
-passes and dribbles were atomic events. Multiple dribbles by the same player became a
-"carry"—a player-level durational fact. Team possession spanned all team durational facts
-(carry, foul-won, opponent-out) into a higher-level aggregation. Turnovers derived from possession changes.
-The system needed to support any aggregation pattern, not just what we knew upfront.
+<Heading level={4} as="h4" class="mb-4 mt-8">Why This Mattered to Statsbomb's Business</Heading>
 
-**Match Metadata was different.** Players, clubs, referees, stadiums—reference data that
-thousands of collectors needed but only 5 people managed. Crowd-sourced data meant conflicting
-information: same player, different spellings; same club, multiple sources. The system required
-automated golden entity resolution—5 people couldn't manually reconcile metadata for thousands
-of collectors across hundreds of matches weekly.
-
-Product managers couldn't define new collection requirements without engineering bottlenecks. Collectors waited weeks for tooling updates. Operations needed to scale from 100 collectors to thousands without proportional support staff.
-  </section>
-
-  {/* Business Context Section */}
-  <section class="mb-8">
-    <Heading level={2} as="h2" class="mb-6">Why This Mattered to Statsbomb's Business</Heading>
-
-Statsbomb provided granular sports analytics to professional clubs, broadcasters, and betting operators—markets where data velocity creates competitive advantage. Teams analyzing opponent patterns hours after matches finished fell behind. Broadcasters needed live insights for real-time commentary. Betting markets priced during play, not after final whistle.
-
-The 75% efficiency gain wasn't just operational—it unlocked new revenue streams. Real-time collection enabled incremental analysis during live matches—broadcasters could comment on possession patterns as they emerged, teams could track opponent tactics in-match. Multi-sport expansion (soccer to American football) without proportional engineering cost meant entering adjacent markets with existing infrastructure. 10x operational scale without linear staffing growth preserved margins while growing coverage.
-
-The architectural separation between rules and execution created a strategic moat: product managers could customize data specifications per client without engineering rewrites. A Premier League club wanting detailed positioning data and a Championship club needing only basic events both ran on the same system—different configurations, same codebase.
-  </section>
-
-  {/* Architecture Section */}
-  <section class="mb-8">
-    <Heading level={2} as="h2" class="mb-6">Architecture: Separation as First Principle</Heading>
-
-Architecture emerges when you chase why/where users struggle, not what features they request.
-
-**We built three systems in parallel, not sequentially:**
-
-1. **Domain Logic as Configuration** → Rules without code deploys
-2. **Live-Collection-App** → UX that makes errors impossible
-3. **Backend Evolution** → Event graphs + claims-based metadata
-
-**Why this order matters:** Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.
-
-    {/* DSL Subsection */}
-    <div class="mb-4">
-      <Heading level={3} as="h3" class="mb-4">Domain Logic as Configuration</Heading>
-
-We separated three concerns: **entry validation** (dataspec), **sequencing logic**
-(DSL), and **aggregation rules** (grouping DSL). Product managers wrote rules in readable
-syntax. The system compiled to execution logic.
-
-The DSL let product managers define domain logic as sequences and dependencies. For soccer, they could express that possession meant a team had active carry (player dribbling), received fouls, or forced the ball out—spans of time aggregated from atomic events. Individual passes became complete-pass metrics. Multiple dribbles by the same player became a carry. Turnovers derived from possession changes. The rules formed dependency layers: atomic events (passes, shots), player-level facts (carries), team-level aggregations (possession), and higher-level derivatives (turnovers).
-
-When we expanded to American football, product managers wrote drive segmentation rules using the same DSL patterns. Offensive drives derived from snap sequences until scoring or turnover. Red zone conversions tracked touchdown efficiency. Third-down success measured possession maintenance. The execution engine didn't change—new sport, same architectural separation. No engineering bottleneck.
-
-<Accordion summary="Visualizing the Data Flow" class="mb-6">
-
-<Body size="sm" as="p" class="mb-4 text-neutral">
-  Domain experts don't think in code—they think in sequences. We used visual timelines to translate
-  their mental models into technical architecture. This diagram shows how atomic events (Layer 0)
-  flow through time, and higher-level facts derive from event patterns. Color key: <Badge variant="skill" size="xs">amber</Badge> = data layers, <Badge variant="category" size="xs">blue</Badge> = transformations, <Badge variant="status" size="xs">emerald</Badge> = final output.
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  Statsbomb provided granular sports analytics to professional clubs and broadcasters—markets where data velocity creates competitive advantage.
 </Body>
 
-<MermaidDiagram
-  id="data-flow"
-  caption="Functional data pipeline: atomic events (Layer 0) flow through map/reduce transformations to derive team-specific facts, durational states, and compound metrics"
-  relationships={[
-    "Layer 0: Atomic event stream (pass, reception, dribble, shot, goal-keeper) with team colors",
-    "Map transformation: teamAFacts = map(getTeamFacts(teamA), layer-0) filters to black team only",
-    "Reduce transformation: teamADurationalFacts = reduce(durationalFactsReducer, teamAFacts) derives possession phases (carry, defense)",
-    "Reduce transformation: officialRecords = reduce(officialRecordsReducer, layer-0) creates match records",
-    "Overlap transformation: teamACompoundFacts = overlap(teamAFacts, teamADurationalFacts, officialRecords) combines all layers"
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Professional Clubs",
+      definition: "Teams analyzing opponent patterns hours after matches finished fell behind. Real-time collection enabled tracking opponent tactics in-match for immediate tactical adjustments."
+    },
+    {
+      term: "Broadcasters",
+      definition: "Needed live insights for real-time commentary. Could now comment on possession patterns as they emerged during live matches."
+    }
   ]}
->
+/>
 
-```mermaid
-graph TD
-    L0["All Events
-    Both teams"]
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  The efficiency gains weren't just operational—they unlocked strategic capabilities:
+</Body>
 
-    MAP["map
-    Filter team"]
-    L1["Team Events
-    One team"]
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "10x Operational Scale Without Linear Staffing",
+      definition: "100 → 1000+ collectors with distributed system architecture. Preserved margins while growing coverage."
+    },
+    {
+      term: "Client Customization Without Code Rewrites",
+      definition: "Product managers could customize data specifications per client. Premier League club wanting detailed positioning data and Championship club needing basic events ran on same system—different configurations, same codebase."
+    }
+  ]}
+/>
 
-    RED1["reduce
-    Phases"]
-    L2["Possession
-    Phases"]
+<Callout variant="insight" title="Strategic Moat" class="mb-6">
+  <p>The architectural separation between rules and execution created a strategic moat: product managers shipped new sports and client configurations without engineering bottlenecks. Architecture became competitive advantage.</p>
+</Callout>
 
-    RED2["reduce
-    Stats"]
-    L3["Match
-    Records"]
+<Heading level={4} as="h4" class="mb-4 mt-8">Discovering the Domain Structure Through Event Storming</Heading>
 
-    OVL["overlap
-    3 layers"]
-    L4["Final
-    Timeline"]
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  Event storming sessions mapped the domain. Five bounded contexts emerged: match metadata, event collection, people coordination, media management, contextual aggregation.
+</Body>
 
-    L0 -->|1| MAP
-    MAP --> L1
-    L1 -->|2| RED1
-    RED1 --> L2
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  <strong>One insight stood out:</strong> arbitrary aggregation from atomic facts.
+</Body>
 
-    L0 -.->|3| RED2
-    RED2 --> L3
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Atomic Events",
+      definition: "Individual passes and dribbles—the base facts collectors recorded"
+    },
+    {
+      term: "Player-Level Durational Facts",
+      definition: "Multiple dribbles by the same player became a 'carry'—aggregated from atomic events"
+    },
+    {
+      term: "Team-Level Aggregations",
+      definition: "Team possession spanned all team durational facts (carry, foul-won, opponent-out) into higher-level aggregation"
+    },
+    {
+      term: "Derived Facts",
+      definition: "Turnovers derived from possession changes—computed from other aggregations"
+    }
+  ]}
+/>
 
-    L2 -->|Layer 1| OVL
-    L1 -.->|Layer 2| OVL
-    L3 -.->|Layer 3| OVL
-    OVL --> L4
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+  The system needed to support any aggregation pattern, not just what we knew upfront.
+</Body>
 
-    classDef data fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
-    classDef func fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
-    classDef final fill:#D1FAE5,stroke:#10B981,stroke-width:3px,color:#065F46
+<Callout variant="insight" title="Why Match Metadata Was Different" class="my-6">
+  <p>Players, clubs, referees, stadiums—reference data that thousands of collectors needed but only 5 people managed. Crowd-sourced data meant conflicting information: same player, different spellings; same club, multiple sources. The system required automated golden entity resolution—5 people couldn't manually reconcile metadata for thousands of collectors across hundreds of matches weekly.</p>
+</Callout>
 
-    class L0,L1,L2,L3 data
-    class MAP,RED1,RED2,OVL func
-    class L4 final
-```
+**The Scaling Challenge**
 
-</MermaidDiagram>
+Product managers couldn't define new collection requirements without engineering bottlenecks. Collectors waited weeks for tooling updates. Operations needed to scale from 100 collectors to thousands without proportional support staff. At 100 collectors, two product managers manually coordinated match assignments, answered dataspec questions in Slack, and resolved conflicting interpretations. At 1000+? That model breaks—support requests would consume entire workdays, blocking actual dataspec evolution.
 
-</Accordion>
+**Three architectural requirements emerged:** Rules without code deploys, UX that prevents errors, metadata that resolves conflicts automatically.
+  </section>
+
+  <SectionDivider spacing="major" />
+
+  {/* Architecture Section */}
+  <section class="mb-8" id="architecture">
+    <Heading level={3} as="h2" class="mb-6 text-navy">Architecture: Separation as First Principle</Heading>
+
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+  Understanding the business value explains *why* we built this. Now: *how* did architectural decisions enable 10x scale and multi-sport expansion without code rewrites?
+</Body>
+
+<Callout variant="insight" title="User Struggle → Architecture">
+  <p>Architecture emerges when you chase why/where users struggle, not what features they request.</p>
+</Callout>
+
+<p class="mb-8 text-text-lighter leading-relaxed">We built three systems in parallel, not sequentially:</p>
+
+  {/* 3-Column Card Grid */}
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+    {/* System 1: Domain Logic */}
+    <Card variant="minimal" class="border-l-4 border-l-skill hover:shadow-lg transition-shadow">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill" aria-label="Step 1 of 3">1</span>
+        <Heading level={4} as="h4" class="text-base font-semibold">Domain Logic as Configuration</Heading>
+      </div>
+      <Body size="sm" as="p" class="text-neutral">Rules without code deploys—product managers define dataspec logic in readable DSL syntax</Body>
+    </Card>
+
+    {/* System 2: Live-Collection-App */}
+    <Card variant="minimal" class="border-l-4 border-l-category hover:shadow-lg transition-shadow">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category" aria-label="Step 2 of 3">2</span>
+        <Heading level={4} as="h4" class="text-base font-semibold">Live-Collection-App</Heading>
+      </div>
+      <Body size="sm" as="p" class="text-neutral">UX that makes errors impossible—state machines constrain invalid workflows, keyboard flows build muscle memory</Body>
+    </Card>
+
+    {/* System 3: Backend Evolution */}
+    <Card variant="minimal" class="border-l-4 border-l-status hover:shadow-lg transition-shadow">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status" aria-label="Step 3 of 3">3</span>
+        <Heading level={4} as="h4" class="text-base font-semibold">Backend Evolution</Heading>
+      </div>
+      <Body size="sm" as="p" class="text-neutral">Event graphs + claims-based metadata—temporal dependencies and provenance tracking at scale</Body>
+    </Card>
+  </div>
+
+  {/* Callout for "Why this order matters" */}
+  <Callout variant="insight">
+    <Body size="sm" as="p" class="font-medium mb-2">
+      <strong>Why this order matters:</strong>
+    </Body>
+    <Body size="sm" as="p" class="text-neutral leading-relaxed">Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.</Body>
+  </Callout>
+
+  {/* Link to Technical Appendix */}
+  <Callout variant="insight" title="Technical Deep Dive Available" class="my-8">
+    <p class="mb-2">For implementation details—DSL syntax, state machine configuration, functional pipeline patterns, and code examples—see the <a href="/portfolio/statsbomb-technical-appendix" class="text-secondary hover:text-secondary-dark underline font-semibold">Technical Appendix</a>.</p>
+    <p class="text-sm text-neutral">Covers: ANTLR grammar, XState machines, map/reduce transformations, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</p>
+  </Callout>
+
+    {/* DSL Subsection - Slimmed Down */}
+    <div class="mb-10">
+      <Callout variant="insight" title="System 1 of 3: Domain Logic as Configuration">
+        <p>Bounded context: Event collection dataspec</p>
+      </Callout>
+
+      <Heading level={3} as="h3" class="mb-4">Domain Logic as Configuration</Heading>
+
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  We separated three concerns: entry validation (dataspec), sequencing logic (DSL), and aggregation rules (grouping DSL). Product managers wrote rules in readable syntax. The system compiled to execution logic.
+</Body>
+
+<Heading level={4} as="h4" class="mb-4 mt-6">Dependency Layers: From Atomic Events to Derived Facts</Heading>
+
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  The DSL let product managers define domain logic as sequences and dependencies. For soccer, possession derived from multiple event types aggregated over time:
+</Body>
+
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Atomic Events → Player-Level Facts",
+      definition: "Passes, shots recorded as base events. Multiple dribbles became 'carry' (player-level durational fact)."
+    },
+    {
+      term: "Player-Level Facts → Team Aggregations",
+      definition: "Possession meant team had active carry (player dribbling), received fouls, or forced ball out—spans of time aggregated from atomic events."
+    },
+    {
+      term: "Team Aggregations → Higher-Level Derivatives",
+      definition: "Turnovers derived from possession changes—computed from team-level aggregations."
+    }
+  ]}
+/>
+
+<Heading level={4} as="h4" class="mb-4 mt-6">Multi-Sport Expansion: Same DSL, New Rules</Heading>
+
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  When we expanded to American football, product managers wrote drive segmentation rules using the same DSL patterns:
+</Body>
+
+<Body size="sm" as="p" class="mb-6 text-text-lighter">
+  Offensive drives derived from snap sequences until scoring or turnover. The execution engine didn't change—new sport, same architectural separation. No engineering bottleneck.
+</Body>
+
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+  Without DSLs, every new rule required engineering deploys. With DSLs, product managers shipped dataspec changes independently—velocity without correctness trade-offs.
+</Body>
     </div>
 
     {/* Live-Collection-App Subsection */}
-    <div class="mb-12">
-      <Heading level={3} as="h3" class="mb-4"><span>The Live-Collection-App: UX as First Principle</span></Heading>
+    <div class="mb-10">
+      <Callout variant="insight" title="System 2 of 3: Live-Collection-App">
+        <p>Bounded context: Collector workflows and real-time collaboration</p>
+      </Callout>
 
-The first thing we built wasn't backend architecture. It was the tool collectors would use every day—an Electron desktop app that replaced Dartfish's rigid forms with keyboard-first workflows.
+      <Heading level={3} as="h3" class="mb-4">The Live-Collection-App: UX as First Principle</Heading>
 
-**Real-Time Collaboration**
+<Body size="sm" as="p" class="mb-6 text-text-lighter">
+  The first thing we built wasn't backend architecture. It was the tool collectors would use every day—an Electron desktop app that replaced Dartfish's rigid forms with keyboard-first workflows.
+</Body>
 
-GraphQL subscriptions via WebSocket enabled Google Docs-style collaboration. Multiple collectors worked concurrently—one collector led by publishing the base event name, others contributed their assigned data pieces (player positions, freeze frames, detailed attributes). Role separation by design meant no conflicts were possible. Freeze frame positioning and manual location data coexisted as valid refinements at different granularities.
+<Heading level={4} as="h4" class="mb-4 mt-6">Real-Time Collaboration: Google Docs for Sports Data</Heading>
 
-        <Body size="sm" as="p" class="mb-4 text-neutral">
-          Concurrent collection follows a pub-sub pattern: lead collector establishes base event identity,
-          specialized collectors subscribe and contribute domain-specific data. Role separation prevents conflicts—
-          each collector owns distinct data fields, no overlapping writes. Color key: <Badge variant="skill" size="xs">amber</Badge> = collectors, <Badge variant="category" size="xs">blue</Badge> = subscription layer, <Badge variant="status" size="xs">emerald</Badge> = merge service.
-        </Body>
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  GraphQL subscriptions via WebSocket enabled concurrent collection. Multiple collectors worked simultaneously without conflicts.
+</Body>
 
-        <MermaidDiagram
-          id="concurrent-collection"
-          caption="Real-time collaborative collection: lead collector publishes base event via GraphQL subscription, concurrent collectors contribute specialized data pieces (positions, freeze frames, attributes) without conflicts"
-          relationships={[
-            "Lead Collector (amber) publishes base event (shot, event_id: abc123, timestamp, team)",
-            "GraphQL Subscription (blue) broadcasts base event to all active collectors via WebSocket",
-            "Position Collector (amber) subscribes and contributes player_positions data field",
-            "Freeze Frame Collector (amber) subscribes and contributes freeze_frame_data field",
-            "Attributes Collector (amber) subscribes and contributes detailed_attributes field",
-            "Merge Service (emerald) combines all contributions into complete event record",
-            "No conflicts possible: each collector writes to distinct data fields (role separation by design)"
-          ]}
-        >
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Pub-Sub Pattern",
+      definition: "Lead collector published base event name (pass, shot, tackle), others subscribed and contributed domain-specific data."
+    },
+    {
+      term: "Role Separation by Design",
+      definition: "One collector owned player positions (freeze frames), another tracked detailed attributes, third handled timing. No overlapping responsibility meant zero conflicts."
+    },
+    {
+      term: "Concurrent Collection Without Merging",
+      definition: "Specialized collectors contributed their pieces to shared event identity. No manual merge conflicts—architecture prevented them."
+    }
+  ]}
+/>
 
-```mermaid
-graph TD
-    LEAD[Lead Collector
-    Creates base event] -->|GraphQL
-    subscription| SUB[Base Event Published
-    shot: abc123
-    team: A, time: 45:30]
+<Heading level={4} as="h4" class="mb-4 mt-6">State Machines for Impossible States</Heading>
 
-    SUB -->|WebSocket
-    broadcast| POS[Position Collector
-    Subscribes]
-    SUB -->|WebSocket
-    broadcast| FREEZE[Freeze Frame Collector
-    Subscribes]
-    SUB -->|WebSocket
-    broadcast| ATTR[Attributes Collector
-    Subscribes]
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  XState modeled collection workflows as explicit finite state machines. Five major state machines orchestrated the app, preventing illegal states by design.
+</Body>
 
-    POS -->|Contributes
-    player_positions| MERGE[Merge Service
-    Combines data]
-    FREEZE -->|Contributes
-    freeze_frame_data| MERGE
-    ATTR -->|Contributes
-    detailed_attributes| MERGE
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Video Mode State Machine",
+      definition: "Manual playback, loop mode, editing mode—mutually exclusive states with defined transitions."
+    },
+    {
+      term: "Collection Flow State Machine",
+      definition: "Watching → Collecting base event → Adding details. Couldn't skip steps or submit incomplete data."
+    },
+    {
+      term: "Freeze Frame Handler",
+      definition: "Idle → Active → Reviewing. Couldn't enter freeze frame mode without active event, couldn't exit without validation."
+    },
+    {
+      term: "Batch Validation State Machine",
+      definition: "Prevented submission with missing required fields. Form validation encoded in state transitions, not runtime checks."
+    }
+  ]}
+/>
 
-    MERGE --> FINAL[Complete Event
-    shot: abc123
-    All data pieces merged]
+<Heading level={4} as="h4" class="mb-4 mt-6">Three UX Patterns That Scaled</Heading>
 
-    classDef atomic fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
-    classDef derived fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
-    classDef system fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Keyboard-First Workflows",
+      definition: "Context-aware mappings (same key, different actions per context). Collectors touch-typed events like Vim users—hands stayed on keyboard, eyes stayed on video."
+    },
+    {
+      term: "Contextual UI Adaptation",
+      definition: "When you selected 'Pass,' system showed only valid pass types for that player's position. DSL sequence rules determined valid options. If only one remained, auto-filled and skipped."
+    },
+    {
+      term: "Semi-Automated Freeze Frames",
+      definition: "CV service detected 80-90% of player positions, collectors corrected edge cases. 30 seconds vs. 3 minutes fully manual."
+    }
+  ]}
+/>
 
-    class LEAD,POS,FREEZE,ATTR atomic
-    class SUB derived
-    class MERGE,FINAL system
-```
-
-        </MermaidDiagram>
-
-**State Machines for Impossible States**
-
-We used XState to model collection workflows as explicit finite state machines. Five major state machines orchestrated the app: video mode (manual playback, loop, editing), collection flow (watching, collecting base event, adding details), freeze frame handling (idle, active, reviewing), player customization, and batch validation. This prevented illegal states by design—you couldn't enter a freeze frame without an active event, couldn't submit without required fields. In our context, traditional event handlers created implicit state explosions—tracking state across event handlers made correctness fragile. State machines helped us make transitions explicit and testable, though this added complexity that only paid off at scale.
-
-**30+ Keyboard Shortcuts: Muscle Memory Over Mouse Clicks**
-
-Contextual keyboard mappings with module scoping meant the same key could trigger different actions depending on context. In the main collection view, `t` created new events (pass, shot, tackle), `/` toggled video loop mode, and arrow keys controlled playback. In freeze frame mode, `t` toggled team view, number keys selected players by jersey, Enter confirmed positions. Collectors touch-typed events like Vim users touch-type code. Hands stayed on keyboard. Eyes stayed on video.
-
-**Contextual UI Adaptation**
-
-The interface adapted based on game state and previous decisions. When a collector selected "Pass," the system showed only valid pass types for that player's position. DSL sequence rules determined valid next options. If only one option remained valid, the system auto-filled and skipped the question entirely. Cognitive load minimization—collectors never saw irrelevant options.
-
-<Accordion summary="Video Loop Mode">
-
-Press `/` to toggle between manual playback and auto-replay. In loop mode, the system repeated a 5-second window around the active event. No manual rewinding. Collectors filled fields while watching the replay, then pressed `/` to move forward.
-
-</Accordion>
-
-<Accordion summary="Computer Vision Assistance" class="mb-6">
-
-Freeze frames (positioning data for all 22 players) were semi-automated. Collectors triggered frame extraction, CV service detected players and ball, system overlaid predictions on pitch canvas, collectors corrected misidentifications. Hybrid approach: 80-90% automation, human correction for edge cases.
-
-</Accordion>
-
-This tool became the foundation. The dataspec drove UI validation, the DSL defined legal event sequences, the state machines constrained invalid states. We still found edge cases in production, but the architecture caught most errors before they reached collectors. Concurrent collection during live matches with sub-minute latency. The backend scaled to support what the UX tool showed collectors needed.
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+  The dataspec drove UI validation, DSL defined legal event sequences, state machines constrained invalid states. Architecture caught most errors before collectors saw them. Concurrent collection during live matches with sub-minute latency.
+</Body>
     </div>
 
-    {/* Event Collection Subsection */}
+    {/* Backend + Metadata Subsection */}
     <div class="mb-10">
-      <Heading level={3} as="h3" class="mb-4"><span>Backend Evolution: From Batch to Real-Time</span></Heading>
+      <Callout variant="insight" title="System 3 of 3: Backend + Metadata">
+        <p>Bounded contexts: Event graphs, match metadata, temporal resolution</p>
+      </Callout>
 
-Breaking matches down by decision rather than team increased correctness while reducing collector coordination overhead. Computer vision assisted input, contextual keyboard mappings reduced cognitive load, and automated linting caught preventable errors. Collectors focused on judgment over correction—handling edge cases where human expertise mattered rather than catching mistakes.
+      <Heading level={3} as="h3" class="mb-4">Backend Evolution: Event Graphs + Claims-Based Metadata</Heading>
 
-**Beyond Simple Sequences: Event Dependency Graphs**
+<Heading level={4} as="h4" class="mb-4 mt-6">Event Dependency Graphs</Heading>
 
-        <Body size="sm" as="p" class="mb-4 text-neutral">
-          Events don't just flow sequentially—they form directed acyclic graphs. A foul-committed event
-          might depend on a previous clearance, which itself connects to atomic pass events. The system
-          modeled both temporal relationships (PREV/NEXT) and logical dependencies (DEPENDS_ON). Color key: <Badge variant="skill" size="xs">amber</Badge> = defense phase, <Badge variant="category" size="xs">blue</Badge> = loose phase, <Badge variant="status" size="xs">emerald</Badge> = possession phase.
-        </Body>
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  A clearance triggers "loose phase" (neither team controls ball), enabling ball-recovery or fifty-fifty. Successful recovery triggers "possession phase," enabling pass/dribble. This flow encoded two relationship types:
+</Body>
 
-        <MermaidDiagram
-          id="event-dependency"
-          caption="Phase-driven event validation: clearance (Layer 0) triggers 'loose' phase, enabling ball-recovery or fifty-fifty (Layer 0). Successful recovery triggers 'possession' phase, enabling pass/dribble (Layer 0). Only atomic events determine phases."
-          relationships={[
-            "clearance (team A, Layer 0 atomic) triggers loose phase - neither team controls ball",
-            "Loose phase allows: ball-recovery or fifty-fifty (Layer 0 atomic temporal successors)",
-            "ball-recovery (outcome: complete, Layer 0) triggers possession phase - team B controls ball",
-            "Possession phase allows: pass, dribble, reception (Layer 0 atomic events only)",
-            "fifty-fifty (outcome: won-B, Layer 0) also triggers possession phase - alternative path",
-            "Phase state machine uses only Layer 0 events - derived events (carry, turnover) computed separately"
-          ]}
-        >
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Temporal Relationships (PREV/NEXT)",
+      definition: "Sequential time-based flow—clearance happened before ball-recovery, recovery before possession phase"
+    },
+    {
+      term: "Logical Relationships (DEPENDS_ON)",
+      definition: "Causal dependencies—clearance caused loose phase, recovery caused possession phase"
+    },
+    {
+      term: "Directed Acyclic Graph Structure",
+      definition: "Events form graph nodes with typed edges. No cycles, query-able dependencies for root-cause analysis."
+    }
+  ]}
+/>
 
-```mermaid
-graph TD
-    subgraph "Defense Phase"
-        CL["clearance
-        team: A
-        Layer 0"]
-    end
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+  Sequential processing couldn't answer "what caused this turnover?" Graph structure enabled temporal + causal queries for data quality debugging.
+</Body>
 
-    subgraph "Loose Phase (No Control)"
-        BR["ball-recovery
-        team: B
-        outcome: complete
-        Layer 0"]
-        FF["fifty-fifty
-        team: A vs B
-        outcome: won-B
-        Layer 0"]
-    end
-
-    subgraph "Possession Phase (Team B)"
-        PASS["pass
-        team: B
-        Layer 0"]
-        DRIB["dribble
-        team: B
-        Layer 0"]
-    end
-
-    CL -->|PREV
-    triggers loose| BR
-    CL -->|PREV
-    triggers loose| FF
-    BR -->|triggers
-    possession| PASS
-    BR -->|triggers
-    possession| DRIB
-    FF -->|triggers
-    possession| PASS
-
-    CL -.->|phase rule:
-    loose allows| BR
-    CL -.->|phase rule:
-    loose allows| FF
-    BR -.->|phase rule:
-    possession allows| PASS
-    BR -.->|phase rule:
-    possession allows| DRIB
-    FF -.->|phase rule:
-    possession allows| PASS
-
-    classDef defense fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
-    classDef loose fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
-    classDef possession fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
-
-    class CL defense
-    class BR,FF loose
-    class PASS,DRIB possession
-```
-
-        </MermaidDiagram>
-    </div>
-
-    {/* Metadata Management Subsection */}
-    <div class="mb-10">
-      <Heading level={3} as="h3" class="mb-4"><span>Match Metadata: Temporal Stages with Automated Entity Resolution</span></Heading>
+**Match Metadata: Temporal Stages + Automated Conflict Resolution**
 
 The metadata challenge required different architectural thinking. Match metadata had **temporal stages** that preceded live collection:
 
-**Stage 1: Competition Schedules (Days/Weeks Before Kickoff)**
+<Heading level={4} as="h4" class="mb-4 mt-6">Three Temporal Stages</Heading>
 
-We organized competition schedules daily and observed the web for updates—fixtures announced, kickoff times changed, venues moved. Web scrapers monitored official sources. Any schedule changes propagated automatically.
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Competition Schedules (days/weeks before)",
+      definition: "Web scrapers monitored official sources. Fixture changes propagated automatically."
+    },
+    {
+      term: "Matchday Lineups (hours before)",
+      definition: "Scraped starting XI, formations, referees. Most new entities entered here."
+    },
+    {
+      term: "Automatic Entity Streaming",
+      definition: "New entities (player spelling variants, unknown referees) automatically streamed to info resolution team—no manual data entry."
+    }
+  ]}
+/>
 
-**Stage 2: Matchday Lineups (Hours Before Kickoff)**
+<Heading level={4} as="h4" class="mb-4 mt-6">Claims-Based Architecture</Heading>
 
-Ahead of kickoff, we scraped matchday lineups and match details—starting XI, formations, referees, stadium conditions. This is where most new entities entered the system.
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  With thousands of collectors crowd-sourcing data, conflicts were inevitable: same player, different spellings; same club, multiple sources. Rather than key-value pairs, metadata became claims from actors with three core attributes:
+</Body>
 
-**Stage 3: Automatic Entity Streaming**
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Provenance (Who)",
+      definition: "Which collector or scraper asserted this fact—trusted scrapers weighted higher than new collectors"
+    },
+    {
+      term: "Confidence (Reliability)",
+      definition: "Source reliability score based on historical accuracy—automated ranking reduced manual review burden"
+    },
+    {
+      term: "Temporality (When)",
+      definition: "When the claim was made—later assertions could override earlier ones if confidence higher"
+    }
+  ]}
+/>
 
-Whenever scrapers or collectors encountered a new entity—player spelling variant, unknown referee, club name mismatch—the system automatically streamed it to the **info resolution team** (5 people managing metadata for thousands of collectors). No manual data entry. No waiting for batch imports.
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  When multiple sources asserted conflicting facts, the system detected conflicts automatically and routed to the 5-person metadata team.
+</Body>
 
-With thousands of collectors crowd-sourcing data across multiple sources, conflicts were inevitable: same player, different spellings; same club, multiple sources. The system needed to resolve golden entities automatically—5 people couldn't manually reconcile every conflict.
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  <strong>Team Workflow:</strong> Query pending conflicts → review side-by-side with full context → resolve once → system cascades to all dependent data.
+</Body>
 
-Rather than key-value pairs, metadata became **claims from actors** with provenance
-(who), confidence (reliability), and temporality (when). Each claim carried its source context.
-When multiple sources asserted conflicting facts, the graph structure made conflicts explicit
-and queryable.
-
-        <Body size="sm" as="p" class="mb-4 text-neutral">
-          The 5-person metadata team's workflow: query for pending conflicts → review side-by-side with
-          full context → resolve once → system cascades to all dependent data. Color key: <Badge variant="skill" size="xs">amber</Badge> = data sources, <Badge variant="category" size="xs">blue</Badge> = claims, <Badge variant="status" size="xs">emerald</Badge> = resolution system.
-        </Body>
-
-        <MermaidDiagram
-          id="metadata-claims"
-          caption="Metadata claims flow showing data sources (collectors, scrapers, APIs) submitting claims that resolve into golden entities with automatic conflict resolution"
-          relationships={[
-            "Data sources (amber): Collector A, Scraped Source, and Third-party API submit nationality claims",
-            "Claims (blue): \"Nationality: Egypt\" and \"Nationality: UK\" represent conflicting data",
-            "Conflict resolution: Conflicting claim (Nationality: UK) routes to Pending Conflicts Queue",
-            "System nodes (emerald): Metadata Team Review resolves conflicts and updates Golden Entity",
-            "Cascade: Golden Entity (Player X) automatically updates dependent systems (Match Data, Historical Stats)",
-            "Agreed claims resolve directly to golden entity; conflicts require human review"
-          ]}
-        >
-
-```mermaid
-graph TD
-    C1[Collector A] -->|claims| N1[Nationality: Egypt]
-    C2[Scraped Source] -->|claims| N2[Nationality: UK]
-    API[Third-party API] -->|claims| N1
-
-    N1 -->|resolves to| GE[Golden Entity: Player X]
-    N2 -->|conflict| QUEUE[Pending Conflicts Queue]
-
-    QUEUE --> MT[Metadata Team Review]
-    MT -->|resolves| GE
-
-    GE -->|cascades to| DEP1[Match Data]
-    GE -->|cascades to| DEP2[Historical Stats]
-
-    classDef atomic fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
-    classDef derived fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
-    classDef system fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
-
-    class C1,C2,API atomic
-    class N1,N2 derived
-    class QUEUE,MT,GE,DEP1,DEP2 system
-```
-
-        </MermaidDiagram>
-
-The system's design reduced duplicate entities, caught most conflicts automatically, and escalated true ambiguity. The 5-person team focused on the 1-2% of ambiguous cases requiring domain expertise (is "FC Barcelona" the same as "Barcelona FC"? yes; but "Manchester United" vs "Manchester City"? no).
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+  The 5-person team focused on the 1-2% of ambiguous cases requiring domain expertise ("FC Barcelona" vs. "Barcelona FC"? same; "Manchester United" vs. "Manchester City"? different). System resolved the other 98% automatically.
+</Body>
     </div>
   </section>
 
+  <SectionDivider spacing="major" />
+
   {/* Impact Section */}
-  <section class="mb-16">
-    <Heading level={2} as="h2" class="mb-6"><span>Impact: What Changed When Architecture Met Distributed Ownership?</span></Heading>
+  <section class="mb-16" id="impact">
+    <Heading level={3} as="h2" class="mb-6 text-navy">Impact: Timeline Comparison (2018 → 2021)</Heading>
 
-    <Heading level={3} as="h3" class="mb-4">The 80/20 Lesson</Heading>
+<Body size="sm" as="p" class="mb-6 text-text-lighter">
+  <strong>What actually changed on the ground?</strong> Here's the operational transformation from Dartfish baseline to production at scale.
+</Body>
 
-    <Body size="base" as="p" class="mb-8">
-      Design for the 80% common case; production iteration reveals the 20% edge cases. This principle drove every architectural decision—from DSL syntax to state machine transitions to metadata resolution logic.
-    </Body>
+<div class="grid md:grid-cols-2 gap-6 mb-8">
+  <Card variant="default" class="p-6">
+    <Heading level={3} as="h3" class="mb-4 text-red-600">2018: Engineering Bottleneck</Heading>
+    <ul class="space-y-3 text-sm text-text-lighter">
+      <li><strong>American football expansion:</strong> Scoped at 6 months engineering work, product blocked on roadmap</li>
+      <li><strong>New event type:</strong> Deploy + regression testing required for every rule change</li>
+      <li><strong>Support burden:</strong> Product managers fielded 50+ daily Slack questions about dataspec rules</li>
+    </ul>
+  </Card>
 
-<Accordion summary="Quantitative Results">
+  <Card variant="default" class="p-6">
+    <Heading level={3} as="h3" class="mb-4 text-emerald-600">2021: Configuration-Driven Scale</Heading>
+    <ul class="space-y-3 text-sm text-text-lighter">
+      <li><strong>NFL dataspecs shipped in 3 weeks:</strong> Product managers wrote drive rules, zero engineering involvement</li>
+      <li><strong>New event type:</strong> JSON config + UI test, deployed same day through DSL system</li>
+      <li><strong>Automated resolution:</strong> System answered 98% of dataspec questions, 5-person team handled only ambiguous 2%</li>
+    </ul>
+  </Card>
+</div>
 
-**Real-time collection:** Concurrent collection during live matches replaced post-match sequential processing.
+<Callout variant="insight" title="Collector Voice" class="mb-6">
+  <p class="mb-2"><strong>Before (Dartfish):</strong> "12 minutes per freeze frame clicking 22 player positions manually. By minute 60, my hand cramped from mouse clicks."</p>
+  <p><strong>After (CV-assisted UI):</strong> "Computer vision detected 90%, I corrected edge cases in 3 minutes. Eyes stayed on video, hands on keyboard."</p>
+  <p class="text-xs text-text-lighter mt-3">— Senior Collector, 2020</p>
+</Callout>
 
-**Minimal engineering bottleneck:** When we expanded to American football, product managers wrote new dataspecs and grouping rules with minimal code changes.
+<Callout variant="insight" title="The 80/20 Lesson" class="mb-6">
+  <p>Design for the 80% common case; production iteration reveals the 20% edge cases. This principle drove every architectural decision—from DSL syntax to state machine transitions to metadata resolution logic. Most collectors collected standard matches; we optimized for that, not edge cases.</p>
+</Callout>
 
-**Automated validation:** Linting and contextual validation caught errors automatically.
-Collectors focused on judgment calls where human expertise mattered—event type conflicts,
-ambiguous data points—rather than catching preventable mistakes.
+<Heading level={4} as="h4" class="mb-4 mt-6">What Made This Possible</Heading>
 
-**Non-linear leverage:** Operations scaled 10x without proportional staffing increases.
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Non-linear leverage",
+      definition: "Operations scaled 10x (100 → 1000+ collectors) without proportional staffing increases. The 5-person metadata team queried pending conflicts, resolved once via claims interface, and the system cascaded updates to all affected events."
+    },
+    {
+      term: "Minimal engineering bottleneck",
+      definition: "When we expanded to American football in 2020, product managers wrote new dataspecs and grouping rules. Engineering only intervened for state machine edge cases (e.g., possession turnover during penalty review—an NFL-specific complexity)."
+    },
+    {
+      term: "Collector experience transformation",
+      definition: "Keyboard flows built muscle memory. Contextual mappings reduced cognitive load (press 'P' for pass, but context changes based on phase). Computer vision assisted bounding box input, reducing manual pixel-perfect clicking."
+    },
+    {
+      term: "Client customization through configuration",
+      definition: "Different granularity requirements—basic event tracking or advanced positioning data with x/y coordinates—handled through dataspec configuration, not separate codebases."
+    }
+  ]}
+/>
 
-The system scaled horizontally as load increased. Product managers could ship new dataspecs without engineering bottlenecks, though some edge cases still required technical collaboration.
-
-</Accordion>
-
-<Accordion summary="Qualitative Changes" class="mb-6">
-
-**Collector experience:** Keyboard flows built muscle memory. Contextual mappings reduced cognitive load. Computer vision assisted input.
-
-**Client customization:** Different granularity requirements—basic event tracking or advanced positioning data—handled through configuration.
-
-**Metadata team stayed small:** The 5-person team queried pending conflicts, reviewed side-by-side, resolved once, and the system cascaded updates.
-
-</Accordion>
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+  The system scaled horizontally as load increased. Product managers could ship new dataspecs without engineering bottlenecks, though some edge cases still required technical collaboration for complex state transitions.
+</Body>
   </section>
 
+  <SectionDivider spacing="major" />
+
   {/* Team Building Section */}
-  <section class="mb-16">
-    <Heading level={2} as="h2" class="mb-6"><span>The Team Building Challenge: Learning to Lead</span></Heading>
+  <section class="mb-16" id="team-building">
+    <Heading level={3} as="h2" class="mb-6 text-navy">The Team Building Challenge: Learning to Lead</Heading>
 
-The technical architecture above—DSLs, state machines, claims-based metadata—took three years to evolve. **But technical patterns without team transmission = bottleneck.**
-
-The harder lesson wasn't about architecture. It was about building a team that could iterate beyond my initial vision.
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+  The technical architecture—DSLs, state machines, claims-based metadata—took three years to evolve. The harder lesson wasn't technical. It was building a team that could iterate beyond my initial vision while learning to lead for the first time.
+</Body>
 
 <Accordion summary="Year One: Finding the Core Partnership">
 
@@ -518,51 +597,57 @@ By year three, we had built the hiring and mentoring systems needed to scale bey
 
 </Accordion>
 
-**The Breakthrough: Distributed Ownership**
+<Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
 
-When Waheed, Hadeel, and Abdallah joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with:
+<Body size="sm" as="p" class="mb-4 text-text-lighter">
+  When Waheed, Hadeel, and Abdallah joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with:
+</Body>
 
-<Accordion summary="Adham (Services Architecture Lead)">
+<div class="grid md:grid-cols-2 gap-6 mb-8">
+  <Card variant="default" class="p-6">
+    <Heading level={5} as="h5" class="mb-2">Adham</Heading>
+    <p class="text-sm text-text-lighter mb-3 italic">Services Architecture Lead</p>
+    <ul class="space-y-2 text-sm text-text-lighter">
+      <li>Designed all backend services architecture</li>
+      <li>Led Kafka event streaming implementation</li>
+      <li>Built GraphQL-based web scraper (modeled DOM operations as GraphQL queries—querying the web like an API)</li>
+    </ul>
+  </Card>
 
-<ul class="list-disc ml-6 space-y-2">
-<li>Designed all backend services architecture</li>
-<li>Led Kafka event streaming implementation</li>
-<li>Built GraphQL-based web scraper (modeled DOM operations as GraphQL queries—querying the web like an API)</li>
-</ul>
+  <Card variant="default" class="p-6">
+    <Heading level={5} as="h5" class="mb-2">Waheed</Heading>
+    <p class="text-sm text-text-lighter mb-3 italic">Metadata System</p>
+    <ul class="space-y-2 text-sm text-text-lighter">
+      <li>Implemented claims-based entity resolution</li>
+      <li>Built automatic conflict detection</li>
+      <li>Owned golden entity cascade logic</li>
+    </ul>
+  </Card>
 
-</Accordion>
+  <Card variant="default" class="p-6">
+    <Heading level={5} as="h5" class="mb-2">Hadeel</Heading>
+    <p class="text-sm text-text-lighter mb-3 italic">Collection Service and Dataspec</p>
+    <ul class="space-y-2 text-sm text-text-lighter">
+      <li>Implemented real-time collection service</li>
+      <li>Owned Kafka integration and GraphQL subscriptions</li>
+      <li>Built WebSocket infrastructure for concurrent collaboration</li>
+      <li>Collaborated with PMs on evolving the dataspec capabilities</li>
+    </ul>
+  </Card>
 
-<Accordion summary="Waheed (Metadata System)">
+  <Card variant="default" class="p-6">
+    <Heading level={5} as="h5" class="mb-2">Abdallah</Heading>
+    <p class="text-sm text-text-lighter mb-3 italic">Desktop Application and Dataspec</p>
+    <ul class="space-y-2 text-sm text-text-lighter">
+      <li>Maintained the Electron live-collection-app</li>
+      <li>Collaborated with PMs on evolving the dataspec capabilities</li>
+    </ul>
+  </Card>
+</div>
 
-<ul class="list-disc ml-6 space-y-2">
-<li>Implemented claims-based entity resolution</li>
-<li>Built automatic conflict detection</li>
-<li>Owned golden entity cascade logic</li>
-</ul>
-
-</Accordion>
-
-<Accordion summary="Hadeel (Collection Service and Dataspec)">
-
-<ul class="list-disc ml-6 space-y-2">
-<li>Implemented real-time collection service</li>
-<li>Owned Kafka integration and GraphQL subscriptions</li>
-<li>Built WebSocket infrastructure for concurrent collaboration</li>
-<li>Collaborated with PMs on evolving the dataspec capabilities</li>
-</ul>
-
-</Accordion>
-
-<Accordion summary="Abdallah (Desktop Application and Dataspec)" class="mb-6">
-
-<ul class="list-disc ml-6 space-y-2">
-<li>Maintained the Electron live-collection-app</li>
-<li>Collaborated with PMs on evolving the dataspec capabilities</li>
-</ul>
-
-</Accordion>
-
-They took the foundational concepts and applied them to contexts we hadn't explored yet.
+<Body size="sm" as="p" class="mb-6 text-text-lighter">
+  They took the foundational concepts and applied them to contexts we hadn't explored yet.
+</Body>
 
 <Accordion summary="The External Constraint" class="mb-6">
 
@@ -570,18 +655,22 @@ In 2022, I left Egypt. By then: 1000+ collectors, internal DSLs shipped, America
 
 </Accordion>
 
-**The Lesson**
-
-Team building isn't separate from technical work. It's the multiplier that makes ambitious architecture sustainable. Waiting until year three to expand beyond the two-person partnership meant racing against time when external constraints intervened.
-
-The lesson: distributed ownership from day one, not year three. The architecture proved its value—scaling to 1000+ collectors across multiple sports. The team multiplied that value. Waheed, Hadeel, and Abdallah should have started alongside Adham from year one. The technical concepts would have propagated faster, subsystem ownership would have emerged earlier, and the customer-facing DSL would have shipped.
-
-Architecture shapes what's possible. But people make it real.
+<Callout variant="insight" title="The Team Building Lesson">
+  <p>Team building isn't separate from technical work. It's the multiplier that makes ambitious architecture sustainable. Waiting until year three to expand beyond the two-person partnership meant racing against time when external constraints intervened.</p>
+  <p>The lesson: distributed ownership from day one, not year three. The architecture proved its value—scaling to 1000+ collectors across multiple sports. The team multiplied that value. Waheed, Hadeel, and Abdallah should have started alongside Adham from year one. The technical concepts would have propagated faster, subsystem ownership would have emerged earlier, and the customer-facing DSL would have shipped.</p>
+  <p><strong>Architecture shapes what's possible. But people make it real.</strong></p>
+</Callout>
   </section>
 
+  <SectionDivider spacing="major" />
+
   {/* Lessons Section */}
-  <section class="mb-16">
-    <Heading level={2} as="h2" class="mb-6"><span>Lessons: What Transfers? What Only Worked Here?</span></Heading>
+  <section class="mb-16" id="lessons">
+    <Heading level={3} as="h2" class="mb-6 text-navy">Lessons: What Transfers? What Only Worked Here?</Heading>
+
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+  Four years, three systems, distributed ownership learned the hard way. Which principles transfer to other domains? Which only worked because of sports analytics constraints?
+</Body>
 
 **What Worked in This Context**
 
@@ -593,24 +682,38 @@ Invest in team building from day one, not year three. The two-year delay meant r
 
 Event storming from Day 1, not month 6. Understanding bounded contexts (match metadata, event collection, people coordination, media management, contextual aggregation) shaped every technical decision.
 
-<Accordion summary="When These Patterns Apply" class="mb-6">
+**When These Patterns Apply**
 
 These aren't universal truths—they worked because of specific conditions:
 
-**Scale threshold:** Separation creates leverage at 1000+ users, not 100. At 50 users with stable requirements, build directly. At 10x growth projections with variant needs, invest in separation.
-
-**Domain complexity:** Sports analytics, medical diagnosis, legal review—domains where experts have tacit knowledge worth externalizing. The more complex the expertise, the more value in DSLs that let non-engineers express rules.
-
-**Multi-variant requirements:** Multiple sports, client customization, regional variations. When every customer wants different behavior, configuration prevents maintaining N codebases.
-
-**The meta-lesson:** More domain knowledge → better problem diagnosis → better architectural decisions → concepts that create value instead of complexity. Context always determines what works.
-
-</Accordion>
+<DefinitionList
+  class="mb-6"
+  items={[
+    {
+      term: "Scale Threshold (1000+, not 100)",
+      definition: "Separation creates leverage at scale. At 100 collectors, two product managers answered Slack questions faster than building DSLs. At 1000+, manual coordination broke—five people couldn't handle 50+ daily dataspec questions while evolving the spec. Configuration became cheaper than human time."
+    },
+    {
+      term: "Domain Complexity (Tacit Expertise)",
+      definition: "Sports analytics, medical diagnosis, legal review—domains where experts have tacit knowledge worth externalizing. The more complex the expertise, the more value in DSLs that let non-engineers express rules."
+    },
+    {
+      term: "Multi-Variant Requirements",
+      definition: "Multiple sports, client customization, regional variations. When every customer wants different behavior, configuration prevents maintaining N codebases."
+    },
+    {
+      term: "The Meta-Lesson",
+      definition: "More domain knowledge → better problem diagnosis → better architectural decisions → concepts that create value instead of complexity. Context always determines what works."
+    }
+  ]}
+/>
   </section>
 
+  <SectionDivider spacing="major" />
+
   {/* Behind the Scenes Section */}
-  <section class="mb-8">
-    <Heading level={2} as="h2" class="mb-6"><span>Behind the Scenes</span></Heading>
+  <section class="mb-8" id="behind-the-scenes">
+    <Heading level={2} as="h2" class="mb-6">Behind the Scenes</Heading>
 
 The human side of building production systems: our team in Cairo (2018-2022), where "make illegal states unrepresentable" went from paper sketches to production reality.
 
@@ -620,13 +723,10 @@ The human side of building production systems: our team in Cairo (2018-2022), wh
 
   </section>
 
-  <hr class="border-neutral-light my-8" />
+  <SectionDivider spacing="minor" />
 
   {/* Footer Navigation */}
-  <div class="flex flex-col md:flex-row gap-4 md:justify-between md:items-center">
-    <Button variant="secondary" href="/portfolio" class="w-full md:w-auto">
-      ← Back to Portfolio
-    </Button>
+  <div class="flex justify-center md:justify-end">
     <Button variant="primary" href="/contact" class="w-full md:w-auto">
       Start a Conversation →
     </Button>

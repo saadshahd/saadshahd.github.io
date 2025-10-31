@@ -1,0 +1,18 @@
+---
+// ScrollProgress.astro
+// Wrapper component that switches between Desktop and Mobile variants
+// Uses CSS breakpoint (lg: 1024px) to toggle visibility
+// Desktop needs wider screens to avoid overlapping content
+import ScrollProgressDesktop from './ScrollProgressDesktop.astro';
+import ScrollProgressMobile from './ScrollProgressMobile.astro';
+---
+
+<!-- Desktop: Show on screens ≥1024px (lg breakpoint) - needs space for side margin -->
+<div class="hidden lg:block">
+  <ScrollProgressDesktop />
+</div>
+
+<!-- Mobile: Show on screens <1024px (includes tablets) -->
+<div class="block lg:hidden">
+  <ScrollProgressMobile />
+</div>
