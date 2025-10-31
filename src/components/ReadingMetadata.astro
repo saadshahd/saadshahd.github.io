@@ -1,0 +1,25 @@
+---
+import { Clock, Layers } from '@lucide/astro';
+import { clsx } from 'clsx';
+
+type Props = {
+  readingTime: string;      // "25 min" or "5 min"
+  sectionCount?: number;    // Optional, for long-form content
+  class?: string;
+};
+
+const { readingTime, sectionCount, class: className } = Astro.props;
+---
+
+<div class={clsx('flex flex-wrap gap-4 text-sm text-text-lighter', className)}>
+  <span class="flex items-center gap-2">
+    <Clock class="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+    <span>~{readingTime} read</span>
+  </span>
+  {sectionCount && (
+    <span class="flex items-center gap-2">
+      <Layers class="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+      <span>{sectionCount} sections</span>
+    </span>
+  )}
+</div>

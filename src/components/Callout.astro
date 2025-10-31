@@ -1,9 +1,9 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
-import { Triangle, Waves, AlertTriangle, Code2 } from '@lucide/astro';
+import { Lightbulb, Layers, AlertTriangle, Code2, MessageSquareQuote, Info } from '@lucide/astro';
 
-// CVA variant definitions
+// CVA variant definitions - STYLE ONLY (colors/borders)
 const callout = cva(
   [
     'rounded-lg',
@@ -12,11 +12,11 @@ const callout = cva(
   {
     variants: {
       variant: {
-        insight: 'bg-callout-insight-bg border-primary text-text', // Gold: Egyptian brand heritage
-        context: 'bg-callout-context-bg border-secondary text-text', // Blue: Red Sea contextual information
+        primary: 'bg-callout-insight-bg border-primary text-text', // Gold: Brand/emphasis
+        secondary: 'bg-callout-context-bg border-secondary text-text', // Blue: Contextual information
         warning: 'bg-callout-warning-bg border-warning text-text', // Amber: Attention-requiring trade-offs
-        technical: 'bg-callout-technical-bg border-success text-text', // Emerald: Implementation details
-        subtle: 'bg-surface border-neutral-light text-text', // Neutral: Low-priority notes
+        success: 'bg-callout-technical-bg border-success text-text', // Emerald: Success/completion
+        neutral: 'bg-surface border-neutral-light text-text', // Gray: Low-priority/quotes
       },
       size: {
         default: 'p-6 border-l-4',
@@ -25,7 +25,7 @@ const callout = cva(
       },
     },
     defaultVariants: {
-      variant: 'insight',
+      variant: 'primary',
       size: 'default',
     },
   }
@@ -45,36 +45,41 @@ const content = cva([
   '[&>p:last-child]:mb-0', // Remove bottom margin from last paragraph
 ]);
 
+// Icon type - SEMANTIC ONLY
+type IconName = 'lightbulb' | 'layers' | 'alert' | 'code' | 'quote' | 'info' | 'none';
+
 type Props = VariantProps<typeof callout> & {
   title?: string;
   class?: string;
-  showIcon?: boolean; // Optional icon display
+  icon?: IconName; // Explicit semantic choice
 };
 
 const {
-  variant = 'insight',
+  variant = 'primary',
   size = 'default',
   title: titleText,
   class: className,
-  showIcon = true, // Icons enabled by default
+  icon = 'lightbulb', // Default to lightbulb for insights
 } = Astro.props;
 
-// Icon mapping for variants (Egyptian-themed Lucide icons)
+// Icon mapping - semantic meaning to Lucide component
 const iconMap = {
-  insight: Triangle,      // Pyramid → architectural wisdom
-  context: Waves,         // Water → background/domain
-  warning: AlertTriangle, // Sun/caution → attention
-  technical: Code2,       // Lotus/code → implementation
-  subtle: undefined,      // No icon for subtle variant
+  lightbulb: Lightbulb,           // Lessons/insights/"aha moments"
+  layers: Layers,                 // Architectural structure/systems
+  alert: AlertTriangle,           // Warnings/trade-offs
+  code: Code2,                    // Technical implementation
+  quote: MessageSquareQuote,      // User voice/testimonials
+  info: Info,                     // Background information
+  none: undefined,                // Explicitly no icon
 } as const;
 
-const IconComponent = variant ? iconMap[variant] : undefined;
+const IconComponent = iconMap[icon];
 ---
 
 <aside class={clsx(callout({ variant, size }), className)} role="note">
   {titleText && (
     <div class={clsx(title(), 'flex items-center gap-2')}>
-      {showIcon && IconComponent && (
+      {IconComponent && (
         <IconComponent class="w-5 h-5 flex-shrink-0" />
       )}
       <span>{titleText}</span>

@@ -1,0 +1,36 @@
+---
+import Card from './Card.astro';
+import Heading from './typography/Heading.astro';
+import { AlertTriangle, CheckCircle } from '@lucide/astro';
+import { clsx } from 'clsx';
+
+type ComparisonVariant = 'before' | 'after' | 'problem' | 'solution';
+
+type Props = {
+  variant: ComparisonVariant;
+  title: string;
+  class?: string;
+};
+
+const { variant, title, class: className } = Astro.props;
+
+// Map variants to icon components and semantic colors
+const iconMap = {
+  before: { Icon: AlertTriangle, color: 'text-warning' },    // Challenges/constraints
+  problem: { Icon: AlertTriangle, color: 'text-warning' },   // Same as before
+  after: { Icon: CheckCircle, color: 'text-success' },       // Solutions/achievements
+  solution: { Icon: CheckCircle, color: 'text-success' },    // Same as after
+} as const;
+
+const { Icon, color } = iconMap[variant];
+---
+
+<Card variant="default" class={clsx('p-6', className)}>
+  <Heading level={3} as="h3" class="flex items-center gap-2 mb-4 text-text">
+    <Icon class={clsx('w-5 h-5 flex-shrink-0', color)} aria-hidden="true" />
+    <span>{title}</span>
+  </Heading>
+  <div class="text-text-lighter space-y-3 text-sm">
+    <slot />
+  </div>
+</Card>

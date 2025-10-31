@@ -7,6 +7,7 @@ import Button from '../../components/Button.astro';
 import Badge from '../../components/Badge.astro';
 import Card from '../../components/Card.astro';
 import Callout from '../../components/Callout.astro';
+import CalloutCTA from '../../components/CalloutCTA.astro';
 import Heading from '../../components/typography/Heading.astro';
 import Body from '../../components/typography/Body.astro';
 import MermaidDiagram from '../../components/MermaidDiagram.astro';
@@ -16,6 +17,9 @@ import Accordion from '../../components/Accordion.astro';
 import DefinitionList from '../../components/DefinitionList.astro';
 import ScrollProgress from '../../components/ScrollProgress.astro';
 import SectionDivider from '../../components/SectionDivider.astro';
+import ReadingMetadata from '../../components/ReadingMetadata.astro';
+import MetricCard from '../../components/MetricCard.astro';
+import ComparisonCard from '../../components/ComparisonCard.astro';
 
 <ScrollProgress />
 
@@ -39,10 +43,7 @@ import SectionDivider from '../../components/SectionDivider.astro';
     </div>
 
     {/* Reading metadata */}
-    <div class="flex flex-wrap gap-4 mb-8 text-sm text-text-lighter">
-      <span>📖 ~25 min read</span>
-      <span>🏗️ 6 sections</span>
-    </div>
+    <ReadingMetadata readingTime="25 min" sectionCount={6} class="mb-8" />
 
     {/* Integrated TL;DR as expandable details */}
     <details class="mb-8 p-6 bg-surface rounded-lg border border-neutral-light" open>
@@ -72,34 +73,38 @@ import SectionDivider from '../../components/SectionDivider.astro';
 
       {/* Metric cards - scannable tiles with semantic colors and context */}
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div class="p-4 bg-[#D1FAE5]/30 border border-[#10B981] rounded-lg">
-          <div class="text-2xl font-bold text-[#065F46] mb-1">99%</div>
-          <div class="text-xs font-semibold text-[#065F46] mb-1">Error prevention through linting</div>
-          <div class="text-xs text-text-lighter">Automated validation caught mistakes before they became data quality issues</div>
-        </div>
-        <div class="p-4 bg-[#DBEAFE]/30 border border-[#0EA5E9] rounded-lg">
-          <div class="text-2xl font-bold text-[#0C4A6E] mb-1">~20s</div>
-          <div class="text-xs font-semibold text-[#0C4A6E] mb-1">Event collection latency</div>
-          <div class="text-xs text-text-lighter">Coaches received detailed match analytics in near real-time to adjust tactics during live matches</div>
-        </div>
-        <div class="p-4 bg-[#FEF3C7]/30 border border-[#F59E0B] rounded-lg">
-          <div class="text-2xl font-bold text-[#78350F] mb-1">10x</div>
-          <div class="text-xs font-semibold text-[#78350F] mb-1">Collector scaling (100 → 1000+)</div>
-          <div class="text-xs text-text-lighter">Non-linear leverage without proportional staffing increases</div>
-        </div>
+        <MetricCard
+          variant="status"
+          value="99%"
+          label="Error prevention through linting"
+          description="Automated validation caught mistakes before they became data quality issues"
+        />
+        <MetricCard
+          variant="category"
+          value="~20s"
+          label="Event collection latency"
+          description="Coaches received detailed match analytics in near real-time to adjust tactics during live matches"
+        />
+        <MetricCard
+          variant="skill"
+          value="10x"
+          label="Collector scaling (100 → 1000+)"
+          description="Non-linear leverage without proportional staffing increases"
+        />
       </div>
 
       {/* Core lesson callout */}
-      <Callout variant="insight" title="Core Lesson">
+      <Callout variant="primary" icon="lightbulb" title="Core Lesson">
         <p>Team building multiplies architectural leverage—waiting until year three to expand beyond two-person partnership meant racing external constraints before completing customer-facing features.</p>
       </Callout>
 
       {/* Technical Appendix Link */}
-      <div class="mt-6 p-4 bg-surface rounded-lg border border-neutral-light">
-        <Body size="sm" as="p" class="mb-2 font-medium">📐 For Engineers: Technical Deep Dive Available</Body>
-        <Body size="sm" as="p" class="mb-3 text-text-lighter">ANTLR grammar, XState machines, functional pipelines, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</Body>
-        <Button variant="secondary" size="sm" href="/portfolio/statsbomb-technical-appendix">View Technical Appendix →</Button>
-      </div>
+      <CalloutCTA variant="secondary" title="For Engineers: Technical Deep Dive Available" icon="code" class="mt-6">
+        <Body size="sm">ANTLR grammar, XState machines, functional pipelines, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</Body>
+        <Fragment slot="cta">
+          <Button variant="ghost" size="sm" href="/portfolio/statsbomb-technical-appendix">View Technical Appendix →</Button>
+        </Fragment>
+      </CalloutCTA>
     </details>
   </section>
 
@@ -159,7 +164,7 @@ Years of daily conversations with collectors revealed their actual workflows and
   ]}
 />
 
-<Callout variant="insight" title="Strategic Moat" class="mb-6">
+<Callout variant="primary" icon="lightbulb" title="Strategic Moat" class="mb-6">
   <p>The architectural separation between rules and execution created a strategic moat: product managers shipped new sports and client configurations without engineering bottlenecks. Architecture became competitive advantage.</p>
 </Callout>
 
@@ -199,7 +204,7 @@ Years of daily conversations with collectors revealed their actual workflows and
   The system needed to support any aggregation pattern, not just what we knew upfront.
 </Body>
 
-<Callout variant="context" title="Why Match Metadata Was Different" class="my-6">
+<Callout variant="secondary" icon="info" title="Why Match Metadata Was Different" class="my-6">
   <p>Players, clubs, referees, stadiums—reference data that thousands of collectors needed but only 5 people managed. Crowd-sourced data meant conflicting information: same player, different spellings; same club, multiple sources. The system required automated golden entity resolution—5 people couldn't manually reconcile metadata for thousands of collectors across hundreds of matches weekly.</p>
 </Callout>
 
@@ -220,7 +225,7 @@ Product managers couldn't define new collection requirements without engineering
   Understanding the business value explains *why* we built this. Now: *how* did architectural decisions enable 10x scale and multi-sport expansion without code rewrites?
 </Body>
 
-<Callout variant="insight" title="User Struggle → Architecture">
+<Callout variant="primary" icon="lightbulb" title="User Struggle → Architecture">
   <p>Architecture emerges when you chase why/where users struggle, not what features they request.</p>
 </Callout>
 
@@ -258,22 +263,22 @@ Product managers couldn't define new collection requirements without engineering
   </div>
 
   {/* Callout for "Why this order matters" */}
-  <Callout variant="technical">
-    <Body size="sm" as="p" class="font-medium mb-2">
-      <strong>Why this order matters:</strong>
-    </Body>
+  <Callout variant="success" icon="code" title="Why this order matters">
     <Body size="sm" as="p" class="text-text-lighter leading-relaxed">Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.</Body>
   </Callout>
 
   {/* Link to Technical Appendix */}
-  <Callout variant="subtle" title="Technical Deep Dive Available" class="my-8">
-    <p class="mb-2">For implementation details—DSL syntax, state machine configuration, functional pipeline patterns, and code examples—see the <a href="/portfolio/statsbomb-technical-appendix" class="text-secondary hover:text-secondary-dark underline font-semibold">Technical Appendix</a>.</p>
-    <p class="text-sm text-text-lighter">Covers: ANTLR grammar, XState machines, map/reduce transformations, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</p>
-  </Callout>
+  <CalloutCTA variant="secondary" title="Technical Deep Dive Available" icon="code" class="my-8">
+    <Body size="sm">For implementation details—DSL syntax, state machine configuration, functional pipeline patterns, and code examples.</Body>
+    <Body size="sm" class="mt-2 text-text-lighter">Covers: ANTLR grammar, XState machines, map/reduce transformations, event graphs, claims-based metadata, keyboard mappings, and computer vision integration.</Body>
+    <Fragment slot="cta">
+      <Button variant="ghost" size="sm" href="/portfolio/statsbomb-technical-appendix">View Technical Appendix →</Button>
+    </Fragment>
+  </CalloutCTA>
 
     {/* DSL Subsection - Slimmed Down */}
     <div class="mb-10">
-      <Callout variant="context" title="System 1 of 3: Domain Logic as Configuration">
+      <Callout variant="secondary" icon="layers" title="System 1 of 3: Domain Logic as Configuration">
         <p>Bounded context: Event collection dataspec</p>
       </Callout>
 
@@ -324,7 +329,7 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* Live-Collection-App Subsection */}
     <div class="mb-10">
-      <Callout variant="context" title="System 2 of 3: Live-Collection-App">
+      <Callout variant="secondary" icon="layers" title="System 2 of 3: Live-Collection-App">
         <p>Bounded context: Collector workflows and real-time collaboration</p>
       </Callout>
 
@@ -413,7 +418,7 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* Backend + Metadata Subsection */}
     <div class="mb-10">
-      <Callout variant="context" title="System 3 of 3: Backend + Metadata">
+      <Callout variant="secondary" icon="layers" title="System 3 of 3: Backend + Metadata">
         <p>Bounded contexts: Event graphs, match metadata, temporal resolution</p>
       </Callout>
 
@@ -520,32 +525,30 @@ The metadata challenge required different architectural thinking. Match metadata
 </Body>
 
 <div class="grid md:grid-cols-2 gap-6 mb-8">
-  <Card variant="default" class="p-6">
-    <Heading level={3} as="h3" class="mb-4 text-red-600">Engineering Bottleneck</Heading>
-    <ul class="space-y-3 text-sm text-text-lighter">
+  <ComparisonCard variant="before" title="Engineering Bottleneck">
+    <ul class="space-y-3">
       <li><strong>American football expansion:</strong> Scoped at 6 months engineering work, product blocked on roadmap</li>
       <li><strong>New event type:</strong> Deploy + regression testing required for every rule change</li>
       <li><strong>Support burden:</strong> Product managers fielded 50+ daily Slack questions about dataspec rules</li>
     </ul>
-  </Card>
+  </ComparisonCard>
 
-  <Card variant="default" class="p-6">
-    <Heading level={3} as="h3" class="mb-4 text-emerald-600">Configuration-Driven Scale</Heading>
-    <ul class="space-y-3 text-sm text-text-lighter">
+  <ComparisonCard variant="after" title="Configuration-Driven Scale">
+    <ul class="space-y-3">
       <li><strong>NFL dataspecs shipped in 3 weeks:</strong> Product managers wrote drive rules, zero engineering involvement</li>
       <li><strong>New event type:</strong> JSON config + UI test, deployed same day through DSL system</li>
       <li><strong>Automated resolution:</strong> System answered 98% of dataspec questions, 5-person team handled only ambiguous 2%</li>
     </ul>
-  </Card>
+  </ComparisonCard>
 </div>
 
-<Callout variant="technical" title="Collector Voice" class="mb-6">
+<Callout variant="neutral" icon="quote" title="Collector Voice" class="mb-6">
   <p class="mb-2"><strong>Before (Dartfish):</strong> "12 minutes per freeze frame clicking 22 player positions manually. By minute 60, my hand cramped from mouse clicks."</p>
   <p><strong>After (CV-assisted UI):</strong> "Computer vision detected 90%, I corrected edge cases in 3 minutes. Eyes stayed on video, hands on keyboard."</p>
   <p class="text-xs text-text-lighter mt-3">— A.Magdy, 360 Collection Lead</p>
 </Callout>
 
-<Callout variant="insight" title="The 80/20 Lesson" class="mb-6">
+<Callout variant="primary" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
   <p>Design for the 80% common case; production iteration reveals the 20% edge cases. This principle drove every architectural decision—from DSL syntax to state machine transitions to metadata resolution logic. Most collectors collected standard matches; we optimized for that, not edge cases.</p>
 </Callout>
 
@@ -662,7 +665,7 @@ In 2022, I left Egypt. By then: 1000+ collectors, internal DSLs shipped, America
 
 </Accordion>
 
-<Callout variant="insight" title="The Team Building Lesson">
+<Callout variant="primary" icon="lightbulb" title="The Team Building Lesson">
   <p>Team building isn't separate from technical work. It's the multiplier that makes ambitious architecture sustainable. Waiting until year three to expand beyond the two-person partnership meant racing against time when external constraints intervened.</p>
   <p>The lesson: distributed ownership from day one, not year three. The architecture proved its value—scaling to 1000+ collectors across multiple sports. The team multiplied that value. Waheed, Hadeel, and Abdallah should have started alongside Adham from year one. The technical concepts would have propagated faster, subsystem ownership would have emerged earlier, and the customer-facing DSL would have shipped.</p>
   <p><strong>Architecture shapes what's possible. But people make it real.</strong></p>

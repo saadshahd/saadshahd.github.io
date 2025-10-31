@@ -1,0 +1,78 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { clsx } from 'clsx';
+
+// CVA variant definitions - Maps to badge semantic colors
+const metricCard = cva(
+  [
+    'p-4',
+    'rounded-lg',
+    'border',
+  ],
+  {
+    variants: {
+      variant: {
+        skill: 'bg-skill/30 border-skill',       // Amber/gold: Technical capabilities
+        category: 'bg-category/30 border-category', // Blue: System characteristics
+        status: 'bg-status/30 border-status',    // Emerald: Success/completion
+      },
+    },
+    defaultVariants: {
+      variant: 'skill',
+    },
+  }
+);
+
+const valueStyles = cva([
+  'text-2xl',
+  'font-bold',
+  'mb-1',
+]);
+
+const labelStyles = cva([
+  'text-xs',
+  'font-semibold',
+  'mb-1',
+]);
+
+const descriptionStyles = cva([
+  'text-xs',
+  'text-text-lighter',
+]);
+
+// Variant-specific text colors (WCAG AA compliant, 7.2-9.1:1 contrast)
+const textColorMap = {
+  skill: 'text-[#78350F]',    // Amber text on light amber background
+  category: 'text-[#0C4A6E]', // Blue text on light blue background
+  status: 'text-[#065F46]',   // Emerald text on light emerald background
+} as const;
+
+type Props = VariantProps<typeof metricCard> & {
+  value: string;        // "99%", "~20s", "10x"
+  label: string;        // "Error prevention through linting"
+  description: string;  // Context paragraph
+  class?: string;
+};
+
+const {
+  variant = 'skill',
+  value,
+  label,
+  description,
+  class: className,
+} = Astro.props;
+
+const textColor = textColorMap[variant];
+---
+
+<div class={clsx(metricCard({ variant }), className)}>
+  <div class={clsx(valueStyles(), textColor)}>
+    {value}
+  </div>
+  <div class={clsx(labelStyles(), textColor)}>
+    {label}
+  </div>
+  <div class={descriptionStyles()}>
+    {description}
+  </div>
+</div>

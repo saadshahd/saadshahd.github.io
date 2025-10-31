@@ -369,15 +369,25 @@ if (!prefersReducedMotion()) {
 ✅ **ALWAYS use these components**:
 ```astro
 <Button variant="primary" size="md" href="/portfolio">View Work</Button>
+<Button variant="ghost" size="sm" href="#">Soft CTA (for callouts)</Button>
 <Badge variant="skill">JavaScript</Badge>
 <Card variant="default">Content</Card>
 <Link href="/about">About</Link>
+<Callout variant="primary" title="Insight">Info without action</Callout>
+<CalloutCTA variant="secondary" title="Title" icon="code">
+  <Body size="sm">Content with primary action...</Body>
+  <Fragment slot="cta">
+    <Button variant="ghost" size="sm" href="#">Action →</Button>
+  </Fragment>
+</CalloutCTA>
 ```
 
 ❌ **FORBIDDEN patterns**:
 - Raw HTML: `<button>`, `<a>`, `<div>` with manual Tailwind classes
 - Arbitrary colors: `text-gray-*`, `bg-[#...]`, `text-slate-*`
 - Arbitrary sizes: `text-[22px]`, `p-[18px]`, `mb-13`
+- Custom CTA wrappers: `<div class="bg-surface ...">` with manual buttons
+- Inline action links in Callout: Use CalloutCTA with Button in cta slot instead
 
 **Why**: Type-safe CVA variants prevent class drift, ensure WCAG AA compliance
 
