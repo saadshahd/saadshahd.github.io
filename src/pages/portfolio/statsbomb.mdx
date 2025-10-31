@@ -276,11 +276,13 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* DSL Subsection - Slimmed Down */}
     <div class="mb-10">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill" aria-label="System 1 of 3">1</span>
-        <Heading level={3} as="h3" class="mb-0">Domain Logic as Configuration</Heading>
+      <div class="flex items-start gap-3 mb-6">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-skill/10 flex items-center justify-center text-base font-bold text-skill mt-1" aria-label="System 1 of 3">1</span>
+        <div class="flex-1">
+          <Heading level={3} as="h3" class="mb-1">Domain Logic as Configuration</Heading>
+          <Body size="sm" as="p" class="text-text-lighter italic">Bounded context: Event collection dataspec</Body>
+        </div>
       </div>
-      <Body size="sm" as="p" class="mb-4 text-text-lighter italic">Bounded context: Event collection dataspec</Body>
 
 <Body size="sm" as="p" class="mb-4 text-text-lighter">
   We separated three concerns: entry validation (dataspec), sequencing logic (DSL), and aggregation rules (grouping DSL). Product managers wrote rules in readable syntax. The system compiled to execution logic.
@@ -327,11 +329,13 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* Live-Collection-App Subsection */}
     <div class="mb-10">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category" aria-label="System 2 of 3">2</span>
-        <Heading level={3} as="h3" class="mb-0">The Live-Collection-App: UX as First Principle</Heading>
+      <div class="flex items-start gap-3 mb-6">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-category/10 flex items-center justify-center text-base font-bold text-category mt-1" aria-label="System 2 of 3">2</span>
+        <div class="flex-1">
+          <Heading level={3} as="h3" class="mb-1">The Live-Collection-App: UX as First Principle</Heading>
+          <Body size="sm" as="p" class="text-text-lighter italic">Bounded context: Collector workflows and real-time collaboration</Body>
+        </div>
       </div>
-      <Body size="sm" as="p" class="mb-4 text-text-lighter italic">Bounded context: Collector workflows and real-time collaboration</Body>
 
 <Body size="sm" as="p" class="mb-6 text-text-lighter">
   The first thing we built wasn't backend architecture. It was the tool collectors would use every day—an Electron desktop app that replaced Dartfish's rigid forms with keyboard-first workflows.
@@ -416,11 +420,13 @@ Product managers couldn't define new collection requirements without engineering
 
     {/* Backend + Metadata Subsection */}
     <div class="mb-10">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status" aria-label="System 3 of 3">3</span>
-        <Heading level={3} as="h3" class="mb-0">Backend Evolution: Event Graphs + Claims-Based Metadata</Heading>
+      <div class="flex items-start gap-3 mb-6">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-status/10 flex items-center justify-center text-base font-bold text-status mt-1" aria-label="System 3 of 3">3</span>
+        <div class="flex-1">
+          <Heading level={3} as="h3" class="mb-1">Backend Evolution: Event Graphs + Claims-Based Metadata</Heading>
+          <Body size="sm" as="p" class="text-text-lighter italic">Bounded contexts: Event graphs, match metadata, temporal resolution</Body>
+        </div>
       </div>
-      <Body size="sm" as="p" class="mb-4 text-text-lighter italic">Bounded contexts: Event graphs, match metadata, temporal resolution</Body>
 
 <Heading level={4} as="h4" class="mb-4 mt-6">Event Dependency Graphs</Heading>
 
