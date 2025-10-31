@@ -85,12 +85,12 @@ const ogImageURL = new URL(ogImage, Astro.site);
           const isActive = normalizedHref === currentPath;
 
           if (isActive) {
-            tab.classList.add('text-text', 'scale-105');
-            tab.classList.remove('text-neutral');
+            tab.classList.add('text-accent', 'scale-105');
+            tab.classList.remove('text-text-lighter');
             tab.setAttribute('aria-current', 'page');
           } else {
-            tab.classList.remove('text-text', 'scale-105');
-            tab.classList.add('text-neutral');
+            tab.classList.remove('text-accent', 'scale-105');
+            tab.classList.add('text-text-lighter');
             tab.removeAttribute('aria-current');
           }
         });

@@ -107,6 +107,45 @@
 
 **Clarity**: Write for "intelligent curious person" - explain complexity simply, consistent depth for all
 
+### Visual Balance for Side-by-Side Elements
+
+**Principle**: Text elements in responsive grids (cards, columns, comparison layouts) must balance character counts to maintain visual rhythm.
+
+**Why**: Unbalanced text lengths break grid aesthetics—one element spanning 3 lines while others use 2 creates visual noise and reduces scannability.
+
+**Guidelines**:
+
+1. **Target ±15% variance** in character counts for grid items
+2. **Measure by description/body text**, not headings (headings naturally vary)
+3. **Balance through editing**, not padding:
+   - ❌ Don't add filler words to short text
+   - ✅ Do tighten verbose text and expand terse text with meaningful detail
+4. **Common patterns requiring balance**:
+   - Metric cards (3-column stats grids)
+   - Comparison cards (before/after, system features)
+   - Definition lists in grid layout
+   - Feature highlights in multi-column layouts
+
+**Example: Metric Card Balancing**
+
+```
+❌ Imbalanced (77 / 110 / 61 chars):
+Card 1: "Automated validation caught mistakes before they became data quality issues"
+Card 2: "Coaches received detailed match analytics in near real-time to adjust tactics during live matches"
+Card 3: "Non-linear leverage without proportional staffing increases"
+
+✅ Balanced (77 / 79 / 67 chars):
+Card 1: "Automated validation caught mistakes before they became data quality issues"
+Card 2: "Near real-time match analytics enabled tactical adjustments during live games"
+Card 3: "Non-linear scaling achieved without proportional staffing growth"
+```
+
+**Audit Process**:
+1. Count characters in each grid item's description
+2. Calculate variance: (max - min) / avg
+3. If variance > 20%, edit for balance
+4. Verify visual rendering at mobile/tablet/desktop breakpoints
+
 ### Reader Goals (Priority Order)
 
 1. Trust (battle-tested experience)
@@ -397,10 +436,18 @@ if (!prefersReducedMotion()) {
 - [ ] All interactive elements meet WCAG AA contrast (4.5:1 minimum)
 - [ ] All buttons/links use components (no raw `<button>`, `<a>`)
 - [ ] Zero arbitrary colors/sizes outside design system
+- [ ] Text color usage correct: `text-text-lighter` for muted text, NEVER `text-neutral` (border-only color)
 
 **REQUIRED**:
 - [ ] Zero `text-gray-*`, `text-slate-*`, `bg-blue-*` classes
 - [ ] Zero arbitrary spacing values outside Fibonacci sequence
+
+**Text Color Hierarchy Rule** (WCAG AA compliance):
+- `text-text` (#0F172A, 17.56:1) - Primary body text, headings
+- `text-text-light` (#1E293B, 14.39:1) - Secondary text
+- `text-text-lighter` (#475569, 7.45:1) - **Tertiary/muted text on surfaces**
+- `text-neutral` (#94A3B8, 2.52:1) - **ONLY for borders/icons, NEVER for readable text**
+- `text-neutral-light` (#CBD5E1, 1.8:1) - **ONLY for borders, NEVER for text**
 
 **RECOMMENDED**:
 - [ ] Component examples added to Astrobook stories (if new component)

@@ -4,11 +4,22 @@ import { clsx } from 'clsx';
 
 // CVA variant definitions
 const accordion = cva([
-  'border border-neutral-light',
   'rounded-lg',
   'mb-4',
   'px-4',
-]);
+], {
+  variants: {
+    variant: {
+      skill: 'border-l-4 border-badge-skill-border bg-badge-skill-bg/10',
+      category: 'border-l-4 border-badge-category-border bg-badge-category-bg/10',
+      status: 'border-l-4 border-badge-status-border bg-badge-status-bg/10',
+      default: 'border border-neutral-light',
+    }
+  },
+  defaultVariants: {
+    variant: 'default'
+  }
+});
 
 const summary = cva([
   'flex items-center justify-between gap-4',
@@ -36,6 +47,7 @@ type Props = VariantProps<typeof accordion> & {
   name?: string;
   role?: string;
   defaultOpen?: boolean;
+  variant?: 'skill' | 'category' | 'status' | 'default';
   class?: string;
 };
 
@@ -44,6 +56,7 @@ const {
   name,
   role,
   defaultOpen = false,
+  variant,
   class: className,
 } = Astro.props;
 
@@ -54,7 +67,7 @@ if (!summaryText && !name) {
 ---
 
 <details
-  class={clsx(accordion(), className)}
+  class={clsx(accordion({ variant }), className)}
   data-accordion
   open={defaultOpen}
 >
@@ -89,11 +102,6 @@ if (!summaryText && !name) {
   /* Rotate chevron when expanded */
   details[open] svg {
     transform: rotate(180deg);
-  }
-
-  /* Active state: stronger border when open */
-  details[open] {
-    border-color: rgb(244 196 48 / 0.3); /* border-primary/30 */
   }
 
   /* Remove default disclosure triangle */

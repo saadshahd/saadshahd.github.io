@@ -17,7 +17,7 @@ import Accordion from '../../components/Accordion.astro';
       ← Back to Case Study
     </Button>
 
-    <p class="text-sm text-neutral font-medium uppercase tracking-wide mb-1">Technical Deep Dive</p>
+    <p class="text-sm text-text-lighter font-medium uppercase tracking-wide mb-1">Technical Deep Dive</p>
     <h1 class="text-base md:text-lg text-navy font-medium mb-2">Statsbomb Architecture: Implementation Details</h1>
     <Body size="base" as="p" class="text-text-lighter mb-6">Code examples, state machine configurations, functional pipeline patterns, and technical specifications from the real-time sports data collection system.</Body>
   </div>
@@ -28,7 +28,7 @@ import Accordion from '../../components/Accordion.astro';
 
   {/* Table of Contents */}
   <nav class="my-12 p-6 bg-surface rounded-lg border border-neutral-light" aria-label="Table of contents">
-    <h2 class="text-sm uppercase tracking-wide text-neutral font-semibold mb-4">Contents</h2>
+    <h2 class="text-sm uppercase tracking-wide text-text-lighter font-semibold mb-4">Contents</h2>
     <ul class="space-y-2 text-sm">
       <li><a href="#dsl-implementation" class="text-text-lighter hover:text-secondary transition-colors">DSL Implementation</a></li>
       <li><a href="#state-machines" class="text-text-lighter hover:text-secondary transition-colors">State Machine Architecture</a></li>
@@ -186,7 +186,7 @@ WS: [ \t\r\n]+ -> skip;
 
     <Heading level={4} as="h3" class="mb-4 mt-8">Execution Model: Rule Engine Architecture</Heading>
 
-    <Body size="sm" as="p" class="mb-4 text-neutral">
+    <Body size="sm" as="p" class="mb-4 text-text-lighter">
       The rule engine consumed parsed DSL rules and atomic events, emitting derived facts. It maintained three data structures: **event stream** (immutable log), **active states** (mutable phase tracker), and **derived facts** (computed aggregations).
     </Body>
 
@@ -294,7 +294,7 @@ function evaluateAggregations(
   <section class="mb-16" id="state-machines">
     <Heading level={3} as="h2" class="mb-6">State Machine Architecture with XState</Heading>
 
-    <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
+    <Body size="base" as="p" class="mb-6 text-text-lighter leading-relaxed">
       The live-collection-app used XState to model collection workflows as explicit finite state machines. Five major machines orchestrated the app: **video mode**, **collection flow**, **freeze frame handling**, **player customization**, and **batch validation**.
     </Body>
 
@@ -493,7 +493,7 @@ Collectors pressed `/` to toggle loop mode—video replayed 5-second window whil
   <section class="mb-16" id="functional-pipelines">
     <Heading level={3} as="h2" class="mb-6">Functional Data Pipelines: Map, Reduce, Overlap</Heading>
 
-    <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
+    <Body size="base" as="p" class="mb-6 text-text-lighter leading-relaxed">
       Event aggregation followed functional programming patterns: **map** (filter to team), **reduce** (derive phases), **overlap** (combine layers). This made data transformations composable and testable.
     </Body>
 
@@ -707,7 +707,7 @@ const processSoccerMatch = (atomicEvents: AtomicEvent[]) => {
   <section class="mb-16" id="event-graphs">
     <Heading level={3} as="h2" class="mb-6">Event Dependency Graphs: Beyond Sequential Processing</Heading>
 
-    <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
+    <Body size="base" as="p" class="mb-6 text-text-lighter leading-relaxed">
       Events don't just flow sequentially—they form directed acyclic graphs with **temporal** (PREV/NEXT) and **logical** (DEPENDS_ON) relationships. Phase-driven validation meant atomic events determined legal next states.
     </Body>
 
@@ -880,7 +880,7 @@ const buildEventGraph = (events: AtomicEvent[]): EventGraph => {
   <section class="mb-16" id="metadata-claims">
     <Heading level={3} as="h2" class="mb-6">Claims-Based Metadata: Automated Conflict Resolution</Heading>
 
-    <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
+    <Body size="base" as="p" class="mb-6 text-text-lighter leading-relaxed">
       Rather than key-value pairs, metadata became **claims from actors** with provenance (who), confidence (reliability), and temporality (when). When multiple sources asserted conflicting facts, the graph structure made conflicts explicit and queryable.
     </Body>
 
@@ -1060,7 +1060,7 @@ const getPendingConflicts = (entities: GoldenEntity[]): ConflictReview[] => {
   <section class="mb-16" id="keyboard-mappings">
     <Heading level={3} as="h2" class="mb-6">Keyboard Shortcut System: Context-Aware Mappings</Heading>
 
-    <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
+    <Body size="base" as="p" class="mb-6 text-text-lighter leading-relaxed">
       Contextual keyboard mappings with module scoping meant the same key could trigger different actions depending on context. Collectors touch-typed events like Vim users touch-type code—hands stayed on keyboard, eyes stayed on video.
     </Body>
 
@@ -1238,7 +1238,7 @@ collectionFlowMachine.onTransition((state) => {
   <section class="mb-16" id="computer-vision">
     <Heading level={3} as="h2" class="mb-6">Computer Vision Integration: Semi-Automated Positioning</Heading>
 
-    <Body size="base" as="p" class="mb-6 text-neutral leading-relaxed">
+    <Body size="base" as="p" class="mb-6 text-text-lighter leading-relaxed">
       Freeze frames (positioning data for all 22 players) were semi-automated. Collectors triggered frame extraction, CV service detected players and ball, system overlaid predictions on pitch canvas, collectors corrected misidentifications. Hybrid approach: 80-90% automation, human correction for edge cases.
     </Body>
 
