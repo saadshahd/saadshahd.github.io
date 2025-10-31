@@ -10,14 +10,14 @@ import Body from '../components/typography/Body.astro';
 <Layout title="Portfolio - Saad Shahd">
   <Container width="default">
     <Heading level={1} as="h1" class="mb-2">Portfolio</Heading>
-    <Body size="lg" as="p" class="text-neutral mb-8">Selected case studies showcasing technical depth and impact</Body>
+    <Body size="lg" as="p" class="text-text-lighter mb-8">Selected case studies showcasing technical depth and impact</Body>
 
     <div class="grid gap-8 md:gap-16">
       <!-- Statsbomb Case Study -->
       <Card variant="case-study" href="/portfolio/statsbomb">
         <div class="p-8">
           <Heading level={3} as="h2" class="mb-4">Statsbomb Collection</Heading>
-          <Body size="base" as="p" class="text-neutral mb-6 leading-relaxed">
+          <Body size="base" as="p" class="text-text-lighter mb-6 leading-relaxed">
             How do you scale real-time sports data collection without sacrificing correctness?
             Started with an Electron app (XState state machines, 30+ contextual keyboard shortcuts) that reduced 16 sequential hours to 4 concurrent collectors.
             Then built backend DSLs so product managers could define sports rules as configuration—new sports became data, not code.
@@ -30,7 +30,7 @@ import Body from '../components/typography/Body.astro';
             <Badge variant="status">XState</Badge>
             <Badge variant="skill">ANTLR</Badge>
           </div>
-          <Body size="sm" as="div" class="text-neutral">
+          <Body size="sm" as="div" class="text-text-lighter">
             Problem → Architecture → Impact → Lessons
           </Body>
         </div>
@@ -40,7 +40,7 @@ import Body from '../components/typography/Body.astro';
       <Card variant="case-study">
         <div class="p-8 opacity-50">
           <Heading level={3} as="h2" class="mb-4"><span>Wise Editorial Platform</span></Heading>
-          <Body size="base" as="p" class="text-neutral mb-6 leading-relaxed">
+          <Body size="base" as="p" class="text-text-lighter mb-6 leading-relaxed">
             How do 20 teams collaborate on wise.com without friction or incorrectness?
             Building editorial infrastructure that handles global→local fintech complexity—regulations differ by market, offerings vary by country, cultural nuances matter.
             The challenge is architectural: coherence at scale while preserving developer experience.
@@ -52,7 +52,7 @@ import Body from '../components/typography/Body.astro';
             <Badge variant="skill">Content Architecture</Badge>
             <Badge variant="skill">DX</Badge>
           </div>
-          <Body size="sm" as="div" class="text-neutral">
+          <Body size="sm" as="div" class="text-text-lighter">
             Coming soon...
           </Body>
         </div>
