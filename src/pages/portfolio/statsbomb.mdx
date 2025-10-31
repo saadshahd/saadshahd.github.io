@@ -452,19 +452,31 @@ The patterns Ali and I sketched in VSCode during week one became valuable enough
   Four years, three systems, distributed ownership learned the hard way. Which principles transfer to other domains? Which only worked because of sports analytics constraints?
 </Body>
 
-**What Worked in This Context**
-
-At 14, I read "Pragmatic Programmer" on an Egyptian bus, squinting at my phone screen. One lesson stuck: **perfectionism fails. Ship the 80%.**
-
-Years later, building the dataspec, I saw the pattern again. Most collectors worked standard matches—two teams, 90 minutes, clear possession. Edge cases existed (penalty review during possession turnover in NFL), but chasing them first would've paralyzed us. Design for the 80%. The 20% reveals itself in production.
-
-Architecture emerged from observing where collectors struggled—watching hesitation, workarounds, and slowdowns at 2am. Separation of rules from execution paid off at 1000+ collectors. At 100, it felt like over-engineering. At scale, it became the moat.
-
 **What I'd Change**
 
-**Team building from day one**, not year three (covered in Team Building section above). The harder lesson: architecture multiplies through people, not just abstractions.
+I had to leave Egypt in early 2022. Not a choice I wanted—leaving Ali, Waheed, Hadeel, Abdallah, the collectors, the work still unfinished.
 
-**Event storming from Day 1**, not month 6. Understanding bounded contexts (match metadata, event collection, people coordination, media management, contextual aggregation) shaped every technical decision.
+Adham had already left months before. His absence made staying harder—then circumstances forced me to leave. The backend partnership, the late-night Kafka debates, the distributed ownership we'd just started scaling—it fragmented before I left.
+
+By then: 1000+ collectors worldwide, internal DSLs shipped and scaling, American football expansion working. But the customer-facing DSL—the one that would let clients define their own derived facts without us—remained unfinished when I left.
+
+The people I worked with deserved more time together. The systems we built deserved to reach their full potential. Neither happened.
+
+**If I Could Rewind**
+
+What if distributed ownership wasn't a year-three discovery but a founding principle?
+
+Adham, Waheed, Hadeel, Abdallah took concepts—state machines, DSLs, event graphs—and evolved them. That emergence happened despite late investment, not because of early planning. By the time distributed ownership became structural (year three), half the team had fragmented.
+
+The harder pattern: teams don't scale architectures—they reveal what architecture should've been from the start. Knowledge centralization creates beautiful bottlenecks, no matter how elegant the separation of concerns.
+
+**What Month Six Revealed**
+
+Bounded contexts didn't exist on day one because we didn't know what we were building yet. Match metadata, event collection, people coordination, media management, contextual aggregation—these boundaries emerged from production pain, not upfront design.
+
+Month six, the boundaries became visible. Not because we got smarter, but because collectors showed us where the seams were. You can't shortcut that discovery. The mess is the curriculum.
+
+Event storming from day one sounds wise in hindsight. In practice? We would've drawn wrong boundaries around problems we hadn't experienced yet. Some architecture reveals itself through building, not planning.
 
 **When These Patterns Apply**
 
