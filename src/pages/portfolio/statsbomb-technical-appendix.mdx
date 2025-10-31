@@ -61,7 +61,7 @@ import Accordion from '../../components/Accordion.astro';
       The DSL grammar separated three concerns: **entry validation** (dataspec), **sequencing logic** (rule definitions), and **aggregation rules** (grouping). Product managers wrote rules in readable syntax that compiled to execution logic.
     </Body>
 
-    <Accordion summary="Example: Soccer Possession Rules (DSL Syntax)">
+    <Accordion variant="skill" summary="Example: Soccer Possession Rules (DSL Syntax)">
 
 ```antlr
 // Possession rule: Team has active carry, received fouls, or forced ball out
@@ -103,7 +103,7 @@ turnover_rule:
 
 </Accordion>
 
-    <Accordion summary="ANTLR Grammar Fragment">
+    <Accordion variant="skill" summary="ANTLR Grammar Fragment">
 
 ```antlr
 grammar Dataspec;
@@ -190,7 +190,7 @@ WS: [ \t\r\n]+ -> skip;
       The rule engine consumed parsed DSL rules and atomic events, emitting derived facts. It maintained three data structures: **event stream** (immutable log), **active states** (mutable phase tracker), and **derived facts** (computed aggregations).
     </Body>
 
-    <Accordion summary="Rule Engine Core Logic (TypeScript)">
+    <Accordion variant="skill" summary="Rule Engine Core Logic (TypeScript)">
 
 ```typescript
 // Rule engine maintains event stream, phase state, and derived facts
@@ -303,7 +303,7 @@ function evaluateAggregations(
       <p>XState machines made illegal UI states impossible. Can't submit without required fields. Can't enter edit mode while video plays. State transitions became testable without rendering components.</p>
     </Callout>
 
-    <Accordion summary="Collection Flow State Machine (XState Configuration)">
+    <Accordion variant="skill" summary="Collection Flow State Machine (XState Configuration)">
 
 ```typescript
 import { createMachine, assign } from 'xstate';
@@ -427,7 +427,7 @@ const collectionFlowMachine = createMachine({
 
 </Accordion>
 
-    <Accordion summary="Video Mode State Machine">
+    <Accordion variant="skill" summary="Video Mode State Machine">
 
 ```typescript
 // Video mode: Manual playback, loop mode, editing
@@ -563,7 +563,7 @@ graph TD
 
     </MermaidDiagram>
 
-    <Accordion summary="Pipeline Implementation (TypeScript)">
+    <Accordion variant="skill" summary="Pipeline Implementation (TypeScript)">
 
 ```typescript
 // Composable transformation functions
@@ -785,7 +785,7 @@ graph TD
 
     </MermaidDiagram>
 
-    <Accordion summary="Graph Representation (TypeScript)">
+    <Accordion variant="skill" summary="Graph Representation (TypeScript)">
 
 ```typescript
 // Event graph: Nodes are events, edges are relationships
@@ -927,7 +927,7 @@ graph TD
 
     </MermaidDiagram>
 
-    <Accordion summary="Claims Model Implementation (TypeScript)">
+    <Accordion variant="skill" summary="Claims Model Implementation (TypeScript)">
 
 ```typescript
 // Claim: Assertion about entity property with provenance
@@ -1064,7 +1064,7 @@ const getPendingConflicts = (entities: GoldenEntity[]): ConflictReview[] => {
       Contextual keyboard mappings with module scoping meant the same key could trigger different actions depending on context. Collectors touch-typed events like Vim users touch-type code—hands stayed on keyboard, eyes stayed on video.
     </Body>
 
-    <Accordion summary="Keyboard Mapping Examples by Context">
+    <Accordion variant="category" summary="Keyboard Mapping Examples by Context">
 
 **Main Collection View:**
 - `t` - Create new event (pass/shot/tackle)
@@ -1091,7 +1091,7 @@ const getPendingConflicts = (entities: GoldenEntity[]): ConflictReview[] => {
 
 </Accordion>
 
-    <Accordion summary="Implementation: Module-Scoped Keybindings (TypeScript)">
+    <Accordion variant="skill" summary="Implementation: Module-Scoped Keybindings (TypeScript)">
 
 ```typescript
 // Keyboard context: Active module determines key mappings
@@ -1246,7 +1246,7 @@ collectionFlowMachine.onTransition((state) => {
       <p>Full automation would require 10x model complexity for diminishing returns. Edge cases (occlusion, unusual angles, poor lighting) failed ~10-20% of the time. Semi-automated approach: 30 seconds vs. 2-3 minutes manual, 99%+ accuracy with human verification.</p>
     </Callout>
 
-    <Accordion summary="CV Pipeline Architecture">
+    <Accordion variant="category" summary="CV Pipeline Architecture">
 
 **Pipeline Stages:**
 
@@ -1267,7 +1267,7 @@ collectionFlowMachine.onTransition((state) => {
 
 </Accordion>
 
-    <Accordion summary="Technical Implementation Notes">
+    <Accordion variant="skill" summary="Technical Implementation Notes">
 
 ```typescript
 // CV service API contract
