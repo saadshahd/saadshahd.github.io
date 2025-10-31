@@ -659,15 +659,17 @@ Not building for your resume. Not chasing the latest architectural trend. Buildi
 
   {/* Team Building Section */}
   <section class="mb-16" id="team-building">
-    <Heading level={3} as="h2" class="mb-6 text-navy">The Team Building Challenge: Learning to Lead</Heading>
+    <Heading level={3} as="h2" class="mb-6 text-navy">The Team Building Challenge: From Week One to Distributed Ownership</Heading>
 
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
-  The technical architecture—DSLs, state machines, claims-based metadata—took three years to evolve. The harder lesson wasn't technical. It was building a team that could iterate beyond my initial vision while learning to lead for the first time.
-</Body>
+Remember that first-week feeling? Shipping the freezeframe tool twice daily, getting thanked by collectors, feeling like I was there to help. **That feeling needed to scale.**
+
+I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
 
 <Accordion variant="status" summary="Year One: Finding the Core Partnership">
 
-Week one: Ali and I hand-wrote sequencing rules. Early months: Adham joined as co-architect. The foundational architecture—data as configuration, state machines, DSLs—emerged from our collaborative exploration. <TextHighlight variant="fade-in">Adham pushed me to chase ideas I wasn't confident enough to pursue</TextHighlight> alone.
+Week one: Ali and I sat with VSCode, encoding his mental models. Early months: Adham joined as co-architect. The foundational architecture—data as configuration, state machines, DSLs—emerged from our collaborative exploration. <TextHighlight variant="fade-in">Adham pushed me to chase ideas I wasn't confident enough to pursue alone</TextHighlight>.
+
+He read "Designing Data-Intensive Applications" and saw what I didn't: Kafka as the center of persistence, event logs as foundation. I hesitated—felt like complexity. He was right. That decision enabled real-time collection at the scale broadcasters needed.
 
 Month one backend: a single Go endpoint called `sync`—batch, offline. We started building the live-collection-app with Omar Negm, an engineer shifting from aerospace. No formal process. Just the urgent need to replace Dartfish.
 
@@ -683,9 +685,13 @@ By year three, we had built the hiring and mentoring systems needed to scale bey
 
 <Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
 
-<Body size="sm" as="p" class="mb-4 text-text-lighter">
-  When Waheed, Hadeel, and Abdallah joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with:
-</Body>
+When Waheed, Hadeel, and Abdallah joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with. They felt the same thing I felt week one: **build for people who thank you.** Collectors, product managers, ops teams.
+
+**Waheed** built claims-based metadata resolution—the automated conflict detection system we'd only sketched conceptually. He took provenance + confidence + temporality and made it production-ready.
+
+**Hadeel** implemented real-time GraphQL subscriptions—the concurrent collection we'd prototyped but hadn't hardened for 1000+ collectors simultaneously.
+
+**Abdallah** maintained the Electron app state machines and evolved keyboard workflows, including handling NFL-specific edge cases (possession turnover during penalty review) we hadn't mapped when we started.
 
 <div class="grid md:grid-cols-2 gap-6 mb-8">
   <Card variant="default" class="p-6">
