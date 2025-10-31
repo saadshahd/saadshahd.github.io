@@ -19,7 +19,6 @@ import SectionDivider from '../../components/SectionDivider.astro';
 import ReadingMetadata from '../../components/ReadingMetadata.astro';
 import MetricCard from '../../components/MetricCard.astro';
 import ComparisonCard from '../../components/ComparisonCard.astro';
-import TextHighlight from '../../components/TextHighlight.astro';
 
 <ScrollProgress />
 
@@ -133,13 +132,13 @@ Two collectors per match, each following a team, manually entering 3000+ events 
 
 <Heading level={4} as="h4" class="mb-4 mt-8">The Industry Baseline: Dartfish's Limitations</Heading>
 
-The industry-standard tool—Dartfish—couldn't scale to what we needed. Button-heavy interface forced mouse clicks for every selection. It had keyboard shortcuts, but they weren't contextual. Each key could only map to one event type—globally, across the entire data spec. No overlap possible. With 50+ event types but only 40 usable keys, we hit a ceiling. Collectors memorized which arbitrary key triggered which event, at all times, regardless of game context. <TextHighlight variant="fade-in">Cognitive overload</TextHighlight>.
+The industry-standard tool—Dartfish—couldn't scale to what we needed. Button-heavy interface forced mouse clicks for every selection. It had keyboard shortcuts, but they weren't contextual. Each key could only map to one event type—globally, across the entire data spec. No overlap possible. With 50+ event types but only 40 usable keys, we hit a ceiling. Collectors memorized which arbitrary key triggered which event, at all times, regardless of game context. **Cognitive overload**.
 
 Two collectors per match, each following a team, manually entering 3000+ events over 16 hours. Duplicated effort. No prevention, only validation after mistakes happened.
 
 <Heading level={4} as="h4" class="mb-4 mt-8">What Collectors Actually Needed</Heading>
 
-Years of daily conversations with collectors revealed their actual workflows and friction points. <TextHighlight variant="emphasis">The dataspec itself needed to be data, not code</TextHighlight>, so product managers could express rules in one place that drove the entire system.
+Years of daily conversations with collectors revealed their actual workflows and friction points. **The dataspec itself needed to be data, not code**, so product managers could express rules in one place that drove the entire system.
 
 <Heading level={4} as="h4" class="mb-4 mt-8">Why This Mattered to Statsbomb's Business</Heading>
 
@@ -249,6 +248,19 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
 The architecture worked because we witnessed it under production load, not because we'd designed it perfectly upfront. Real-time isn't a checkbox. It's thousands of decisions about timeouts, reconnection logic, state recovery after network failures. You can't spec that in advance. You have to watch it break.
   </section>
 
+  {/* Visual proof: 2am debugging */}
+  <figure class="my-6 max-w-2xl mx-auto">
+    <img
+      src="/images/statsbomb/df52f41a-686e-4989-8f34-08b1487920b6.jpg"
+      alt="Late night debugging session with Adham and Waheed"
+      class="rounded-lg w-full h-auto"
+      loading="lazy"
+    />
+    <figcaption class="text-xs text-text-lighter mt-2 text-center italic">
+      Late night, Cairo (2019): Debugging real-time collection with Adham and Waheed
+    </figcaption>
+  </figure>
+
   <SectionDivider spacing="minor" />
 
   {/* Architecture Section */}
@@ -321,7 +333,7 @@ The architecture worked because we witnessed it under production load, not becau
       </div>
 
 <Body size="sm" as="p" class="mb-4 text-text-lighter">
-  <TextHighlight variant="emphasis">We separated three concerns: entry validation (dataspec), sequencing logic (DSL), and aggregation rules (grouping DSL)</TextHighlight>. Product managers wrote rules in readable syntax. The system compiled to execution logic.
+  **We separated three concerns: entry validation (dataspec), sequencing logic (DSL), and aggregation rules (grouping DSL)**. Product managers wrote rules in readable syntax. The system compiled to execution logic.
 </Body>
 
 <Heading level={4} as="h4" class="mb-4 mt-6">Dependency Layers: From Atomic Events to Derived Facts</Heading>
@@ -404,7 +416,7 @@ The architecture worked because we witnessed it under production load, not becau
 <Heading level={4} as="h4" class="mb-4 mt-6">State Machines for Impossible States</Heading>
 
 <Body size="sm" as="p" class="mb-4 text-text-lighter">
-  XState modeled collection workflows as explicit finite state machines. <TextHighlight variant="fade-in">Five major state machines orchestrated the app</TextHighlight>, preventing illegal states by design.
+  XState modeled collection workflows as explicit finite state machines. **Five major state machines orchestrated the app**, preventing illegal states by design.
 </Body>
 
 <DefinitionList
@@ -592,7 +604,7 @@ The dataspec itself had to be uncertain. I knew from week one we'd iterate, have
 
   <ComparisonCard variant="after" title="Configuration-Driven Scale">
     <ul class="space-y-3">
-      <li><strong><TextHighlight variant="fade-in">NFL dataspecs shipped in 3 weeks</TextHighlight>:</strong> Product managers wrote drive rules, zero engineering involvement</li>
+      <li><strong>NFL dataspecs shipped in 3 weeks:</strong> Product managers wrote drive rules, zero engineering involvement</li>
       <li><strong>New event type:</strong> JSON config + UI test, deployed same day through DSL system</li>
       <li><strong>Automated resolution:</strong> System resolved 98% automatically, 5-person team handled ambiguous cases</li>
     </ul>
@@ -606,7 +618,7 @@ The dataspec itself had to be uncertain. I knew from week one we'd iterate, have
 </Callout>
 
 <Callout variant="primary" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
-  <p><TextHighlight variant="fade-in">Design for the 80% common case</TextHighlight>; production iteration reveals the 20% edge cases. This principle drove every architectural decision—from DSL syntax to state machine transitions to metadata resolution logic. Most collectors collected standard matches; we optimized for that, not edge cases.</p>
+  <p>**Design for the 80% common case**; production iteration reveals the 20% edge cases. This principle drove every architectural decision—from DSL syntax to state machine transitions to metadata resolution logic. Most collectors collected standard matches; we optimized for that, not edge cases.</p>
 </Callout>
 
 <Heading level={4} as="h4" class="mb-4 mt-6">What Made This Possible</Heading>
@@ -667,7 +679,7 @@ I could iterate quickly alone—ship twice daily, no coordination overhead, dire
 
 <Accordion variant="status" summary="Year One: Finding the Core Partnership">
 
-Week one: Ali and I sat with VSCode, encoding his mental models. Early months: Adham joined as co-architect. The foundational architecture—data as configuration, state machines, DSLs—emerged from our collaborative exploration. <TextHighlight variant="fade-in">Adham pushed me to chase ideas I wasn't confident enough to pursue alone</TextHighlight>.
+Week one: Ali and I sat with VSCode, encoding his mental models. Early months: Adham joined as co-architect. The foundational architecture—data as configuration, state machines, DSLs—emerged from our collaborative exploration. **Adham pushed me to chase ideas I wasn't confident enough to pursue alone**.
 
 He read "Designing Data-Intensive Applications" and saw what I didn't: Kafka as the center of persistence, event logs as foundation. I hesitated—felt like complexity. He was right. That decision enabled real-time collection at the scale broadcasters needed.
 
@@ -752,7 +764,7 @@ In 2022, I left Egypt. By then: 1000+ collectors, internal DSLs shipped, America
 <Callout variant="primary" icon="lightbulb" title="The Team Building Lesson">
   <p>Team building isn't separate from technical work. It's the multiplier that makes ambitious architecture sustainable. Waiting until year three to expand beyond the two-person partnership meant racing against time when external constraints intervened.</p>
   <p>The lesson: distributed ownership from day one, not year three. The architecture proved its value—scaling to 1000+ collectors across multiple sports. The team multiplied that value. Waheed, Hadeel, and Abdallah should have started alongside Adham from year one. The technical concepts would have propagated faster, subsystem ownership would have emerged earlier, and the customer-facing DSL would have shipped.</p>
-  <p><strong><TextHighlight variant="emphasis">Architecture shapes what's possible. But people make it real.</TextHighlight></strong></p>
+  <p><strong>Architecture shapes what's possible. But people make it real.</strong></p>
 </Callout>
   </section>
 
@@ -817,7 +829,9 @@ The human side of building production systems: our team in Cairo (2018-2022), wh
 
 <PhotoGallery class="mb-8" photos={statsbombPhotos} columns={3} />
 
-*Photos from 2018-2021: Team collaboration, technical discussions, and the people who took foundational concepts beyond their initial vision.*
+<p class="text-sm text-text-lighter text-center italic mt-4 mb-8">
+  Cairo, 2018-2022: Our team at Statsbomb (internally known as Arqam). From left across photos: Ali pairing with collectors during Week One (April 2018), planning sessions with Hesham and Abdallah, Adham and Ali in temporary coworking space, team gathering at Ali's Sahel house for Muhanad's farewell.
+</p>
 
   </section>
 
