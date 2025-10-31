@@ -102,97 +102,18 @@ export function revealOnScroll(selector: string) {
 
 ---
 
-### 3. **Typography Animations**
-Text reveals, highlights, and stagger effects for long-form reading.
+### 3. **Typography Animations** ⚠️ DEPRECATED
+Simple CSS-only text reveals for section headers.
 
-**Techniques Learned**:
-- Word-by-word reveals (Splitting.js pattern)
-- Text highlighting on scroll (Codrops: OnScrollTextHighlight)
-- Blur reveals (NOT RECOMMENDED - accessibility concerns)
+**Note**: Word-by-word text highlighting with DOM manipulation (Splitting.js pattern) has been **removed** after testing. See `docs/lessons/2025-10-31-text-highlighting-failure.md` for details.
 
-**Reusable Components**:
+**Why Removed**: Word-by-word reveals break reading flow, degrade accessibility (screen readers, text selection), and conflict with "content-first" philosophy. Animations should enhance comprehension, not force readers to wait.
 
-#### A. Word Reveal (Headings)
-```typescript
-// src/utils/animations.ts
-export function revealWords(selector: string) {
-  const container = document.querySelector(selector);
-  if (!container) return;
-
-  // Split into words
-  const text = container.textContent!;
-  const words = text.split(' ');
-  container.innerHTML = words
-    .map(w => `<span class="word">${w}</span>`)
-    .join(' ');
-
-  const wordEls = container.querySelectorAll('.word');
-
-  animate(
-    wordEls,
-    { opacity: [0, 1], y: [20, 0] },
-    {
-      duration: 0.6,
-      delay: stagger(0.1),
-      easing: "ease-out"
-    }
-  );
-}
-```
-
-**CSS Styles**:
-```css
-/* src/styles/animations.css */
-.word {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-}
-
-/* Prevent layout shift */
-.reveal-words {
-  min-height: 1em;
-}
-```
-
-#### B. Text Highlight (Emphasis)
-```typescript
-// Mark key phrases in Markdown with <mark>
-// Animate as they enter viewport
-
-export function highlightOnScroll() {
-  const marks = document.querySelectorAll('mark');
-
-  marks.forEach((mark) => {
-    inView(
-      mark,
-      ({ target }) => {
-        animate(
-          target,
-          {
-            backgroundColor: [
-              "rgba(244, 196, 48, 0)",    // Transparent
-              "rgba(244, 196, 48, 0.3)"   // Egyptian gold 30%
-            ],
-            scaleX: [0, 1]
-          },
-          { duration: 0.8, easing: "ease-out" }
-        );
-      },
-      { amount: 0.5 }
-    );
-  });
-}
-```
-
-**Markdown Usage**:
-```markdown
-<!-- blog/realtime-data-collection.md -->
-We chose PostgreSQL over MongoDB because ==ACID guarantees== were non-negotiable.
-```
-
-**Complexity**: 5 story points (includes text splitting logic)
-**Priority**: Week 3-4
+**Recommended Alternatives**:
+- Semantic `<mark>` with CSS-only subtle background (no JS)
+- Section-level fade-ins on scroll (reveal paragraphs, not words)
+- Static visual hierarchy through typography (bold, color, sizing)
+- Reader-controlled progressive disclosure (accordion/tabs)
 
 ---
 

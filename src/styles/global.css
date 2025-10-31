@@ -178,6 +178,15 @@
   --diagram-focus-offset: 2px;
 }
 
+/* ===== Text Highlight Animation System ===== */
+/* Define outside @theme because these are animation-only variables, not utility generators */
+:root {
+  --color-highlight-start: #475569;  /* Muted gray - start state */
+  --color-highlight-gold: #856B00;   /* Bronze gold - WCAG AA compliant (4.54:1) */
+  --color-highlight-blue: #0369A1;   /* Darker blue - better contrast */
+  --duration-highlight: 618ms;       /* Golden ratio medium timing */
+}
+
 html {
   font-size: 120%; /* Scale all rem-based sizes by 1.2x on desktop */
   scroll-behavior: smooth; /* Smooth anchor navigation */
