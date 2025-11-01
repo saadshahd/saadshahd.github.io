@@ -98,7 +98,12 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <script>
       import Headroom from 'headroom.js';
 
-      let headroomInstance: Headroom | null = null;
+      // Expose headroom globally so other scripts can freeze/unfreeze during programmatic scrolls
+      declare global {
+        interface Window {
+          headroomInstance?: Headroom | null;
+        }
+      }
 
       document.addEventListener('astro:page-load', () => {
         const nav = document.getElementById('desktop-nav');
@@ -108,23 +113,23 @@ const ogImageURL = new URL(ogImage, Astro.site);
         const disableAutoHide = nav.dataset.disableAutoHide === 'true';
 
         // Destroy previous instance to prevent memory leaks
-        if (headroomInstance) {
-          headroomInstance.destroy();
-          headroomInstance = null;
+        if (window.headroomInstance) {
+          window.headroomInstance.destroy();
+          window.headroomInstance = null;
         }
 
         // Skip initialization if page disabled auto-hide
         if (disableAutoHide) return;
 
         // Initialize headroom with threshold and tolerance settings
-        headroomInstance = new Headroom(nav, {
+        window.headroomInstance = new Headroom(nav, {
           offset: 50,         // Hide after scrolling down 50px
           tolerance: {
             up: 10,           // Show after scrolling up 10px
             down: 10          // Hide after scrolling down 10px past offset
           }
         });
-        headroomInstance.init();
+        window.headroomInstance.init();
       });
     </script>
 

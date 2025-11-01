@@ -255,13 +255,18 @@ if (grouped && !position) {
   summary::marker {
     display: none;
   }
+
+  /* Prevent layout shift during accordion expansion */
+  details[data-accordion] {
+    scroll-margin-top: 2rem;
+  }
+
+  .accordion-content {
+    overflow-anchor: auto;
+  }
 </style>
 
 <script>
-  import { animate } from "motion";
-  import type { DOMKeyframesDefinition, AnimationOptions } from "motion";
-  import { goldenTiming, egyptianEasing, prefersReducedMotion } from "../utils/animations";
-
   function initAccordions() {
     const details = document.querySelectorAll<HTMLDetailsElement>('details[data-accordion]');
 
@@ -274,7 +279,7 @@ if (grouped && !position) {
       if (!content) return;
 
       detail.addEventListener('toggle', () => {
-        // NEW: Exclusive behavior for grouped accordions
+        // Exclusive behavior for grouped accordions
         if (detail.open && detail.hasAttribute('data-grouped')) {
           const parent = detail.parentElement;
           if (parent) {
@@ -282,52 +287,37 @@ if (grouped && !position) {
             siblings.forEach(sibling => {
               if (sibling !== detail && sibling.open) {
                 sibling.open = false;
-                // Trigger toggle event for animation
-                sibling.dispatchEvent(new Event('toggle'));
               }
             });
           }
-        }
 
-        if (prefersReducedMotion()) {
-          // Instant toggle - no animation
-          return;
-        }
+          // Freeze headroom to prevent navbar from showing during programmatic scroll
+          if (window.headroomInstance) {
+            window.headroomInstance.freeze();
+          }
 
-        if (detail.open) {
-          // Expanding: measure full height, animate from 0
-          const fullHeight = content.scrollHeight;
-          content.style.height = '0px';
-          content.style.overflow = 'hidden';
+          // Find the first accordion in this group by DOM order
+          const firstInGroup = parent.querySelector('details[data-grouped]') as HTMLDetailsElement;
+          const targetAccordion = firstInGroup || detail;
 
-          const keyframes: DOMKeyframesDefinition = { height: [`0px`, `${fullHeight}px`] };
-          const options: AnimationOptions = {
-            duration: goldenTiming.fast,
-            ease: egyptianEasing.water
-          };
-
-          animate(content, keyframes, options).finished.then(() => {
-            // Reset to auto for dynamic content
-            content.style.height = 'auto';
-            content.style.overflow = 'visible';
+          // Scroll to the GROUP's start (first accordion), not the clicked accordion
+          // This keeps the entire group visible with all borders
+          targetAccordion.scrollIntoView({
+            behavior: 'instant',  // Instant scroll for snappy accordion swaps
+            block: 'start',       // Align group top to viewport top
+            inline: 'nearest'
           });
-        } else {
-          // Collapsing: measure current height, animate to 0
-          const currentHeight = content.scrollHeight;
-          content.style.height = `${currentHeight}px`;
-          content.style.overflow = 'hidden';
 
-          // Force reflow to ensure starting height is applied
-          void content.offsetHeight;
-
-          const keyframes: DOMKeyframesDefinition = { height: [`${currentHeight}px`, `0px`] };
-          const options: AnimationOptions = {
-            duration: goldenTiming.fast,
-            ease: egyptianEasing.water
-          };
-
-          animate(content, keyframes, options);
+          // Unfreeze headroom after instant scroll completes
+          setTimeout(() => {
+            if (window.headroomInstance) {
+              window.headroomInstance.unfreeze();
+            }
+          }, 50);  // Small buffer for instant scroll
         }
+
+        // Instant toggle - no animation (simplest solution to prevent layout shift)
+        return;
       });
     });
   }
