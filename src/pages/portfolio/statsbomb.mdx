@@ -321,13 +321,13 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
         <span class="text-sm text-text-lighter"> — Product managers owned the rules</span>
       </span>
 
-Remember week one—Ali dictating rules while I typed in notepad? That's when it clicked: the dataspec can't be code. It has to be data we can iterate without deploys. That became the DSL principle.
+Remember week one—Ali and I sketching `start → [middle] → break` as sequential chains while I typed in notepad? That's when it clicked: the dataspec can't be code. It has to be data we iterate without deploys.
 
-Product managers needed to express domain logic—entry validation, sequencing logic, aggregation rules—in readable syntax that compiled to execution logic. Rules as data, not code.
+Product managers needed to express domain logic—entry validation, sequencing, aggregation—in readable syntax that compiled to execution. Rules as data, not code.
 
-Atomic events (passes, shots) aggregated into derived facts (possession phases, drives, turnovers). Store unchanging truth, recompute everything else when rules evolved.
+Atomic events (passes, shots) aggregated into derived facts (possession phases, drives, turnovers). Store unchanging truth, recompute everything when the dataspec evolved.
 
-Week one, Ali and I sketched `start → [middle] → break` as sequential chains. Production revealed ball possession had states—`carry`, `flight`, `loose`—not sequence positions. Early classification asked 'is this recovery offensive?' Later versions asked 'whose team has the ball?'—simpler question, impossible to misinterpret. Pass tracking shifted from outcome-based logic (did it complete?) to state-based (ball in flight → resolution). Flight became its own phase with clear resolution paths.
+Production revealed ball possession had states—`carry`, `flight`, `loose`—not sequence positions. Early classification asked 'is this recovery offensive?' Later versions asked 'whose team has the ball?'—simpler question, impossible to misinterpret. Pass tracking shifted from outcome-based (did it complete?) to state-based (ball in flight → resolution). Flight became its own phase with clear resolution paths.
 
 **The payoff came in 2020.** When we expanded to American football, product managers wrote drive segmentation rules using the same patterns. New sport, same architectural separation. Zero engineering bottleneck.
 
