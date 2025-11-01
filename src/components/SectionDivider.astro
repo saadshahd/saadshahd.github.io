@@ -1,9 +1,12 @@
 ---
+import { cn } from '@/utils/cn';
+
 interface Props {
   spacing?: 'major' | 'subsection' | 'minor';
+  class?: string;
 }
 
-const { spacing = 'major' } = Astro.props;
+const { spacing = 'major', class: className = '' } = Astro.props;
 
 // Fibonacci-aligned spacing tokens from design system
 const spacingMap = {
@@ -14,7 +17,7 @@ const spacingMap = {
 ---
 
 <div
-  class={`section-divider ${spacingMap[spacing]}`}
+  class={cn(`section-divider ${spacingMap[spacing]} ${className}`)}
   role="separator"
   aria-hidden="true"
 >
