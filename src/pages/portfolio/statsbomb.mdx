@@ -19,6 +19,7 @@ import SectionDivider from '../../components/SectionDivider.astro';
 import ReadingMetadata from '../../components/ReadingMetadata.astro';
 import MetricCard from '../../components/MetricCard.astro';
 import ComparisonCard from '../../components/ComparisonCard.astro';
+import Quote from '../../components/Quote.astro';
 
 <ScrollProgress />
 
@@ -261,10 +262,6 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
   Understanding the business value explains *why* we built this. Now: *how* did architectural decisions enable 10x scale and multi-sport expansion without code rewrites?
 </Body>
 
-<Callout variant="primary" icon="lightbulb" title="User Struggle → Architecture">
-  <p>Architecture emerges when you chase why/where users struggle, not what features they request.</p>
-</Callout>
-
 <p class="mb-6 text-text-lighter leading-relaxed">Three systems evolved in parallel:</p>
 
   <div class="mb-8">
@@ -404,9 +401,9 @@ Abdallah maintained the Electron app state machines and evolved keyboard workflo
   </ComparisonCard>
 </div>
 
-<p class="mb-6 text-text-lighter italic">
-  Freeze frame collection reduced from 12 minutes (manual clicking, Dartfish) to 30 seconds (CV-assisted workflow). Computer vision detected 90% automatically; collectors corrected edge cases with eyes on video, hands on keyboard. — A.Magdy, 360 Collection Lead
-</p>
+<Quote icon={true} attribution="A.Magdy, 360 Collection Lead">
+  Freeze frame collection reduced from 12 minutes (manual clicking, Dartfish) to 30 seconds (CV-assisted workflow). Computer vision detected 90% automatically; collectors corrected edge cases with eyes on video, hands on keyboard.
+</Quote>
 
 <Callout variant="primary" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
   <Body size="sm">Age 14. Nasr City to downtown on a Cairo bus, reading "The Pragmatic Programmer"

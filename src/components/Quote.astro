@@ -1,0 +1,23 @@
+---
+import { MessageSquareQuote } from '@lucide/astro';
+
+interface Props {
+  icon?: boolean;
+  attribution?: string;
+  class?: string;
+}
+
+const { icon = false, attribution, class: className } = Astro.props;
+---
+
+<blockquote class={`border-l-2 border-neutral-light pl-6 my-6 ${className || ''}`}>
+  {icon && (
+    <MessageSquareQuote class="w-5 h-5 text-neutral mb-2" />
+  )}
+  <div class="text-text-lighter italic">
+    <slot />
+  </div>
+  {attribution && (
+    <cite class="block text-sm not-italic text-text-lighter mt-3">— {attribution}</cite>
+  )}
+</blockquote>
