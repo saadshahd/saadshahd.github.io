@@ -14,7 +14,7 @@ import Heading from '../components/typography/Heading.astro';
       <Display level={1} as="h1" class="hero-name mb-2 leading-tight opacity-0 max-w-150 md:max-w-170">
         Saad Shahd
       </Display>
-      <Heading level={2} class="hero-title leading-tight text-text mb-6 opacity-0 max-w-150 md:max-w-170 text-balance">
+      <Heading level={3} class="hero-title leading-tight text-text mb-6 opacity-0 max-w-150 md:max-w-170 text-balance">
         What if systems couldn't break by design?
       </Heading>
       <Body size="lg" as="p" class="hero-value text-text-lighter mb-8 leading-relaxed opacity-0 max-w-150 md:max-w-150 lg:text-lg text-balance">
@@ -22,10 +22,12 @@ import Heading from '../components/typography/Heading.astro';
       </Body>
       <div class="hero-ctas flex gap-4 justify-center opacity-0">
         <Button variant="primary" size="md" href="/portfolio">
-          Explore My Work
+          <span class="inline sm:hidden">View Work</span>
+          <span class="hidden sm:inline">Explore My Work</span>
         </Button>
         <Button variant="secondary" size="md" href="/contact">
-          Start a Conversation
+          <span class="inline sm:hidden">Let's Talk</span>
+          <span class="hidden sm:inline">Start a Conversation</span>
         </Button>
       </div>
     </div>

@@ -80,15 +80,11 @@ Ali had spent years analyzing sports data—he could articulate possession rules
 Week one, Ali and I sat with VSCode open. He spoke rules aloud, I typed them as text:
 
 <div class="grid md:grid-cols-3 gap-6 mb-8">
-  <div class="text-center md:text-left">
-    `start → [middle] → break`
-  </div>
+  <div class="text-center md:text-left underline decoration-from-font decoration-wavy decoration-secondary-dark underline-offset-8">`start → [middle] → break`</div>
 
-  <div class="text-center leading-relaxed rotate-90 md:rotate-0"><span class="text-text-lighter/80 mr-2">became</span><MoveRight class="w-5 h-5 text-neutral inline"/></div>
+  <div class="text-center leading-relaxed rotate-90 md:rotate-0 my-12 md:my-0 text-text-lighter/80"><span class="mr-2">evolved to</span><MoveRight class="w-5 h-5 inline"/></div>
 
-  <div calss="text-center md:text-right">
-    `carry, flight, loose`
-  </div>
+  <div class="text-center md:text-left underline decoration-from-font decoration-wavy decoration-primary-dark underline-offset-8">`carry, flight, loose`</div>
 </div>
 
 As I typed what Ali dictated, I realized: I wasn't writing documentation. I was encoding his mental model as executable text. **That's when it clicked: the dataspec can't be code. It has to be data we can iterate without deploys.**
@@ -169,7 +165,7 @@ Post-match reconciliation consumed 2 hours across two merge points. First merge:
 {/* Workflow Comparison: Before vs. After */}
 <div class="grid md:grid-cols-2 my-8">
   <div>
-    <div class="flex items-center justify-center gap-2 p-2 border border-r-0 border-neutral-light">
+    <div class="flex items-center justify-center gap-2 p-2 border md:border-r-0 border-neutral-light">
       <svg class="w-5 h-5 text-text-lighter" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
       </svg>

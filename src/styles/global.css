@@ -243,6 +243,7 @@ pre.mermaid,
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+  background: none !important;
 }
 
 /* Node rectangles - add border radius */
