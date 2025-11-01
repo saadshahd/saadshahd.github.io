@@ -31,17 +31,55 @@ type Props = VariantProps<typeof button> & {
   href?: string;
   class?: string;
   type?: 'button' | 'submit' | 'reset';
+  /**
+   * Optional tracking label for analytics (location identifier)
+   * Example: 'hero', 'footer', 'case-study-card'
+   */
+  trackLocation?: string;
 };
 
-const { variant, size, href, class: className, type = 'button' } = Astro.props;
+const { variant, size, href, class: className, type = 'button', trackLocation } = Astro.props;
+
+// Get button text for tracking (from slot content, will be passed via data attribute)
+const buttonId = trackLocation ? `cta-${trackLocation}` : undefined;
 ---
 
 {href ? (
-  <a href={href} class={button({ variant, size, className })}>
+  <a
+    href={href}
+    class={button({ variant, size, className })}
+    data-track-location={trackLocation}
+    data-track-destination={href}
+  >
     <slot />
   </a>
 ) : (
-  <button type={type} class={button({ variant, size, className })}>
+  <button
+    type={type}
+    class={button({ variant, size, className })}
+    data-track-location={trackLocation}
+  >
     <slot />
   </button>
 )}
+
+{/* Client-side tracking script (runs once per page) */}
+<script>
+  import { trackCTAClick } from '@/utils/analytics';
+
+  // Track all button/link clicks with data-track-location attribute
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    const button = target.closest('[data-track-location]') as HTMLElement;
+
+    if (!button) return;
+
+    const location = button.getAttribute('data-track-location');
+    const destination = button.getAttribute('data-track-destination');
+    const text = button.textContent?.trim() || '';
+
+    if (location) {
+      trackCTAClick(location, text, destination || undefined);
+    }
+  });
+</script>

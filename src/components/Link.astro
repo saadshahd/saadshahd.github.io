@@ -25,9 +25,13 @@ type Props = VariantProps<typeof link> & {
   href: string;
   class?: string;
   external?: boolean;
+  /**
+   * Enable analytics tracking for this link (default: true for external links)
+   */
+  trackClick?: boolean;
 };
 
-const { variant, active, href, class: className, external = false } = Astro.props;
+const { variant, active, href, class: className, external = false, trackClick = external } = Astro.props;
 const classes = cn(link({ variant, active }), className);
 
 // External link attributes
@@ -35,9 +39,19 @@ const externalAttrs = external ? {
   target: '_blank',
   rel: 'noopener noreferrer'
 } : {};
+
+// Current page path for tracking source
+const currentPath = Astro.url.pathname;
 ---
 
-<a href={href} class={classes} {...externalAttrs}>
+<a
+  href={href}
+  class={classes}
+  {...externalAttrs}
+  data-track-outbound={trackClick ? 'true' : undefined}
+  data-track-destination={trackClick ? href : undefined}
+  data-track-source={trackClick ? currentPath : undefined}
+>
   <slot />
   {external && variant === 'external' && (
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,3 +59,24 @@ const externalAttrs = external ? {
     </svg>
   )}
 </a>
+
+{/* Client-side tracking script for outbound links */}
+<script>
+  import { trackOutboundLink } from '@/utils/analytics';
+
+  // Track outbound link clicks
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    const link = target.closest('[data-track-outbound="true"]') as HTMLAnchorElement;
+
+    if (!link) return;
+
+    const destination = link.getAttribute('data-track-destination');
+    const source = link.getAttribute('data-track-source');
+    const text = link.textContent?.trim() || '';
+
+    if (destination && source) {
+      trackOutboundLink(destination, source, text);
+    }
+  });
+</script>
