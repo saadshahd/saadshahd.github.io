@@ -128,8 +128,35 @@ const ogImageURL = new URL(ogImage, Astro.site);
       });
     </script>
 
-    <!-- Mermaid diagrams handled by astro-mermaid integration -->
-    <!-- Client-side rendering + View Transitions support built-in -->
+    <!--
+      Mermaid client-side rendering with View Transitions support
+
+      The astro-mermaid integration has a bug where it only registers the astro:after-swap
+      listener if the FIRST page loaded contains diagrams. If users land on a page without
+      diagrams (e.g., homepage), the listener is never registered, breaking all subsequent
+      navigations to pages with diagrams.
+
+      This script unconditionally registers astro:page-load listener to ensure diagrams
+      render on every navigation, regardless of entry point.
+    -->
+    <script>
+      // Register unconditionally (not conditional like integration's astro:after-swap)
+      document.addEventListener('astro:page-load', async () => {
+        // Only check for unprocessed diagrams (integration may have already processed some)
+        const unprocessedDiagrams = document.querySelectorAll('.mermaid:not([data-processed="true"])');
+
+        if (unprocessedDiagrams.length === 0) return;
+
+        // Dynamic import to avoid loading on pages without diagrams
+        const { default: mermaid } = await import('mermaid');
+
+        // Run on unprocessed diagrams only (prevents duplicate rendering)
+        // mermaid.run() will use the config from astro-mermaid integration
+        await mermaid.run({
+          querySelector: '.mermaid:not([data-processed="true"])'
+        });
+      });
+    </script>
   </head>
   <body class="bg-background text-text antialiased">
     <!-- Responsive Navigation: Mobile circular badge → Desktop bar -->
