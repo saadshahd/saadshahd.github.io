@@ -1,0 +1,50 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/utils/cn';
+import Body from '@/components/typography/Body.astro';
+
+const note = cva(
+  'text-text-lighter italic',
+  {
+    variants: {
+      align: {
+        left: '',
+        center: 'text-center mx-auto',
+      },
+      width: {
+        default: '',
+        narrow: 'max-w-[700px]',
+      },
+      spacing: {
+        default: 'mb-6',
+        spacious: 'mb-12',
+      },
+    },
+    defaultVariants: {
+      align: 'left',
+      width: 'default',
+      spacing: 'default',
+    },
+  }
+);
+
+interface Props extends HTMLAttributes<'p'>, VariantProps<typeof note> {}
+
+const {
+  align,
+  width,
+  spacing,
+  class: className,
+  ...htmlAttrs
+} = Astro.props;
+---
+
+<Body
+  size="sm"
+  as="p"
+  class={cn(note({ align, width, spacing }), className)}
+  {...htmlAttrs}
+>
+  <slot />
+</Body>

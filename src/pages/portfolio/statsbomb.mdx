@@ -7,6 +7,7 @@ import Section from '../../components/Section.astro';
 import Figure from '../../components/Figure.astro';
 import PhotoGrid from '../../components/PhotoGrid.astro';
 import CaseStudyTLDR from '../../components/CaseStudyTLDR.astro';
+import EditorialNote from '../../components/EditorialNote.astro';
 import Button from '../../components/Button.astro';
 import Badge from '../../components/Badge.astro';
 import Card from '../../components/Card.astro';
@@ -302,9 +303,9 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
   {/* Architecture Section */}
   <Section spacing="default" id="architecture" titleLevel={3} title="Architecture: Three Systems in Parallel">
 
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+<EditorialNote>
   Understanding the business value explains *why* we built this. Now: *how* did architectural decisions enable 10x scale and multi-sport expansion without code rewrites?
-</Body>
+</EditorialNote>
 
 <p class="mb-6 text-text-lighter leading-relaxed">Three systems evolved in parallel:</p>
 
@@ -381,7 +382,7 @@ When it mattered most, the architecture protected collectors: dataspec validated
 
   {/* The Dataspec Paradox - NEW SECTION */}
   <Section spacing="default" id="dataspec-paradox">
-    <Heading level={3} as="h2" class="mb-6 text-navy md:text-center max-w-[600px] mx-auto">The Dataspec Velocity Tradeoff: How Do You Change Rules Without Invalidating History?</Heading>
+    <Heading level={3} as="h2" class="mb-6 text-navy">The Dataspec Velocity Tradeoff: How Do You Change Rules Without Invalidating History?</Heading>
 
 By 2020, we had two years of historical matches. Thousands of games, millions of events. Then we realized: "possession" in 2020 meant something different than "possession" in 2018. We'd learned more about the sport. The rules evolved.
 
@@ -421,7 +422,9 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
   <SectionDivider spacing="major" />
 
   {/* Transition Bridge to Technical Sections */}
-  <Body size="sm" as="p" class="mb-12 text-text-lighter italic text-center max-w-[700px] mx-auto">The acquisition validated the collection system—but what made 5000+ collectors possible? Three architectural decisions: configuration-driven domain logic, prevention through state machines, and event graphs for time. Here's the quantified impact, then how we built it.</Body>
+  <EditorialNote align="center" width="narrow" spacing="spacious">
+    The acquisition validated the collection system—but what made 5000+ collectors possible? Three architectural decisions: configuration-driven domain logic, prevention through state machines, and event graphs for time. Here's the quantified impact, then how we built it.
+  </EditorialNote>
 
   {/* Impact Section - Collapsible */}
   <details id="impact" class="group" open={false}>
@@ -505,7 +508,7 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
   </Accordion>
 </div>
 
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">From 100 to 5000+ collectors, product managers shipped new dataspecs without proportional engineering investment, though complex state transitions occasionally required technical collaboration.</Body>
+<EditorialNote>From 100 to 5000+ collectors, product managers shipped new dataspecs without proportional engineering investment, though complex state transitions occasionally required technical collaboration.</EditorialNote>
   </details>
 
   <SectionDivider spacing="major" />
@@ -513,9 +516,9 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
   {/* Lessons Section */}
   <Section spacing="default" id="lessons" titleLevel={3} title="Lessons: What Transfers? What Only Worked Here?">
 
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
+<EditorialNote>
   Four years, three systems, distributed ownership learned the hard way. Which principles transfer to other domains? Which only worked because of sports analytics constraints?
-</Body>
+</EditorialNote>
 
 **What I'd Change**
 
