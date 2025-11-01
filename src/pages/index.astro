@@ -4,30 +4,31 @@ import Container from '../components/Container.astro';
 import Button from '../components/Button.astro';
 import Display from '../components/typography/Display.astro';
 import Body from '../components/typography/Body.astro';
+import Heading from '../components/typography/Heading.astro';
 ---
 
 <Layout title="Saad Shahd - Software Engineer" disableAutoHideNav={true}>
   <!-- Centered content on top of patterns -->
   <Container width="default" spacing="hero" class="relative flex flex-col justify-center items-center" style="z-index: 1;">
-    <section class="w-full flex flex-col items-center text-center">
-      <Display level={1} as="h1" class="hero-name mb-6 leading-tight opacity-0 max-w-150 md:max-w-170">
+    <div class="w-full flex flex-col items-center text-center">
+      <Display level={1} as="h1" class="hero-name mb-2 leading-tight opacity-0 max-w-150 md:max-w-170">
         Saad Shahd
       </Display>
-      <Body size="lg" as="p" class="hero-title text-text mb-6 opacity-0 max-w-150 md:max-w-170 text-balance">
+      <Heading level={2} class="hero-title leading-tight text-text mb-6 opacity-0 max-w-150 md:max-w-170 text-balance">
         What if systems couldn't break by design?
-      </Body>
-      <Body size="base" as="p" class="hero-value text-text-lighter mb-16 leading-relaxed opacity-0 max-w-150 md:max-w-170 lg:text-lg text-balance">
-        Over 15 years, patterns emerged from production systems. When you separate behavior from state, reliability stops being aspirational. It becomes structural. Exploring what's possible when architecture shapes correctness—curious how these patterns apply to your context?
+      </Heading>
+      <Body size="lg" as="p" class="hero-value text-text-lighter mb-8 leading-relaxed opacity-0 max-w-150 md:max-w-150 lg:text-lg text-balance">
+        Over a decade building products for the humans, one pattern keeps appearing: when systems can't break by design, reliability becomes structural. Still exploring what's possible when architecture serves people first—curious about your context?
       </Body>
       <div class="hero-ctas flex gap-4 justify-center opacity-0">
-        <Button variant="primary" size="lg" href="/portfolio">
+        <Button variant="primary" size="md" href="/portfolio">
           Explore My Work
         </Button>
-        <Button variant="secondary" size="lg" href="/contact">
+        <Button variant="secondary" size="md" href="/contact">
           Start a Conversation
         </Button>
       </div>
-    </section>
+    </div>
   </Container>
 </Layout>
 
