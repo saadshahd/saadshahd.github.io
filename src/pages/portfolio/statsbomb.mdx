@@ -531,10 +531,10 @@ These aren't universal truths—they worked because of specific conditions:
   <Accordion
     size="inline"
     variant="default"
-    summary="Scale: 1000+ collectors, not 100"
+    summary="Scale: 100k events/minute peak, 5000+ collectors processing live matches"
     defaultOpen={false}
   >
-    <Body size="sm" as="p">Separation creates leverage at scale. At 100 collectors, two product managers answered Slack questions faster than building DSLs. At 1000+, manual coordination broke—five people couldn't handle 50+ daily dataspec questions while evolving the spec. Configuration became cheaper than human time.</Body>
+    <Body size="sm" as="p">During peak live match time, the system processes 100,000+ atomic events per minute—touches, passes, tackles, runs—streaming through arbitrary validation layers in real-time. With 100 collectors, manual coordination could absorb this velocity. At 1000+ collectors, five product managers couldn't handle 50+ daily dataspec questions while the spec evolved. Today at 5000+ collectors processing live matches simultaneously, architectural separation isn't optimization—it's the only way to handle this streaming intensity without engineering bottlenecks.</Body>
   </Accordion>
 
   <Accordion
