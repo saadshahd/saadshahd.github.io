@@ -150,26 +150,47 @@ Post-match reconciliation consumed 2 hours across two merge points. First merge:
 
 ```mermaid
 graph TD
-    Start["Match begins"] --> HomeCollector["Home collector"]
-    Start --> AwayCollector["Away collector"]
-    HomeCollector --> Merge1["Reconcile"]
-    AwayCollector --> Merge1
-    Merge1 --> HomePost["Validation + Frames"]
-    Merge1 --> AwayPost["Validation + Frames"]
-    HomePost --> Merge2["Final merge"]
-    AwayPost --> Merge2
-    Merge2 --> Complete["Match complete
-    ~12h total
-    ~20 man-hours"]
+    subgraph live["⏱ Offline Match (12h)"]
+        Start["Match begins"]
+        Start --> HomeCollector["Home collector"]
+        Start --> AwayCollector["Away collector"]
+    end
 
-    classDef problem fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
-    class Start,HomeCollector,AwayCollector,Merge1,HomePost,AwayPost,Merge2,Complete problem
+    subgraph post1["⎇ First Merge"]
+        HomeCollector --> Merge1["~1 hour"]
+        AwayCollector --> Merge1
+    end
+
+    subgraph post2["⚖ 2 Collectors x 4h"]
+        Merge1 --> HomePost["Validation"]
+        Merge1 --> AwayPost["FreezeFrame"]
+    end
+
+    subgraph post3["⎇ Final Merge"]
+        HomePost --> Merge2["~1 hour"]
+        AwayPost --> Merge2
+        
+    end
+
+    Merge2 --> Complete["Match complete
+        ~12h total
+        ~20 man-hours"]
+    
+    classDef bottleneck fill:#FFFFFF,stroke:#DC2626,stroke-width:3px,color:#0F172A,font-weight:600
+    classDef collector fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
+    classDef processor fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
+    classDef system fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
+
+    class Merge1,Merge2 bottleneck
+    class HomeCollector,AwayCollector collector
+    class HomePost,AwayPost processor
+    class Start,Complete system
 ```
 
       </MermaidDiagram>
       <details class="mt-2 text-xs text-text-lighter text-center">
         <summary class="cursor-pointer hover:text-text">Text alternative</summary>
-        <p class="mt-1">Before workflow: Home and Away collectors work in parallel (4h each). First merge reconciles collection conflicts (1h). Then parallel post-processing for validation, conflicts, and freeze frames (4h each). Final merge reconciles post-processing conflicts (1h). Total: ~12h wall-clock = 20 man-hours.</p>
+        <p class="mt-1">Offline workflow taking 12 hours: Home and Away collectors work in parallel. First merge reconciles collection conflicts (~1h). Then 2 collectors work in parallel (4h each) on Validation and FreezeFrame. Final merge reconciles post-processing conflicts (~1h). Total: ~12h wall-clock = 20 man-hours.</p>
       </details>
     </figure>
   </div>
@@ -195,25 +216,37 @@ graph TD
 
 ```mermaid
 graph TD
-    Start["Match begins"] --> Base["Base Event"]
-    Base --> E1["Extras"]
-    Base --> E2["Location"]
-    Base --> E3["FreezeFrame"]
-    E1 --> M["Automated merge"]
-    E2 --> M
-    E3 --> M
-    M --> N["Complete Analysis"]
-    N --> O["Match ends
-    ~2 hours
-    ~7 man hours"]
-    classDef success fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
-    class Start,Base,E1,E2,E3,M,N,O success
+    subgraph live["⏱ Live Match (Real-time)"]
+        Start["Match begins"] --> Base["Base Event"]
+    end
+
+    subgraph enrich["⫴ Up to 12 Parallel streams"]
+        Base --> E1["Extras"]
+        E2["..."]
+        Base --> E3["360 FF"]
+    end
+
+    subgraph merge["⎇ Automated Merge"]
+        E1 --> M["No conflicts"]
+        E3 --> M
+    end
+
+    M --> Complete["Analytics from first moment
+    ends real world time"]
+
+    classDef atomic fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
+    classDef derived fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
+    classDef system fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
+
+    class Base atomic
+    class E1,E2,E3 derived
+    class Start,M,Complete system
 ```
 
       </MermaidDiagram>
       <details class="mt-2 text-xs text-text-lighter text-center">
         <summary class="cursor-pointer hover:text-text">Text alternative</summary>
-        <p class="mt-1">Concurrent workflow: Base events (name, timestamp) created during match with 3 parallel enrichments (Extras, Location, FreezeFrame), automated merge, complete layered analysis at match end. Total: ~2 hours wall-clock = ~7 man-hours.</p>
+        <p class="mt-1">Live real-time workflow: Base events created during match with up to 12 parallel enrichments (Extras, ... , 360 FF) based on desired collection granularity and speed SLA. Automated merge with no conflicts. Analytics available from first moment, ending at real world time.</p>
       </details>
     </figure>
   </div>

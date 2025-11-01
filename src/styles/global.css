@@ -250,6 +250,7 @@ pre.mermaid,
 .mermaid .cluster rect {
   rx: var(--diagram-border-radius);
   ry: var(--diagram-border-radius);
+  fill: transparent !important;
 }
 
 /* Node labels - use design system typography */
