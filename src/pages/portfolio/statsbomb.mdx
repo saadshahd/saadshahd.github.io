@@ -2,6 +2,9 @@
 layout: ../../layouts/MDXLayout.astro
 title: "Statsbomb Real Time Data Collection - Saad Shahd"
 ---
+import Container from '../../components/Container.astro';
+import Section from '../../components/Section.astro';
+import Figure from '../../components/Figure.astro';
 import Button from '../../components/Button.astro';
 import Badge from '../../components/Badge.astro';
 import Card from '../../components/Card.astro';
@@ -22,9 +25,9 @@ import Quote from '../../components/Quote.astro';
 
 import { MoveRight } from '@lucide/astro';
 
-<div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
+<Container width="narrow" spacing="default">
   {/* Hero Section with integrated TL;DR */}
-  <section class="mb-12">
+  <Section spacing="spacious">
 
     <p class="text-sm text-text-lighter font-medium uppercase tracking-wide mb-1">Case Study</p>
     <h1 class="text-base md:text-lg text-navy font-medium mb-2">Statsbomb Sports Data Collection</h1>
@@ -58,11 +61,10 @@ import { MoveRight } from '@lucide/astro';
         <p>Architectural separation multiplied team leverage—product managers shipped new sports without engineering bottlenecks. When Adham, Waheed, Hadeel, and Abdallah took ownership, they evolved the system beyond what we started with.</p>
       </Callout>
     </details>
-  </section>
+  </Section>
 
   {/* Origins: Week One Partnership */}
-  <section class="mb-6" id="origins">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Origins: Week One Partnership</Heading>
+  <Section spacing="compact" id="origins" titleLevel={3} title="Origins: Week One Partnership">
 
 We shipped twice daily. Every morning, I'd push a new build of the FreezeFrame tool—replacing Dartfish's 12-minute manual clicking with computer vision-assisted positioning. By afternoon, collectors would test it during matches. By evening, I'd see their feedback in Slack.
 
@@ -96,66 +98,41 @@ That partnership—domain expert + systems thinker—is why the DSL approach wor
 
 {/* Visual proof: Week One sketches → Production Evolution */}
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-6">
-  <figure>
-    <div class="overflow-hidden rounded-lg bg-neutral-light h-56 md:h-64 lg:h-72">
-      <img
-        src="/images/statsbomb/ff-initial-sketches-1.jpg"
-        alt="Hand-drawn viewport calculations for FreezeFrame tool"
-        class="w-full h-full object-cover"
-        style="object-position: center center;"
-        loading="lazy"
-      />
-    </div>
-    <figcaption class="text-xs text-text-lighter mt-1 text-center italic">Viewport calculations</figcaption>
-  </figure>
+  <Figure
+    src="/images/statsbomb/ff-initial-sketches-1.jpg"
+    alt="Hand-drawn viewport calculations for FreezeFrame tool"
+    caption="Viewport calculations"
+    aspectRatio="portrait"
+  />
 
-  <figure>
-    <div class="overflow-hidden rounded-lg bg-neutral-light h-56 md:h-64 lg:h-72">
-      <img
-        src="/images/statsbomb/ff-initial-sketches-2.jpg"
-        alt="Soccer field perspective sketch showing goal positioning"
-        class="w-full h-full object-cover"
-        style="object-position: center center;"
-        loading="lazy"
-      />
-    </div>
-    <figcaption class="text-xs text-text-lighter mt-1 text-center italic">Soccer field geometry & positioning</figcaption>
-  </figure>
+  <Figure
+    src="/images/statsbomb/ff-initial-sketches-2.jpg"
+    alt="Soccer field perspective sketch showing goal positioning"
+    caption="Soccer field geometry & positioning"
+    aspectRatio="portrait"
+  />
 
-  <figure>
-    <div class="overflow-hidden rounded-lg bg-neutral-light h-56 md:h-64 lg:h-72">
-      <img
-        src="/images/statsbomb/live-collection-v1-2018.png"
-        alt="First production run of live collection tool in 2018"
-        class="w-full h-full object-cover"
-        style="object-position: center center;"
-        loading="lazy"
-      />
-    </div>
-    <figcaption class="text-xs text-text-lighter mt-1 text-center italic">First production run (2018)</figcaption>
-  </figure>
+  <Figure
+    src="/images/statsbomb/live-collection-v1-2018.png"
+    alt="First production run of live collection tool in 2018"
+    caption="First production run (2018)"
+    aspectRatio="portrait"
+  />
 
-  <figure>
-    <div class="overflow-hidden rounded-lg bg-neutral-light h-56 md:h-64 lg:h-72">
-      <img
-        src="/images/statsbomb/live-collection-v2-2019.png"
-        alt="Ragdoll feature for goalkeeper reactions in freeze frames, requested by Liverpool"
-        class="w-full h-full object-cover"
-        style="object-position: center top;"
-        loading="lazy"
-      />
-    </div>
-    <figcaption class="text-xs text-text-lighter mt-1 text-center italic">Ragdoll feature (2019)</figcaption>
-  </figure>
+  <Figure
+    src="/images/statsbomb/live-collection-v2-2019.png"
+    alt="Ragdoll feature for goalkeeper reactions in freeze frames, requested by Liverpool"
+    caption="Ragdoll feature (2019)"
+    aspectRatio="portrait"
+  />
 </div>
     <p class="text-xs text-text-light text-center italic -mt-2 mb-6">Week One sketches (2018): From these rough drawings to production tool in days, evolving with customer-driven features like Liverpool's goalkeeper reaction tracking</p>
-  </section>
+  </Section>
 
   <SectionDivider spacing="minor" />
 
   {/* Problem Section */}
-  <section class="mb-8" id="problem">
-    <Heading level={3} as="h2" class="mb-6 text-navy">The Two-Merge Bottleneck</Heading>
+  <Section spacing="default" id="problem" titleLevel={3} title="The Two-Merge Bottleneck">
 
 Two collectors, same match. Hours after the final whistle, they're still arguing.
 
@@ -294,13 +271,12 @@ graph TD
 The merge tax scaled linearly with collectors. At 100 collectors, two product managers mediated conflicts manually—tedious but manageable. At 1000 collectors? The math broke. Manual conflict resolution couldn't scale without proportional staffing increases, blocking market expansion.
 
 What collectors needed: prevention during collection, not reconciliation after. We architected the tool to make ambiguous interpretations structurally impossible—if you can't express it in the UI, you can't collect it wrong.
-  </section>
+  </Section>
 
   <SectionDivider spacing="major" />
 
   {/* Real-Time Collection: The 2am Test - NEW SECTION */}
-  <section class="mb-12" id="realtime-test">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Real-Time Collection: The 2am Test</Heading>
+  <Section spacing="spacious" id="realtime-test" titleLevel={3} title="Real-Time Collection: The 2am Test">
 
 We tested for months before committing to broadcasters. "Real-time" wasn't a feature—it was an obligation. One failure during a live match = lost client.
 
@@ -309,26 +285,21 @@ I'd start at 10am, leave at 3am. Not grinding for grinding's sake—I needed to 
 Ali stayed nights for company. Not to supervise—he wasn't debugging TypeScript with me. But he understood the stakes. Broadcasters needed real-time commentary data. Collectors needed tools that didn't break at 2am when fatigue set in.
 
 That's when we'd debug together: Adham tracing the Kafka lag, me testing state machine transitions with a tired collector who just wanted to finish the match and go home.
-  </section>
+  </Section>
 
   {/* Visual proof: 2am debugging */}
-  <figure class="my-6 mx-auto">
-    <img
-      src="/images/statsbomb/df52f41a-686e-4989-8f34-08b1487920b6.jpg"
-      alt="Late night debugging session with Adham and Waheed"
-      class="rounded-lg w-full h-auto"
-      loading="lazy"
-    />
-    <figcaption class="text-xs text-text-lighter mt-2 text-center italic">
-      Late night, Cairo (2019): Debugging real-time collection with Adham and Waheed
-    </figcaption>
-  </figure>
+  <Figure
+    src="/images/statsbomb/df52f41a-686e-4989-8f34-08b1487920b6.jpg"
+    alt="Late night debugging session with Adham and Waheed"
+    caption="Late night, Cairo (2019): Debugging real-time collection with Adham and Waheed"
+    aspectRatio="auto"
+    class="mx-auto"
+  />
 
   <SectionDivider spacing="major" />
 
   {/* Architecture Section */}
-  <section class="mb-8" id="architecture">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Architecture: Three Systems in Parallel</Heading>
+  <Section spacing="default" id="architecture" titleLevel={3} title="Architecture: Three Systems in Parallel">
 
 <Body size="sm" as="p" class="mb-6 text-text-lighter italic">
   Understanding the business value explains *why* we built this. Now: *how* did architectural decisions enable 10x scale and multi-sport expansion without code rewrites?
@@ -409,12 +380,12 @@ The dataspec drove UI validation, DSLs defined legal sequences, state machines c
 **Backend Evolution**: Month one: Omar Negm built the single Go endpoint called `sync`—batch, offline. In year two (2019), when Omar left to teach kids software, Adham joined and designed the evolution to Kafka as persistence center, event logs as foundation—enabling real-time collection at broadcaster scale.
     </Accordion>
   </div>
-  </section>
+  </Section>
 
   <SectionDivider spacing="major" />
 
   {/* The Dataspec Paradox - NEW SECTION */}
-  <section class="mb-8" id="dataspec-paradox">
+  <Section spacing="default" id="dataspec-paradox">
     <Heading level={3} as="h2" class="mb-6 text-navy text-center max-w-[600px] mx-auto">The Dataspec Velocity Tradeoff: How Do You Change Rules Without Invalidating History?</Heading>
 
 By 2020, we had two years of historical matches. Thousands of games, millions of events. Then we realized: "possession" in 2020 meant something different than "possession" in 2018. We'd learned more about the sport. The rules evolved.
@@ -424,35 +395,33 @@ Most systems would version the data: v1 events stay v1, new matches use v2. But 
 The solution: **tiered evolution.** When the dataspec changed, we'd backfill historical data through the new rules—recomputing derived facts from the atomic events we stored. The graph structure made this possible: we knew what cascaded when one definition changed.
 
 The dataspec itself had to be uncertain. By week one, the question shifted: not *if* we'd iterate, but *how often*. Our historical data needed to evolve with our understanding—not versioned snapshots frozen in time, but living data that grew smarter as we did.
-  </section>
+  </Section>
 
   <SectionDivider spacing="major" />
 
   {/* Team Building Section */}
-  <section class="mb-8" id="team-building">
-    <Heading level={3} as="h2" class="mb-6 text-navy ">Distributed Ownership: Learning to Scale</Heading>
+  <Section spacing="default" id="team-building" titleLevel={3} title="Distributed Ownership: Learning to Scale">
 
 What enables fast iteration at the start? Simplicity—ship twice daily, direct collector feedback, zero coordination. As complexity grew (DSLs, state machines, metadata resolution), the question shifted: how do you maintain velocity with a team? The technical architecture took three years to evolve. The harder part: building a team that could iterate beyond the initial design while learning to distribute ownership.
 
 <Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
 
-**Adham** advocated for Kafka in year two. My reaction: this feels complex for what we're doing. His counter: the domain will grow into it. He was right. By year three, event streaming wasn't "advanced tooling"—it was how we handled parallel collection and historical corrections at scale. What seemed like over-engineering became structural necessity as domain complexity revealed itself. That moment taught me distributed ownership meant trusting teammates to see architectural needs I couldn't.
+**Adham** advocated for Kafka in year two. I resisted—unnecessary complexity. His counter: the domain will demand it. By year three, he was right. Event streaming became essential for parallel collection and historical corrections.
 
 When **Waheed, Hadeel, and Abdallah** joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with. Waheed transformed conceptual sketches into production systems. Hadeel hardened prototypes for live match scale. Abdallah evolved workflows I thought were complete. They felt the same urgency to serve collectors directly—that partnership from week one had become distributed ownership.
-  </section>
+  </Section>
 
   <SectionDivider spacing="major" />
 
   {/* Hudl Acquisition - Narrative Closure */}
-  <section class="mb-8" id="hudl-acquisition">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Epilogue: Hudl Acquisition (2024)</Heading>
+  <Section spacing="default" id="hudl-acquisition" titleLevel={3} title="Epilogue: Hudl Acquisition (2024)">
 
 In 2024, two years after I left Egypt, Hudl acquired Statsbomb.
 
 Hudl is the industry standard—the platform most college and professional teams use globally for video analysis and performance tracking. They didn't acquire Statsbomb for the data alone. They acquired the collection system, the DSLs, the real-time infrastructure that enabled 5000+ collectors to work concurrently.
 
 The patterns Ali and I sketched in notepad during week one became valuable enough for an industry leader to buy. The architecture that emerged from serving collectors directly, from watching what slowed them down and making it faster, had legs beyond what we imagined.
-  </section>
+  </Section>
 
   <SectionDivider spacing="major" />
 
@@ -460,8 +429,7 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
   <Body size="sm" as="p" class="mb-12 text-text-lighter italic text-center max-w-[700px] mx-auto">The acquisition validated the collection system—but what made 5000+ collectors possible? Three architectural decisions: configuration-driven domain logic, prevention through state machines, and event graphs for time. Here's the quantified impact, then how we built it.</Body>
 
   {/* Impact Section */}
-  <section class="mb-12" id="impact">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Impact: Timeline Comparison (2018 → 2021)</Heading>
+  <Section spacing="spacious" id="impact" titleLevel={3} title="Impact: Timeline Comparison (2018 → 2021)">
 
 <Body size="sm" as="p" class="text-text-lighter"><strong>What actually changed on the ground?</strong> Here's the operational transformation from Dartfish baseline to production at scale.</Body>
 
@@ -530,13 +498,12 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
 </div>
 
 <Body size="sm" as="p" class="mb-6 text-text-lighter italic">From 100 to 5000+ collectors, product managers shipped new dataspecs without proportional engineering investment, though complex state transitions occasionally required technical collaboration.</Body>
-  </section>
+  </Section>
 
   <SectionDivider spacing="major" />
 
   {/* Lessons Section */}
-  <section class="mb-8" id="lessons">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Lessons: What Transfers? What Only Worked Here?</Heading>
+  <Section spacing="default" id="lessons" titleLevel={3} title="Lessons: What Transfers? What Only Worked Here?">
 
 <Body size="sm" as="p" class="mb-6 text-text-lighter italic">
   Four years, three systems, distributed ownership learned the hard way. Which principles transfer to other domains? Which only worked because of sports analytics constraints?
@@ -609,23 +576,22 @@ These aren't universal truths—they worked because of specific conditions:
     <Body size="sm" as="p">More domain knowledge → better problem diagnosis → better architectural decisions → concepts that create value instead of complexity. Context always determines what works.</Body>
   </Accordion>
 </div>
-  </section>
+  </Section>
 
   <SectionDivider spacing="major" />
 
   {/* Behind the Scenes Section */}
-  <section class="mb-8" id="behind-the-scenes">
-    <Heading level={2} as="h2" class="mb-6">Behind the Scenes</Heading>
+  <Section spacing="default" id="behind-the-scenes" titleLevel={2} title="Behind the Scenes">
 
 Cairo, 2018-2022: Arqam (Statsbomb)—night shifts, onboarding, farewells. From hand-drawn rules to collectors analyzing their own game nights.
 
 <MediaGallery class="mb-8" items={statsbombMedia} columns={3} />
 
-  </section>
+  </Section>
 
 
   {/* Footer Navigation */}
   <div class="flex justify-center mt-8 md:mt-12">
     <Button variant="primary" href="/contact" class="w-full md:w-auto">Start a Conversation →</Button>
   </div>
-</div>
+</Container>
