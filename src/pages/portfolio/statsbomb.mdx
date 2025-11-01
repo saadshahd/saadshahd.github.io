@@ -346,21 +346,15 @@ Without DSLs, every new rule required engineering deploys. With DSLs, product ma
         <span class="text-sm text-text-lighter"> — State machines owned correctness</span>
       </span>
 
-Remember the 2am Test? World Cup extra time, keyboard glitches, WebSocket drops. Those failures taught us: real-time isn't a feature checkbox. When collectors are exhausted at 2am during penalty shootouts, the tool can't allow ambiguous inputs. Prevention through state machines, not validation after the fact—that became the XState requirement.
+Remember the 2am Test? World Cup extra time, exhausted collectors, keyboard glitches, WebSocket drops. Those failures taught us: when humans are depleted, tools must guide them.
 
-The first thing we built was the tool collectors would use every day—an Electron desktop app replacing Dartfish's rigid forms with keyboard-first workflows.
+The industry standard (Dartfish) forced button-heavy mouse clicks with rigid keyboard shortcuts—50+ event types mapped to 40 keys, memorized regardless of context.
 
-**Why Dartfish Couldn't Scale**: The industry standard forced button-heavy mouse clicks for every selection. It had keyboard shortcuts, but each key mapped to only one event type globally. With 50+ event types but only 40 usable keys, collectors memorized arbitrary mappings regardless of game context. Cognitive overload blocked velocity.
+We built context-aware: press 'P' for pass, the system knew valid pass types for that player's position. One option remaining? Auto-filled and advanced. Collectors touch-typed like Vim users. Eyes on video, hands on keyboard.
 
-**State Machines for Prevention**: We modeled collection workflows as explicit finite state machines with XState. Define workflows as explicit states with clear transitions, and illegal states become structurally impossible. Can't skip steps. Can't submit incomplete data.
+Ashmawy, Andrew, and Shash built computer vision for automated position detection—collectors corrected edge cases.
 
-**Context-Aware Keyboard Mappings**: Same key, different actions per context. Press 'P' for pass—the DSL determined valid pass types for that player's position. If only one option remained, auto-filled and skipped. Collectors touch-typed like Vim users. Eyes on video, hands on keyboard.
-
-**Computer Vision Integration**: Ashmawy, Andrew, and Shash built the CV service for automated player position detection. Collectors corrected edge cases.
-
-**Concurrent Collection**: Hadeel implemented GraphQL subscriptions via WebSocket. One collector published the base event, others subscribed with specialized contributions (positions, attributes, timing). Zero overlapping responsibility = zero merge conflicts.
-
-The dataspec drove UI validation, DSLs defined legal sequences, state machines constrained invalid states. Architecture caught errors before collectors saw them.
+When it mattered most, the architecture protected collectors: dataspec validated inputs, state machines prevented illegal sequences, DSLs defined legal transitions. Errors became structurally prevented, not just caught.
     </Accordion>
 
     <Accordion
@@ -455,7 +449,7 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
 </ComparisonGrid>
 
 <Callout variant="primary" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
-  <Body size="sm">"Design for the 80% case"—The Pragmatic Programmer. That principle shaped every decision: DSL for standard sequences, state machines for common flows, metadata for typical events. When 95% of matches follow patterns, build for patterns.</Body>
+  <Body size="sm">"Design for the 80% case"—The Pragmatic Programmer. That principle shaped most decisions: DSL for standard sequences, state machines for common flows, metadata for typical events. When 95% of matches follow patterns, build for patterns.</Body>
 </Callout>
 
 <Heading level={4} as="h4" class="mb-4 mt-6">What Made This Possible</Heading>
