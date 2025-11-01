@@ -404,14 +404,17 @@ Abdallah maintained the Electron app state machines and evolved keyboard workflo
   </ComparisonCard>
 </div>
 
-<Callout variant="neutral" icon="quote" title="Collector Voice" class="mb-6">
-  <p class="mb-2"><strong>Before (Dartfish):</strong> "12 minutes per freeze frame clicking 22 player positions manually. By minute 60, my hand cramped from mouse clicks."</p>
-  <p><strong>After (CV-assisted UI):</strong> "Computer vision detected 90%, I corrected edge cases in 3 minutes. Eyes stayed on video, hands on keyboard."</p>
-  <p class="text-xs text-text-lighter mt-3">— A.Magdy, 360 Collection Lead</p>
-</Callout>
+<p class="mb-6 text-text-lighter italic">
+  Freeze frame collection reduced from 12 minutes (manual clicking, Dartfish) to 30 seconds (CV-assisted workflow). Computer vision detected 90% automatically; collectors corrected edge cases with eyes on video, hands on keyboard. — A.Magdy, 360 Collection Lead
+</p>
 
 <Callout variant="primary" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
-  <p>**Design for the 80% common case**; production iteration reveals the 20% edge cases. This principle drove every architectural decision—from DSL syntax to state machine transitions to metadata resolution logic. Most collectors collected standard matches; we optimized for that, not edge cases.</p>
+  <Body size="sm">Age 14. Nasr City to downtown on a Cairo bus, reading "The Pragmatic Programmer"
+    on my phone. Hunt & Thomas: "Design for the 80% case." That paragraph stuck.
+    Sixteen years later, every architectural decision traced back—DSL optimized for
+    standard match sequences, state machines for common collector flows, metadata
+    for typical events. When 95% of matches follow patterns, build for patterns.
+    Production revealed the remaining 5%.</Body>
 </Callout>
 
 <Heading level={4} as="h4" class="mb-4 mt-6">What Made This Possible</Heading>
