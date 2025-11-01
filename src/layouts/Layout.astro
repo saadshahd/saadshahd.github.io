@@ -26,6 +26,9 @@ const {
 const currentPath = Astro.url.pathname;
 const canonicalURL = new URL(currentPath, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
+
+// Umami analytics (optional, loads only if website ID configured)
+const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 ---
 
 <!doctype html>
@@ -61,6 +64,15 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <Font cssVariable="--font-serif" preload />
     <Font cssVariable="--font-display" preload />
     <ClientRouter />
+
+    <!-- Umami Analytics: Privacy-first, cookie-free tracking -->
+    {umamiWebsiteId && (
+      <script
+        defer
+        src="https://cloud.umami.is/script.js"
+        data-website-id={umamiWebsiteId}
+      ></script>
+    )}
 
     <!-- Update active tab state after View Transitions -->
     <script>
