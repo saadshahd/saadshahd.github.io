@@ -41,7 +41,7 @@ import Quote from '../../components/Quote.astro';
     </div>
 
     {/* Reading metadata */}
-    <ReadingMetadata readingTime="25 min" sectionCount={6} class="mb-8" />
+    <ReadingMetadata readingTime="26 min" sectionCount={10} class="mb-8" />
 
     {/* Integrated TL;DR as expandable details */}
     <details class="mb-8 p-6 bg-surface rounded-lg border border-neutral-light" open>
@@ -88,7 +88,7 @@ As I typed what Ali dictated, I realized: I wasn't writing documentation. I was 
 That partnership—domain expert + systems thinker—is why the DSL approach worked. Without Ali's mental models, I'd have built generic forms. Without my systems thinking, his knowledge would've stayed tacit.
 
 {/* Visual proof: Week One sketches */}
-<div class="grid md:grid-cols-2 gap-4 my-6 max-w-4xl mx-auto">
+<div class="grid md:grid-cols-2 gap-4 my-6 max-w-[696px] mx-auto">
   <figure>
     <img
       src="/images/statsbomb/ff-initial-sketches-1.jpg"
@@ -592,10 +592,9 @@ Cairo, 2018-2022: Arqam (Statsbomb)—night shifts, onboarding, farewells. From 
 
   </section>
 
-  <SectionDivider spacing="minor" />
 
   {/* Footer Navigation */}
-  <div class="flex justify-center md:justify-end">
+  <div class="flex justify-center ">
     <Button variant="primary" href="/contact" class="w-full md:w-auto">Start a Conversation →</Button>
   </div>
 </div>
