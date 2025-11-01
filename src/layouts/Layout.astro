@@ -131,63 +131,8 @@ const ogImageURL = new URL(ogImage, Astro.site);
       });
     </script>
 
-    <!-- Lazy load Mermaid only on pages with diagrams -->
-    <!-- Centering CSS in global.css eliminates race condition -->
-    <script>
-      import type { MermaidConfig } from 'mermaid';
-
-      // Track if mermaid has been loaded to avoid duplicate imports
-      let mermaidModule: typeof import('mermaid') | null = null;
-
-      const initMermaid = async () => {
-        // Check if page has any Mermaid diagrams
-        const hasMermaid = document.querySelector('.mermaid-wrapper, pre.mermaid, code.mermaid');
-        if (!hasMermaid) return;
-
-        // Lazy load mermaid module only when needed
-        if (!mermaidModule) {
-          mermaidModule = await import('mermaid');
-
-          // Initialize with Egyptian design system config (matching astro.config.mjs)
-          const config: MermaidConfig = {
-            startOnLoad: false,
-            theme: 'base',
-            themeVariables: {
-              primaryColor: '#F5F1E8',
-              primaryBorderColor: '#CBD5E1',
-              primaryTextColor: '#0F172A',
-              fontFamily: 'Inter, system-ui, sans-serif',
-              fontSize: '14px',
-              lineColor: '#475569',
-              edgeLabelBackground: '#FEFDFB',
-              clusterBkg: '#FEFDFB',
-              clusterBorder: '#CBD5E1',
-              secondaryColor: '#DBEAFE',
-              tertiaryColor: '#FEF3C7',
-            },
-            flowchart: {
-              htmlLabels: true,
-              titleTopMargin: 12,
-              subGraphTitleMargin: {
-                top: 12,
-                bottom: 6
-              }
-            }
-          };
-          mermaidModule.default.initialize(config);
-        }
-
-        // Remove data-processed attributes to allow re-rendering on View Transitions
-        const diagrams = document.querySelectorAll('.mermaid-wrapper [data-processed], pre.mermaid[data-processed], code.mermaid[data-processed]');
-        diagrams.forEach(diagram => diagram.removeAttribute('data-processed'));
-
-        // Render diagrams (centering CSS from global.css applies automatically)
-        await mermaidModule.default.run();
-      };
-
-      // Initialize on page load (handles both initial load and View Transitions)
-      document.addEventListener('astro:page-load', initMermaid);
-    </script>
+    <!-- Mermaid diagrams handled by astro-mermaid integration -->
+    <!-- Client-side rendering + View Transitions support built-in -->
   </head>
   <body class="bg-background text-text antialiased">
     <!-- Scroll Progress Indicator (long-form content pages only) -->
