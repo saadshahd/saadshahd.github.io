@@ -218,21 +218,9 @@ graph TD
   </div>
 </div>
 
-<Heading level={4} as="h4" class="mb-4 mt-8">The Industry Baseline: Dartfish's Limitations</Heading>
+The merge tax scaled linearly with collectors. At 100 collectors, two product managers mediated conflicts manually—tedious but manageable. At 1000 collectors? The math broke. Manual conflict resolution couldn't scale without proportional staffing increases, blocking market expansion.
 
-The industry-standard tool—Dartfish—couldn't scale to what we needed. Button-heavy interface forced mouse clicks for every selection. It had keyboard shortcuts, but they weren't contextual. Each key could only map to one event type—globally, across the entire data spec. No overlap possible. With 50+ event types but only 40 usable keys, we hit a ceiling. Collectors memorized which arbitrary key triggered which event, at all times, regardless of game context. **Cognitive overload**.
-
-<Heading level={4} as="h4" class="mb-4 mt-8">What Collectors Actually Needed</Heading>
-
-Years of daily conversations with collectors revealed their actual workflows and friction points: contextual keyboard mappings that adapted to game state, automated validation to prevent errors before they happened, and clear definitions so two collectors watching the same play would record the same events.
-
-<Heading level={4} as="h4" class="mb-4 mt-8">Why This Mattered to Statsbomb's Business</Heading>
-
-Statsbomb provided granular sports analytics to professional clubs and broadcasters—markets where data velocity creates competitive advantage. Broadcasters needed live insights during matches for real-time commentary. Clubs needed opponent patterns within minutes, not hours, to adjust tactics. **The constraint: real-time collection with zero compromise on correctness.** Most systems choose one—velocity or correctness. We needed both.
-
-The efficiency gains weren't just operational—they unlocked strategic capabilities. Operations scaled 10x (100 → 1000+ collectors) without proportional staffing increases, preserving margins while growing coverage. Client customization happened through configuration: Premier League club wanting detailed positioning data and Championship club needing basic events ran on same system—different configurations, same codebase.
-
-**The Scaling Challenge**: Product managers couldn't define new collection requirements without engineering bottlenecks. Operations needed to scale from 100 collectors to thousands without proportional support staff. At 100 collectors, two product managers coordinated manually. At 1000+? Support requests would consume entire workdays, blocking evolution.
+What collectors needed: prevention during collection, not reconciliation after. Architecture shaped to make ambiguous interpretations structurally impossible.
   </section>
 
   <SectionDivider spacing="major" />
