@@ -1,0 +1,64 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/utils/cn';
+import Figure from '@/components/Figure.astro';
+
+interface Photo {
+  src: string;
+  alt: string;
+  caption: string;
+  aspectRatio?: 'portrait' | 'landscape' | 'square';
+}
+
+const grid = cva(
+  'grid grid-cols-1 gap-4 my-6',
+  {
+    variants: {
+      columns: {
+        '2': 'md:grid-cols-2',
+        '3': 'md:grid-cols-2 lg:grid-cols-3',
+        '4': 'md:grid-cols-2 lg:grid-cols-4',
+      },
+    },
+    defaultVariants: {
+      columns: '4',
+    },
+  }
+);
+
+interface Props extends HTMLAttributes<'div'>, VariantProps<typeof grid> {
+  /**
+   * Array of photo objects to display in grid
+   */
+  photos: Photo[];
+
+  /**
+   * Optional caption displayed below grid
+   */
+  groupCaption?: string;
+}
+
+const {
+  photos,
+  columns,
+  groupCaption,
+  class: className,
+  ...htmlAttrs
+} = Astro.props;
+---
+
+<div class={cn(grid({ columns }), className)} {...htmlAttrs}>
+  {photos.map((photo) => (
+    <Figure
+      src={photo.src}
+      alt={photo.alt}
+      caption={photo.caption}
+      aspectRatio={photo.aspectRatio}
+    />
+  ))}
+</div>
+
+{groupCaption && (
+  <p class="text-xs text-text-light text-center italic -mt-2 mb-6">{groupCaption}</p>
+)}
