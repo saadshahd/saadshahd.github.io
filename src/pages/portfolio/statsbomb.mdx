@@ -147,36 +147,38 @@ Two collectors per match, each following a team, manually entering 3000+ events 
     <figure>
       <MermaidDiagram
         id="workflow-before"
-        caption="8-10h total: 2h collection (4 man-hours), then 6-8h post-processing (validation, conflicts, freeze frames)"
+        caption="~12h total: Collection (4h each) → First merge (1h) → Post-processing (4h each) → Final merge (1h) = 20 man-hours"
         relationships={[
-          "Collection: 2 collectors × 2h = 4 man-hours",
-          "Post-processing: 6-8h for validation, conflict resolution, freeze frames",
-          "Total: 8-10h wall-clock = 16-20 man-hours",
-          "Sequential dependency creates bottleneck"
+          "Parallel collection: Home & Away collectors (4h each)",
+          "First merge: Reconcile collection conflicts (1h)",
+          "Parallel post-processing: Validation, conflicts, freeze frames (4h each)",
+          "Final merge: Reconcile post-processing conflicts (1h)",
+          "Total: ~12h wall-clock = 20 man-hours"
         ]}
       >
 
 ```mermaid
 graph TD
-    Start["Match begins"] --> Collect["Collection
-    2 collectors × 4h"]
-    Collect --> Post["Post-processing
-    ~8 hours"]
-    Post --> Valid["Validation +
-    Conflict resolution +
-    Freeze frames"]
-    Valid --> Complete["Match complete
-    ~8h total
-    ~16 man-hours"]
+    Start["Match begins"] --> HomeCollector["Home collector"]
+    Start --> AwayCollector["Away collector"]
+    HomeCollector --> Merge1["Reconcile"]
+    AwayCollector --> Merge1
+    Merge1 --> HomePost["Validation + Frames"]
+    Merge1 --> AwayPost["Validation + Frames"]
+    HomePost --> Merge2["Final merge"]
+    AwayPost --> Merge2
+    Merge2 --> Complete["Match complete
+    ~12h total
+    ~20 man-hours"]
 
     classDef problem fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
-    class Start,Collect,Post,Valid,Complete problem
+    class Start,HomeCollector,AwayCollector,Merge1,HomePost,AwayPost,Merge2,Complete problem
 ```
 
       </MermaidDiagram>
       <details class="mt-2 text-xs text-text-lighter text-center">
         <summary class="cursor-pointer hover:text-text">Text alternative</summary>
-        <p class="mt-1">Sequential workflow: 2 collectors work 2h in parallel for collection (4 man-hours), then 6-8h post-processing for validation, conflict resolution, and freeze frames. Total: 8-10h wall-clock = 16-20 man-hours.</p>
+        <p class="mt-1">Before workflow: Home and Away collectors work in parallel (4h each). First merge reconciles collection conflicts (1h). Then parallel post-processing for validation, conflicts, and freeze frames (4h each). Final merge reconciles post-processing conflicts (1h). Total: ~12h wall-clock = 20 man-hours.</p>
       </details>
     </figure>
   </div>
@@ -202,18 +204,17 @@ graph TD
 
 ```mermaid
 graph TD
-    Start["Match begins"] --> Base["Base Event
-    (name, timestamp)"]
+    Start["Match begins"] --> Base["Base Event"]
     Base --> E1["Extras"]
     Base --> E2["Location"]
     Base --> E3["FreezeFrame"]
     E1 --> M["Automated merge"]
     E2 --> M
     E3 --> M
-    M --> N["Match ends
-    ~2 hours"]
-    N --> O["Complete Analysis"]
-
+    M --> N["Complete Analysis"]
+    N --> O["Match ends
+    ~2 hours
+    ~7 man hours"]
     classDef success fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
     class Start,Base,E1,E2,E3,M,N,O success
 ```
@@ -221,7 +222,7 @@ graph TD
       </MermaidDiagram>
       <details class="mt-2 text-xs text-text-lighter text-center">
         <summary class="cursor-pointer hover:text-text">Text alternative</summary>
-        <p class="mt-1">Concurrent workflow: Base events (name, timestamp) created during match with 3 parallel enrichments (Extras, Location, FreezeFrame), followed by 5-minute automated merge at match end. Total: ~2 hours.</p>
+        <p class="mt-1">Concurrent workflow: Base events (name, timestamp) created during match with 3 parallel enrichments (Extras, Location, FreezeFrame), automated merge, complete layered analysis at match end. Total: ~2 hours wall-clock = ~7 man-hours.</p>
       </details>
     </figure>
   </div>
