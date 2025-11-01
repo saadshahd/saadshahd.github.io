@@ -423,7 +423,7 @@ Most systems would version the data: v1 events stay v1, new matches use v2. But 
 
 The solution: **tiered evolution.** When the dataspec changed, we'd backfill historical data through the new rules—recomputing derived facts from the atomic events we stored. The graph structure made this possible: we knew what cascaded when one definition changed.
 
-The dataspec itself had to be uncertain. I knew from week one we'd iterate, have versions, experiment. Our historical data needed to evolve with our understanding—not versioned snapshots frozen in time, but living data that grew smarter as we did.
+The dataspec itself had to be uncertain. By week one, the question shifted: not *if* we'd iterate, but *how often*. Our historical data needed to evolve with our understanding—not versioned snapshots frozen in time, but living data that grew smarter as we did.
   </section>
 
   <SectionDivider spacing="major" />
@@ -432,7 +432,7 @@ The dataspec itself had to be uncertain. I knew from week one we'd iterate, have
   <section class="mb-8" id="team-building">
     <Heading level={3} as="h2" class="mb-6 text-navy ">Distributed Ownership: Learning to Scale</Heading>
 
-I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
+What enables fast iteration at the start? Simplicity—ship twice daily, direct collector feedback, zero coordination. As complexity grew (DSLs, state machines, metadata resolution), the question shifted: how do you maintain velocity with a team? The technical architecture took three years to evolve. The harder part: building a team that could iterate beyond the initial design while learning to distribute ownership.
 
 <Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
 
