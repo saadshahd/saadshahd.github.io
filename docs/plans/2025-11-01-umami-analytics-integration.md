@@ -9,6 +9,7 @@
 ## Problem
 
 After launching the portfolio and sharing on LinkedIn, we have zero visibility into:
+
 - **Visitor behavior** - Are people reading the case study? Where do they drop off?
 - **Traffic sources** - Is LinkedIn driving traffic? Which posts work?
 - **Engagement patterns** - Do CTAs work? Which sections engage?
@@ -23,6 +24,7 @@ After launching the portfolio and sharing on LinkedIn, we have zero visibility i
 **Chosen solution:** Umami Cloud analytics with custom event tracking
 
 **Why Umami:**
+
 - ✅ **Free tier sufficient** (100K events/month, 3 websites, 6-month retention)
 - ✅ **Privacy-first** (cookie-free, GDPR compliant, no consent banner)
 - ✅ **Custom events** (scroll depth, CTA clicks, section engagement)
@@ -31,6 +33,7 @@ After launching the portfolio and sharing on LinkedIn, we have zero visibility i
 - ✅ **Lightweight** (~3KB script, async load, no performance impact)
 
 **Alternative considered (70% confident):** Cloudflare Web Analytics
+
 - **Pros:** 100% free forever, even simpler setup
 - **Cons:** No custom event tracking (can't measure scroll depth, CTA clicks)
 - **Why rejected:** User wants "nice to have" event tracking for engagement insights
@@ -84,6 +87,7 @@ After launching the portfolio and sharing on LinkedIn, we have zero visibility i
 ### Tracking Strategy
 
 **Automatic tracking (no code needed):**
+
 - Pageviews, unique visitors
 - Referrer sources (linkedin.com visible)
 - Country, device, browser, OS
@@ -91,17 +95,18 @@ After launching the portfolio and sharing on LinkedIn, we have zero visibility i
 
 **Custom event tracking:**
 
-| Event Type | Trigger | Data Captured | Why |
-|------------|---------|---------------|-----|
-| `scroll-depth` | Intersection Observer at 25/50/75/100% | page, depth, section | Shows where readers drop off in case study |
-| `cta-click` | Button/Link click | location, text, destination | Measures CTA effectiveness |
-| `section-view` | Intersection Observer on major sections | page, section-name | Identifies engaging vs skipped sections |
-| `outbound-link` | External link click | destination, source-page | Tracks LinkedIn/GitHub profile clicks |
+| Event Type      | Trigger                                 | Data Captured               | Why                                        |
+| --------------- | --------------------------------------- | --------------------------- | ------------------------------------------ |
+| `scroll-depth`  | Intersection Observer at 25/50/75/100%  | page, depth, section        | Shows where readers drop off in case study |
+| `cta-click`     | Button/Link click                       | location, text, destination | Measures CTA effectiveness                 |
+| `section-view`  | Intersection Observer on major sections | page, section-name          | Identifies engaging vs skipped sections    |
+| `outbound-link` | External link click                     | destination, source-page    | Tracks LinkedIn/GitHub profile clicks      |
 
 **UTM parameters for LinkedIn:**
+
 ```
-https://saad-shahd.dev/?utm_source=linkedin&utm_medium=social&utm_campaign=launch-2025-01
-https://saad-shahd.dev/portfolio/statsbomb/?utm_source=linkedin&utm_medium=social&utm_campaign=case-study-statsbomb
+https://saadshahd.github.io/?utm_source=linkedin&utm_medium=social&utm_campaign=launch-2025-01
+https://saadshahd.github.io/portfolio/statsbomb/?utm_source=linkedin&utm_medium=social&utm_campaign=case-study-statsbomb
 ```
 
 ---
@@ -111,16 +116,19 @@ https://saad-shahd.dev/portfolio/statsbomb/?utm_source=linkedin&utm_medium=socia
 ### Phase 1: Base Integration (5 minutes, 1 story point)
 
 **Files modified:**
+
 1. `src/layouts/Layout.astro` - Add Umami script tag
 2. `.env` - Add `PUBLIC_UMAMI_WEBSITE_ID` (from Umami dashboard)
 3. `.env.example` - Document environment variable
 
 **Changes:**
+
 - Add conditional script tag in `<head>` (only loads if env var set)
 - Async/defer loading (no performance impact)
 - TypeScript globals for `window.umami`
 
 **Verification:**
+
 - Load site, check Network tab for `script.js` from `cloud.umami.is`
 - Visit Umami dashboard, confirm pageview recorded
 - Test on multiple pages, verify paths tracked correctly
@@ -130,22 +138,25 @@ https://saad-shahd.dev/portfolio/statsbomb/?utm_source=linkedin&utm_medium=socia
 ### Phase 2: Analytics Utility (10 minutes, 1 story point)
 
 **Files created:**
+
 1. `src/utils/analytics.ts` - Event tracking helpers
 2. `src/types/umami.d.ts` - TypeScript definitions for Umami API
 
 **API design:**
+
 ```typescript
 // Core tracking function
-export function trackEvent(name: string, data?: Record<string, any>): void
+export function trackEvent(name: string, data?: Record<string, any>): void;
 
 // Convenience helpers
-export function trackCTAClick(location: string, text: string): void
-export function trackScrollDepth(page: string, depth: number): void
-export function trackSectionView(page: string, section: string): void
-export function trackOutboundLink(destination: string, source: string): void
+export function trackCTAClick(location: string, text: string): void;
+export function trackScrollDepth(page: string, depth: number): void;
+export function trackSectionView(page: string, section: string): void;
+export function trackOutboundLink(destination: string, source: string): void;
 ```
 
 **Type safety:**
+
 ```typescript
 // src/types/umami.d.ts
 interface Window {
@@ -156,6 +167,7 @@ interface Window {
 ```
 
 **Error handling:**
+
 - Check `typeof window !== 'undefined'` (SSR safety)
 - Check `'umami' in window` (script loaded)
 - Silent failure if Umami unavailable (graceful degradation)
@@ -165,11 +177,13 @@ interface Window {
 ### Phase 3: CTA Tracking (10 minutes, 1 story point)
 
 **Files modified:**
+
 1. `src/components/Button.astro` - Add click tracking
 2. `src/components/Link.astro` - Add outbound link tracking
 3. `src/components/CalloutCTA.astro` - Track CTA interactions
 
 **Implementation pattern:**
+
 ```astro
 ---
 // Button.astro
@@ -197,6 +211,7 @@ const isExternal = href.startsWith('http');
 ```
 
 **Tracked CTAs:**
+
 - Homepage: "Explore My Work", "Start a Conversation"
 - Case study: "Read Full Case Study" cards
 - About page: "Download Resume"
@@ -207,53 +222,60 @@ const isExternal = href.startsWith('http');
 ### Phase 4: Scroll Depth Tracking (15 minutes, 2 story points)
 
 **Files modified:**
+
 1. `src/pages/portfolio/statsbomb.astro` - Add scroll observer
 
 **Implementation approach:**
+
 ```typescript
 // Intersection Observer watching key sections
 const observeScrollDepth = () => {
   const sections = [
-    { element: document.querySelector('#tldr'), depth: 25 },
-    { element: document.querySelector('#architecture'), depth: 50 },
-    { element: document.querySelector('#impact'), depth: 75 },
-    { element: document.querySelector('footer'), depth: 100 },
+    { element: document.querySelector("#tldr"), depth: 25 },
+    { element: document.querySelector("#architecture"), depth: 50 },
+    { element: document.querySelector("#impact"), depth: 75 },
+    { element: document.querySelector("footer"), depth: 100 },
   ];
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const section = sections.find(s => s.element === entry.target);
-        if (section) {
-          umami.track('scroll-depth', {
-            page: 'statsbomb-case-study',
-            depth: `${section.depth}%`,
-            section: entry.target.id
-          });
-          observer.unobserve(entry.target); // Fire once per section
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const section = sections.find((s) => s.element === entry.target);
+          if (section) {
+            umami.track("scroll-depth", {
+              page: "statsbomb-case-study",
+              depth: `${section.depth}%`,
+              section: entry.target.id,
+            });
+            observer.unobserve(entry.target); // Fire once per section
+          }
         }
-      }
-    });
-  }, { threshold: 0.5 }); // Fire when 50% of section visible
+      });
+    },
+    { threshold: 0.5 }
+  ); // Fire when 50% of section visible
 
-  sections.forEach(s => s.element && observer.observe(s.element));
+  sections.forEach((s) => s.element && observer.observe(s.element));
 };
 
 // Run after page load
-if (document.readyState === 'complete') {
+if (document.readyState === "complete") {
   observeScrollDepth();
 } else {
-  window.addEventListener('load', observeScrollDepth);
+  window.addEventListener("load", observeScrollDepth);
 }
 ```
 
 **Why Intersection Observer:**
+
 - More accurate than scroll listeners
 - Better performance (browser-optimized)
 - Fires once per section (no duplicate events)
 - Respects `prefers-reduced-motion` (standard behavior)
 
 **Sections tracked:**
+
 1. **25% (TL;DR)** - User started reading
 2. **50% (Architecture)** - User engaged with technical content
 3. **75% (Impact)** - User reading outcomes
@@ -266,12 +288,14 @@ if (document.readyState === 'complete') {
 **Umami dashboard setup:**
 
 1. **Custom reports:**
+
    - "LinkedIn Traffic" - Filter by `utm_source=linkedin`
    - "Case Study Engagement" - Filter `scroll-depth` events on statsbomb page
    - "CTA Performance" - Filter `cta-click` events, group by text
    - "Drop-off Analysis" - Compare scroll depths (100% - 75% - 50% - 25%)
 
 2. **Goals (if available on free tier):**
+
    - Goal: "Contact CTA Click"
    - Goal: "Full Case Study Read" (100% scroll depth)
 
@@ -285,6 +309,7 @@ if (document.readyState === 'complete') {
 ### Why Not Google Analytics?
 
 **Rejected (40% confident GA would work):**
+
 - ❌ Cookie-based (requires consent banner)
 - ❌ Privacy concerns (tracks users across sites)
 - ❌ Overkill for portfolio (enterprise features unused)
@@ -294,6 +319,7 @@ if (document.readyState === 'complete') {
 ### Why Not Plausible? ($9/month)
 
 **Deferred (90% confident Plausible would be better, but cost matters):**
+
 - ❌ $9/month exceeds "free only" budget
 - ✅ Automatic scroll depth tracking (would save implementation time)
 - ✅ Better UX, Google Search Console integration
@@ -302,6 +328,7 @@ if (document.readyState === 'complete') {
 ### Environment Variable Strategy
 
 **Decision:** Use `PUBLIC_UMAMI_WEBSITE_ID` (public prefix)
+
 - ✅ Astro convention for client-side env vars
 - ✅ Safe to expose (website ID is public in script tag anyway)
 - ✅ Easy to set in GitHub Pages environment (if needed)
@@ -311,18 +338,21 @@ if (document.readyState === 'complete') {
 ## Privacy & Compliance
 
 **GDPR/CCPA compliance:**
+
 - ✅ No cookies (no consent banner required)
 - ✅ No personal data collected (anonymous counts)
 - ✅ No cross-site tracking
 - ✅ Visitor IP addresses anonymized
 
 **Performance impact:**
+
 - Umami script: ~3KB gzipped
 - Loads async (doesn't block render)
 - Custom events: negligible (<1KB per page)
 - **Expected load time:** 2.1s → 2.1s (no change)
 
 **Accessibility:**
+
 - ✅ Tracking doesn't affect screen readers
 - ✅ No visual changes to UI
 - ✅ Works with JavaScript disabled (graceful degradation)
@@ -332,6 +362,7 @@ if (document.readyState === 'complete') {
 ## Success Metrics
 
 **After 1 week, we should know:**
+
 - ✅ Total visitors from LinkedIn post
 - ✅ Bounce rate (% who leave immediately)
 - ✅ Case study engagement (% reaching 50%, 75%, 100% depth)
@@ -339,6 +370,7 @@ if (document.readyState === 'complete') {
 - ✅ Top referrer sources
 
 **After 1 month, we can optimize:**
+
 - If 50% drop at 50% scroll → Middle sections need work
 - If LinkedIn bounce rate >70% → Landing page needs improvement
 - If CTA clicks <5% → CTA copy/placement needs adjustment
@@ -349,12 +381,14 @@ if (document.readyState === 'complete') {
 ## Reversibility
 
 **High reversibility (90% confident):**
+
 - Remove script tag from Layout.astro → Back to no tracking (5 minutes)
 - Keep event tracking code → Works with other analytics (Plausible, Fathom)
 - Export data from Umami → CSV download anytime
 - Migrate to self-hosted Umami → Same tracking code, different endpoint
 
 **Migration path to paid solution:**
+
 1. Keep Umami script tag
 2. Add Plausible script tag (runs in parallel)
 3. Compare data for 1-2 weeks
@@ -413,6 +447,7 @@ Phase 6: Documentation & Launch (0.5 story points)
 ## Future Enhancements (Not Now)
 
 **Consider later if traffic grows:**
+
 1. **Heatmaps** (requires paid service like Hotjar)
 2. **Session replay** (Umami Pro tier $20/month or LogRocket)
 3. **A/B testing** (requires custom implementation or tool)
@@ -444,12 +479,14 @@ Phase 6: Documentation & Launch (0.5 story points)
 **Overall confidence:** 85%
 
 **Based on:**
+
 - Umami is proven solution (31K GitHub stars, used by thousands)
 - Free tier covers expected traffic (100K events >> portfolio needs)
 - Implementation is straightforward (well-documented API)
 - Reversibility is high (remove script tag = done)
 
 **Key assumption that could invalidate this:**
+
 - If traffic exceeds 100K events/month → Upgrade to Pro ($20/month) or self-host
 
 **Alternative confidence:** Self-hosted Umami (75% confident) - More setup complexity but free forever
@@ -457,6 +494,7 @@ Phase 6: Documentation & Launch (0.5 story points)
 ---
 
 **Applied patterns:**
+
 - Library-First (using Umami vs building custom analytics)
 - Progressive Disclosure (start with base tracking, add events incrementally)
 - Make Illegal States Unrepresentable (TypeScript types prevent invalid event data)
