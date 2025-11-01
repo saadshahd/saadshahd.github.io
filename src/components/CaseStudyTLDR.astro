@@ -1,0 +1,34 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/utils/cn';
+
+interface Props extends HTMLAttributes<'details'> {
+  /**
+   * Summary title (default: "TL;DR: What We Built (2 min)")
+   */
+  title?: string;
+
+  /**
+   * Default open state
+   */
+  open?: boolean;
+}
+
+const {
+  title = 'TL;DR: What We Built (2 min)',
+  open = true,
+  class: className,
+  ...htmlAttrs
+} = Astro.props;
+---
+
+<details
+  class={cn('mb-8 p-6 bg-surface rounded-lg border border-neutral-light', className)}
+  open={open}
+  {...htmlAttrs}
+>
+  <summary class="cursor-pointer font-semibold text-text hover:text-text-light transition-colors">
+    {title}
+  </summary>
+  <slot />
+</details>
