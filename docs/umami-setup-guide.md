@@ -19,16 +19,22 @@ Visit your Umami dashboard at https://cloud.umami.is and set up custom views:
 
 #### 1. LinkedIn Traffic Report
 
-**Path:** Dashboard → Reports → Create Custom Report
+**Note:** The Reports feature may not be available on Umami Cloud free tier. Use the workaround below instead.
 
-**Configuration:**
+**Path (if available):** Dashboard → Reports → Create Custom Report
 
-- **Name:** "LinkedIn Traffic"
-- **Filter:** `utm_source = linkedin` OR `referrer contains linkedin.com`
-- **Metrics:** Visitors, pageviews, bounce rate, avg time on page
-- **Time range:** Last 7 days (or custom)
+**Alternative (Free Tier):** Dashboard → Referrers → Filter/Search for "linkedin"
 
-**What this shows:** All traffic from LinkedIn, including organic shares and UTM-tagged posts
+**What to look for:**
+- Click on "Referrers" in the left sidebar
+- Look for `linkedin.com` or `lnkd.in` in the list
+- Click the referrer to see detailed metrics:
+  - Total visitors from LinkedIn
+  - Landing pages (which pages they visit)
+  - Bounce rate
+  - Average time on site
+
+**What this shows:** All traffic from LinkedIn, including organic shares
 
 ---
 
