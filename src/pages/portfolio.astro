@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Container from '../components/Container.astro';
 import Card from '../components/Card.astro';
 import Badge from '../components/Badge.astro';
+import BadgeList from '../components/BadgeList.astro';
 import Heading from '../components/typography/Heading.astro';
 import Body from '../components/typography/Body.astro';
 ---
@@ -21,11 +22,13 @@ import Body from '../components/typography/Body.astro';
             How do you scale real-time sports data collection without sacrificing correctness?
             Week one partnership: Ali dictated rules, I typed configuration, collectors thanked us. We built prevention into collection tools, gave product managers ownership through configuration, scaled to 5000+ collectors across sports. Architecture emerged over three years. Team building took longer—by the time ownership became distributed, I'd left Egypt. Lesson: sustainable systems need teams, not just separation.
           </Body>
-          <div class="flex flex-wrap gap-2">
-            <Badge variant="category">Real-Time Data Collection</Badge>
-            <Badge variant="status">State Machines</Badge>
-            <Badge variant="skill">Configuration-Driven</Badge>
-          </div>
+          <BadgeList
+            badges={[
+              { label: "Real-Time Data Collection", variant: "category" },
+              { label: "State Machines", variant: "status" },
+              { label: "Configuration-Driven", variant: "skill" }
+            ]}
+          />
         </div>
       </Card>
 
@@ -39,16 +42,16 @@ import Body from '../components/typography/Body.astro';
             The challenge is architectural: coherence at scale while preserving developer experience. Puck and Payload became foundations for structured flexibility—schema-driven boundaries let teams compose freely without breaking each other.
             Still exploring what content collaboration looks like at 16M+ customer scale.
           </Body>
-          <div class="flex flex-wrap gap-2 mb-4">
-            {/* System Characteristics */}
-            <Badge variant="category">Multi-Team Collaboration</Badge>
-            <Badge variant="category">Content Governance</Badge>
-            {/* Key Technologies */}
-            <Badge variant="status">Puck</Badge>
-            <Badge variant="status">Payload</Badge>
-            {/* Differentiating Skill */}
-            <Badge variant="skill">Structured Flexibility</Badge>
-          </div>
+          <BadgeList
+            badges={[
+              { label: "Multi-Team Collaboration", variant: "category" },
+              { label: "Content Governance", variant: "category" },
+              { label: "Puck", variant: "status" },
+              { label: "Payload", variant: "status" },
+              { label: "Structured Flexibility", variant: "skill" }
+            ]}
+            class="mb-4"
+          />
           <Body size="sm" as="div" class="text-text-lighter">
             Coming soon...
           </Body>

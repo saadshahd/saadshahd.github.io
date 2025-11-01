@@ -1,0 +1,46 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/utils/cn';
+import Badge from '@/components/Badge.astro';
+
+interface BadgeItem {
+  label: string;
+  variant: 'skill' | 'category' | 'status';
+}
+
+const list = cva(
+  'flex flex-wrap',
+  {
+    variants: {
+      spacing: {
+        compact: 'gap-2',
+        default: 'gap-4',
+      },
+    },
+    defaultVariants: {
+      spacing: 'compact',
+    },
+  }
+);
+
+interface Props extends HTMLAttributes<'div'>, VariantProps<typeof list> {
+  /**
+   * Array of badge objects with label and variant
+   */
+  badges: BadgeItem[];
+}
+
+const {
+  badges,
+  spacing,
+  class: className,
+  ...htmlAttrs
+} = Astro.props;
+---
+
+<div class={cn(list({ spacing }), className)} {...htmlAttrs}>
+  {badges.map((badge) => (
+    <Badge variant={badge.variant}>{badge.label}</Badge>
+  ))}
+</div>
