@@ -36,6 +36,7 @@
     "photoswipe": "^5.4.4",
     "photoswipe-dynamic-caption-plugin": "^1.2.7",
     "shiki": "^3.13.0",
+    "tailwind-merge": "^3.3.1",
     "zod": "^4.1.12"
   }
 }

@@ -1,6 +1,6 @@
 ---
 import { cva } from 'class-variance-authority';
-import { clsx } from 'clsx';
+import { cn } from '../utils/cn';
 
 const list = cva([
   'space-y-4',
@@ -35,7 +35,7 @@ type Props = {
 const { items, class: className } = Astro.props;
 ---
 
-<dl class={clsx(list(), className)}>
+<dl class={cn(list(), className)}>
   {items.map(({ term, definition }) => (
     <div class={item()}>
       <dt class={termStyle()}>{term}</dt>

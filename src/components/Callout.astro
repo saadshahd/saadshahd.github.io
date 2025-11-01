@@ -1,6 +1,6 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
-import { clsx } from 'clsx';
+import { cn } from '../utils/cn';
 import { Lightbulb, Layers, AlertTriangle, Code2, MessageSquareQuote, Info } from '@lucide/astro';
 
 // CVA variant definitions - STYLE ONLY (colors/borders)
@@ -107,9 +107,9 @@ const iconMap = {
 const IconComponent = iconMap[icon];
 ---
 
-<aside class={clsx(callout({ variant, size }), className)} role="note">
+<aside class={cn(callout({ variant, size }), className)} role="note">
   {titleText && (
-    <div class={clsx(title(), 'flex items-center gap-2')}>
+    <div class={cn(title(), 'flex items-center gap-2')}>
       {IconComponent && (
         <IconComponent class="w-5 h-5 flex-shrink-0" />
       )}
@@ -121,7 +121,7 @@ const IconComponent = iconMap[icon];
   </div>
 
   {Astro.slots.has('cta') && (
-    <div class={clsx(ctaSection({ variant, size }))} role="group" aria-label="Actions">
+    <div class={cn(ctaSection({ variant, size }))} role="group" aria-label="Actions">
       <slot name="cta" />
     </div>
   )}

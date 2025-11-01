@@ -2,7 +2,7 @@
 import Card from './Card.astro';
 import Heading from './typography/Heading.astro';
 import { AlertTriangle, CheckCircle } from '@lucide/astro';
-import { clsx } from 'clsx';
+import { cn } from '../utils/cn';
 
 type ComparisonVariant = 'before' | 'after' | 'problem' | 'solution';
 
@@ -25,9 +25,9 @@ const iconMap = {
 const { Icon, color } = iconMap[variant];
 ---
 
-<Card variant="default" class={clsx('p-6', className)}>
+<Card variant="default" class={cn('p-6', className)}>
   <Heading level={3} as="h3" class="flex items-center gap-2 mb-4 text-text">
-    <Icon class={clsx('w-5 h-5 flex-shrink-0', color)} aria-hidden="true" />
+    <Icon class={cn('w-5 h-5 flex-shrink-0', color)} aria-hidden="true" />
     <span>{title}</span>
   </Heading>
   <div class="text-text-lighter space-y-3 text-sm">

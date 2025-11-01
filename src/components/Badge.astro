@@ -1,6 +1,6 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
-import { clsx } from 'clsx';
+import { cn } from '../utils/cn';
 
 const badge = cva(
   'inline-flex items-center rounded-full font-medium border',
@@ -28,7 +28,7 @@ type Props = VariantProps<typeof badge> & {
 };
 
 const { variant, size, class: className } = Astro.props;
-const classes = clsx(badge({ variant, size }), className);
+const classes = cn(badge({ variant, size }), className);
 ---
 
 <span class={classes}>

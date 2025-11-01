@@ -1,6 +1,6 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
-import { clsx } from 'clsx';
+import { cn } from '../utils/cn';
 
 // CVA variant definitions - Neutral background + accent left border (Callout pattern)
 const metricCard = cva(
@@ -66,11 +66,11 @@ const {
 const textColor = textColorMap[variant];
 ---
 
-<div class={clsx(metricCard({ variant }), className)}>
-  <div class={clsx(valueStyles(), textColor)}>
+<div class={cn(metricCard({ variant }), className)}>
+  <div class={cn(valueStyles(), textColor)}>
     {value}
   </div>
-  <div class={clsx(labelStyles(), textColor)}>
+  <div class={cn(labelStyles(), textColor)}>
     {label}
   </div>
   <div class={descriptionStyles()}>

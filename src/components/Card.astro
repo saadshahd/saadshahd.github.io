@@ -1,6 +1,6 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
-import { clsx } from 'clsx';
+import { cn } from '../utils/cn';
 
 const card = cva(
   'block rounded-lg overflow-hidden transition-all',
@@ -24,7 +24,7 @@ type Props = VariantProps<typeof card> & {
 };
 
 const { variant, href, class: className } = Astro.props;
-const classes = clsx(card({ variant }), className);
+const classes = cn(card({ variant }), className);
 ---
 
 {href ? (

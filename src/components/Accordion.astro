@@ -1,6 +1,6 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
-import { clsx } from 'clsx';
+import { cn } from '../utils/cn';
 
 /**
  * Accordion Component
@@ -116,6 +116,10 @@ const summary = cva([
         'text-text',                    // Same color as DL terms - no hover change
       ],
     },
+
+    grouped: {
+      true: 'pl-4',
+    },
   },
   defaultVariants: {
     size: 'default',
@@ -196,12 +200,12 @@ if (grouped && !position) {
 ---
 
 <details
-  class={clsx(accordion({ variant, grouped, position, size }), className)}
+  class={cn(accordion({ variant, grouped, position, size }), className)}
   data-accordion
   data-grouped={grouped || undefined}
   open={defaultOpen}
 >
-  <summary class={summary({ size })}>
+  <summary class={summary({ size, grouped })}>
     {name ? (
       <div class="flex flex-col md:flex-row md:items-baseline md:gap-2">
         <span class="font-semibold text-text">{name}</span>

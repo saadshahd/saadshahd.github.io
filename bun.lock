@@ -13,6 +13,7 @@
         "photoswipe": "^5.4.4",
         "photoswipe-dynamic-caption-plugin": "^1.2.7",
         "shiki": "^3.13.0",
+        "tailwind-merge": "^3.3.1",
         "zod": "^4.1.12",
       },
       "devDependencies": {
@@ -1156,6 +1157,8 @@
     "style-to-object": ["style-to-object@1.0.11", "", { "dependencies": { "inline-style-parser": "0.2.4" } }, "sha512-5A560JmXr7wDyGLK12Nq/EYS38VkGlglVzkis1JEdbGWSnbQIEhZzTJhzURXN5/8WwwFCs/f/VVcmkTppbXLow=="],
 
     "stylis": ["stylis@4.3.6", "", {}, "sha512-yQ3rwFWRfwNUY7H5vpU0wfdkNSnvnJinhF9830Swlaxl03zsOjCfmX0ugac+3LtK0lYSgwL/KXc8oYL3mG4YFQ=="],
+
+    "tailwind-merge": ["tailwind-merge@3.3.1", "", {}, "sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g=="],
 
     "tailwindcss": ["tailwindcss@4.1.16", "", {}, "sha512-pONL5awpaQX4LN5eiv7moSiSPd/DLDzKVRJz8Q9PgzmAdd1R4307GQS2ZpfiN7ZmekdQrfhZZiSE5jkLR4WNaA=="],
 
