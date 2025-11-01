@@ -1,0 +1,48 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Heading from '@/components/typography/Heading.astro';
+import Body from '@/components/typography/Body.astro';
+import { cn } from '@/utils/cn';
+
+interface Props extends HTMLAttributes<'div'> {
+  /**
+   * Job title (e.g., "Senior Software Engineer")
+   */
+  title: string;
+
+  /**
+   * Company name
+   */
+  company: string;
+
+  /**
+   * Location string (e.g., "London")
+   */
+  location: string;
+
+  /**
+   * Pre-formatted date range (e.g., "03/2022 - Present")
+   */
+  dates: string;
+}
+
+const {
+  title,
+  company,
+  location,
+  dates,
+  class: className,
+  ...htmlAttrs
+} = Astro.props;
+---
+
+<div class={cn('mb-6', className)} {...htmlAttrs}>
+  <div class="flex justify-between items-start mb-2">
+    <div>
+      <Heading level={2} as="h3" class="mb-1"><span>{title}</span></Heading>
+      <Body size="sm" as="p" class="text-text-lighter">{company}</Body>
+    </div>
+    <Body size="sm" as="p" class="text-text-lighter">{location} | {dates}</Body>
+  </div>
+  <slot />
+</div>

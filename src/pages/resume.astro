@@ -7,6 +7,7 @@ import Heading from '../components/typography/Heading.astro';
 import Body from '../components/typography/Body.astro';
 import Link from '../components/Link.astro';
 import ReadingMetadata from '../components/ReadingMetadata.astro';
+import ExperienceEntry from '../components/ExperienceEntry.astro';
 import '../styles/print-resume.css';
 ---
 
@@ -78,31 +79,27 @@ import '../styles/print-resume.css';
 
       <div class="space-y-10">
         <!-- Wise -->
-        <div>
-          <div class="flex justify-between items-start mb-2">
-            <div>
-              <Heading level={2} as="h3" class="mb-1"><span>Senior Software Engineer</span></Heading>
-              <Body size="sm" as="p" class="text-text-lighter">Wise</Body>
-            </div>
-            <Body size="sm" as="p" class="text-text-lighter">London | 03/2022 - Present</Body>
-          </div>
+        <ExperienceEntry
+          title="Senior Software Engineer"
+          company="Wise"
+          location="London"
+          dates="03/2022 - Present"
+        >
           <Body size="sm" as="p" class="mb-4">Building infrastructure for the world's most international account—helping 16M+ customers move money across borders.</Body>
           <Body size="base" as="ul" class="space-y-3">
             <li><strong>Led hypothesis-driven experimentation that increased conversion 19%.</strong> Partnered with product teams to isolate pricing friction points through rapid A/B testing. Short iterations revealed psychological barriers traditional analytics missed—validating hunches with data, not opinions.</li>
             <li><strong>Partnered with 8 teams to decompose tangled service dependencies, improving velocity 4x through bounded contexts with explicit contracts (DDD principles).</strong> Previous architecture forced coordination across teams for every change. Refactored to message-driven boundaries where services communicate through immutable events. Each team could deploy independently. Tradeoff: Added complexity in event schema evolution, but eliminated coordination tax and reduced deployment risk.</li>
             <li><strong>Leading consolidation of fragmented product components, increasing user satisfaction 26%.</strong> Working with design and engineering teams to migrate six inconsistent UIs into a unified design system backed by shared state management. Users no longer learned different interactions for similar actions—cognitive load dropped, satisfaction rose.</li>
           </Body>
-        </div>
+        </ExperienceEntry>
 
         <!-- Statsbomb -->
-        <div>
-          <div class="flex justify-between items-start mb-2">
-            <div>
-              <Heading level={2} as="h3" class="mb-1"><span>Founding Engineer</span></Heading>
-              <Body size="sm" as="p" class="text-text-lighter">Statsbomb</Body>
-            </div>
-            <Body size="sm" as="p" class="text-text-lighter">Bath, UK | 03/2018 - 03/2022</Body>
-          </div>
+        <ExperienceEntry
+          title="Founding Engineer"
+          company="Statsbomb"
+          location="Bath, UK"
+          dates="03/2018 - 03/2022"
+        >
           <Body size="sm" as="p" class="mb-4">Built core data collection system from scratch for football analytics platform—serving Premier League clubs, international federations, and media companies.</Body>
           <Body size="base" as="ul" class="space-y-3">
             <li><strong>Partnered with domain experts to design domain-specific language (ANTLR grammar) enabling product managers to define sports rules as configuration.</strong> Topological dependency resolution compiled declarative sequences ("pass then reception") into validation logic. Expanded from soccer to American football with zero code changes. Pattern: Separation of rules from execution unlocked non-linear scaling (100 → 5000+ collectors without proportional engineering).</li>
@@ -111,34 +108,30 @@ import '../styles/print-resume.css';
             <li><strong>Led event sourcing architecture with Kafka providing immutable audit trails—critical when clubs make million-pound decisions.</strong> Architecture enabled replay for debugging, consistency without distributed transactions, and linear throughput scaling. Reduced match collection from 16 sequential hours to 4 concurrent hours with near real-time (~20s latency).</li>
             <li><strong>Scaled from 2-person partnership to distributed subsystem ownership across Cairo engineering team.</strong> Engineers took foundational concepts (DSLs, state machines, event sourcing) and evolved them to contexts we hadn't explored—claims-based metadata resolution, concurrent collection workflows, desktop app state management. Pattern: Use production libraries (Apollo, Kafka, ANTLR) for infrastructure; focus engineering on domain problems. Lesson learned: Team building is the multiplier for ambitious architecture. Waiting until year 3 meant racing geo-political constraints before shipping customer-facing DSL.</li>
           </Body>
-        </div>
+        </ExperienceEntry>
 
         <!-- Eventtus -->
-        <div>
-          <div class="flex justify-between items-start mb-2">
-            <div>
-              <Heading level={2} as="h3" class="mb-1"><span>Frontend Technical Lead</span></Heading>
-              <Body size="sm" as="p" class="text-text-lighter">Eventtus</Body>
-            </div>
-            <Body size="sm" as="p" class="text-text-lighter">Cairo, Egypt | 03/2017 - 03/2018</Body>
-          </div>
+        <ExperienceEntry
+          title="Frontend Technical Lead"
+          company="Eventtus"
+          location="Cairo, Egypt"
+          dates="03/2017 - 03/2018"
+        >
           <Body size="sm" as="p" class="mb-4">Built engagement platform for events—the leading event app provider across Middle East and North Africa.</Body>
           <Body size="base" as="ul" class="space-y-3">
             <li><strong>Modernized frontend stack and built event manager dashboards.</strong> Led frontend architecture decisions that enabled teams to ship features faster with better maintainability.</li>
           </Body>
-        </div>
+        </ExperienceEntry>
 
         <!-- Instabug -->
-        <div>
-          <div class="flex justify-between items-start mb-2">
-            <div>
-              <Heading level={2} as="h3" class="mb-1"><span>Senior Frontend Engineer</span></Heading>
-              <Body size="sm" as="p" class="text-text-lighter">Instabug</Body>
-            </div>
-            <Body size="sm" as="p" class="text-text-lighter">Cairo, Egypt | 11/2015 - 08/2016</Body>
-          </div>
+        <ExperienceEntry
+          title="Senior Frontend Engineer"
+          company="Instabug"
+          location="Cairo, Egypt"
+          dates="11/2015 - 08/2016"
+        >
           <Body size="sm" as="p" class="mb-4">Core team member building tools for mobile developers to ship better apps—crash reporting, user feedback, and performance monitoring.</Body>
-        </div>
+        </ExperienceEntry>
       </div>
     </section>
 
