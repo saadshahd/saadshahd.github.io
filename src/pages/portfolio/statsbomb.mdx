@@ -48,12 +48,12 @@ import Quote from '../../components/Quote.astro';
       <summary class="cursor-pointer font-semibold text-text hover:text-text-light transition-colors">TL;DR: What We Built (2 min)</summary>
 
       {/* Hook - outcome-focused, concrete impact */}
-      <Body size="lg" as="p" class="my-6 text-text font-medium leading-relaxed">Built a real-time sports data collection system (2018-2022) through configuration-driven architecture that scaled from 2 founding engineers to distributed teams across multiple sports.</Body>
+      <Body size="lg" as="p" class="my-6 text-text font-medium leading-relaxed">Built a real-time sports data collection system through configuration-driven architecture that scaled from 2 founding engineers to distributed teams across multiple sports.</Body>
 
       <ul class="space-y-3 mb-6 text-text-lighter">
         <li><strong>What Shipped:</strong> Concurrent collection at scale across multiple sports during live matches</li>
         <li><strong>Core Architecture:</strong> Separated domain rules (DSLs) from execution (state machines), enabling configuration-driven expansion without code rewrites for each new sport</li>
-        <li><strong>Business Impact:</strong> Product managers shipped new sports independently, 5-person metadata team scaled to 1000+ collectors, automated validation prevented errors before they happened</li>
+        <li><strong>Business Impact:</strong> Product managers shipped new sports independently, 5-person metadata team scaled to collectors, automated validation prevented errors before they happened</li>
       </ul>
 
       {/* Core lesson callout */}
@@ -395,9 +395,9 @@ I could iterate quickly alone—ship twice daily, no coordination overhead, dire
 
 When **Waheed, Hadeel, and Abdallah** joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with. They felt the same urgency to serve collectors, product managers, and ops teams directly.
 
-Waheed built claims-based metadata resolution—the automated conflict detection system we'd only sketched conceptually. He took provenance + confidence + temporality and made it production-ready, enabling 5 people to resolve conflicts for 1000+ collectors.
+Waheed built claims-based metadata resolution—the automated conflict detection system we'd only sketched conceptually. He took provenance + confidence + temporality and made it production-ready, enabling 5 people to resolve conflicts for thousands collectors.
 
-Hadeel implemented real-time GraphQL subscriptions—the concurrent collection we'd prototyped but hadn't hardened for 1000+ collectors working simultaneously on live matches.
+Hadeel implemented real-time GraphQL subscriptions—the concurrent collection we'd prototyped but hadn't hardened for collectors working simultaneously on live matches.
 
 Abdallah maintained the Electron app state machines and evolved keyboard workflows, including handling NFL-specific edge cases (possession turnover during penalty review) we hadn't mapped when we started. He kept the collector experience smooth as we expanded sports.
 
@@ -498,7 +498,7 @@ Abdallah maintained the Electron app state machines and evolved keyboard workflo
 
 In 2024, two years after I left Egypt, Hudl acquired Statsbomb.
 
-Hudl is the industry standard—the platform most college and professional teams use globally for video analysis and performance tracking. They didn't acquire Statsbomb for the data alone. They acquired the collection system, the DSLs, the real-time infrastructure that enabled 1000+ collectors to work concurrently.
+Hudl is the industry standard—the platform most college and professional teams use globally for video analysis and performance tracking. They didn't acquire Statsbomb for the data alone. They acquired the collection system, the DSLs, the real-time infrastructure that enabled 5000+ collectors to work concurrently.
 
 The patterns Ali and I sketched in VSCode during week one became valuable enough for an industry leader to buy. The architecture that emerged from serving collectors directly, from watching what slowed them down and making it faster, had legs beyond what we imagined.
   </section>
@@ -517,7 +517,7 @@ I had to leave Egypt in early 2022. Not a choice I wanted—leaving Ali, Waheed,
 
 Adham had already left months before. His absence made staying harder—then circumstances forced me to leave. The backend partnership, the late-night Kafka debates, the distributed ownership we'd just started scaling—it fragmented before I left.
 
-By then: 1000+ collectors worldwide, internal DSLs shipped and scaling, American football expansion working. But the customer-facing DSL—the one that would let clients define their own derived facts without us—remained unfinished when I left.
+By then: 5000+ collectors remotely, internal DSLs shipped and scaling, American football expansion working. But the customer-facing DSL—the one that would let clients define their own derived facts without us—remained unfinished when I left.
 
 The people I worked with deserved more time together. The systems we built deserved to reach their full potential. Neither happened.
 
@@ -548,7 +548,7 @@ These aren't universal truths—they worked because of specific conditions:
     summary="Scale: 100k events/minute peak, 5000+ collectors processing live matches"
     defaultOpen={false}
   >
-    <Body size="sm" as="p">During peak live match time, the system processes 100,000+ atomic events per minute—touches, passes, tackles, runs—streaming through arbitrary validation layers in real-time. With 100 collectors, manual coordination could absorb this velocity. At 1000+ collectors, five product managers couldn't handle 50+ daily dataspec questions while the spec evolved. Today at 5000+ collectors processing live matches simultaneously, architectural separation isn't optimization—it's the only way to handle this streaming intensity without engineering bottlenecks.</Body>
+    <Body size="sm" as="p">During peak live match time, the system processes 100,000+ atomic events per minute—touches, passes, tackles, runs—streaming through arbitrary validation layers in real-time. With 100 collectors, manual coordination could absorb this velocity. At 1000+ collectors, 2 product managers couldn't handle 50+ daily dataspec questions while the spec evolved. Today at 5000+ collectors processing live matches simultaneously, architectural separation isn't optimization—it's the only way to handle this streaming intensity without engineering bottlenecks.</Body>
   </Accordion>
 
   <Accordion
