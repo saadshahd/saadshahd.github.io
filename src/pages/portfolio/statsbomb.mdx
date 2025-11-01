@@ -21,6 +21,9 @@ import MetricCard from '../../components/MetricCard.astro';
 import ComparisonCard from '../../components/ComparisonCard.astro';
 import Quote from '../../components/Quote.astro';
 
+import { MoveRight } from '@lucide/astro';
+
+
 <ScrollProgress />
 
 <div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
@@ -41,7 +44,7 @@ import Quote from '../../components/Quote.astro';
     </div>
 
     {/* Reading metadata */}
-    <ReadingMetadata readingTime="26 min" sectionCount={10} class="mb-8" />
+    <ReadingMetadata readingTime="25 min" sectionCount={10} class="mb-8" />
 
     {/* Integrated TL;DR as expandable details */}
     <details class="mb-8 p-6 bg-surface rounded-lg border border-neutral-light" open>
@@ -53,12 +56,12 @@ import Quote from '../../components/Quote.astro';
       <ul class="space-y-3 mb-6 text-text-lighter">
         <li><strong>What Shipped:</strong> Concurrent collection at scale across multiple sports during live matches</li>
         <li><strong>Core Architecture:</strong> Separated domain rules (DSLs) from execution (state machines), enabling configuration-driven expansion without code rewrites for each new sport</li>
-        <li><strong>Business Impact:</strong> Product managers shipped new sports independently, 5-person metadata team scaled to collectors, automated validation prevented errors before they happened</li>
+        <li><strong>Business Impact:</strong> Product managers shipped new sports independently, 5-person metadata team scaled to cover thousands collectors information needs</li>
       </ul>
 
       {/* Core lesson callout */}
       <Callout variant="primary" icon="lightbulb" title="Core Lesson">
-        <p>Team building multiplies architectural leverage—waiting until year three to expand beyond two-person partnership meant racing external constraints before completing customer-facing features.</p>
+        <p>Shared ownership multiplies architectural leverage—treating it as year-three discovery rather than founding principle meant fragmentation interrupted completing the customer-facing vision.</p>
       </Callout>
     </details>
   </section>
@@ -81,7 +84,17 @@ Ali had spent years analyzing sports data—he could articulate possession rules
 
 Week one, Ali and I sat with VSCode open. He spoke rules aloud, I typed them as text:
 
-<p class="text-center">`start → [middle] → break`</p>
+<div class="grid md:grid-cols-3 gap-6 mb-8">
+  <div>
+    `start → [middle] → break`
+  </div>
+
+  <div class="text-center leading-relaxed"><span class="text-text-lighter/80 mr-2">became</span><MoveRight class="w-5 h-5 text-neutral inline"/></div>
+
+  <div>
+    `carry, flight, loose`
+  </div>
+</div>
 
 As I typed what Ali dictated, I realized: I wasn't writing documentation. I was encoding his mental model as executable text. **That's when it clicked: the dataspec can't be code. It has to be data we can iterate without deploys.**
 
@@ -345,6 +358,8 @@ Product managers needed to express domain logic—entry validation, sequencing l
 
 Atomic events (passes, shots) aggregated into derived facts (possession phases, drives, turnovers). Store unchanging truth, recompute everything else when rules evolved.
 
+Week one, Ali and I sketched `start → [middle] → break` as sequential chains. Production revealed ball possession had states—`carry`, `flight`, `loose`—not sequence positions. Early classification asked 'is this recovery offensive?' Later versions asked 'whose team has the ball?'—simpler question, impossible to misinterpret. Pass tracking shifted from outcome-based logic (did it complete?) to state-based (ball in flight → resolution). Flight became its own phase with clear resolution paths.
+
 **The payoff came in 2020.** When we expanded to American football, product managers wrote drive segmentation rules using the same DSL patterns. New sport, same architectural separation. Zero engineering bottleneck.
 
 Without DSLs, every new rule required engineering deploys. With DSLs, product managers shipped dataspec changes independently—velocity without correctness trade-offs.
@@ -417,21 +432,13 @@ The dataspec itself had to be uncertain. I knew from week one we'd iterate, have
   <section class="mb-8" id="team-building">
     <Heading level={3} as="h2" class="mb-6 text-navy text-center max-w-[600px] mx-auto">The Team Building Challenge: From Week One to Distributed Ownership</Heading>
 
-Remember that first-week feeling? Shipping the FreezeFrame tool twice daily, getting thanked by collectors, feeling like I was there to help. **That feeling needed to scale.**
-
 I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
 
 <Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
 
-**Adham** joined in year two (2019) when Omar left to teach kids software. He took ownership of backend development and advocated for Kafka as persistence center, event logs as foundation. I hesitated—felt like complexity. He was right. That decision enabled real-time collection at broadcaster scale. He built the backend services, Kafka streaming, and GraphQL scraper architecture that let product managers define dataspecs without engineering deploys.
+**Adham** advocated for Kafka when he joined in year two. I hesitated—felt like complexity. He was right. That moment taught me distributed ownership meant trusting teammates to see architectural needs I couldn't.
 
-When **Waheed, Hadeel, and Abdallah** joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with. They felt the same urgency to serve collectors, product managers, and ops teams directly.
-
-Waheed built claims-based metadata resolution—the automated conflict detection system we'd only sketched conceptually. He took provenance + confidence + temporality and made it production-ready, enabling 5 people to resolve conflicts for thousands collectors.
-
-Hadeel implemented real-time GraphQL subscriptions—the concurrent collection we'd prototyped but hadn't hardened for collectors working simultaneously on live matches.
-
-Abdallah maintained the Electron app state machines and evolved keyboard workflows, including handling NFL-specific edge cases (possession turnover during penalty review) we hadn't mapped when we started. He kept the collector experience smooth as we expanded sports.
+When **Waheed, Hadeel, and Abdallah** joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with. Waheed transformed conceptual sketches into production systems. Hadeel hardened prototypes for live match scale. Abdallah evolved workflows I thought were complete. They felt the same urgency to serve collectors directly—that partnership from week one had become distributed ownership.
   </section>
 
   <SectionDivider spacing="major" />
@@ -440,11 +447,9 @@ Abdallah maintained the Electron app state machines and evolved keyboard workflo
   <section class="mb-12" id="impact">
     <Heading level={3} as="h2" class="mb-6 text-navy">Impact: Timeline Comparison (2018 → 2021)</Heading>
 
-<Body size="sm" as="p" class="mb-6 text-text-lighter">
-  <strong>What actually changed on the ground?</strong> Here's the operational transformation from Dartfish baseline to production at scale.
-</Body>
+<Body size="sm" as="p" class="text-text-lighter"><strong>What actually changed on the ground?</strong> Here's the operational transformation from Dartfish baseline to production at scale.</Body>
 
-<Quote icon={true} attribution="A.Magdy, 360 Lead">With Dartfish, 12 minutes just to freeze a single shot. Now we freeze every event in the match—passes, tackles, everything. The tool made this scope possible.</Quote>
+<Quote class='my-12' icon={true} attribution="A.Magdy, 360 Lead">With Dartfish, 12 minutes just to freeze a single shot. Now we freeze every event in the match—passes, tackles, everything. The tool made this scope possible.</Quote>
 
 <div class="grid md:grid-cols-2 gap-6 mb-8">
   <ComparisonCard variant="before" title="Engineering Bottleneck">
