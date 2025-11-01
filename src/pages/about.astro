@@ -4,12 +4,51 @@ import Container from '../components/Container.astro';
 import Button from '../components/Button.astro';
 import Heading from '../components/typography/Heading.astro';
 import Body from '../components/typography/Body.astro';
+import DefinitionList from '../components/DefinitionList.astro';
+import ReadingMetadata from '../components/ReadingMetadata.astro';
+import Callout from '../components/Callout.astro';
 import { FileText } from '@lucide/astro';
+
+const expertiseItems = [
+  {
+    term: "Functional Programming",
+    definition: "Separation of concerns through pure functions, immutable data, and composable architectures"
+  },
+  {
+    term: "Distributed Systems",
+    definition: "Building correct systems that handle millions of events while maintaining both velocity and correctness guarantees"
+  },
+  {
+    term: "Real-Time Processing",
+    definition: "Event-driven architectures with Kafka, exactly-once semantics, and graceful degradation"
+  },
+  {
+    term: "Content Architecture",
+    definition: "Editorial infrastructure for global→local fintech content, handling regulatory and cultural complexity"
+  },
+  {
+    term: "Global Scaling",
+    definition: "Fintech regulations, internationalization, and localization across diverse markets"
+  },
+  {
+    term: "Platform Engineering",
+    definition: "Infrastructure that lets teams deploy confidently through observability, testing, and progressive delivery"
+  },
+  {
+    term: "Architecture Patterns",
+    definition: "Domain-Driven Design, CQRS, event sourcing, and microservice decomposition"
+  },
+  {
+    term: "LLM Integration",
+    definition: "Cognitive partners revealing architectural possibilities, not automation replacing judgment"
+  }
+];
 ---
 
 <Layout title="About - Saad Shahd">
   <Container width="narrow">
-    <Heading level={1} as="h1" class="mb-16"><span>About</span></Heading>
+    <Heading level={1} as="h1" class="mb-6"><span>About</span></Heading>
+    <ReadingMetadata readingTime="3 min" class="mb-16" />
 
     <div>
       <Body size="lg" as="p" class="text-text-lighter mb-8 leading-normal">
@@ -25,12 +64,14 @@ import { FileText } from '@lucide/astro';
       </Body>
 
       <Body size="base" as="p" class="mb-8 leading-relaxed">
-        How do systems adapt when the future is unknowable? Architectural separation—separating behavior from state, making illegal states unrepresentable—means systems can handle surprises structurally. Exploring how LLMs fit this pattern: not as automation replacing judgment, but as cognitive partners revealing architectural possibilities we haven't considered. Working primarily in TypeScript, Python, Go, and Clojure.
+        How do systems adapt when the future is unknowable? Over 15 years at Instabug, Statsbomb, and Wise, this pattern repeated: separating behavior from state, making illegal states unrepresentable, means systems can handle surprises structurally. Exploring how LLMs fit this pattern—not as automation replacing judgment, but as cognitive partners revealing architectural possibilities we haven't considered. Working primarily in TypeScript, Python, Go, and Clojure.
       </Body>
 
-      <Body size="base" as="p" class="text-lg font-medium text-accent">
-        Curious about the 'why' first—it sometimes reveals the 'how,' but always clarifies what we're building.
-      </Body>
+      <Callout variant="primary" size="compact" icon="lightbulb">
+        <Body size="base">
+          Curious about the 'why' first—it sometimes reveals the 'how,' but always clarifies what we're building.
+        </Body>
+      </Callout>
 
       <!-- Resume CTA -->
       <div class="mt-10 mb-16">
@@ -41,16 +82,7 @@ import { FileText } from '@lucide/astro';
       </div>
 
       <Heading level={1} as="h2" class="mt-12 mb-6"><span>Technical Expertise</span></Heading>
-      <Body size="base" as="ul" class="space-y-2">
-        <li>Functional programming and separation of concerns</li>
-        <li>Distributed systems correctness</li>
-        <li>Real-time event processing and collection systems</li>
-        <li>Content architecture and editorial platforms</li>
-        <li>Global→local scaling (fintech regulations, i18n/l10n)</li>
-        <li>Developer experience and platform thinking</li>
-        <li>Architectural patterns for distributed systems</li>
-        <li>LLM-augmented development patterns</li>
-      </Body>
+      <DefinitionList items={expertiseItems} />
 
     </div>
   </Container>
