@@ -1,7 +1,7 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/cn';
-import { Lightbulb, Layers, AlertTriangle, Code2, MessageSquareQuote, Info } from '@lucide/astro';
+import { Lightbulb, Layers, AlertTriangle, Code2, MessageSquareQuote, Info, Triangle } from '@lucide/astro';
 
 // CVA variant definitions - STYLE ONLY (colors/borders)
 const callout = cva(
@@ -77,7 +77,7 @@ const ctaSection = cva(
 );
 
 // Icon type - SEMANTIC ONLY
-type IconName = 'lightbulb' | 'layers' | 'alert' | 'code' | 'quote' | 'info' | 'none';
+type IconName = 'lightbulb' | 'layers' | 'alert' | 'code' | 'quote' | 'info' | 'pyramid' | 'none';
 
 type Props = VariantProps<typeof callout> & {
   title?: string;
@@ -101,6 +101,7 @@ const iconMap = {
   code: Code2,                    // Technical implementation
   quote: MessageSquareQuote,      // User voice/testimonials
   info: Info,                     // Background information
+  pyramid: Triangle,              // Egyptian heritage/architectural principles
   none: undefined,                // Explicitly no icon
 } as const;
 

@@ -7,7 +7,7 @@ import Body from '../components/typography/Body.astro';
 import DefinitionList from '../components/DefinitionList.astro';
 import ReadingMetadata from '../components/ReadingMetadata.astro';
 import Callout from '../components/Callout.astro';
-import { FileText } from '@lucide/astro';
+import { FileText, Triangle } from '@lucide/astro';
 
 const expertiseItems = [
   {
@@ -47,12 +47,11 @@ const expertiseItems = [
 
 <Layout title="About - Saad Shahd">
   <Container width="narrow">
-    <Heading level={1} as="h1" class="mb-6"><span>About</span></Heading>
-    <ReadingMetadata readingTime="3 min" class="mb-16" />
+    <Heading level={1} as="h1" class="mb-16"><span>About</span></Heading>
 
     <div>
       <Body size="lg" as="p" class="text-text-lighter mb-8 leading-normal">
-        What if we asked 'why' before 'how'? Over 15 years at Instabug, Statsbomb, and Wise, patterns emerged: when teams explore constraints first, architecture reveals itself through production needs.
+        What if we asked <i>why</i> before <i>how</i>? Over 15 years at Instabug, Statsbomb, and Wise, patterns emerged: when teams explore constraints first, architecture reveals itself through production needs.
       </Body>
 
       <Body size="base" as="p" class="mb-6 leading-relaxed">
@@ -67,19 +66,17 @@ const expertiseItems = [
         How do systems adapt when the future is unknowable? Over 15 years at Instabug, Statsbomb, and Wise, this pattern repeated: separating behavior from state, making illegal states unrepresentable, means systems can handle surprises structurally. Exploring how LLMs fit this pattern—not as automation replacing judgment, but as cognitive partners revealing architectural possibilities we haven't considered. Working primarily in TypeScript, Python, Go, and Clojure.
       </Body>
 
-      <Callout variant="primary" size="compact" icon="lightbulb">
-        <Body size="base">
-          Curious about the 'why' first—it sometimes reveals the 'how,' but always clarifies what we're building.
-        </Body>
+      <Callout variant="primary" size="compact">
+        <div class="md:flex justify-between items-center">
+          <div>
+            <Triangle class="w-5 h-5 inline mr-1" />
+            Curious about the <strong>why</strong> first—it sometimes reveals the <strong>how,</strong> but always clarifies what we're building.
+          </div>
+          <Button variant="primary" size="sm" href="#" class="mt-3 md:mt-0">Full Background</Button>
+        </div>
       </Callout>
 
-      <!-- Resume CTA -->
-      <div class="mt-10 mb-16">
-        <Button href="/resume" variant="primary" size="md" class="gap-2">
-          <FileText size={20} />
-          Full Background
-        </Button>
-      </div>
+      
 
       <Heading level={1} as="h2" class="mt-12 mb-6"><span>Technical Expertise</span></Heading>
       <DefinitionList items={expertiseItems} />
