@@ -22,6 +22,7 @@ Visit your Umami dashboard at https://cloud.umami.is and set up custom views:
 **Path:** Dashboard → Reports → Create Custom Report
 
 **Configuration:**
+
 - **Name:** "LinkedIn Traffic"
 - **Filter:** `utm_source = linkedin` OR `referrer contains linkedin.com`
 - **Metrics:** Visitors, pageviews, bounce rate, avg time on page
@@ -36,19 +37,21 @@ Visit your Umami dashboard at https://cloud.umami.is and set up custom views:
 **Path:** Dashboard → Events → Filter
 
 **Configuration:**
+
 - **Event name:** `scroll-depth`
 - **Filter:** `page = statsbomb-case-study`
 - **Group by:** `depth` field
 - **Visualization:** Bar chart or table
 
 **What this shows:**
+
 - How many readers reach 25% (Origins section)
 - How many reach 50% (Architecture section)
 - How many reach 75% (Lessons section)
 - How many reach 100% (End of page)
 
 **Example insight:** "500 visitors, 400 reached 25%, 300 reached 50%, 150 reached 75%, 80 reached 100%"
-→ *50% drop-off between Architecture and Lessons sections*
+→ _50% drop-off between Architecture and Lessons sections_
 
 ---
 
@@ -57,17 +60,19 @@ Visit your Umami dashboard at https://cloud.umami.is and set up custom views:
 **Path:** Dashboard → Events → Filter
 
 **Configuration:**
+
 - **Event name:** `cta-click`
 - **Group by:** `location` field (shows hero, case-study-end, etc.)
 - **Secondary group:** `text` field (shows button text)
 
 **What this shows:**
+
 - Which CTAs get clicked most ("Explore My Work" vs "Start a Conversation")
 - Click-through rates by location (hero vs case study end)
 - Which button copy resonates
 
 **Example insight:** "Hero CTAs: 50 clicks (15% CTR), Case study end: 12 clicks (3% CTR)"
-→ *Most conversions happen on homepage hero*
+→ _Most conversions happen on homepage hero_
 
 ---
 
@@ -76,11 +81,13 @@ Visit your Umami dashboard at https://cloud.umami.is and set up custom views:
 **Path:** Dashboard → Events → Filter
 
 **Configuration:**
+
 - **Event name:** `outbound-link`
 - **Group by:** `destination` field
 - **Sort by:** Count (descending)
 
 **What this shows:**
+
 - Which external links get clicked (LinkedIn profile, GitHub, resume PDF)
 - Where users navigate after reading content
 
@@ -94,6 +101,7 @@ Visit your Umami dashboard at https://cloud.umami.is and set up custom views:
 
 1. Go to Events → `scroll-depth` → Filter `page = statsbomb-case-study`
 2. Note counts for each depth:
+
    - 25%: X visitors
    - 50%: Y visitors
    - 75%: Z visitors
@@ -105,11 +113,12 @@ Visit your Umami dashboard at https://cloud.umami.is and set up custom views:
    - **75% → 100% retention:** (W / Z) × 100%
 
 **Example:**
+
 - 500 → 400 (80% retention, 20% drop-off after Origins)
 - 400 → 300 (75% retention, 25% drop-off after Architecture)
 - 300 → 80 (27% retention, 73% drop-off after Lessons!)
 
-→ *Need to improve Lessons section or move key insights earlier*
+→ _Need to improve Lessons section or move key insights earlier_
 
 ---
 
@@ -120,13 +129,15 @@ Visit your Umami dashboard at https://cloud.umami.is and set up custom views:
 #### How to Share on LinkedIn
 
 Simply post clean URLs:
-- Homepage: `https://saad-shahd.dev`
-- Case study: `https://saad-shahd.dev/portfolio/statsbomb`
-- About: `https://saad-shahd.dev/about`
+
+- Homepage: `https://saadshahd.github.io`
+- Case study: `https://saadshahd.github.io/portfolio/statsbomb`
+- About: `https://saadshahd.github.io/about`
 
 #### What You'll Track
 
 Umami automatically captures LinkedIn traffic via **referrer headers**:
+
 - **Referrer:** `linkedin.com` (or `lnkd.in` for shortened links)
 - **Total visitors:** Count of all LinkedIn-referred traffic
 - **Landing pages:** Which pages LinkedIn users visit first
@@ -137,6 +148,7 @@ Umami automatically captures LinkedIn traffic via **referrer headers**:
 **Path:** Dashboard → Referrers → Look for `linkedin.com`
 
 You'll see:
+
 - **Total visitors** from LinkedIn
 - **Bounce rate** (do they stay or leave immediately?)
 - **Top landing pages** (homepage vs. case study direct links)
@@ -145,14 +157,17 @@ You'll see:
 #### What You Give Up (and why it's okay)
 
 **Can't differentiate between posts:**
+
 - ❌ "Was it the launch post or the case study highlight that drove traffic?"
 - ✅ **But you can infer:** Post on Monday → check traffic Tuesday → see spike
 
 **Can't track campaigns:**
+
 - ❌ "Which post format works best?"
 - ✅ **But you'll know:** Total LinkedIn impact, engagement quality, conversion rates
 
 **When to reconsider:**
+
 - If LinkedIn becomes your #1 traffic source (>40% of visitors)
 - If you're A/B testing different post formats and need per-post data
 - If you start running LinkedIn ads (then use UTM for paid vs organic)
@@ -199,11 +214,13 @@ You'll see:
 ### Week 1: Traffic Validation
 
 **Questions:**
+
 - Is LinkedIn driving visitors? (Check Referrers → linkedin.com)
 - Are people clicking CTAs? (Check Events → cta-click)
 - Do visitors read the full case study? (Check Events → scroll-depth)
 
 **Actions based on data:**
+
 - **Low LinkedIn traffic?** → Share more on LinkedIn, try different post formats
 - **Low CTA clicks?** → Test different button copy or placement
 - **High drop-off at 50%?** → Architecture section too dense, needs simplification
@@ -211,11 +228,13 @@ You'll see:
 ### Week 2-4: Optimization
 
 **Questions:**
+
 - Which LinkedIn posts drive the most traffic? (UTM campaigns)
 - Where do visitors drop off in the case study? (Scroll depth funnel)
 - Do visitors who read 100% convert more? (Cross-reference scroll-depth + cta-click)
 
 **Actions:**
+
 - Double down on high-performing LinkedIn content types
 - Refactor sections with high drop-off rates
 - Add more CTAs near high-engagement sections
@@ -223,6 +242,7 @@ You'll see:
 ### Month 1+: Pattern Recognition
 
 **Questions:**
+
 - What's the visitor-to-contact conversion rate?
 - Which pages drive the most conversions?
 - Are recruiters reading case studies or just browsing?
@@ -234,11 +254,13 @@ You'll see:
 ### Events Not Showing in Dashboard
 
 **Check:**
+
 1. Is Umami script loading? (DevTools → Network → `script.js` from `cloud.umami.is`)
 2. Are console warnings showing? (Look for `[Analytics] Umami not loaded`)
 3. Is `window.umami` defined? (DevTools → Console → type `window.umami`)
 
 **Fix:**
+
 - If script not loading → Check Layout.astro has correct website ID
 - If console warnings → Script blocked by ad blocker, disable for your domain
 - If window.umami undefined → Script failed to load, check network logs
