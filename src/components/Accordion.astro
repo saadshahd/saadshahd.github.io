@@ -43,23 +43,23 @@ const accordion = cva([
     // NEW: Position variants for grouped container styling
     position: {
       first: [
-        'border border-primary/15',
+        'border border-primary',
         'bg-surface/40',
         'rounded-t-lg rounded-b-none',
       ],
       middle: [
-        'border-l border-r border-primary/15',
+        'border-l border-r border-primary',
         'bg-surface/40',
         'rounded-none',
       ],
       last: [
-        'border border-primary/15',
+        'border border-primary',
         'bg-surface/40',
         'rounded-b-lg rounded-t-none',
         'mb-0',  // Override for last element
       ],
       only: [
-        'border border-primary/15',
+        'border border-primary',
         'bg-surface/40',
         'rounded-lg',
       ],
@@ -118,7 +118,7 @@ const summary = cva([
     },
 
     grouped: {
-      true: 'pl-4',
+      true: 'pl-0 pr-0',
     },
   },
   defaultVariants: {
@@ -135,6 +135,9 @@ const chevron = cva([
       default: 'w-5 h-5',      // 20px
       inline: 'w-3.5 h-3.5',   // 14px (proportional to text-sm)
     },
+    grouped: {
+      true: 'text-primary'
+    }
   },
   defaultVariants: {
     size: 'default',
@@ -205,7 +208,7 @@ if (grouped && !position) {
   data-grouped={grouped || undefined}
   open={defaultOpen}
 >
-  <summary class={summary({ size, grouped })}>
+  <summary class={cn(summary({ size, grouped }))}>
     {name ? (
       <div class="flex flex-col md:flex-row md:items-baseline md:gap-2">
         <span class="font-semibold text-text">{name}</span>
@@ -215,7 +218,7 @@ if (grouped && !position) {
       summaryText
     )}
     <svg
-      class={chevron({ size })}
+      class={cn(chevron({ size, grouped }))}
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
