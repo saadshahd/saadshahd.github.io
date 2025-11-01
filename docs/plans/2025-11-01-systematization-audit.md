@@ -29,41 +29,44 @@ Implement in 3 phases: Immediate (13pts), Short-term (11pts), Long-term (10pts).
 - Build validated successfully after each migration
 - Atomic migration approach: ship component → migrate usage → validate → move to next
 
-## Short-Term (11 story points) - NOT STARTED
+## Short-Term (11 story points) - ✅ COMPLETE
 
-### 6. ExperienceEntry Component (3pts)
+### 6. ✅ ExperienceEntry Component (3pts) - COMPLETE
 **Pattern**: Resume job entry header (4 occurrences in `resume.astro:82, 99, 118, 133`)
-**Current**:
-```astro
-<div class="flex justify-between items-start mb-2">
-  <div>
-    <Heading level={2} as="h3" class="mb-1"><span>Job Title</span></Heading>
-    <Body size="sm" as="p" class="text-text-lighter">Company</Body>
-  </div>
-  <Body size="sm" as="p" class="text-text-lighter">Location | Date</Body>
-</div>
-```
-**Proposed**: `<ExperienceEntry title="..." company="..." location="..." dates="..."><slot /></ExperienceEntry>`
+**Shipped**: `src/components/ExperienceEntry.astro`
+**Props**: `title`, `company`, `location`, `dates` + default slot
+**Migrations**: All 4 occurrences in resume.astro migrated
+**Commit**: c7681bb
 
-### 7. PhotoGrid Component (3pts)
-**Pattern**: 4-column photo grid with group caption (54 lines → 10 lines in `statsbomb.mdx:98-151`)
-**Proposed**: `<PhotoGrid columns={4} photos={[{src, alt, caption}]} groupCaption="..." />`
-**Impact**: Reusable for future case studies, massive complexity reduction
+### 7. ✅ PhotoGrid Component (3pts) - COMPLETE
+**Pattern**: 4-column photo grid with group caption (reduced 30 lines → 10 lines)
+**Shipped**: `src/components/PhotoGrid.astro`
+**Props**: `columns` (2/3/4), `photos` array, `groupCaption` (optional)
+**Variants**: CVA columns variant for responsive grid
+**Migrations**: statsbomb.mdx (lines 101-130)
+**Commit**: 336c81a
 
-### 8. CaseStudyTLDR Component (2pts)
-**Pattern**: Expandable summary block (1 occurrence but high-value for future case studies)
-**Location**: `statsbomb.mdx:50-60`
-**Proposed**: `<CaseStudyTLDR hook="..." lesson="..."><slot /></CaseStudyTLDR>`
+### 8. ✅ CaseStudyTLDR Component (2pts) - COMPLETE
+**Pattern**: Expandable summary block with default open state
+**Shipped**: `src/components/CaseStudyTLDR.astro`
+**Props**: `title` (default "TL;DR: What We Built (2 min)"), `open` (default true)
+**Migrations**: statsbomb.mdx (lines 54-64)
+**Commit**: fa67470
 
-### 9. EditorialNote Component (2pts)
-**Pattern**: Italic transitional text (3 occurrences in `statsbomb.mdx:333, 460, 541`)
-**Current**: `<Body size="sm" as="p" class="mb-6 text-text-lighter italic">`
-**Proposed**: `<EditorialNote align="center" maxWidth="narrow">...</EditorialNote>`
+### 9. ✅ EditorialNote Component (2pts) - COMPLETE
+**Pattern**: Italic transitional text (4 occurrences in statsbomb.mdx)
+**Shipped**: `src/components/EditorialNote.astro`
+**Variants**: `align` (left/center), `width` (default/narrow), `spacing` (default/spacious)
+**Migrations**: All 4 occurrences in statsbomb.mdx migrated
+**Commit**: 65a2675
 
-### 10. BadgeList Component (2pts)
-**Pattern**: Flex-wrapped badge collections (5+ occurrences)
-**Locations**: `portfolio.astro:24`, `statsbomb.mdx:33`, similar patterns in portfolio cards
-**Proposed**: `<BadgeList tags={[{label, variant}]} />`
+### 10. ✅ BadgeList Component (2pts) - COMPLETE
+**Pattern**: Flex-wrapped badge collections (2 occurrences migrated)
+**Shipped**: `src/components/BadgeList.astro`
+**Props**: `badges` array with `{label, variant}`, `spacing` (compact/default)
+**Variants**: CVA spacing variant (gap-2 vs gap-4)
+**Migrations**: statsbomb.mdx, portfolio.astro
+**Commit**: dd964c5
 
 ## Long-Term (10 story points) - NOT STARTED
 
