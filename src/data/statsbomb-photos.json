@@ -1,5 +1,6 @@
 [
   {
+    "type": "image",
     "src": "/images/statsbomb/IMG_20180326_132547.jpg",
     "alt": "Omar Negm resting during early days of building Statsbomb collection tools",
     "caption": "2018: Omar Negm during Week One, transitioning from aerospace engineering to building tools collectors would thank us for",
@@ -8,14 +9,16 @@
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/IMG_20180410_163253.jpg",
     "alt": "Ali during first meeting at Statsbomb's original office",
-    "caption": "2018: Week One with Ali, when collectors scaled so fast we shared a tiny office—the freezeframe tool shipped twice daily",
+    "caption": "2018: Week One with Ali, when collectors scaled so fast we shared a tiny office—the FreezeFrame tool shipped twice daily",
     "width": 1200,
     "height": 1603
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/IMG_20180813_133937.jpg",
     "alt": "Ali and Adham working in single-room workspace as collectors scaled",
     "caption": "2018: Ali and Adham working together as collectors scaled to take our room—the partnership that would define Year One",
@@ -24,6 +27,7 @@
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/IMG_20180814_180157.jpg",
     "alt": "Adham demonstrating collection tool features to Ali",
     "caption": "2018: Adham demoing iteration to Ali—the tight feedback loop that made shipping twice daily possible during Year One",
@@ -32,6 +36,7 @@
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/IMG_20190625_113053.jpg",
     "alt": "Waheed joining the team with Adham onboarding him",
     "caption": "2019: Waheed joining the team—Adham onboarding his university friend who'd help tackle the metadata challenges",
@@ -40,6 +45,7 @@
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/IMG_20190815_190736.jpg",
     "alt": "With collectors Mo'emen and Bassel in downtown Cairo",
     "caption": "2018: With Mo'emen and Bassel, two collectors whose feedback shaped how we built the system",
@@ -48,6 +54,7 @@
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/collection-leadership-night.jpg",
     "alt": "Collection leadership team Hegazy, Ramadan, and Adham Nasser during night shift",
     "caption": "2020: Collection leadership team—Hegazy, Ramadan, and Adham Nasser—during night shift discussions about ambitions and scaling collector operations to 1000+",
@@ -56,6 +63,7 @@
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/IMG_0570.jpg",
     "alt": "Abdallah, Saad, and Hesham planning live collection architecture",
     "caption": "2020: Planning live collection with Abdallah and Hesham—exploring how real-time architecture would scale American football from offline to concurrent collection",
@@ -64,6 +72,7 @@
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/_MG_0011.jpg",
     "alt": "Adham, Saad, and Waheed at Ali's Sahel beach house",
     "caption": "2020: Team gathering at Ali's Sahel house for Muhanad's farewell before military enrollment—reflecting on how far we'd come together",
@@ -72,6 +81,7 @@
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/_MG_0017.jpg",
     "alt": "Team sharing dreams and values during Muhanad's farewell gathering",
     "caption": "2020: Sharing dreams and values during Muhanad's farewell—the moment partnership became something bigger",
@@ -80,10 +90,65 @@
   },
 
   {
+    "type": "image",
     "src": "/images/statsbomb/IMG_5078.jpg",
     "alt": "Product, tech, and ops leadership teams during Ramadan Iftar 2023",
     "caption": "2023: Ramadan Iftar with product, tech, and ops leadership teams—now supporting collectors together",
     "width": 1200,
     "height": 900
+  },
+
+  {
+    "type": "image",
+    "src": "/images/statsbomb/IMG_2570.jpg",
+    "alt": "Egyptian geometric triangle patterns decorating Statsbomb collection workspace",
+    "caption": "2020: Hesham's Egyptian geometric design in the collection workspace—triangles everywhere gave collectors focus and us visibility into operations",
+    "width": 1200,
+    "height": 1601
+  },
+
+  {
+    "type": "image",
+    "src": "/images/statsbomb/IMG_3519.jpg",
+    "alt": "Amr, Amal, and Ahmed Shahd sharing a meal during team gathering",
+    "caption": "2020: Team gathering with Amr (live collection app lead), Amal, and Ahmed Shahd—building bonds beyond the workspace",
+    "width": 1200,
+    "height": 1601
+  },
+
+  {
+    "type": "image",
+    "src": "/images/statsbomb/IMG_3732.jpg",
+    "alt": "Ashamawy working on Statsbomb 360 data with Alaa and Waheed in shared workspace",
+    "caption": "2020: Ashamawy working on Statsbomb 360 data alongside Alaa and Waheed—collaborative approach to new product development",
+    "width": 1200,
+    "height": 1200
+  },
+
+  {
+    "type": "image",
+    "src": "/images/statsbomb/IMG_3923.jpg",
+    "alt": "Late-night workspace corner where conversations with collectors happened",
+    "caption": "2020: Late-night workspace where honest conversations with collectors shaped what we built together",
+    "width": 1200,
+    "height": 1601
+  },
+
+  {
+    "type": "image",
+    "src": "/images/statsbomb/IMG_4434.jpg",
+    "alt": "Event storming session with Kamal and Asharaf at El Gouna retreat using sticky notes",
+    "caption": "2021: El Gouna retreat event storming session with Kamal (ops manager) and Asharaf (training lead)—modeling the operations system through sticky notes and collaboration",
+    "width": 1200,
+    "height": 900
+  },
+
+  {
+    "type": "image",
+    "src": "/images/statsbomb/statsbomb-amateur-league-poster.jpg",
+    "alt": "Statsbomb amateur league team playing match in Egypt using collection tools built for elite clubs",
+    "caption": "2024: Statsbomb team's amateur league squad in Egypt—collectors analyzing their own matches with the tools they built for clubs like Liverpool",
+    "width": 720,
+    "height": 1280
   }
 ]

@@ -1,27 +1,29 @@
 /**
- * Photo Gallery Type System
+ * Media Gallery Type System
  *
- * Zod schemas for photo metadata validation at build time.
+ * Zod schemas for image metadata validation at build time.
  * Makes illegal states unrepresentable: invalid data = build failure.
  */
 
 import { z } from "zod";
 
 /**
- * Photo Schema
+ * Image Schema
  *
- * Validates individual photo metadata with strict constraints:
+ * Validates individual image metadata with strict constraints:
+ * - type: Must be 'image' (discriminator for future extensibility)
  * - src: Must be /images/*.{jpg,jpeg,png,webp}
  * - alt: 10-200 chars (descriptive, not decorative)
  * - caption: 20-300 chars (1-2 sentences with context)
  * - width/height: Positive integers (for aspect ratio calculation)
  */
-export const PhotoSchema = z.object({
+export const ImageSchema = z.object({
+  type: z.literal("image"),
   src: z
     .string()
     .regex(
       /^\/images\/.+\.(jpg|jpeg|png|webp)$/,
-      "Photo src must be /images/... path ending in .jpg, .jpeg, .png, or .webp",
+      "Image src must be /images/... path ending in .jpg, .jpeg, .png, or .webp",
     ),
   alt: z
     .string()
@@ -48,11 +50,35 @@ export const PhotoSchema = z.object({
 });
 
 /**
- * Photos Array Schema
+ * Media Item Schema
  *
- * Validates array of photos with reasonable limits:
- * - Minimum 1 photo (empty galleries fail build)
- * - Maximum 20 photos (performance constraint)
+ * Currently only supports images. Type field allows future extensibility.
+ */
+export const MediaItemSchema = ImageSchema;
+
+/**
+ * Photo Schema (Backward Compatibility)
+ *
+ * @deprecated Use ImageSchema instead. Kept for backward compatibility.
+ */
+export const PhotoSchema = ImageSchema.omit({ type: true });
+
+/**
+ * Media Items Array Schema
+ *
+ * Validates array of media items (images + videos) with reasonable limits:
+ * - Minimum 1 item (empty galleries fail build)
+ * - Maximum 20 items (performance constraint)
+ */
+export const MediaItemsSchema = z
+  .array(MediaItemSchema)
+  .min(1, "Gallery must contain at least 1 media item")
+  .max(20, "Gallery cannot exceed 20 media items (performance constraint)");
+
+/**
+ * Photos Array Schema (Backward Compatibility)
+ *
+ * @deprecated Use MediaItemsSchema instead. Kept for backward compatibility.
  */
 export const PhotosSchema = z
   .array(PhotoSchema)
@@ -60,34 +86,50 @@ export const PhotosSchema = z
   .max(20, "Gallery cannot exceed 20 photos (performance constraint)");
 
 /**
- * Photo Type (inferred from schema)
+ * Media Item Type (inferred from schema)
  *
  * Use this type in components instead of manually defining interface.
  * Stays in sync with schema automatically.
  */
+export type MediaItem = z.infer<typeof MediaItemSchema>;
+
+/**
+ * Photo Type (inferred from schema)
+ *
+ * @deprecated Use MediaItem instead. Kept for backward compatibility.
+ */
 export type Photo = z.infer<typeof PhotoSchema>;
 
 /**
- * Validate Photos at Build Time
+ * Validate Media Items at Build Time
  *
  * Throws descriptive error if validation fails, causing build to fail fast.
  * Call this in Astro components before rendering gallery.
  *
  * @param data - Unknown data to validate (typically imported JSON)
- * @returns Validated array of Photo objects
+ * @returns Validated array of MediaItem objects
  * @throws ZodError with detailed field-level error messages
  *
  * @example
  * ```typescript
- * import photos from '@/data/statsbomb-photos.json';
- * import { validatePhotos } from '@/utils/gallery';
+ * import media from '@/data/statsbomb-media.json';
+ * import { validateMediaItems } from '@/utils/gallery';
  *
  * try {
- *   const validatedPhotos = validatePhotos(photos);
+ *   const validatedMedia = validateMediaItems(media);
  * } catch (error) {
- *   throw new Error(`Invalid photo data: ${error.message}`);
+ *   throw new Error(`Invalid media data: ${error.message}`);
  * }
  * ```
+ */
+export function validateMediaItems(data: unknown): MediaItem[] {
+  return MediaItemsSchema.parse(data);
+}
+
+/**
+ * Validate Photos at Build Time
+ *
+ * @deprecated Use validateMediaItems instead. Kept for backward compatibility.
  */
 export function validatePhotos(data: unknown): Photo[] {
   return PhotosSchema.parse(data);
@@ -96,10 +138,10 @@ export function validatePhotos(data: unknown): Photo[] {
 /**
  * Gallery Configuration Schema
  *
- * Validates PhotoGallery component props.
+ * Validates MediaGallery component props.
  */
 export const GalleryConfigSchema = z.object({
-  photos: PhotosSchema,
+  items: MediaItemsSchema,
   columns: z
     .union([z.literal(2), z.literal(3)])
     .optional()

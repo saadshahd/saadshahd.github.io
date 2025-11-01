@@ -10,8 +10,8 @@ import Callout from '../../components/Callout.astro';
 import Heading from '../../components/typography/Heading.astro';
 import Body from '../../components/typography/Body.astro';
 import MermaidDiagram from '../../components/MermaidDiagram.astro';
-import PhotoGallery from '../../components/PhotoGallery.astro';
-import statsbombPhotos from '../../data/statsbomb-photos.json';
+import MediaGallery from '../../components/MediaGallery.astro';
+import statsbombMedia from '../../data/statsbomb-photos.json';
 import Accordion from '../../components/Accordion.astro';
 import DefinitionList from '../../components/DefinitionList.astro';
 import ScrollProgress from '../../components/ScrollProgress.astro';
@@ -67,7 +67,7 @@ import Quote from '../../components/Quote.astro';
   <section class="mb-6" id="origins">
     <Heading level={3} as="h2" class="mb-6 text-navy">Origins: Week One Partnership</Heading>
 
-We shipped twice daily. Every morning, I'd push a new build of the freezeframe tool—replacing Dartfish's 12-minute manual clicking with computer vision-assisted positioning. By afternoon, collectors would test it during matches. By evening, I'd see their feedback in Slack.
+We shipped twice daily. Every morning, I'd push a new build of the FreezeFrame tool—replacing Dartfish's 12-minute manual clicking with computer vision-assisted positioning. By afternoon, collectors would test it during matches. By evening, I'd see their feedback in Slack.
 
 *"This saved me 9 minutes per frame."*
 *"My hand doesn't cramp anymore."*
@@ -92,7 +92,7 @@ That partnership—domain expert + systems thinker—is why the DSL approach wor
   <figure>
     <img
       src="/images/statsbomb/ff-initial-sketches-1.jpg"
-      alt="Hand-drawn viewport calculations for freezeframe tool"
+      alt="Hand-drawn viewport calculations for FreezeFrame tool"
       class="rounded-lg w-full h-auto"
       loading="lazy"
     />
@@ -189,7 +189,7 @@ graph TD
 
       </MermaidDiagram>
       <details class="mt-2 text-xs text-text-lighter text-center">
-        <summary class="cursor-pointer hover:text-text">Text alternative</summary>
+        <summary class="cursor-pointer hover:text-text mb-8 md:mb-0">Text alternative</summary>
         <p class="mt-1">Offline workflow taking 12 hours: Home and Away collectors work in parallel. First merge reconciles collection conflicts (~1h). Then 2 collectors work in parallel (4h each) on Validation and FreezeFrame. Final merge reconciles post-processing conflicts (~1h). Total: ~12h wall-clock = 20 man-hours.</p>
       </details>
     </figure>
@@ -385,7 +385,7 @@ The dataspec itself had to be uncertain. I knew from week one we'd iterate, have
   <section class="mb-8" id="team-building">
     <Heading level={3} as="h2" class="mb-6 text-navy">The Team Building Challenge: From Week One to Distributed Ownership</Heading>
 
-Remember that first-week feeling? Shipping the freezeframe tool twice daily, getting thanked by collectors, feeling like I was there to help. **That feeling needed to scale.**
+Remember that first-week feeling? Shipping the FreezeFrame tool twice daily, getting thanked by collectors, feeling like I was there to help. **That feeling needed to scale.**
 
 I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
 
@@ -586,13 +586,9 @@ These aren't universal truths—they worked because of specific conditions:
   <section class="mb-8" id="behind-the-scenes">
     <Heading level={2} as="h2" class="mb-6">Behind the Scenes</Heading>
 
-The human side of building production systems: our team in Cairo (2018-2022), where "make illegal states unrepresentable" went from paper sketches to production reality.
+Cairo, 2018-2022: Arqam (Statsbomb)—night shifts, onboarding, farewells. From hand-drawn rules to collectors analyzing their own game nights.
 
-<PhotoGallery class="mb-8" photos={statsbombPhotos} columns={3} />
-
-<p class="text-sm text-text-light text-center italic mt-4 mb-8">
-  Cairo, 2018-2022: Our team at Statsbomb (internally known as Arqam). Clockwise from top: Collection leadership during night shift chatting about their ambitions and dreams, Ali pairing with collectors during Week One (April 2018), planning sessions with Hesham and Abdallah, Adham and Ali in temporary coworking space, team gathering at Ali's Sahel house for Muhanad's farewell.
-</p>
+<MediaGallery class="mb-8" items={statsbombMedia} columns={3} />
 
   </section>
 

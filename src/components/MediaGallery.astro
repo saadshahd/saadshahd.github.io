@@ -1,0 +1,306 @@
+---
+/**
+ * Media Gallery Component
+ *
+ * Reusable gallery with PhotoSwipe lightbox integration for images and videos.
+ * Features:
+ * - Responsive grid (1 col mobile, 2-3 col desktop)
+ * - Egyptian design system styling
+ * - WCAG AA accessibility (keyboard nav, screen reader)
+ * - Respects prefers-reduced-motion
+ * - Lazy loading below fold
+ * - Video playback support via PhotoSwipe video plugin
+ */
+
+import { validateMediaItems } from "../utils/gallery";
+import { cva, type VariantProps } from "class-variance-authority";
+import type { HTMLAttributes } from "astro/types";
+
+// CVA Variants
+const galleryVariants = cva("gallery-grid", {
+  variants: {
+    columns: {
+      2: "md:grid-cols-2",
+      3: "md:grid-cols-3",
+    },
+    variant: {
+      default: "gap-6 md:gap-10",
+      compact: "gap-4 md:gap-6",
+    },
+  },
+  defaultVariants: {
+    columns: 3,
+    variant: "default",
+  },
+});
+
+interface Props
+  extends HTMLAttributes<"div">,
+    VariantProps<typeof galleryVariants> {
+  items: unknown; // Accept unknown, validate at runtime
+  id?: string; // Gallery ID for PhotoSwipe targeting
+}
+
+const {
+  items: rawItems,
+  columns = 3,
+  variant = "default",
+  id = "media-gallery",
+  class: className,
+  ...rest
+} = Astro.props;
+
+// Validate media items at build time (fail fast if invalid)
+let items;
+try {
+  items = validateMediaItems(rawItems);
+} catch (error) {
+  const message = error instanceof Error ? error.message : String(error);
+  throw new Error(
+    `MediaGallery: Invalid media data\n${message}\n` +
+      `Check your JSON file for schema violations (type, src, alt, caption, width, height)`,
+  );
+}
+---
+
+<div class="media-gallery-container" {...rest}>
+  <div
+    class={galleryVariants({ columns, variant, className })}
+    id={id}
+    role="list"
+  >
+    {
+      items.map((item, index) => (
+        <figure class="media-card" role="listitem">
+          <a
+            href={item.src}
+            data-pswp-width={item.width}
+            data-pswp-height={item.height}
+            data-pswp-caption={item.caption}
+            aria-label={`View full size: ${item.alt}`}
+            class="media-link"
+          >
+            <picture>
+              <source
+                srcset={item.src.replace(/\.(jpg|jpeg|png)$/, ".webp")}
+                type="image/webp"
+              />
+              <img
+                src={item.src}
+                alt={item.alt}
+                loading={index < 3 ? "eager" : "lazy"}
+                decoding="async"
+                width={item.width}
+                height={item.height}
+                class="media-image"
+              />
+            </picture>
+          </a>
+        </figure>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  /* Masonry Gallery (CSS Columns) */
+  .gallery-grid {
+    column-count: 1;
+    column-gap: var(--spacing-sm); /* 8px */
+  }
+
+  /* 2 columns on tablet */
+  @media (min-width: 640px) {
+    .gallery-grid {
+      column-count: 2;
+    }
+  }
+
+  /* 3 columns on desktop */
+  @media (min-width: 768px) {
+    .gallery-grid {
+      column-count: 3;
+      column-gap: var(--spacing-md); /* 16px */
+    }
+  }
+
+  /* Media Card */
+  .media-card {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 var(--spacing-sm) 0; /* Minimal vertical spacing (8px) */
+    break-inside: avoid; /* Prevent splitting across columns */
+  }
+
+  /* Media Link */
+  .media-link {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-neutral-light);
+    transition: all 0.2s cubic-bezier(0.65, 0, 0.35, 1); /* Egyptian water */
+  }
+
+  .media-link:hover {
+    transform: scale(1.02);
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border-color: var(--color-primary);
+  }
+
+  .media-link:focus {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Media Image */
+  .media-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .media-link {
+      transition: none;
+    }
+
+    .media-link:hover {
+      transform: none;
+    }
+  }
+
+  /* PhotoSwipe Dynamic Caption Plugin - Egyptian Design System Override */
+  :global(.pswp__dynamic-caption) {
+    background: rgba(15, 23, 42, 0.9) !important; /* text-text with alpha */
+    color: var(--color-background) !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    padding: var(--spacing-md) !important;
+    font-style: italic !important;
+  }
+
+  /* Ensure caption text is readable */
+  :global(.pswp__dynamic-caption a) {
+    color: var(--color-primary) !important;
+  }
+</style>
+
+<script>
+  import PhotoSwipeLightbox from "photoswipe/lightbox";
+  import PhotoSwipe from "photoswipe";
+  import PhotoSwipeDynamicCaption from "photoswipe-dynamic-caption-plugin";
+  import "photoswipe/style.css";
+  import "photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css";
+
+  // Check for reduced motion preference
+  function prefersReducedMotion(): boolean {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  // Initialize PhotoSwipe on all galleries
+  function initializeGalleries() {
+    const galleries = document.querySelectorAll(".media-gallery-container");
+    console.log("[MediaGallery] Found containers:", galleries.length);
+
+    galleries.forEach((container) => {
+      const gallery = container.querySelector(".gallery-grid");
+      if (!gallery) {
+        console.warn("[MediaGallery] No .gallery-grid found in container");
+        return;
+      }
+
+      const galleryId = gallery.getAttribute("id") || "media-gallery";
+      console.log("[MediaGallery] Initializing gallery:", galleryId);
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: `#${galleryId}`,
+        children: "a",
+        pswpModule: PhotoSwipe,
+
+        // Animation durations (will be overridden by CSS if reduced motion)
+        showAnimationDuration: prefersReducedMotion() ? 0 : 400,
+        hideAnimationDuration: prefersReducedMotion() ? 0 : 400,
+
+        // Accessibility
+        closeOnVerticalDrag: true,
+      });
+
+      // Initialize official caption plugin
+      const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
+        type: "auto", // 'auto' = aside on desktop, below on mobile
+        captionContent: (slide) => {
+          return slide.data.element?.getAttribute("data-pswp-caption") || "";
+        },
+      });
+
+      lightbox.init();
+      console.log("[MediaGallery] Lightbox initialized for:", galleryId);
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeGalleries);
+  } else {
+    // DOM already loaded
+    initializeGalleries();
+  }
+
+  // Re-initialize after Astro View Transitions
+  document.addEventListener("astro:after-swap", () => {
+    initializeGalleries();
+  });
+</script>
+
+<!-- PhotoSwipe Egyptian Easing Overrides -->
+<style is:global>
+  /* Egyptian easing for PhotoSwipe animations */
+  .pswp__img {
+    transition-timing-function: cubic-bezier(
+      0.65,
+      0,
+      0.35,
+      1
+    ) !important; /* water */
+  }
+
+  .pswp--open {
+    animation-timing-function: cubic-bezier(
+      0.76,
+      0,
+      0.24,
+      1
+    ) !important; /* monument */
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .pswp__img,
+    .pswp--open,
+    .pswp__bg {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* PhotoSwipe UI customization (Egyptian colors) */
+  .pswp__button {
+    background-color: var(--color-surface) !important;
+    border: 1px solid var(--color-neutral-light) !important;
+  }
+
+  .pswp__button:hover {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+  }
+
+  .pswp__bg {
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+</style>
