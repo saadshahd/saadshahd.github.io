@@ -1,37 +1,20 @@
 ---
-import Card from './Card.astro';
 import Heading from './typography/Heading.astro';
-import { AlertTriangle, CheckCircle } from '@lucide/astro';
-import { cn } from '../utils/cn';
-
-type ComparisonVariant = 'before' | 'after' | 'problem' | 'solution';
 
 type Props = {
-  variant: ComparisonVariant;
   title: string;
   class?: string;
 };
 
-const { variant, title, class: className } = Astro.props;
-
-// Map variants to icon components and muted colors
-const iconMap = {
-  before: { Icon: AlertTriangle, color: 'text-text-lighter' },    // Challenges/constraints
-  problem: { Icon: AlertTriangle, color: 'text-text-lighter' },   // Same as before
-  after: { Icon: CheckCircle, color: 'text-text-lighter' },       // Solutions/achievements
-  solution: { Icon: CheckCircle, color: 'text-text-lighter' },    // Same as after
-} as const;
-
-const { Icon, color } = iconMap[variant];
+const { title, class: className } = Astro.props;
 ---
 
 
-<div>
+<div class={className}>
     <Heading level={3} as="h3" class="flex items-center gap-2 mb-4 text-text">
-    <Icon class={cn('w-5 h-5 flex-shrink-0', color)} aria-hidden="true" />
     <span>{title}</span>
   </Heading>
-  <div class="text-text-lighter space-y-3 text-sm">
+  <div class="text-text-lighter space-y-1 text-sm">
     <slot />
   </div>
 </div>

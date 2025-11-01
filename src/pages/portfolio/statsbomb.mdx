@@ -2,33 +2,34 @@
 layout: ../../layouts/MDXLayout.astro
 title: "Statsbomb Real Time Data Collection - Saad Shahd"
 ---
-import Container from '../../components/Container.astro';
-import Section from '../../components/Section.astro';
-import Figure from '../../components/Figure.astro';
-import PhotoGrid from '../../components/PhotoGrid.astro';
-import CaseStudyTLDR from '../../components/CaseStudyTLDR.astro';
-import EditorialNote from '../../components/EditorialNote.astro';
-import BadgeList from '../../components/BadgeList.astro';
-import Button from '../../components/Button.astro';
-import Badge from '../../components/Badge.astro';
-import Card from '../../components/Card.astro';
-import Callout from '../../components/Callout.astro';
-import Heading from '../../components/typography/Heading.astro';
-import Body from '../../components/typography/Body.astro';
-import WavyUnderline from '../../components/typography/WavyUnderline.astro';
-import MermaidDiagram from '../../components/MermaidDiagram.astro';
-import MediaGallery from '../../components/MediaGallery.astro';
-import statsbombMedia from '../../data/statsbomb-photos.json';
-import Accordion from '../../components/Accordion.astro';
-import DefinitionList from '../../components/DefinitionList.astro';
-import SectionDivider from '../../components/SectionDivider.astro';
-import ReadingMetadata from '../../components/ReadingMetadata.astro';
-import MetricCard from '../../components/MetricCard.astro';
-import ComparisonCard from '../../components/ComparisonCard.astro';
-import ComparisonGrid from '../../components/ComparisonGrid.astro';
-import Quote from '../../components/Quote.astro';
 
-import { MoveRight } from '@lucide/astro';
+import Container from "../../components/Container.astro";
+import Section from "../../components/Section.astro";
+import Figure from "../../components/Figure.astro";
+import PhotoGrid from "../../components/PhotoGrid.astro";
+import CaseStudyTLDR from "../../components/CaseStudyTLDR.astro";
+import EditorialNote from "../../components/EditorialNote.astro";
+import BadgeList from "../../components/BadgeList.astro";
+import Button from "../../components/Button.astro";
+import Badge from "../../components/Badge.astro";
+import Card from "../../components/Card.astro";
+import Callout from "../../components/Callout.astro";
+import Heading from "../../components/typography/Heading.astro";
+import Body from "../../components/typography/Body.astro";
+import WavyUnderline from "../../components/typography/WavyUnderline.astro";
+import MermaidDiagram from "../../components/MermaidDiagram.astro";
+import MediaGallery from "../../components/MediaGallery.astro";
+import statsbombMedia from "../../data/statsbomb-photos.json";
+import Accordion from "../../components/Accordion.astro";
+import DefinitionList from "../../components/DefinitionList.astro";
+import SectionDivider from "../../components/SectionDivider.astro";
+import ReadingMetadata from "../../components/ReadingMetadata.astro";
+import MetricCard from "../../components/MetricCard.astro";
+import ComparisonCard from "../../components/ComparisonCard.astro";
+import ComparisonGrid from "../../components/ComparisonGrid.astro";
+import Quote from "../../components/Quote.astro";
+
+import { MoveRight } from "@lucide/astro";
 
 <Container width="narrow" spacing="default">
   {/* Hero Section with integrated TL;DR */}
@@ -62,16 +63,18 @@ import { MoveRight } from '@lucide/astro';
         <p>Architectural separation multiplied team leverage—product managers shipped new sports without engineering bottlenecks. When Adham, Waheed, Hadeel, and Abdallah took ownership, they evolved the system beyond what we started with.</p>
       </Callout>
     </CaseStudyTLDR>
+
   </Section>
 
-  {/* Origins: Week One Partnership */}
+{/* Origins: Week One Partnership */}
+
   <Section spacing="compact" id="origins" titleLevel={3} title="Origins: Week One Partnership">
 
 We shipped twice daily. Every morning, I'd push a new build of the FreezeFrame tool—replacing Dartfish's 12-minute manual clicking with computer vision-assisted positioning. By afternoon, collectors would test it during matches. By evening, I'd see their feedback in Slack.
 
-*"This saved me 9 minutes per frame."*
-*"My hand doesn't cramp anymore."*
-*"Eyes stay on video, not the mouse."*
+_"This saved me 9 minutes per frame."_
+_"My hand doesn't cramp anymore."_
+_"Eyes stay on video, not the mouse."_
 
 That feeling—collector gratitude—became the foundation for everything we built over four years. Not from management validation or product roadmaps, but from the people doing the actual work saying "thank you." When you ship for people who thank you, architecture stops being abstract.
 
@@ -98,6 +101,7 @@ As I typed what Ali dictated, I realized: I wasn't writing documentation. I was 
 That partnership—domain expert + systems thinker—is why the DSL approach worked. Without Ali's mental models, I'd have built generic forms. Without my systems thinking, his knowledge would've stayed tacit.
 
 {/* Visual proof: Week One sketches → Production Evolution */}
+
 <PhotoGrid
   columns="4"
   photos={[
@@ -130,9 +134,12 @@ That partnership—domain expert + systems thinker—is why the DSL approach wor
 />
   </Section>
 
-  <SectionDivider spacing="minor" />
+{" "}
 
-  {/* Problem Section */}
+<SectionDivider spacing="minor" />
+
+{/* Problem Section */}
+
   <Section spacing="default" id="problem" titleLevel={3} title="The Two-Merge Bottleneck">
 
 Two collectors, same match. Hours after the final whistle, they're still arguing.
@@ -144,6 +151,7 @@ Two collectors, same match. Hours after the final whistle, they're still arguing
 Collectors spent 2 hours post-match reconciling across two merge points. First merge: align on what events happened during collection. Second merge: reconcile how those events were validated, positioned, and tagged. The tool allowed ambiguous interpretations during the match. Collectors paid the cost afterward.
 
 {/* Workflow Comparison: Before vs. After */}
+
 <div class="grid md:grid-cols-2 my-8">
   <div>
     <div class="flex items-center justify-center gap-2 p-2 border md:border-r-0 border-neutral-light">
@@ -186,13 +194,13 @@ graph TD
     subgraph post3["⎇ Final Merge"]
         HomePost --> Merge2["~1 hour"]
         AwayPost --> Merge2
-        
+
     end
 
     Merge2 --> Complete["Match complete
         ~12h total
         ~20 man-hours"]
-    
+
     classDef bottleneck fill:#FFFFFF,stroke:#DC2626,stroke-width:3px,color:#0F172A,font-weight:600
     classDef collector fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
     classDef processor fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
@@ -210,6 +218,7 @@ graph TD
         <p class="mt-1">Offline workflow taking 12 hours: Home and Away collectors work in parallel. First merge reconciles collection conflicts (~1h). Then 2 collectors work in parallel (4h each) on Validation and FreezeFrame. Final merge reconciles post-processing conflicts (~1h). Total: ~12h wall-clock = 20 man-hours.</p>
       </details>
     </figure>
+
   </div>
 
   <div class="">
@@ -266,17 +275,22 @@ graph TD
         <p class="mt-1">Live real-time workflow: Base events created during match with up to 12 parallel enrichments (Extras, ... , 360 FF) based on desired collection granularity and speed SLA. Automated merge with no conflicts. Analytics available from first moment, ending at real world time.</p>
       </details>
     </figure>
+
   </div>
 </div>
 
 The merge tax scaled linearly with collectors. At 100 collectors, two product managers mediated conflicts manually—tedious but manageable. At 1000 collectors? The math broke. Manual conflict resolution couldn't scale without proportional staffing increases, blocking market expansion.
 
 What collectors needed: prevention during collection, not reconciliation after. We architected the tool to make ambiguous interpretations structurally impossible—if you can't express it in the UI, you can't collect it wrong.
+
   </Section>
 
-  <SectionDivider spacing="major" />
+{" "}
 
-  {/* Real-Time Collection: The 2am Test - NEW SECTION */}
+<SectionDivider spacing="major" />
+
+{/* Real-Time Collection: The 2am Test - NEW SECTION */}
+
   <Section spacing="spacious" id="realtime-test" titleLevel={3} title="Real-Time Collection: The 2am Test">
 
 We tested for months before committing to broadcasters. "Real-time" wasn't a feature—it was an obligation. One failure during a live match = lost client.
@@ -286,27 +300,38 @@ I'd start at 10am, leave at 3am. Not grinding for grinding's sake—I needed to 
 Ali stayed nights for company. Not to supervise—he wasn't debugging TypeScript with me. But he understood the stakes. Broadcasters needed real-time commentary data. Collectors needed tools that didn't break at 2am when fatigue set in.
 
 That's when we'd debug together: Adham tracing the Kafka lag, me testing state machine transitions with a tired collector who just wanted to finish the match and go home.
+
   </Section>
 
-  {/* Visual proof: 2am debugging */}
-  <Figure
-    src="/images/statsbomb/df52f41a-686e-4989-8f34-08b1487920b6.jpg"
-    alt="Late night debugging session with Adham and Waheed"
-    caption="Late night, Cairo (2019): Debugging real-time collection with Adham and Waheed"
-    aspectRatio="auto"
-    class="mx-auto"
-  />
+{/* Visual proof: 2am debugging */}
 
-  <SectionDivider spacing="major" />
+{" "}
 
-  {/* Architecture Section */}
+<Figure
+  src="/images/statsbomb/df52f41a-686e-4989-8f34-08b1487920b6.jpg"
+  alt="Late night debugging session with Adham and Waheed"
+  caption="Late night, Cairo (2019): Debugging real-time collection with Adham and Waheed"
+  aspectRatio="auto"
+  class="mx-auto"
+/>
+
+{" "}
+
+<SectionDivider spacing="major" />
+
+{/* Architecture Section */}
+
   <Section spacing="default" id="architecture" titleLevel={3} title="Architecture: Three Systems in Parallel">
 
 <EditorialNote>
-  Understanding the business value explains *why* we built this. Now: *how* did architectural decisions enable 10x scale and multi-sport expansion without code rewrites?
+  Understanding the business value explains *why* we built this. Now: *how* did
+  architectural decisions enable 10x scale and multi-sport expansion without
+  code rewrites?
 </EditorialNote>
 
-<p class="mb-6 text-text-lighter leading-relaxed">Three systems evolved in parallel:</p>
+<p class="mb-6 text-text-lighter leading-relaxed">
+  Three systems evolved in parallel:
+</p>
 
   <div class="mb-8">
     <Accordion
@@ -332,7 +357,8 @@ Production revealed ball possession had states—`carry`, `flight`, `loose`—no
 **The payoff came in 2020.** When we expanded to American football, product managers wrote drive segmentation rules using the same patterns. New sport, same architectural separation. Zero engineering bottleneck.
 
 Without DSLs, every new rule required engineering deploys. With DSLs, product managers shipped independently—velocity without correctness trade-offs.
-    </Accordion>
+
+</Accordion>
 
     <Accordion
       grouped
@@ -355,7 +381,8 @@ We built context-aware: press 'P' for pass, the system knew valid pass types for
 Ashmawy, Andrew, and Shash built computer vision for automated position detection—collectors corrected edge cases.
 
 When it mattered most, the architecture protected collectors: dataspec validated inputs, state machines prevented illegal sequences, DSLs defined legal transitions. Errors became structurally prevented, not just caught.
-    </Accordion>
+
+</Accordion>
 
     <Accordion
       grouped
@@ -368,18 +395,24 @@ When it mattered most, the architecture protected collectors: dataspec validated
         <span class="font-semibold text-navy">Backend Evolution</span>
         <span class="text-sm text-text-lighter"> — Event graphs owned time</span>
       </span>
+
 **Event Graphs**: Sequential event logs couldn't answer "what caused this turnover?" We needed both temporal relationships (clearance BEFORE recovery) AND logical relationships (clearance CAUSED loose phase). Events formed directed acyclic graphs with typed edges—enabling timeline replay and root-cause analysis for data quality debugging.
 
 **Waheed's Claims Breakthrough**: Match metadata from thousands of collectors meant inevitable conflicts—same player, different spellings. Waheed built claims-based metadata resolution. **The insight: metadata isn't key-value pairs, it's claims from actors.** System detected conflicts automatically, routed 1-2% ambiguous cases to the 5-person metadata team. They resolved once via claims interface—system cascaded to all dependent data. The team handled ambiguity; the system handled scale.
 
 **Backend Evolution**: Month one: Omar Negm built the single Go endpoint called `sync`—batch, offline. In year two (2019), when Omar left to teach kids software, Adham joined and designed the evolution to Kafka as persistence center, event logs as foundation—enabling real-time collection at broadcaster scale.
-    </Accordion>
+
+</Accordion>
+
   </div>
   </Section>
 
-  <SectionDivider spacing="major" />
+{" "}
 
-  {/* The Dataspec Paradox - NEW SECTION */}
+<SectionDivider spacing="major" />
+
+{/* The Dataspec Paradox - NEW SECTION */}
+
   <Section spacing="default" id="dataspec-paradox">
     <Heading level={3} as="h2" class="mb-6 text-navy">The Dataspec Velocity Tradeoff: How Do You Change Rules Without Invalidating History?</Heading>
 
@@ -389,26 +422,36 @@ Most systems would version the data: v1 events stay v1, new matches use v2. But 
 
 The solution: **tiered evolution.** When the dataspec changed, we'd backfill historical data through the new rules—recomputing derived facts from the atomic events we stored. The graph structure made this possible: we knew what cascaded when one definition changed.
 
-The dataspec itself had to be uncertain. By week one, the question shifted: not *if* we'd iterate, but *how often*. Our historical data needed to evolve with our understanding—not versioned snapshots frozen in time, but living data that grew smarter as we did.
+The dataspec itself had to be uncertain. By week one, the question shifted: not _if_ we'd iterate, but _how often_. Our historical data needed to evolve with our understanding—not versioned snapshots frozen in time, but living data that grew smarter as we did.
+
   </Section>
 
-  <SectionDivider spacing="major" />
+{" "}
 
-  {/* Team Building Section */}
+<SectionDivider spacing="major" />
+
+{/* Team Building Section */}
+
   <Section spacing="default" id="team-building" titleLevel={3} title="Distributed Ownership: Learning to Scale">
 
 What enables fast iteration at the start? Simplicity—ship twice daily, direct collector feedback, zero coordination. As complexity grew (DSLs, state machines, metadata resolution), the question shifted: how do you maintain velocity with a team? The technical architecture took three years to evolve. The harder part: building a team that could iterate beyond the initial design while learning to distribute ownership.
 
-<Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
+<Heading level={4} as="h4" class="mb-4 mt-6">
+  The Breakthrough: Distributed Ownership
+</Heading>
 
 **Adham** advocated for Kafka in year two. I resisted—unnecessary complexity. His counter: the domain will demand it. By year three, he was right. Event streaming became essential for parallel collection and historical corrections.
 
 When **Waheed, Hadeel, and Abdallah** joined, something shifted. They didn't just implement—they took ownership and iterated beyond what we started with. Waheed transformed conceptual sketches into production systems. Hadeel hardened prototypes for live match scale. Abdallah evolved workflows I thought were complete. They felt the same urgency to serve collectors directly—that partnership from week one had become distributed ownership.
+
   </Section>
 
-  <SectionDivider spacing="major" />
+{" "}
 
-  {/* Hudl Acquisition - Narrative Closure */}
+<SectionDivider spacing="major" />
+
+{/* Hudl Acquisition - Narrative Closure */}
+
   <Section spacing="default" id="hudl-acquisition" titleLevel={3} title="Epilogue: Hudl Acquisition (2024)">
 
 In 2024, two years after I left Egypt, Hudl acquired Statsbomb.
@@ -416,11 +459,15 @@ In 2024, two years after I left Egypt, Hudl acquired Statsbomb.
 Hudl is the industry standard—the platform most college and professional teams use globally for video analysis and performance tracking. They didn't acquire Statsbomb for the data alone. They acquired the collection system, the DSLs, the real-time infrastructure that enabled 5000+ collectors to work concurrently.
 
 The patterns Ali and I sketched in notepad during week one became valuable enough for an industry leader to buy. The architecture that emerged from serving collectors directly, from watching what slowed them down and making it faster, had legs beyond what we imagined.
+
   </Section>
 
-  <SectionDivider spacing="major" />
+{" "}
 
-  {/* Impact Section - Collapsible */}
+<SectionDivider spacing="major" />
+
+{/* Impact Section - Collapsible */}
+
   <details id="impact" class="group" open={false}>
     <summary class="cursor-pointer list-none">
       <Heading level={3} as="h2" class="mb-6 text-navy flex items-center justify-center gap-2 leading-tight">
@@ -437,81 +484,90 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
         <p>Impact: Timeline Comparison</p>
       </Heading>
     </summary>
-<Body size="sm" as="p" class="text-text-lighter"><strong>What actually changed on the ground?</strong> Here's the operational transformation from Dartfish baseline to production at scale.</Body>
-<Quote class='my-12' icon={true} attribution="A.Magdy, 360 Lead">With Dartfish, 12 minutes just to freeze a single shot. Now we freeze every event in the match—passes, tackles, everything. The tool made this scope possible.</Quote>
 
-<ComparisonGrid spacing="default">
-  <ComparisonCard variant="before" title="Engineering Bottleneck">
-    <ul class="space-y-3">
-      <li><strong>American football expansion:</strong> 12-month engineering estimate blocked product roadmap and market entry timing</li>
-      <li><strong>Dataspec changes:</strong> 5-day engineering cycle (code → test → deploy → regression) per rule change</li>
-      <li><strong>Support burden:</strong> 2 product managers fielded 50+ daily Slack questions about rules and edge cases</li>
-    </ul>
-  </ComparisonCard>
+<div class="max-w-[680px] mx-auto">
+  <Body size="sm" as="p" class="text-text-lighter"><strong>What actually changed on the ground?</strong> Here's the operational transformation from Dartfish baseline to production at scale.</Body>
+  <Quote class="my-12" attribution="A.Magdy, 360 Lead">With Dartfish, 12 minutes just to freeze a single shot. Now we freeze every event in the match—passes, tackles, everything. The tool made this scope possible.</Quote>
+  <ComparisonGrid spacing="default">
+    <ComparisonCard title="Before">
+      <ul class="space-y-3">
+        <li><strong>New sports:</strong> 12 months blocked</li>
+        <li><strong>Rule changes:</strong> 5-day engineering cycles</li>
+        <li><strong>Conflict resolution:</strong> 8 hours</li>
+      </ul>
+    </ComparisonCard>
 
-  <ComparisonCard variant="after" title="Product Manager Independence">
-    <ul class="space-y-3">
-      <li><strong>NFL shipped day one:</strong> Product managers wrote drive segmentation rules independently, zero engineering bottleneck</li>
-      <li><strong>Dataspec changes:</strong> 5-minute product manager deploy via DSL editor (we shipped twice daily during World Cup 2022)</li>
-      <li><strong>Automated resolution:</strong> 5-person metadata team handled 2% escalations while system resolved 98% automatically</li>
-    </ul>
-  </ComparisonCard>
-</ComparisonGrid>
+    <ComparisonCard title="After">
+      <ul class="space-y-3">
+        <li><strong>New sports:</strong> day-one deploys</li>
+        <li><strong>Rule changes:</strong> 5-minute deploys</li>
+        <li><strong>Conflict resolution:</strong> eliminated</li>
+      </ul>
+    </ComparisonCard>
 
-<Callout variant="primary" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
-  <Body size="sm">"Design for the 80% case"—The Pragmatic Programmer. That principle shaped most decisions: DSL for standard sequences, state machines for common flows, metadata for typical events. When 95% of matches follow patterns, build for patterns.</Body>
-</Callout>
+  </ComparisonGrid>
 
-<Heading level={4} as="h4" class="mb-4 mt-6">What Made This Possible</Heading>
+    <Callout variant="neutral" size="inline" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
+      <Body size="sm">"Design for the 80% case"—The Pragmatic Programmer. That principle shaped most decisions: DSL for standard sequences, state machines for common flows, metadata for typical events. When 95% of matches follow patterns, build for patterns.</Body>
+    </Callout>
 
-<div class="mb-6">
-  <Accordion
-    size="inline"
-    variant="default"
-    summary="Non-linear leverage"
-    defaultOpen={false}
-  >
-    <Body size="sm" as="p">Non-linear scaling without proportional staffing increases. The 5-person metadata team (Muhanad led ops context) queried pending conflicts, resolved once via claims interface, and the system cascaded updates to all affected events.</Body>
-  </Accordion>
+    <Heading level={4} as="h4" class="mb-4 mt-6">What Made This Possible</Heading>
 
-  <Accordion
-    size="inline"
-    variant="default"
-    summary="Minimal engineering bottleneck"
-    defaultOpen={false}
-  >
-    <Body size="sm" as="p">When we expanded to American football in 2020, product managers wrote new dataspecs and grouping rules. Engineering only intervened for state machine edge cases (e.g., possession turnover during penalty review—an NFL-specific complexity).</Body>
-  </Accordion>
+    <div class="mb-6">
+      <Accordion
+        size="inline"
+        variant="default"
+        summary="Non-linear leverage"
+        defaultOpen={false}
+      >
+        <Body size="sm" as="p">Non-linear scaling without proportional staffing increases. The 5-person metadata team (Muhanad led ops context) queried pending conflicts, resolved once via claims interface, and the system cascaded updates to all affected events.</Body>
+      </Accordion>
 
-  <Accordion
-    size="inline"
-    variant="default"
-    summary="Collector experience transformation"
-    defaultOpen={false}
-  >
-    <Body size="sm" as="p">Keyboard flows built muscle memory. Contextual mappings reduced cognitive load (press 'P' for pass, but context changes based on phase). Computer vision assisted bounding box input, reducing manual pixel-perfect clicking.</Body>
-  </Accordion>
+      <Accordion
+        size="inline"
+        variant="default"
+        summary="Minimal engineering bottleneck"
+        defaultOpen={false}
+      >
+        <Body size="sm" as="p">When we expanded to American football in 2020, product managers wrote new dataspecs and grouping rules. Engineering only intervened for state machine edge cases (e.g., possession turnover during penalty review—an NFL-specific complexity).</Body>
+      </Accordion>
 
-  <Accordion
-    size="inline"
-    variant="default"
-    summary="Client customization through configuration"
-    defaultOpen={false}
-  >
-    <Body size="sm" as="p">Different granularity requirements—basic event tracking or advanced positioning data with x/y coordinates—handled through dataspec configuration, not separate codebases.</Body>
-  </Accordion>
-</div>
+      <Accordion
+        size="inline"
+        variant="default"
+        summary="Collector experience transformation"
+        defaultOpen={false}
+      >
+        <Body size="sm" as="p">Keyboard flows built muscle memory. Contextual mappings reduced cognitive load (press 'P' for pass, but context changes based on phase). Computer vision assisted bounding box input, reducing manual pixel-perfect clicking.</Body>
+      </Accordion>
 
-<EditorialNote>From 100 to 5000+ collectors, product managers shipped new dataspecs without proportional engineering investment, though complex state transitions occasionally required technical collaboration.</EditorialNote>
-  </details>
+      <Accordion
+        size="inline"
+        variant="default"
+        summary="Client customization through configuration"
+        defaultOpen={false}
+      >
+        <Body size="sm" as="p">Different granularity requirements—basic event tracking or advanced positioning data with x/y coordinates—handled through dataspec configuration, not separate codebases.</Body>
+      </Accordion>
+    </div>
 
-  <SectionDivider spacing="major" class='mt-2' />
+    <EditorialNote>From 100 to 5000+ collectors, product managers shipped new dataspecs without proportional engineering investment, though complex state transitions occasionally required technical collaboration.</EditorialNote>
 
-  {/* Lessons Section */}
+  </div>
+</details>
+
+{" "}
+
+<SectionDivider spacing="major" class="mt-2" />
+
+{/* Lessons Section */}
+
   <Section spacing="default" id="lessons" titleLevel={3} title="Lessons: What Transfers? What Only Worked Here?">
 
 <EditorialNote>
-  Four years, three systems, distributed ownership learned the hard way. Which principles transfer to other domains? Which only worked because of sports analytics constraints?
+  Four years, three systems, distributed ownership learned the hard way. Which
+  principles transfer to other domains? Which only worked because of sports
+  analytics constraints?
 </EditorialNote>
 
 **What I'd Change**
@@ -554,23 +610,35 @@ These aren't universal truths—they worked because of specific conditions:
     <Body size="sm" as="p">During peak live match time, the system processes 100,000+ atomic events per minute—touches, passes, tackles, runs—streaming through arbitrary validation layers in real-time. With 100 collectors, manual coordination could absorb this velocity. At 1000+ collectors, 2 product managers couldn't handle 50+ daily dataspec questions while the spec evolved. Today at 5000+ collectors processing live matches simultaneously, architectural separation isn't optimization—it's the only way to handle this streaming intensity without engineering bottlenecks.</Body>
   </Accordion>
 
-  <Accordion
-    size="inline"
-    variant="default"
-    summary="Domain: Tacit expertise worth externalizing"
-    defaultOpen={false}
-  >
-    <Body size="sm" as="p">Sports analytics, medical diagnosis, legal review—domains where experts have tacit knowledge worth externalizing. The more complex the expertise, the more value in DSLs that let non-engineers express rules.</Body>
-  </Accordion>
+{" "}
 
-  <Accordion
-    size="inline"
-    variant="default"
-    summary="Multi-variant: N configurations, not N codebases"
-    defaultOpen={false}
-  >
-    <Body size="sm" as="p">Multiple sports, client customization, regional variations. When every customer wants different behavior, configuration prevents maintaining N codebases.</Body>
-  </Accordion>
+<Accordion
+  size="inline"
+  variant="default"
+  summary="Domain: Tacit expertise worth externalizing"
+  defaultOpen={false}
+>
+  <Body size="sm" as="p">
+    Sports analytics, medical diagnosis, legal review—domains where experts have
+    tacit knowledge worth externalizing. The more complex the expertise, the
+    more value in DSLs that let non-engineers express rules.
+  </Body>
+</Accordion>
+
+{" "}
+
+<Accordion
+  size="inline"
+  variant="default"
+  summary="Multi-variant: N configurations, not N codebases"
+  defaultOpen={false}
+>
+  <Body size="sm" as="p">
+    Multiple sports, client customization, regional variations. When every
+    customer wants different behavior, configuration prevents maintaining N
+    codebases.
+  </Body>
+</Accordion>
 
   <Accordion
     size="inline"
@@ -583,9 +651,12 @@ These aren't universal truths—they worked because of specific conditions:
 </div>
   </Section>
 
-  <SectionDivider spacing="major" />
+{" "}
 
-  {/* Behind the Scenes Section */}
+<SectionDivider spacing="major" />
+
+{/* Behind the Scenes Section */}
+
   <Section spacing="default" id="behind-the-scenes" titleLevel={2} title="Behind the Scenes">
 
 Cairo, 2018-2022: Arqam (Statsbomb)—night shifts, onboarding, farewells. From hand-drawn rules to collectors analyzing their own game nights.
@@ -594,15 +665,15 @@ Cairo, 2018-2022: Arqam (Statsbomb)—night shifts, onboarding, farewells. From 
 
   </Section>
 
+{/* Footer Navigation */}
 
-  {/* Footer Navigation */}
   <div class="flex justify-center mt-8 md:mt-12">
     <Button variant="primary" href="/contact" class="w-full md:w-auto">Start a Conversation →</Button>
   </div>
 </Container>
 
 <style is:global>
-{`
+  {`
   /* Remove default disclosure triangle for collapsible Impact section */
   #impact summary::-webkit-details-marker {
     display: none;

@@ -108,7 +108,7 @@
 <Callout variant="neutral" icon="quote" title="Collector Voice" class="mb-6">
   <p class="mb-2"><strong>Before (Dartfish):</strong> "12 minutes per frame..."</p>
   <p><strong>After (CV-assisted UI):</strong> "Computer vision detected 90%..."</p>
-  <p class="text-xs text-text-lighter mt-3">— A.Magdy, 360 Collection Lead</p>
+  <p class="text-xs text-text-lighter mt-3">A.Magdy, 360 Collection Lead</p>
 </Callout>
 ```
 
