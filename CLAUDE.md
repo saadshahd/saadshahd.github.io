@@ -3,85 +3,26 @@
 ## Project Overview
 
 **What**: Personal portfolio for Egyptian Principal Engineer specializing in functional architecture and production systems
-**Tech**: Astro v5, Bun, Tailwind v4, Motion One, Egyptian geometric design system (pyramids, water patterns)
-**Audience**: Technical recruiters, engineering leaders, and senior engineers seeking production-proven depth
-**Goal**: Content-first showcase with subtle heritage-inspired animations (never theatrical, always purposeful)
+**Tech**: Astro v5, Bun, Tailwind v4, Motion One, Egyptian geometric design system
+**Audience**: Engineering leaders, senior engineers seeking production-proven depth, Technical recruiters
+**Goal**: Content-first showcase with subtle heritage-inspired animations (purposeful, never theatrical)
 
 ---
 
 ## Design Philosophy
 
-**Persona:** Technical authority with taste
-**Approach:** Content-first, animations enhance UX (never distract)
+**Persona**: Technical authority with taste
+**Approach**: Content-first, animations enhance UX (never distract)
 
 ### Egyptian Heritage Brand
 
-**Identity**: Egyptian engineer inspired by Nile, pyramids, Red Sea, High Dam, 1973 water engineering (Bar Lev Line breakthrough)
-**Aesthetic**: Heritage as backdrop - present but not overwhelming technical content
+**Identity**: Egyptian engineer inspired by Nile, pyramids, Red Sea, 1973 water engineering
 **Visual Metaphor**: Creative problem-solving through abstract geometric patterns
+**Source of Truth**: `src/styles/global.css` @theme block
 
-**Color Palette** (src/styles/global.css @theme):
+**Brand Colors**: Primary gold (`#F4C430`), Secondary blue (`#0EA5E9`), Accent cyan (`#06B6D4`), Background cream (`#F5F1E8`)
 
-- Primary: `#F4C430` (bright Egyptian gold) - magical, luminous
-- Secondary: `#0EA5E9` (Red Sea blue) - clear water, NOT greenish
-- Accent: `#06B6D4` (vibrant cyan-blue)
-- Background: `#F5F1E8` (limestone cream)
-
-**Badge Semantic Colors** (WCAG AA compliant, 7.2-9.1:1 contrast):
-
-- Skill: `#FEF3C7` bg / `#78350F` text / `#F59E0B` border (warm amber/gold)
-- Category: `#DBEAFE` bg / `#0C4A6E` text / `#0EA5E9` border (sky blue)
-- Status: `#D1FAE5` bg / `#065F46` text / `#10B981` border (emerald green)
-
-### Egyptian Pattern Components
-
-**Purpose**: Heritage-inspired geometric patterns as subtle content backdrop (never theatrical)
-**Location**: `src/components/patterns/` (PyramidGrid.astro, WaterFlow.astro)
-**Demo**: `/patterns-demo` route
-
-**Usage Rules** (CRITICAL):
-
-1. **Desktop**: Bold animations (scale, flow, reveal) with Egyptian easings
-2. **Mobile**: Static or CSS-only (opacity 0.04, scale 0.7, no animation)
-3. **Accessibility**: ALWAYS respect `prefers-reduced-motion` (disable animations)
-4. **Positioning**: `fixed inset-0 z-0` (full-screen behind content)
-5. **Semantic**: `aria-hidden="true"` + `pointer-events: none` (decorative only)
-6. **Visual Constraint**: Opacity 0.08-0.25, max 2-3 elements per pattern (elegant minimalism)
-
-**When to Use**:
-- Hero sections (PyramidGrid with staggered fade-in)
-- Page backgrounds (WaterFlow with scroll-linked opacity)
-- Never in body content (distracts from reading)
-
-**Implementation Details**: See component source files and Astrobook stories for SVG paths, animation specs, and variants.
-
-### Animation Decision Tree
-
-**Philosophy**: Bold storytelling on entry, never distract during reading, always respect motion preferences
-
-**Decision Framework**:
-
-1. **Is this a decorative pattern** (PyramidGrid/WaterFlow)?
-   - Yes → Use pattern component (desktop only, check `prefersReducedMotion()`)
-   - No → Continue to step 2
-
-2. **Is this the hero section?**
-   - Yes → Staggered text reveal (0.6s delay, 0.15s stagger, `egyptianEasing.water`)
-   - No → Continue to step 3
-
-3. **Is this an element entering viewport?**
-   - Yes → InView trigger (30% threshold, 0.6-0.8s duration, Egyptian easing)
-   - No → Continue to step 4
-
-4. **Is this interactive feedback** (hover/focus)?
-   - Yes → CSS transition only (0.2s, no Motion One)
-   - No → **Don't animate** (body content should never animate mid-read)
-
-**All Animations MUST**:
-- Check `prefersReducedMotion()` first (apply final state instantly if true)
-- Use TypeScript types from Motion One (`DOMKeyframesDefinition`, `AnimationOptions`)
-- Apply Egyptian easings from design system (`egyptianEasing.water/pyramid/monument`)
-- Duration in seconds (0.8) NOT milliseconds (800)
+**Egyptian Patterns**: PyramidGrid/WaterFlow on homepage hero only. Desktop animations with `prefersReducedMotion()` check. See component files for usage.
 
 ---
 
@@ -91,537 +32,185 @@
 **Tone**: Respectful depth - never condescend, never showboat
 **Philosophy**: Production wisdom > trends, first principles > hype
 
-### Writing Rules
+### Core Formula
 
-**Sentence Rhythm** (Gary Provost): Vary length for musicality
+**Question-led + Collaborative + Humble**
 
-- Short: punch and emphasis
-- Medium: natural flow and connection
-- Long: build energy toward architectural insights that matter
+1. **Question-led authority** - Socratic confidence without claiming answers
 
-**Typography Breaks**: Use `<wbr>` for long technical terms (e.g., `Statsbomb<wbr>DataCollection<wbr>Pipeline`) and `text-wrap: balance` for headlines
-
-**Every Sentence Must**: Teach principle, reveal decision, or show impact
-
-**Forbidden**: Hype trends, performative jargon, tutorial-only content, condescension
-
-**Clarity**: Write for "intelligent curious person" - explain complexity simply, consistent depth for all
-
-### Visual Balance for Side-by-Side Elements
-
-**Principle**: Text elements in responsive grids (cards, columns, comparison layouts) must balance character counts to maintain visual rhythm.
-
-**Why**: Unbalanced text lengths break grid aesthetics—one element spanning 3 lines while others use 2 creates visual noise and reduces scannability.
-
-**Guidelines**:
-
-1. **Target ±15% variance** in character counts for grid items
-2. **Measure by description/body text**, not headings (headings naturally vary)
-3. **Balance through editing**, not padding:
-   - ❌ Don't add filler words to short text
-   - ✅ Do tighten verbose text and expand terse text with meaningful detail
-4. **Common patterns requiring balance**:
-   - Metric cards (3-column stats grids)
-   - Comparison cards (before/after, system features)
-   - Definition lists in grid layout
-   - Feature highlights in multi-column layouts
-
-**Example: Metric Card Balancing**
-
-```
-❌ Imbalanced (77 / 110 / 61 chars):
-Card 1: "Automated validation caught mistakes before they became data quality issues"
-Card 2: "Coaches received detailed match analytics in near real-time to adjust tactics during live matches"
-Card 3: "Non-linear leverage without proportional staffing increases"
-
-✅ Balanced (77 / 79 / 67 chars):
-Card 1: "Automated validation caught mistakes before they became data quality issues"
-Card 2: "Near real-time match analytics enabled tactical adjustments during live games"
-Card 3: "Non-linear scaling achieved without proportional staffing growth"
-```
-
-**Audit Process**:
-1. Count characters in each grid item's description
-2. Calculate variance: (max - min) / avg
-3. If variance > 20%, edit for balance
-4. Verify visual rendering at mobile/tablet/desktop breakpoints
-
-### Reader Goals (Priority Order)
-
-1. Trust (battle-tested experience)
-2. Learning (deeper systems thinking)
-3. Practical (applicable patterns)
-4. Respect (demonstrated technical depth)
-
-### Case Study Guidelines (Extracted from Statsbomb)
-
-**Structure:**
-1. **TL;DR first** - Expandable `<details>` with 2-min summary (outcome, architecture, impact, core lesson)
-2. **Reading metadata upfront** - Minutes + section count before story begins
-3. **Badge hierarchy** - Category for domain (Real-Time Collection), status/skill for differentiating tech (XState, ANTLR)
-4. **Section flow** - Origins → Problem → Architecture → Impact → Lessons → Behind Scenes → CTA
-
-**Visual Patterns:**
-5. **Side-by-side comparisons** - Before/after diagrams in 2-column grid with border separators
-6. **Mermaid accessibility** - Wrap diagrams in `<figure>` + `<details>` text alternative for screen readers
-7. **Photo captions** - Italic, centered, 12px text explaining context/year
-8. **Progressive disclosure** - Accordion for deep technical details (DSL syntax, state machines)
-9. **Section dividers** - Major spacing (12-16px) between acts, minor (6px) within sections
-10. **Metric cards** - 3-column grids with balanced character counts (±15% variance)
-
-**Narrative Voice:**
-11. **Origin as specific scene** - Week one partnership, not abstract introduction (Ali dictating rules, typing in VSCode)
-12. **Problem as dialogue** - Start with collectors arguing, product managers fielding Slack questions, real friction
-13. **Questions open sections** - "How do you change rules without invalidating history?" not declarative statements
-14. **Team attribution throughout** - Name who built what (Waheed's claims, Hadeel's subscriptions, Adham's Kafka)
-15. **Regret visible** - "What I'd change" shows humility, learning ("team building year three, not founding principle")
-
-**Copy Mechanics:**
-16. **Sentence rhythm** - Vary short (punch), medium (flow), long (build to insight)
-17. **Italics for transitions** - Context-setting paragraphs between major sections ("Understanding why explains... now: how")
-18. **Strong verbs** - Shipped, scaled, evolved, fragmented (not "implemented", "created", "made")
-19. **Metrics serve lessons** - "16h → 4h" explains architectural payoff, not bragging rights
-20. **Callouts for principles** - Core lessons in dedicated Callout components, not buried in paragraphs
-
-**Content Balance:**
-- **Origins (10%)** - Week one partnership, first tool, mutual trust foundation
-- **Problem (15%)** - Specific pain (2-merge bottleneck), why it blocked scale
-- **Architecture (35%)** - How decisions enabled 10x scale (DSLs, state machines, event graphs)
-- **Impact (20%)** - Timeline comparison, quotes, what made non-linear leverage possible
-- **Lessons (15%)** - What transfers, what doesn't, context boundaries
-- **Behind Scenes (5%)** - Photo gallery, human dimension
-
-### Blog: Hook → Context → Deep Dive → Principle → Application
-
-### Pre-Publish Checklist
-
-- [ ] Sentence lengths vary (short/medium/long)
-- [ ] No hype words (revolutionary, game-changing)
-- [ ] No unnecessary jargon
-- [ ] Every paragraph teaches
-- [ ] Production wisdom evident
-- [ ] First principles explained
-- [ ] Section headings match reader intent: questions for exploration ("How do you...?"), declarations for authority ("The X Pattern"), scenes for story ("Week One: The Partnership")
-- [ ] Collaborative framing ("we", "teams", no "I did X" heroics)
-- [ ] Philosophical systems thinking present
-- [ ] Humble learning visible ("still exploring", "lesson learned")
-- [ ] No bold/arrogant claims
-- [ ] CTAs are invitational, not commanding
-
----
-
-## Copy Tone Guidelines
-
-**Core Tone:** Philosophical + Humble + Collaborative Confidence
-
-**Never:** Bold, arrogant, or individual hero narrative
-
-### Tone Principles
-
-**✅ ALWAYS Use:**
-
-1. **Question-led authority** (Socratic confidence without claiming answers)
-   - "How do you collect 90-minute matches without choosing between velocity and correctness?"
+   - "How do you collect matches without choosing between velocity and correctness?"
    - "What if systems couldn't break by design?"
-   - "How do 20 teams collaborate without friction or incorrectness?"
 
-2. **Collaborative framing** (team/collective credit, not individual genius)
+2. **Collaborative framing** - Team credit, not individual genius
+
    - "We reduced collection from 16 hours to 4 concurrent collectors"
-   - "Working in high-velocity environments revealed they're complementary"
    - "When teams chase the right questions first, architecture emerges"
 
-3. **Philosophical systems thinking** (abstract principles, constraints, architecture)
+3. **Philosophical systems thinking** - Abstract principles, constraints
+
    - "Architecture shapes possibility"
    - "Reliability stops being aspirational—it becomes structural"
-   - "Architectural separation eliminates trade-offs that feel inevitable"
 
-4. **Humble learning orientation** (ongoing exploration, lessons from experience)
+4. **Humble learning orientation** - Ongoing exploration
+
    - "Still exploring what's possible"
-   - "Lesson learned: architectural separation..."
-   - "Over 15 years, a pattern revealed itself"
-   - "Patterns emerged through production bugs"
+   - "Over 15 years, patterns emerged from production bugs"
 
-5. **Evidence-based confidence** (proven through production, not claims)
+5. **Evidence-based confidence** - Proven through production
    - "15 years", "production systems", "at Instabug, Statsbomb, and Wise"
-   - Metrics in service of learning, not bragging
 
-**❌ NEVER Use:**
+### Do/Don't Table
 
-1. **Bold/arrogant claims**
-   - ❌ "I build systems that can't break"
-   - ❌ "I solved content collaboration at scale"
-   - ❌ "I cut 90-minute match collection..." (individual hero)
+| Context            | ❌ Avoid                           | ✅ Use                                                           |
+| ------------------ | ---------------------------------- | ---------------------------------------------------------------- |
+| Introducing work   | "I built editorial infrastructure" | "At Wise, we're solving content collaboration for 20 teams"      |
+| Describing results | "I reduced collection time by 75%" | "We reduced collection from 16 hours to 4 concurrent collectors" |
+| CTAs               | "See My Work" / "Hire Me"          | "Explore My Work" / "Start a Conversation"                       |
 
-2. **First-person hero narrative**
-   - ❌ "I designed", "I implemented", "I achieved" (without collaborative context)
-   - ❌ "My system", "My architecture" (implies sole ownership)
+### Writing Rules
 
-3. **Command language in CTAs**
-   - ❌ "See What I've Built" → ✅ "Explore My Work"
-   - ❌ "Get in Touch" → ✅ "Start a Conversation"
-   - ❌ "View Full Resume" → ✅ "Full Background"
+**Sentence Rhythm** (Gary Provost): Vary length for musicality - short (punch), medium (flow), long (build to insight)
+**Every Sentence Must**: Teach principle, reveal decision, or show impact
+**Typography Breaks**: `<wbr>` for long technical terms, `text-wrap: balance` for headlines
+**Forbidden**: Hype trends, performative jargon, tutorial-only content, condescension
 
-4. **Definitive statements without humility**
-   - ❌ "The right question makes implementation obvious"
-   - ✅ "Curious about the 'why' first—it often reveals the 'how'"
+### Case Study Patterns
 
-5. **Claiming perfection or absolute mastery**
-   - ❌ "I've mastered functional programming"
-   - ❌ "My approach eliminates all bugs"
+**Layout**: TL;DR first (expandable `<details>`), reading metadata upfront, badges (category/status), side-by-side comparisons with border separators, Mermaid diagrams with `<figure>`/`<details>` text alternatives, metric cards with balanced character counts (±15% variance)
 
-### Copy Pattern Template
+**Story Mechanics**: Origin as scene (week one partnership), problem as dialogue (collectors arguing), questions open sections ("How do you...?"), team attribution (name who built what), regret visible ("What I'd change"), italics for transitions, strong verbs (shipped/scaled, not implemented)
 
-**Core Formula**: Question-led opening + collaborative framing + humble uncertainty
+**Narrative Flow**: Prioritize narrative tension over chronology - weave technical depth into human story moments (witnessed failure before solution architecture)
 
-| Context | ❌ Avoid | ✅ Use |
-|---------|---------|--------|
-| **Introducing work** | "I built editorial infrastructure for Wise" | "At Wise, we're solving content collaboration for 20 teams" |
-| **Describing results** | "I reduced collection time by 75%" | "We reduced collection from 16 hours to 4 concurrent collectors" |
-| **Sharing insights** | "I proved velocity and correctness aren't trade-offs" | "Working in high-velocity environments revealed they're complementary" |
-| **CTAs** | "See My Work" / "Hire Me" | "Explore My Work" / "Start a Conversation" |
+**Photo Captions**:
 
-**Approved Hero Section Example**:
-- **Headline**: "What if systems couldn't break by design?" (Socratic question)
-- **Value Prop**: "Over 15 years, patterns emerged from production systems: when you separate behavior from state and make illegal states unrepresentable, reliability stops being aspirational—it becomes structural. Exploring what's possible when architecture shapes correctness." (passive discovery, humble ongoing learning)
+- Individual: `<figcaption class="text-xs text-text-lighter mt-1 text-center italic">`
+- Group: `<p class="text-xs text-text-light text-center italic -mt-2 mb-6">`
+- Content: Context + year, explain what's shown
 
-**Tone Audit Checklist** (all must be "yes" before publishing):
+### Visual Balance
+
+**Principle**: Grid items (cards, columns, comparisons) must balance character counts (±15% variance) to maintain visual rhythm
+
+**Apply during editing passes** when visual rhythm breaks, not initial drafts. Count characters in descriptions, calculate variance (max - min) / avg, edit if > 20%.
+
+### Pre-Publish Tone Audit
+
 - [ ] Question-led? (Major sections open with Socratic questions)
 - [ ] Collaborative? (Achievements credited to teams, not individual)
 - [ ] Philosophical? (Systems thinking and first principles visible)
-- [ ] Humble? (Ongoing learning acknowledged: "still exploring", "lesson learned")
+- [ ] Humble? (Ongoing learning: "still exploring", "lesson learned")
 - [ ] Evidence-based? (Confidence from proven work: years, companies, metrics)
-- [ ] No arrogance? (Zero "I build X" claims without collaborative context)
-- [ ] Invitational CTAs? (Collaborative "Explore"/"Discuss", not commanding)
+- [ ] Sentence rhythm varies (short/medium/long)
+- [ ] No hype words (revolutionary, game-changing)
+- [ ] Strong verbs (shipped/scaled, not implemented)
 
 ---
 
-## Content Structure
+## Design System
 
-**Homepage**: Intro (Building realtime systems through functional architecture), 2-3 case studies, blog preview, CTA
-**Portfolio**: 3-5 case studies (Problem→Architecture→Impact→Lessons), 2000-3000w + diagrams
-**Blog**: Monthly technical articles, start with "Real Time Data Collection System"
-**About**: Bio 200-300w, expertise, highlights, headshot
-**Resume**: PDF + HTML version
-**Contact**: Email, LinkedIn, GitHub, optional form
+**Source**: `src/styles/global.css` @theme block, component files in `src/components/`
 
----
+### Critical Rules
 
-## Success Criteria
+**Text Color Hierarchy** (WCAG AA compliance):
 
-**Week 1-2**: Live, one animation, responsive, placeholder content, <3s load
-**Week 3-4**: First case study (Statsbomb), bio, resume, contact
-**Month 2+**: Blog posts, more case studies, SEO
+- `text-text` (primary body), `text-text-light` (secondary), `text-text-lighter` (muted on surfaces)
+- **NEVER use `text-neutral` for readable text** (border-only color, fails WCAG AA at 2.52:1)
 
----
+**Component-First**: Use Button, Badge, Card, Callout, Heading, Body, Link for all UI
+**Exception**: Raw HTML + Tailwind acceptable for custom layouts not covered by design system (photo grids, multi-column comparisons)
 
-## Tech Stack
+### Component Composition Pattern
 
-**Core:** Astro v5, Bun, Tailwind v4, Motion One (motion.dev), GitHub Pages/Actions
-**Current:** View Transitions API built into Astro
-**Optional:** Markdown for blog/case studies
-**Forbidden:** Complex build systems, heavy frameworks, over-engineering
+**Principle**: Extend existing components via composition, not duplication
+**Example**: CalloutCTA wraps Callout, inheriting all variants (44 lines vs 119 lines)
+**Type-safe approach**: Use `ComponentProps<typeof BaseComponent>` for props inheritance
+**When to use**: Adding features to existing components (CTA slots, optional sections)
 
-### Animation Library
+### Badge Semantic Variants (WCAG AA 7.2-9.1:1 contrast)
 
-**✅ Motion One** (`motion` package): Framework-agnostic, 5KB, Web Animations API - https://motion.dev
-**❌ Framer Motion**: React-only (we don't use React)
-**❌ anime.js**: Export issues, removed
-**Rule**: Motion One or native CSS only. No React libs without React integration.
-
-### Motion One Animation Requirements
-
-**Library**: Motion One (`motion` package) - Framework-agnostic, 5KB, Web Animations API wrapper
-**Documentation**: https://motion.dev
-
-**Project-Specific Requirements**:
-
-1. ✅ **Type Safety**: Always import TypeScript types (`DOMKeyframesDefinition`, `AnimationOptions`, `ScrollOptions`, `InViewOptions`)
-2. ✅ **Transform Properties**: Use individual properties (`x`, `y`, `scale`, `rotate`) - NEVER `transform` strings
-3. ✅ **Duration Format**: Seconds (0.8) NOT milliseconds (800)
-4. ✅ **Accessibility**: Check `prefersReducedMotion()` before ALL animations - apply final state instantly if true
-5. ❌ **FORBIDDEN**: `as any` type casts (bypasses type safety), `transform: "translateY(30px)"` strings
-
-**Egyptian Design System Easings** (see `src/utils/animations.ts`):
-- `egyptianEasing.water` - `[0.65, 0, 0.35, 1]` (flowing, primary choice)
-- `egyptianEasing.pyramid` - `[0.34, 1.56, 0.64, 1]` (sharp, emphasis)
-- `egyptianEasing.monument` - `[0.76, 0, 0.24, 1]` (powerful, reveals)
-
-**Example: Type-Safe Animation with Accessibility**
-
-```typescript
-import { animate, stagger } from "motion";
-import type { DOMKeyframesDefinition, AnimationOptions } from "motion";
-import { egyptianEasing, prefersReducedMotion } from "@/utils/animations";
-
-if (!prefersReducedMotion()) {
-  const keyframes: DOMKeyframesDefinition = { opacity: [0, 1], y: [30, 0] };
-  const options: AnimationOptions = {
-    duration: 0.8,
-    ease: egyptianEasing.water,
-    delay: stagger(0.15, { startDelay: 0.6 })
-  };
-  animate(".hero-item", keyframes, options);
-} else {
-  // Apply final state instantly
-  document.querySelectorAll(".hero-item").forEach(el => {
-    (el as HTMLElement).style.opacity = "1";
-  });
-}
-```
-
-**Complete API Reference**: https://motion.dev/docs/animate
-
-### Code Highlighting
-
-**✅ Shiki** (https://shiki.style): Built into Astro
-
-### Design System Documentation
-
-**✅ Astrobook** (https://astrobook.pages.dev): Native Astro component playground
-**Why:** Storybook CSF v3 compatible, zero React overhead, same dev server
-**Location:** `/design-system` route with live component examples
-
----
-
-## Design System (Single Source of Truth)
-
-**Source**: All tokens defined in `src/styles/global.css` @theme block
-**Documentation**: `/design-system` route (Astrobook integration)
-
-### Egyptian Color Palette
-
-**Brand Colors** (see earlier Egyptian Heritage Brand section):
-- Primary: `#F4C430` (Egyptian gold)
-- Secondary: `#0EA5E9` (Red Sea blue)
-- Accent: `#06B6D4` (cyan-blue)
-- Background: `#F5F1E8` (limestone cream)
-
-**Badge Semantic Variants** (WCAG AA 7.2-9.1:1 contrast):
 - `variant="skill"`: Warm amber/gold (`#FEF3C7` bg, `#78350F` text, `#F59E0B` border)
 - `variant="category"`: Sky blue (`#DBEAFE` bg, `#0C4A6E` text, `#0EA5E9` border)
 - `variant="status"`: Emerald green (`#D1FAE5` bg, `#065F46` text, `#10B981` border)
 
-**Semantic Tokens** (use these in components):
-- Text: `text-accent` (body), `text-accent-light` (secondary), `text-neutral` (muted)
-- Backgrounds: `bg-primary`, `bg-secondary`, `bg-surface`, `bg-background`
-- Borders: `border-accent`, `border-neutral`, `border-primary`
+### Pre-Commit Blockers
 
-**Text Color Hierarchy** (WCAG AA compliance on white/surface backgrounds):
-- `text-text` (`#0F172A`, 17.56:1) - Primary body text, headings
-- `text-text-light` (`#1E293B`, 14.39:1) - Secondary text, subheadings
-- `text-text-lighter` (`#475569`, 7.45:1 WCAG AAA) - **Tertiary text, muted content on Cards/surfaces, metadata**
-- `text-text-navy` (`#0C4A6E`, 9.8:1 WCAG AAA) - Egyptian brand case study titles
-- ❌ `text-neutral` (`#94A3B8`, 2.52:1) - **ONLY for borders/icons, NEVER for text**
-- ❌ `text-neutral-light` (`#CBD5E1`, 1.8:1) - **ONLY for borders, NEVER for text**
+**BLOCKING** (must pass):
 
-**Critical Rule**: Always use `text-text-lighter` (NOT `text-neutral` or `text-neutral-light`) for muted text on Card components or any white/surface backgrounds. The `neutral` color tokens are designed exclusively for borders and visual elements, NOT for readable text.
-
-### Typography Scale
-
-**Display Scale** (Space Grotesk, hero headers only): `text-4xl/5xl` (48-64px)
-**Content-First Scale** (all body/headings): `text-xs` to `text-3xl` (12-40px)
-**Rationale**: Display for impact, content-first for readability at 120% line-height
-
-**Heading Hierarchy:**
-- `<Heading level={1}>` (h1): Display scale, hero only (48-64px)
-- `<Heading level={2}>` (h2): Major section headings (32-40px)
-- `<Heading level={3}>` (h3): Subsections (24-32px)
-- `<Heading level={4}>` (h4): **Subsection details, technical breakdowns** (18-20px, semibold, `text-navy` for Egyptian brand coherence when used as case study subsections)
-- `<Heading level={5}>` (h5): Tertiary headings if needed (16px)
-
-### Spacing System
-
-**Fibonacci Tokens**: `spacing-xs/sm/md/lg/xl/2xl/3xl` (4/8/16/24/40/64/104px)
-**Tailwind Mapping**: `p-1/2/4/6/10/16/26` (same pixel values)
-
-### Component-First Enforcement
-
-✅ **ALWAYS use these components**:
-
-**Core UI Components:**
-```astro
-<Button variant="primary" size="md" href="/portfolio">View Work</Button>
-<Button variant="ghost" size="sm" href="#">Soft CTA (for callouts)</Button>
-<Badge variant="skill">JavaScript</Badge>
-<Card variant="default">Content</Card>
-<Link href="/about">About</Link>
-<Callout variant="primary" title="Insight">Info without action</Callout>
-
-<Callout variant="secondary" title="Title" icon="code">
-  <Body size="sm">Content with primary action...</Body>
-  <Fragment slot="cta">
-    <Button variant="ghost" size="sm" href="#">Action →</Button>
-  </Fragment>
-</Callout>
-```
-
-**Typography Components:**
-```astro
-<Display size="lg">Hero headlines</Display>
-<Heading level={2} variant="section">Major sections</Heading>
-<Heading level={4} variant="navy">Egyptian brand case study subsections</Heading>
-<Body size="md">Body content with semantic sizing</Body>
-```
-
-**Content Structure Components:**
-```astro
-<ReadingMetadata minutes={25} sections={6} />
-<MetricCard title="75% Faster" description="Collection time reduced from 16 to 4 hours" />
-<ComparisonCard
-  beforeLabel="Before"
-  beforeContent="Manual validation, 16 hours"
-  afterLabel="After"
-  afterContent="Automated prevention, 4 hours concurrent"
-/>
-<Accordion title="Technical Deep Dive">
-  <Body>Collapsible details for progressive disclosure...</Body>
-</Accordion>
-<DefinitionList
-  items={[
-    {term: "XState", definition: "Finite state machine library for TypeScript"},
-    {term: "ANTLR", definition: "Parser generator for creating DSLs"}
-  ]}
-/>
-```
-
-**Media Components:**
-```astro
-<PhotoGallery
-  images={photoData}
-  caption="Statsbomb team photos 2018-2022"
-/>
-<MermaidDiagram
-  diagram={`graph TD
-    A[Input] --> B[Process]
-    B --> C[Output]
-    class A atomic
-    class B derived
-    class C system`}
-/>
-```
-
-**Navigation Components:**
-```astro
-<ScrollProgress variant="desktop-vertical" />
-<ScrollProgress variant="mobile-horizontal" />
-```
-
-❌ **FORBIDDEN patterns**:
-- Raw HTML: `<button>`, `<a>`, `<div>` with manual Tailwind classes
-- Arbitrary colors: `text-gray-*`, `bg-[#...]`, `text-slate-*`
-- Arbitrary sizes: `text-[22px]`, `p-[18px]`, `mb-13`
-- Custom CTA wrappers: `<div class="bg-surface ...">` with manual buttons
-- Inline action links instead of CTA slot: Use CTA slot for dedicated action sections with visual separation
-
-**Why**: Type-safe CVA variants prevent class drift, ensure WCAG AA compliance
-
-### Pre-Commit Checklist (BLOCKING = must pass)
-
-**BLOCKING**:
 - [ ] All interactive elements meet WCAG AA contrast (4.5:1 minimum)
 - [ ] All buttons/links use components (no raw `<button>`, `<a>`)
-- [ ] Zero arbitrary colors/sizes outside design system
-- [ ] Text color usage correct: `text-text-lighter` for muted text, NEVER `text-neutral` (border-only color)
-
-**REQUIRED**:
-- [ ] Zero `text-gray-*`, `text-slate-*`, `bg-blue-*` classes
-- [ ] Zero arbitrary spacing values outside Fibonacci sequence
-
-**Text Color Hierarchy Rule** (WCAG AA compliance):
-- `text-text` (#0F172A, 17.56:1) - Primary body text, headings
-- `text-text-light` (#1E293B, 14.39:1) - Secondary text
-- `text-text-lighter` (#475569, 7.45:1) - **Tertiary/muted text on surfaces**
-- `text-neutral` (#94A3B8, 2.52:1) - **ONLY for borders/icons, NEVER for readable text**
-- `text-neutral-light` (#CBD5E1, 1.8:1) - **ONLY for borders, NEVER for text**
-
-**RECOMMENDED**:
-- [ ] Component examples added to Astrobook stories (if new component)
-
-### Responsive Design Note
-
-Tailwind 4: Theme variables are global. Use responsive utility variants (`text-xl md:text-2xl`, `p-4 md:p-6`) in markup, not custom `@media` around tokens.
+- [ ] Zero arbitrary colors outside design system (`text-gray-*`, `bg-[#...]`)
+- [ ] Text color correct: `text-text-lighter` for muted text, NEVER `text-neutral`
 
 ### Technical Diagrams
 
-**Design System**: See `docs/plans/2025-10-30-diagram-design-system.md` for complete specifications
-**CSS Variables**: Added to `src/styles/global.css` @theme block (lines 102-165)
+**Design System**: See `docs/plans/2025-10-30-diagram-design-system.md` for complete specs
+**Mermaid classDef** (copy-paste):
 
-**Quick Reference**:
-- **Palette**: Blueprint Authority (limestone cream canvas, Egyptian gold/blue accents)
-- **Node Types**: Atomic (amber), Derived (blue), System (emerald), Default (cream)
-- **Typography**: Inter 14px titles, 12px labels, 11px annotations
-- **Accessibility**: WCAG AA minimum (4.5:1 text), AAA for node backgrounds (7:1+)
-- **Implementation**: Hybrid approach - Mermaid for standard flows, custom SVG for hero diagrams
-
-**Mermaid classDef Standards** (copy-paste into diagrams):
 ```mermaid
 classDef atomic fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#78350F
 classDef derived fill:#DBEAFE,stroke:#0EA5E9,stroke-width:2px,color:#0C4A6E
 classDef system fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065F46
 ```
 
-**Accessibility Requirements**:
-- [ ] Wrap diagrams in `<figure>` with `<figcaption>` description
-- [ ] Add `<details>` with text alternative for relationships
-- [ ] Test with screen reader (VoiceOver, NVDA)
-- [ ] Verify all text meets 4.5:1 contrast minimum
-- [ ] Respect `prefers-reduced-motion` (disable animations)
+**Accessibility**: Wrap diagrams in `<figure>` + `<figcaption>`, add `<details>` text alternative, test with screen reader, verify 4.5:1 contrast, respect `prefers-reduced-motion`
+
+---
+
+## Tech Stack
+
+**Core**: Astro v5, Bun, Tailwind v4, Motion One, GitHub Pages
+**Animation**: Motion One via `@/utils/animations` (egyptianEasing, prefersReducedMotion)
+**Code highlighting**: Shiki (built into Astro)
+**Forbidden**: Framer Motion (React-only), anime.js (removed), complex build systems
+
+### Animation Requirements
+
+**Use Motion One via `@/utils/animations`** - import egyptianEasing, prefersReducedMotion
+**Type safety**: Import `DOMKeyframesDefinition`, `AnimationOptions` from `motion`
+**Always check `prefersReducedMotion()`** before animating (apply final state instantly if true)
+**Duration**: Seconds (0.8) NOT milliseconds (800)
+**Transforms**: Use `x`, `y`, `scale`, `rotate` (NEVER `transform` strings)
+
+---
+
+## Workflow Patterns
+
+### Design Document Practice
+
+**When**: Before changes >3 story points or introducing new components
+**Structure**: Problem (with line refs) → Decision (with confidence %) → Implementation → Reversibility
+**Location**: `docs/plans/YYYY-MM-DD-feature-name.md`
+**Why**: Prevents scope creep, documents decisions, enables future refactoring
+
+### Story-First Restructure
+
+**Principle**: Narrative tension over chronology - weave technical into human moments
+**Example**: Real-Time Test (2am debugging) placed BEFORE Architecture section (not after) to ground technical decisions in witnessed failure
+**Pattern**: Origins (human) → Problem (friction) → Witnessing (failure) → Solution (architecture) → Epilogue → Impact (metrics) → Lessons (principles)
+
+---
+
+## Content Structure
+
+**Homepage**: Intro (question-led value prop), 2-3 case studies, blog preview, CTA
+**Portfolio**: 3-5 case studies (Problem Story→Architecture→Impact→Lessons), 2000-3000w + diagrams/vsiual minimally as needed to increase clarity without competing with the story and the narrative
+**About**: Bio 200-300w, expertise, highlights, headshot
+**Resume**: PDF + HTML version
+**Contact**: Email, LinkedIn, GitHub
 
 ---
 
 ## Project Status: ✅ Launched (2025-10-31)
 
-### Completed Milestones
+**Live**: 2.1s load time, WCAG AA compliant, fully responsive
+**Content**: Statsbomb case study (25-min read, 6 sections), bio, resume, contact
+**Components**: 30+ design system composoble patterns
+**Documentation**: 12 design docs in `docs/plans/`
 
-**Week 1-2 (Oct 26-27): Foundation**
-- ✅ Mobile navigation with circular logo
-- ✅ Responsive design system (8 story points)
-- ✅ Egyptian pattern components (PyramidGrid, WaterFlow)
-- ✅ Typography components (Display, Heading, Body)
+### Next: Content Expansion
 
-**Week 2-3 (Oct 28-29): Design System**
-- ✅ Component-first architecture (30+ components)
-- ✅ WCAG AA compliance (7.2-9.1:1 contrast ratios)
-- ✅ Customer-driven positioning (feedback from Simon, Adham)
-- ✅ Diagram design system (Blueprint Authority, 6 story points)
-
-**Week 3-4 (Oct 30-31): Content & Launch**
-- ✅ Statsbomb case study (25-min read, 6 sections, complete)
-- ✅ Photo gallery with PhotoSwipe integration
-- ✅ Bio, resume, contact pages
-- ✅ Callout with optional CTA slot (3 story points)
-- ✅ Scroll progress redesign (3 story points)
-- ✅ LinkedIn announcement published
-
-### Launch Checklist
-
-- [x] Live site with Egyptian animations (Motion One + accessibility guards)
-- [x] Fully responsive (mobile/tablet/desktop breakpoints)
-- [x] Complete case study (Statsbomb 2018-2022)
-- [x] Bio/resume/contact pages
-- [x] WCAG AA compliance verified across all semantic variants
-- [x] <3s load time (2.1s actual on GitHub Pages)
-- [x] GitHub Pages deployment workflow
-- [x] LinkedIn announcement
-- [x] Git history cleaned (debugging commits squashed)
-- [x] Senior engineer-focused README
-- [x] 12 design documents in docs/plans/
-
-### Next Phase: Content Expansion
-
-**Priority 1: Blog Infrastructure**
-- [ ] Blog post template with reading metadata
-- [ ] First post: "Real Time Data Collection System"
-- [ ] RSS feed generation
-- [ ] Monthly blog cadence
-
-**Priority 2: Additional Case Studies**
-- [ ] Wise Editorial Platform (current work)
-- [ ] Instabug highlights (2015-2018)
-- [ ] Additional Statsbomb deep dives (XState, ANTLR, DSL)
-
-**Priority 3: SEO & Distribution**
-- [ ] Meta descriptions for all pages
-- [ ] Structured data markup
-- [ ] Sitemap generation
-- [ ] Social media preview optimization
+**Priority 1**: Blog infrastructure (template, RSS feed)
+**Priority 2**: Additional case studies (Wise Editorial Platform, Instabug highlights)
+**Priority 3**: SEO (meta descriptions, structured data, sitemap)
