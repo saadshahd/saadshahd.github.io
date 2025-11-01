@@ -192,9 +192,12 @@ const {
   class: className,
 } = Astro.props;
 
-// Validation: must provide either summary OR (name + role)
-if (!summaryText && !name) {
-  throw new Error('Accordion requires either "summary" or "name" prop');
+// Check if summary slot is provided
+const hasSummarySlot = Astro.slots.has('summary');
+
+// Validation: must provide either summary slot, summary prop, OR (name + role)
+if (!hasSummarySlot && !summaryText && !name) {
+  throw new Error('Accordion requires either a "summary" slot, "summary" prop, or "name" prop');
 }
 
 // NEW: Validation for grouped props
@@ -210,7 +213,9 @@ if (grouped && !position) {
   open={defaultOpen}
 >
   <summary class={cn(summary({ size, grouped }))}>
-    {name ? (
+    {hasSummarySlot ? (
+      <slot name="summary" />
+    ) : name ? (
       <div class="flex flex-col md:flex-row md:items-baseline md:gap-2">
         <span class="font-semibold text-text">{name}</span>
         {role && <span class="text-sm text-text-lighter">{role}</span>}
