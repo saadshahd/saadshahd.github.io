@@ -323,6 +323,8 @@ Without DSLs, every new rule required engineering deploys. With DSLs, product ma
     >
 The first thing we built was the tool collectors would use every day—an Electron desktop app replacing Dartfish's rigid forms with keyboard-first workflows.
 
+**Why Dartfish Couldn't Scale**: The industry standard—Dartfish—forced button-heavy mouse clicks for every selection. It had keyboard shortcuts, but each key mapped to only one event type globally across the entire dataspec. With 50+ event types but only 40 usable keys, collectors memorized arbitrary mappings at all times, regardless of game context. Cognitive overload blocked velocity.
+
 **State Machines for Prevention**: We modeled collection workflows as explicit finite state machines with XState. Define workflows as explicit states with clear transitions, and illegal states become structurally impossible. Can't skip steps. Can't submit incomplete data. Prevention, not validation.
 
 **Context-Aware Keyboard Mappings**: Same key, different actions per context. Press 'P' for pass—the DSL determined valid pass types for that player's position. If only one option remained, auto-filled and skipped. Collectors touch-typed like Vim users. Eyes on video, hands on keyboard.
