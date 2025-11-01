@@ -63,7 +63,7 @@ import ComparisonCard from '../../components/ComparisonCard.astro';
   </section>
 
   {/* Origins: Week One Partnership */}
-  <section class="mb-12" id="origins">
+  <section class="mb-6" id="origins">
     <Heading level={3} as="h2" class="mb-6 text-navy">Origins: Week One Partnership</Heading>
 
 We shipped twice daily. Every morning, I'd push a new build of the freezeframe tool—replacing Dartfish's 12-minute manual clicking with computer vision-assisted positioning. By afternoon, collectors would test it during matches. By evening, I'd see their feedback in Slack.
@@ -80,7 +80,7 @@ Ali had spent years analyzing sports data—he could articulate possession rules
 
 Week one, Ali and I sat with VSCode open. He spoke rules aloud, I typed them as text:
 
-`start → [middle] → break`
+<p class="text-center">`start → [middle] → break`</p>
 
 As I typed what Ali dictated, I realized: I wasn't writing documentation. I was encoding his mental model as executable text. **That's when it clicked: the dataspec can't be code. It has to be data we can iterate without deploys.**
 
@@ -95,9 +95,7 @@ That partnership—domain expert + systems thinker—is why the DSL approach wor
       class="rounded-lg w-full h-auto"
       loading="lazy"
     />
-    <figcaption class="text-xs text-text-lighter mt-1 text-center italic">
-      Viewport calculations & shot extrapolation
-    </figcaption>
+    <figcaption class="text-xs text-text-lighter mt-1 text-center italic">Viewport calculations & shot extrapolation</figcaption>
   </figure>
 
   <figure>
@@ -107,42 +105,34 @@ That partnership—domain expert + systems thinker—is why the DSL approach wor
       class="rounded-lg w-full h-auto"
       loading="lazy"
     />
-    <figcaption class="text-xs text-text-lighter mt-1 text-center italic">
-      Soccer field geometry & positioning
-    </figcaption>
+    <figcaption class="text-xs text-text-lighter mt-1 text-center italic">Soccer field geometry & positioning</figcaption>
   </figure>
 </div>
-<p class="text-xs text-text-lighter text-center italic -mt-2 mb-6">
-  Week One sketches (2018): From these rough drawings to production tool in days
-</p>
+    <p class="text-xs text-text-light text-center italic -mt-2 mb-6">Week One sketches (2018): From these rough drawings to production tool in days</p>
   </section>
 
   <SectionDivider spacing="minor" />
 
   {/* Problem Section */}
   <section class="mb-8" id="problem">
-    <Heading level={3} as="h2" class="mb-6 text-navy">The 70% Hell: When Ambiguity Costs Time</Heading>
+    <Heading level={3} as="h2" class="mb-6 text-navy">The Two-Merge Bottleneck</Heading>
 
-Two collectors, same match, different interpretations.
+Two collectors, same match. Hours after the final whistle, they're still arguing.
 
-"Was that a tackle or a press?"
-"Did possession start at the dribble or the pass?"
-"Is this a defensive action or a duel?"
+"That's a recovery."
+"No, interception—he anticipated the pass."
+"But possession hadn't transferred yet."
 
-Post-match, they'd sit for hours resolving conflicts. One thought event X was valid, the other flagged it as incorrect. The tool allowed ambiguity—permitted both interpretations to exist simultaneously. People paid the cost.
-
-**We were losing 70% of collection time to post-validation arguments.** Another 10% to Slack messages: "What does 'defensive action' even mean in this context?" "When does possession phase actually begin?"
-
-Two collectors per match, each following a team, manually entering 3000+ events over 16 hours. Duplicated effort. No prevention through design—only validation after mistakes happened. The business stakes were real: Statsbomb's revenue model depended on data velocity and granularity. Every hour saved in collection = more matches analyzed = higher data quality premium for professional clubs and broadcasters. Collector efficiency wasn't just operational; it was the constraint on market expansion.
+Post-match reconciliation consumed 2 hours across two merge points. First merge: align on what events happened during collection. Second merge: reconcile how those events were validated, positioned, and tagged. The tool permitted ambiguous interpretations during the match. People paid the cost afterward.
 
 {/* Workflow Comparison: Before vs. After */}
 <div class="grid md:grid-cols-2 my-8">
-  <div class="border-r border-neutral-light pr-6">
-    <div class="flex items-center justify-center gap-2 mb-2">
+  <div>
+    <div class="flex items-center justify-center gap-2 p-2 border border-r-0 border-neutral-light">
       <svg class="w-5 h-5 text-text-lighter" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
       </svg>
-      <Heading level={4} as="h4" class="text-base font-semibold text-text">Before: Sequential Collection</Heading>
+      <Heading level={4} as="h4" class="text-base text-text-lighter">Before: Sequential Collection</Heading>
     </div>
     <figure>
       <MermaidDiagram
@@ -183,12 +173,12 @@ graph TD
     </figure>
   </div>
 
-  <div class="pl-6">
-    <div class="flex items-center justify-center gap-2 mb-2">
+  <div class="">
+    <div class="flex items-center justify-center gap-2 p-2 border border-neutral-light">
       <svg class="w-5 h-5 text-text-lighter" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
-      <Heading level={4} as="h4" class="text-base font-semibold text-text">After: Concurrent Collection</Heading>
+      <Heading level={4} as="h4" class="text-base text-text-lighter">After: Concurrent Collection</Heading>
     </div>
     <figure>
       <MermaidDiagram
@@ -391,38 +381,12 @@ The dataspec itself had to be uncertain. I knew from week one we'd iterate, have
   <SectionDivider spacing="major" />
 
   {/* Team Building Section */}
-  <section class="mb-16" id="team-building">
+  <section class="mb-8" id="team-building">
     <Heading level={3} as="h2" class="mb-6 text-navy">The Team Building Challenge: From Week One to Distributed Ownership</Heading>
 
 Remember that first-week feeling? Shipping the freezeframe tool twice daily, getting thanked by collectors, feeling like I was there to help. **That feeling needed to scale.**
 
 I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
-
-<div id="team-timeline" aria-label="Team building timeline">
-  <Accordion
-    grouped
-    position="first"
-    id="year-one"
-    variant="status"
-    summary="Year One: Finding the Core Partnership"
-    defaultOpen={false}
-  >
-Year one (2018): Omar Negm had already built foundational systems when I joined. Working with Ali and Omar, we developed the live-collection-app—data as configuration, state machines, DSLs.
-
-Year two (2019): Omar left to teach kids software. Adham joined and took ownership of backend evolution.
-  </Accordion>
-
-  <Accordion
-    grouped
-    position="last"
-    id="years-two-three"
-    variant="status"
-    summary="Years Two-Three: Scaling from Partnership to Distributed Team"
-    defaultOpen={false}
-  >
-Adham and I could execute together, but the domain kept expanding. The transition from two-person partnership to distributed team took longer than it needed—I was learning how to lead engineers while building production systems. By year three, we had built the hiring and mentoring systems needed to scale beyond the core partnership.
-  </Accordion>
-</div>
 
 <Heading level={4} as="h4" class="mb-4 mt-6">The Breakthrough: Distributed Ownership</Heading>
 
@@ -436,23 +400,15 @@ Hadeel implemented real-time GraphQL subscriptions—the concurrent collection w
 
 Abdallah maintained the Electron app state machines and evolved keyboard workflows, including handling NFL-specific edge cases (possession turnover during penalty review) we hadn't mapped when we started. He kept the collector experience smooth as we expanded sports.
 
-<Accordion variant="status" summary="The External Constraint" class="mb-6">
-
-In 2022, I left Egypt. By then: 1000+ collectors, internal DSLs shipped, American football expansion worked. The customer-facing DSL that would let clients define their own derived facts remained unfinished when I left—team scaling became the bottleneck, not the architecture.
-
-</Accordion>
-
 <Callout variant="primary" icon="lightbulb" title="The Team Building Lesson">
-  <p>Team building isn't separate from technical work. It's the multiplier that makes ambitious architecture sustainable. Waiting until year three to expand beyond the two-person partnership meant racing against time when external constraints intervened.</p>
-  <p>The lesson: distributed ownership from day one, not year three. The architecture proved its value—scaling to 1000+ collectors across multiple sports. The team multiplied that value. Waheed, Hadeel, and Abdallah should have joined alongside Adham in year two, not year three. The technical concepts would have propagated faster, subsystem ownership would have emerged earlier, and the customer-facing DSL would have shipped.</p>
-  <p><strong>Architecture shapes what's possible. But people make it real.</strong></p>
+  <p>Architecture shapes what's possible. But people make it real.</p>
 </Callout>
   </section>
 
   <SectionDivider spacing="major" />
 
   {/* Impact Section */}
-  <section class="mb-16" id="impact">
+  <section class="mb-8" id="impact">
     <Heading level={3} as="h2" class="mb-6 text-navy">Impact: Timeline Comparison (2018 → 2021)</Heading>
 
 <Body size="sm" as="p" class="mb-6 text-text-lighter">
@@ -463,16 +419,16 @@ In 2022, I left Egypt. By then: 1000+ collectors, internal DSLs shipped, America
   <ComparisonCard variant="before" title="Engineering Bottleneck">
     <ul class="space-y-3">
       <li><strong>American football expansion:</strong> Scoped at 1 year engineering work, product blocked on roadmap</li>
-      <li><strong>New event type:</strong> Deploy + regression testing required for every rule change</li>
+      <li><strong>New event type:</strong> Release + regression testing required for every rule change</li>
       <li><strong>Support burden:</strong> Product managers fielded 50+ daily Slack questions about dataspec rules</li>
     </ul>
   </ComparisonCard>
 
   <ComparisonCard variant="after" title="Configuration-Driven Scale">
     <ul class="space-y-3">
-      <li><strong>NFL dataspecs—first iteration shipped day one:</strong> Product managers wrote drive rules, shipped day one</li>
-      <li><strong>New event type:</strong> JSON config + UI test, deployed same day through DSL system</li>
-      <li><strong>Automated resolution:</strong> System resolved 98% automatically, 5-person team handled ambiguous cases</li>
+      <li><strong>NFL first iteration shipped day one:</strong> Product managers wrote drive rules, shipped day one</li>
+      <li><strong>New event type:</strong> Deployed in minutes through DSL, we released twice daily</li>
+      <li><strong>Automated resolution:</strong> System resolved 98% automatically and escalated the rest to the quality team</li>
     </ul>
   </ComparisonCard>
 </div>
@@ -527,9 +483,7 @@ In 2022, I left Egypt. By then: 1000+ collectors, internal DSLs shipped, America
   </Accordion>
 </div>
 
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">
-  The system scaled horizontally as load increased. Product managers could ship new dataspecs without engineering bottlenecks, though some edge cases still required technical collaboration for complex state transitions.
-</Body>
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">The system scaled horizontally as load increased. Product managers could ship new dataspecs without engineering bottlenecks, though some edge cases still required technical collaboration for complex state transitions.</Body>
   </section>
 
   <SectionDivider spacing="major" />
@@ -546,7 +500,7 @@ The patterns Ali and I sketched in VSCode during week one became valuable enough
   </section>
 
   {/* Lessons Section */}
-  <section class="mb-16" id="lessons">
+  <section class="mb-8" id="lessons">
     <Heading level={3} as="h2" class="mb-6 text-navy">Lessons: What Transfers? What Only Worked Here?</Heading>
 
 <Body size="sm" as="p" class="mb-6 text-text-lighter italic">
@@ -632,7 +586,7 @@ The human side of building production systems: our team in Cairo (2018-2022), wh
 
 <PhotoGallery class="mb-8" photos={statsbombPhotos} columns={3} />
 
-<p class="text-sm text-text-lighter text-center italic mt-4 mb-8">
+<p class="text-sm text-text-light text-center italic mt-4 mb-8">
   Cairo, 2018-2022: Our team at Statsbomb (internally known as Arqam). Clockwise from top: Collection leadership during night shift chatting about their ambitions and dreams, Ali pairing with collectors during Week One (April 2018), planning sessions with Hesham and Abdallah, Adham and Ali in temporary coworking space, team gathering at Ali's Sahel house for Muhanad's farewell.
 </p>
 
