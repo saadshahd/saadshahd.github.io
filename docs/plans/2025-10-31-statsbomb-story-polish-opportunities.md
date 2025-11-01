@@ -9,7 +9,8 @@
 ## ✅ What's Already Complete
 
 ### Story-First Transformation
-- Week One opening (freezeframe tool, collector gratitude)
+
+- Week One opening (FreezeFrame tool, collector gratitude)
 - Ali Partnership (VSCode moment, domain + systems thinking)
 - 70% Hell (specific validation conflict dialogue)
 - 2am Test (production debugging, witnessing failures)
@@ -19,6 +20,7 @@
 - Age 14 philosophical origin (Pragmatic Programmer on Egyptian bus)
 
 ### Content Streamlining
+
 - TL;DR slimmed from 59 lines → 20 lines
 - Removed "aka Arqam" cognitive speed bump
 - Added human dialogue and specific moments throughout
@@ -36,16 +38,19 @@
 #### Specific Insertions
 
 1. **After "Week One: The Freezeframe Tool"**
+
    - Photo: Early team (you, Ali, Negm) at whiteboard or desk
-   - Caption: "Cairo, Week One (2018): Omar Negm, Ali, and I shipping the freezeframe tool twice daily. The collectors' feedback loop that taught us 'build for people who thank you.'"
+   - Caption: "Cairo, Week One (2018): Omar Negm, Ali, and I shipping the FreezeFrame tool twice daily. The collectors' feedback loop that taught us 'build for people who thank you.'"
    - **Why:** Visualizes origin moment, puts faces to names immediately
 
 2. **After "Real-Time Collection: The 2am Test"**
+
    - Photo: Night debugging session OR screenshot of collector UI
    - Caption: "2am debugging session (2019): When Ali stayed for company, not supervision. Real-time isn't designed—it's witnessed under production load."
    - **Why:** Proves the 10am-3am story, shows human side of technical work
 
 3. **Within "Team Building: Distributed Ownership"**
+
    - Photos: 4 team member cards (Adham, Waheed, Hadeel, Abdallah) - already present as cards, could add actual photos
    - Caption per person: "[Name] took [subsystem] from sketch to production-ready"
    - **Why:** Humanizes distributed ownership, shows who made it real
@@ -55,12 +60,13 @@
    - **Why:** Bookend with team context, tie back to "aka Arqam" removed from hero
 
 **Implementation:**
+
 ```astro
 {/* After Week One section */}
 <figure class="my-8">
   <img src="/images/statsbomb/week-one-team.jpg" alt="Early Statsbomb team" class="rounded-lg" />
   <figcaption class="text-sm text-text-lighter mt-2 italic">
-    Cairo, Week One (2018): Omar Negm, Ali, and I shipping the freezeframe tool twice daily...
+    Cairo, Week One (2018): Omar Negm, Ali, and I shipping the FreezeFrame tool twice daily...
   </figcaption>
 </figure>
 ```
@@ -78,6 +84,7 @@
 #### Candidates for Conversion
 
 1. **Problem Section: "Professional Clubs" + "Broadcasters"** (lines 140-152)
+
    - Current: 2-item DefinitionList
    - Convert to: "Statsbomb served two customers with opposing time constraints: professional clubs analyzing opponent patterns hours after matches (racing to prepare for next game), and broadcasters needing live insights for real-time commentary. Both needed the same data—possession patterns, defensive actions—but on completely different timescales. Real-time collection unlocked both."
    - **Why:** Flows better as story, emphasizes tension between customers
@@ -96,6 +103,7 @@
 **Opportunity:** Make it a prominent visual pull quote
 
 #### Current Implementation (lines 548-552)
+
 ```astro
 <Callout variant="neutral" icon="quote" title="Collector Voice" class="mb-6">
   <p class="mb-2"><strong>Before (Dartfish):</strong> "12 minutes per frame..."</p>
@@ -105,14 +113,16 @@
 ```
 
 #### Proposed Pull Quote Component
+
 ```astro
-<PullQuote attribution="A.Magdy, 360 Collection Lead" class="my-8">
+<PullQuote attribution="A.Magdy, 360 Lead" class="my-8">
   <p class="mb-4"><strong>Before (Dartfish):</strong> "12 minutes per freeze frame clicking 22 player positions manually. By minute 60, my hand cramped from mouse clicks."</p>
   <p><strong>After (CV-assisted UI):</strong> "Computer vision detected 90%, I corrected edge cases in 3 minutes. Eyes stayed on video, hands on keyboard."</p>
 </PullQuote>
 ```
 
 **Styling:**
+
 - Large quote marks (decorative)
 - Increased font size (text-lg)
 - Border-left accent (Egyptian gold)
@@ -131,11 +141,13 @@
 #### Specific Fixes
 
 1. **Line 155: "The efficiency gains weren't just operational—they unlocked strategic capabilities"**
+
    - Current: Passive, vague subject
    - Rewrite: "Cutting 16-hour validation down to 4 hours unlocked strategic capabilities"
    - **Why:** Active voice, concrete
 
 2. **Line 637: "The system scaled horizontally as load increased"**
+
    - Current: Abstract technical language
    - Rewrite: "As we grew from 100 to 1000+ collectors, the architecture scaled without proportional engineering effort"
    - **Why:** Specific numbers, human context
@@ -163,6 +175,7 @@
 4. **Team member cards:** Do 2-column cards stack pleasantly on mobile?
 
 **Testing Process:**
+
 1. Load on actual iPhone/Android (not just responsive mode)
 2. Read first 3 sections (Hero → Week One → Ali Partnership)
 3. Check: Where does attention drift? Where do you scroll past?
@@ -181,10 +194,12 @@
 #### Candidates
 
 1. **After 70% Hell dialogue** (line ~131):
+
    - Add: "The tool allowed ambiguity. People paid the cost. Every hour lost to arguments was an hour not collecting matches."
    - **Why:** Short. Punchy. Drives home human cost.
 
 2. **After 2am Test** (line ~249):
+
    - Add: "Real-time isn't a checkbox. It's thousands of decisions about timeouts, reconnection logic, state recovery. You can't spec that in advance."
    - **Why:** Philosophy emerges from action, short sentences build tension
 
@@ -199,16 +214,19 @@
 ## 🔬 Optional: Advanced Enhancements (Defer Until After Reader Feedback)
 
 ### Timeline Visualization (8 story points)
+
 - **What:** Horizontal timeline: 2018 (Week One) → 2019 (Adham joins) → 2020 (NFL expansion) → 2022 (1000+ collectors) → 2024 (Hudl acquisition)
 - **Why:** Visual anchor for 4-year journey
 - **Defer reason:** Story flow works without it, adds complexity, wait for feedback if readers get lost in timeline
 
 ### Interactive "See the Code" Accordion (5 story points)
+
 - **What:** Expandable sections for DSL syntax, XState config, Kafka setup (move from Technical Appendix link)
 - **Why:** Satisfies engineers without disrupting story-seekers
 - **Defer reason:** Current Technical Appendix link works, this is optimization not necessity
 
 ### Mermaid Diagram: Atomic → Derived Facts (5 story points)
+
 - **What:** Visual diagram replacing DefinitionList in Domain Logic section (lines 299-312)
 - **Why:** Complex dependency flow easier to grasp visually
 - **Defer reason:** Text works, diagram is enhancement, wait to see if readers struggle with current format
@@ -218,16 +236,19 @@
 ## 📊 Success Metrics (How to Measure Polish Impact)
 
 ### Before Polish Baseline
+
 - Time to emotional engagement: ~200 words (Week One section starts)
 - Scroll depth: Unknown (need analytics)
 - Reader feedback: Awaiting first responses
 
 ### After Polish Targets
+
 - Time to emotional engagement: <150 words (if inline photo after hero)
 - Scroll depth: 85%+ reach Team Building section
 - Reader qualitative: "I finished it" + "I felt connected to the team" responses
 
 ### Testing Protocol
+
 1. Share with 3 "story-seeker" friends (non-engineers preferred)
 2. Ask: "Where did you stop reading?" "What do you remember?"
 3. Measure: Did they reach Team Building? Did they mention team members by name?
@@ -237,18 +258,21 @@
 ## 🎯 Recommendation: Incremental Polish Based on Feedback
 
 ### Week 1: Ship Current Version
+
 - Merge `story-first-restructure` to main
 - Deploy to production
 - Share with 5-10 people (mix of engineers + story-seekers)
 - Collect feedback: "Where did you lose interest?" "What stood out?"
 
 ### Week 2: Data-Driven Polish
+
 - If readers mention "too long": Add Priority 1 (inline photos as visual breaks)
 - If readers skip technical sections: Add Priority 3 (pull quote) + Priority 6 (reading rhythm)
 - If readers don't reach team section: Consider moving Team Building earlier (before Impact)
 - If mobile feedback negative: Priority 5 (mobile audit)
 
 ### Week 3+: Advanced Enhancements
+
 - Only if feedback suggests: "I got lost in timeline" → add timeline viz
 - Only if engineers request: "Show me the code" → interactive accordions
 
@@ -267,11 +291,13 @@
 ## 📁 Files Affected by Polish
 
 ### Would Change
+
 - `src/pages/portfolio/statsbomb.mdx` (inline photos, prose conversions, micro-copy)
 - `src/data/statsbomb-photos.json` (reorder for inline placement)
 - `src/components/PullQuote.astro` (create if doesn't exist)
 
 ### Wouldn't Change
+
 - `src/layouts/MDXLayout.astro` (layout works)
 - `src/styles/global.css` (design system complete)
 - Any other case study files (polish is Statsbomb-specific)
@@ -281,6 +307,7 @@
 ## 💡 Key Insight: Story-First Transformation Is the Win
 
 **The big value was delivered in Batches 1 & 2:**
+
 - Opening with human connection (Week One)
 - Adding philosophical depth (VSCode moment, 2am test, age 14 origin)
 - Positioning Team Building as climax (not epilogue)

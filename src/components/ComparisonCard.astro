@@ -25,12 +25,13 @@ const iconMap = {
 const { Icon, color } = iconMap[variant];
 ---
 
-<Card variant="default" class={cn('p-6', className)}>
-  <Heading level={3} as="h3" class="flex items-center gap-2 mb-4 text-text">
+
+<div>
+    <Heading level={3} as="h3" class="flex items-center gap-2 mb-4 text-text">
     <Icon class={cn('w-5 h-5 flex-shrink-0', color)} aria-hidden="true" />
     <span>{title}</span>
   </Heading>
   <div class="text-text-lighter space-y-3 text-sm">
     <slot />
   </div>
-</Card>
+</div>

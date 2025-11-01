@@ -10,12 +10,16 @@ interface Props {
 const { icon = false, attribution, class: className } = Astro.props;
 ---
 
-<blockquote class={`border-l-2 border-neutral-light pl-6 my-6 ${className || ''}`}>
-  {icon && (
-    <MessageSquareQuote class="w-5 h-5 text-neutral mb-2" />
-  )}
-  <div class="text-text-lighter italic">
-    <slot />
+<blockquote class={`pl-6 my-6 ${className || ''}`}>
+  <div class="flex">
+    <div class="mr-3">
+      {icon && (
+      <MessageSquareQuote class="w-10 h-10 text-neutral" />
+    )}
+    </div>
+    <div class="text-text-lighter italic">
+      <slot />
+    </div>
   </div>
   {attribution && (
     <cite class="block text-sm not-italic text-text-lighter mt-3">— {attribution}</cite>

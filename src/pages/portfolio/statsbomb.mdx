@@ -432,10 +432,6 @@ Waheed built claims-based metadata resolution—the automated conflict detection
 Hadeel implemented real-time GraphQL subscriptions—the concurrent collection we'd prototyped but hadn't hardened for collectors working simultaneously on live matches.
 
 Abdallah maintained the Electron app state machines and evolved keyboard workflows, including handling NFL-specific edge cases (possession turnover during penalty review) we hadn't mapped when we started. He kept the collector experience smooth as we expanded sports.
-
-<Callout variant="primary" icon="lightbulb" title="The Team Building Lesson">
-  <p>Architecture shapes what's possible. But people make it real.</p>
-</Callout>
   </section>
 
   <SectionDivider spacing="major" />
@@ -447,6 +443,8 @@ Abdallah maintained the Electron app state machines and evolved keyboard workflo
 <Body size="sm" as="p" class="mb-6 text-text-lighter">
   <strong>What actually changed on the ground?</strong> Here's the operational transformation from Dartfish baseline to production at scale.
 </Body>
+
+<Quote icon={true} attribution="A.Magdy, 360 Lead">With Dartfish, 12 minutes just to freeze a single shot. Now we freeze every event in the match—passes, tackles, everything. The tool made this scope possible.</Quote>
 
 <div class="grid md:grid-cols-2 gap-6 mb-8">
   <ComparisonCard variant="before" title="Engineering Bottleneck">
@@ -465,10 +463,6 @@ Abdallah maintained the Electron app state machines and evolved keyboard workflo
     </ul>
   </ComparisonCard>
 </div>
-
-<Quote icon={true} attribution="A.Magdy, 360 Collection Lead">
-  With Dartfish, 12 minutes just to freeze a single shot. Now we freeze every event in the match—passes, tackles, everything. The tool made this scope possible.
-</Quote>
 
 <Callout variant="primary" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
   <Body size="sm">Age 14. Nasr City to downtown on a Cairo bus, reading "The Pragmatic Programmer"
