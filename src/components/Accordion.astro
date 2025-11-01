@@ -111,9 +111,10 @@ const summary = cva([
       ],
       inline: [
         'gap-2',                        // Tight gap (8px) - chevron right next to text
-        'p-0',                    // Minimal padding (4px vertical, 0 horizontal)
+        'p-1',                    // Minimal padding (4px vertical, 0 horizontal)
         'text-sm font-normal',          // Light weight - not bold/semibold
-        'text-text',                    // Same color as DL terms - no hover change
+        'text-text',
+        "before:content-['•'] before:mr-1"                    // Same color as DL terms - no hover change
       ],
     },
 
@@ -156,7 +157,7 @@ const content = cva([
       ],
       inline: [
         'border-none',               // No border separator
-        'mt-1 pt-1 pb-2',           // Minimal spacing (4px top, 8px bottom)
+        'mt-1 pt-1 pb-2 pl-6',           // Minimal spacing (4px top, 8px bottom)
         'text-sm text-text-lighter', // Match DefinitionList definition style
         'leading-relaxed',           // Match DL line-height
       ],
