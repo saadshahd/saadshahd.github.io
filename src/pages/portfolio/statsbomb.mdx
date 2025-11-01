@@ -265,45 +265,20 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
   <p>Architecture emerges when you chase why/where users struggle, not what features they request.</p>
 </Callout>
 
-<p class="mb-8 text-text-lighter leading-relaxed">We built three systems in parallel, not sequentially:</p>
+<p class="mb-6 text-text-lighter leading-relaxed">Three systems evolved in parallel:</p>
 
-  {/* 3-Column Card Grid */}
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-
-    {/* System 1: Domain Logic */}
-    <Card variant="minimal" href="#technical-sections" data-target="domain-config" class="border-l-4 border-l-skill hover:shadow-lg transition-shadow">
-      <Heading level={4} as="h4" class="text-base font-semibold mb-3" style="text-wrap: balance;">Domain Configuration</Heading>
-      <Body size="sm" as="p" class="text-text-lighter">Product managers ship dataspec rules without engineering deploys—configuration over code</Body>
-    </Card>
-
-    {/* System 2: Live-Collection-App */}
-    <Card variant="minimal" href="#technical-sections" data-target="collection-app" class="border-l-4 border-l-category hover:shadow-lg transition-shadow">
-      <Heading level={4} as="h4" class="text-base font-semibold mb-3" style="text-wrap: balance;">Live-Collection-App</Heading>
-      <Body size="sm" as="p" class="text-text-lighter">Prevention over validation—state machines make illegal workflows impossible structurally</Body>
-    </Card>
-
-    {/* System 3: Backend Evolution */}
-    <Card variant="minimal" href="#technical-sections" data-target="backend-evolution" class="border-l-4 border-l-status hover:shadow-lg transition-shadow">
-      <Heading level={4} as="h4" class="text-base font-semibold mb-3" style="text-wrap: balance;">Backend Evolution</Heading>
-      <Body size="sm" as="p" class="text-text-lighter">Temporal dependencies and provenance tracking—event graphs resolve causality at scale</Body>
-    </Card>
-  </div>
-
-  {/* Plain paragraph - less visual weight */}
-  <Body size="sm" as="p" class="mb-8 text-text-lighter leading-relaxed italic">
-    <strong>Why this order matters:</strong> Each system's constraints shaped the others. The DSL drove UI validation. State machines constrained invalid workflows. Metadata resolution enabled concurrent collection. Understanding how they connect reveals why separation creates leverage.
-  </Body>
-
-  {/* Technical sections wrapper for card link scroll target */}
-  <div id="technical-sections" aria-label="Technical architecture sections">
+  <div class="mb-8">
     <Accordion
       grouped
       position="first"
       id="domain-config"
-      summary="Domain Logic as Configuration"
       variant="default"
       defaultOpen={false}
     >
+      <span slot="summary">
+        <span class="font-semibold text-navy">Domain Logic as Configuration</span>
+        <span class="text-sm text-text-lighter"> — Product managers owned the rules</span>
+      </span>
 Product managers needed to express domain logic—entry validation, sequencing logic, aggregation rules—in readable syntax that compiled to execution logic. The dataspec as configuration, not code.
 
 Atomic events (passes, shots) aggregated into derived facts (possession phases, drives, turnovers). Store unchanging truth, recompute everything else when rules evolved.
@@ -317,10 +292,13 @@ Without DSLs, every new rule required engineering deploys. With DSLs, product ma
       grouped
       position="middle"
       id="collection-app"
-      summary="The Live-Collection-App: UX as First Principle"
       variant="default"
       defaultOpen={false}
     >
+      <span slot="summary">
+        <span class="font-semibold text-navy">Live-Collection-App</span>
+        <span class="text-sm text-text-lighter"> — State machines owned correctness</span>
+      </span>
 The first thing we built was the tool collectors would use every day—an Electron desktop app replacing Dartfish's rigid forms with keyboard-first workflows.
 
 **Why Dartfish Couldn't Scale**: The industry standard—Dartfish—forced button-heavy mouse clicks for every selection. It had keyboard shortcuts, but each key mapped to only one event type globally across the entire dataspec. With 50+ event types but only 40 usable keys, collectors memorized arbitrary mappings at all times, regardless of game context. Cognitive overload blocked velocity.
@@ -340,10 +318,13 @@ The dataspec drove UI validation, DSL defined legal sequences, state machines co
       grouped
       position="last"
       id="backend-evolution"
-      summary="Backend Evolution: Event Graphs + Claims-Based Metadata"
       variant="default"
       defaultOpen={false}
     >
+      <span slot="summary">
+        <span class="font-semibold text-navy">Backend Evolution</span>
+        <span class="text-sm text-text-lighter"> — Event graphs owned time</span>
+      </span>
 **Event Graphs**: Sequential event logs couldn't answer "what caused this turnover?" We needed both temporal relationships (clearance BEFORE recovery) AND logical relationships (clearance CAUSED loose phase). Events formed directed acyclic graphs with typed edges—enabling timeline replay and root-cause analysis for data quality debugging.
 
 **Waheed's Claims Breakthrough**: Match metadata from thousands of collectors meant inevitable conflicts—same player, different spellings. Waheed built claims-based metadata resolution. **The insight: metadata isn't key-value pairs, it's claims from actors.** System detected conflicts automatically, routed 1-2% ambiguous cases to the 5-person metadata team. They resolved once via claims interface—system cascaded to all dependent data. The team handled ambiguity; the system handled scale.
@@ -517,11 +498,11 @@ The harder pattern: teams don't scale architectures—they reveal what architect
 
 **What Month Six Revealed**
 
-Bounded contexts didn't exist on day one because we didn't know what we were building yet. Match metadata, event collection, people coordination, media management, contextual aggregation—these boundaries emerged from production pain, not upfront design.
+The bounded contexts existed in the domain from day one—match metadata, event collection, people coordination, media management, contextual aggregation were always separate concerns. We just didn't have the fluency to recognize them yet.
 
-Month six, the boundaries became visible. Not because we got smarter, but because collectors showed us where the seams were. You can't shortcut that discovery. The mess is the curriculum.
+Month one, everything felt coupled. Month three, listening to how collectors, analysts, and product managers talked revealed distinct vocabularies: metadata queries used different language than event recording, coordination had its own mental models separate from data quality. Month six, those linguistic boundaries became undeniable architectural seams.
 
-Event storming from day one sounds wise in hindsight. In practice? We would've drawn wrong boundaries around problems we hadn't experienced yet. Some architecture reveals itself through building, not planning.
+The domain had structure all along. Developing fluency to recognize it took three months of production work. You can't shortcut that curriculum—event storming from day one would've drawn boundaries around our assumptions, not the domain's reality. Some architecture must be discovered through listening, not imposed through planning.
 
 **When These Patterns Apply**
 
