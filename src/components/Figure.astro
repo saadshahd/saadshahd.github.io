@@ -1,0 +1,62 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/utils/cn';
+
+const figureContainer = cva(
+  'overflow-hidden rounded-lg bg-neutral-light',
+  {
+    variants: {
+      aspectRatio: {
+        portrait: 'h-56 md:h-64 lg:h-72',    // Taller for portraits
+        landscape: 'h-48 md:h-56 lg:h-64',   // Shorter for landscapes
+        square: 'h-64',                       // Equal dimensions
+        auto: 'h-auto',                       // Natural aspect ratio
+      },
+    },
+    defaultVariants: {
+      aspectRatio: 'portrait',
+    },
+  }
+);
+
+interface Props extends HTMLAttributes<'figure'>, VariantProps<typeof figureContainer> {
+  /**
+   * Image source path
+   */
+  src: string;
+  /**
+   * Alt text for accessibility
+   */
+  alt: string;
+  /**
+   * Optional caption text (italicized, centered, small text)
+   */
+  caption?: string;
+}
+
+const {
+  src,
+  alt,
+  caption,
+  aspectRatio,
+  class: className,
+  ...htmlAttrs
+} = Astro.props;
+---
+
+<figure class={cn('my-6', className)} {...htmlAttrs}>
+  <div class={cn(figureContainer({ aspectRatio }))}>
+    <img
+      src={src}
+      alt={alt}
+      class="w-full h-full object-cover"
+      loading="lazy"
+    />
+  </div>
+  {caption && (
+    <figcaption class="text-xs text-text-lighter mt-1 text-center italic">
+      {caption}
+    </figcaption>
+  )}
+</figure>

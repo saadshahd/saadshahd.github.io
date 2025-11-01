@@ -21,6 +21,7 @@ import SectionDivider from '../../components/SectionDivider.astro';
 import ReadingMetadata from '../../components/ReadingMetadata.astro';
 import MetricCard from '../../components/MetricCard.astro';
 import ComparisonCard from '../../components/ComparisonCard.astro';
+import ComparisonGrid from '../../components/ComparisonGrid.astro';
 import Quote from '../../components/Quote.astro';
 
 import { MoveRight } from '@lucide/astro';
@@ -435,7 +436,7 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
 
 <Quote class='my-12' icon={true} attribution="A.Magdy, 360 Lead">With Dartfish, 12 minutes just to freeze a single shot. Now we freeze every event in the match—passes, tackles, everything. The tool made this scope possible.</Quote>
 
-<div class="grid md:grid-cols-2 gap-6 mb-8">
+<ComparisonGrid spacing="default">
   <ComparisonCard variant="before" title="Engineering Bottleneck">
     <ul class="space-y-3">
       <li><strong>American football expansion:</strong> 12-month engineering estimate blocked product roadmap and market entry timing</li>
@@ -451,7 +452,7 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
       <li><strong>Automated resolution:</strong> 5-person metadata team handled 2% escalations while system resolved 98% automatically</li>
     </ul>
   </ComparisonCard>
-</div>
+</ComparisonGrid>
 
 <Callout variant="primary" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
   <Body size="sm">"Design for the 80% case"—The Pragmatic Programmer. That principle shaped every decision: DSL for standard sequences, state machines for common flows, metadata for typical events. When 95% of matches follow patterns, build for patterns.</Body>

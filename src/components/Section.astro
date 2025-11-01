@@ -1,0 +1,58 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import Heading from './typography/Heading.astro';
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/utils/cn';
+
+const section = cva(
+  '', // Base classes empty, variants control spacing
+  {
+    variants: {
+      spacing: {
+        compact: 'mb-6',     // Subsections, tight grouping
+        default: 'mb-8',     // Standard sections
+        spacious: 'mb-12',   // Major sections, hero areas
+      },
+    },
+    defaultVariants: {
+      spacing: 'default',
+    },
+  }
+);
+
+interface Props extends HTMLAttributes<'section'>, VariantProps<typeof section> {
+  /**
+   * Optional section ID for anchor links
+   */
+  id?: string;
+  /**
+   * Optional title level (matches Heading component levels)
+   */
+  titleLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  /**
+   * Optional title content (if provided, renders Heading with navy color)
+   */
+  title?: string;
+  /**
+   * Optional heading element to render (h1-h6)
+   */
+  titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+}
+
+const {
+  spacing,
+  id,
+  titleLevel,
+  title,
+  titleAs = 'h2',
+  class: className,
+  ...htmlAttrs
+} = Astro.props;
+---
+
+<section id={id} class={cn(section({ spacing }), className)} {...htmlAttrs}>
+  {title && titleLevel && (
+    <Heading level={titleLevel} as={titleAs} class="mb-6 text-navy">{title}</Heading>
+  )}
+  <slot />
+</section>

@@ -1,16 +1,32 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/utils/cn';
 
 const headingVariants = cva('text-balance', {
   variants: {
     level: {
       1: 'text-2xl md:text-3xl',      // 32px → 40px (page titles, content-first scale)
       2: 'text-xl md:text-2xl',       // 24px → 32px (section headings)
-      3: 'text-lg md:text-xl',     // 20px → 24px (sub-section headings)
+      3: 'text-lg md:text-xl',        // 20px → 24px (sub-section headings)
+    },
+    spacing: {
+      none: '',
+      tight: 'mb-2',           // Compact grouping (skills, contact items)
+      compact: 'mb-4',         // Related subsections
+      section: 'mb-6',         // Standard section spacing
+      major: 'mb-8',           // Major section spacing
+      hero: 'mb-16',           // Hero/page title spacing
+    },
+    color: {
+      default: 'text-text',           // Primary body text color
+      navy: 'text-navy',              // Brand color for emphasis
+      muted: 'text-text-lighter',     // Secondary/muted text
     },
   },
   defaultVariants: {
     level: 1,
+    spacing: 'none',
+    color: 'default',
   },
 });
 
@@ -19,9 +35,9 @@ type Props = VariantProps<typeof headingVariants> & {
   class?: string;
 };
 
-const { level, as: Tag = 'h2', class: className } = Astro.props;
+const { level, spacing, color, as: Tag = 'h2', class: className } = Astro.props;
 ---
 
-<Tag class:list={[headingVariants({ level }), className]}>
+<Tag class={cn(headingVariants({ level, spacing, color }), className)}>
   <slot />
 </Tag>
