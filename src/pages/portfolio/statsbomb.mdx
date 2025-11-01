@@ -410,7 +410,7 @@ The dataspec drove UI validation, DSL defined legal sequences, state machines co
 
   {/* The Dataspec Paradox - NEW SECTION */}
   <section class="mb-8" id="dataspec-paradox">
-    <Heading level={3} as="h2" class="mb-6 text-navy text-center max-w-[600px] mx-auto">The Dataspec Paradox: How Do You Change Rules Without Invalidating History?</Heading>
+    <Heading level={3} as="h2" class="mb-6 text-navy text-center max-w-[600px] mx-auto">The Dataspec Velocity Tradeoff: How Do You Change Rules Without Invalidating History?</Heading>
 
 By 2020, we had two years of historical matches. Thousands of games, millions of events. Then we realized: "possession" in 2020 meant something different than "possession" in 2018. We'd learned more about the sport. The rules evolved.
 
@@ -425,7 +425,7 @@ The dataspec itself had to be uncertain. I knew from week one we'd iterate, have
 
   {/* Team Building Section */}
   <section class="mb-8" id="team-building">
-    <Heading level={3} as="h2" class="mb-6 text-navy text-center max-w-[600px] mx-auto">The Team Building Challenge: From Week One to Distributed Ownership</Heading>
+    <Heading level={3} as="h2" class="mb-6 text-navy ">The Team Building Challenge:</Heading>
 
 I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
 
@@ -437,6 +437,24 @@ When **Waheed, Hadeel, and Abdallah** joined, something shifted. They didn't jus
   </section>
 
   <SectionDivider spacing="major" />
+
+  {/* Hudl Acquisition - Narrative Closure */}
+  <section class="mb-8" id="hudl-acquisition">
+    <Heading level={3} as="h2" class="mb-6 text-navy">Epilogue: Hudl Acquisition (2024)</Heading>
+
+In 2024, two years after I left Egypt, Hudl acquired Statsbomb.
+
+Hudl is the industry standard—the platform most college and professional teams use globally for video analysis and performance tracking. They didn't acquire Statsbomb for the data alone. They acquired the collection system, the DSLs, the real-time infrastructure that enabled 5000+ collectors to work concurrently.
+
+The patterns Ali and I sketched in notepad during week one became valuable enough for an industry leader to buy. The architecture that emerged from serving collectors directly, from watching what slowed them down and making it faster, had legs beyond what we imagined.
+  </section>
+
+  <SectionDivider spacing="major" />
+
+  {/* Transition Bridge to Technical Sections */}
+  <Body size="sm" as="p" class="mb-12 text-text-lighter italic text-center max-w-[700px] mx-auto">
+The acquisition validated the collection system—but what made 5000+ collectors possible? Three architectural decisions: configuration-driven domain logic, prevention through state machines, and event graphs for time. Here's the quantified impact, then how we built it.
+  </Body>
 
   {/* Impact Section */}
   <section class="mb-12" id="impact">
@@ -512,17 +530,6 @@ When **Waheed, Hadeel, and Abdallah** joined, something shifted. They didn't jus
   </section>
 
   <SectionDivider spacing="major" />
-
-  {/* Hudl Acquisition - NEW SECTION */}
-  <section class="mb-8" id="hudl-acquisition">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Epilogue: Hudl Acquisition (2024)</Heading>
-
-In 2024, two years after I left Egypt, Hudl acquired Statsbomb.
-
-Hudl is the industry standard—the platform most college and professional teams use globally for video analysis and performance tracking. They didn't acquire Statsbomb for the data alone. They acquired the collection system, the DSLs, the real-time infrastructure that enabled 5000+ collectors to work concurrently.
-
-The patterns Ali and I sketched in notepad during week one became valuable enough for an industry leader to buy. The architecture that emerged from serving collectors directly, from watching what slowed them down and making it faster, had legs beyond what we imagined.
-  </section>
 
   {/* Lessons Section */}
   <section class="mb-8" id="lessons">
