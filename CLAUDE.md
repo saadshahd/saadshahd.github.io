@@ -153,12 +153,43 @@ Card 3: "Non-linear scaling achieved without proportional staffing growth"
 3. Practical (applicable patterns)
 4. Respect (demonstrated technical depth)
 
-### Case Study: Problem → Architecture → Impact → Lessons
+### Case Study Guidelines (Extracted from Statsbomb)
 
-- Problem (300-500w): Context, challenge, why it mattered
-- Architecture (1000-1500w): Decisions, tradeoffs, diagrams, insights
-- Impact (300-500w): Results, effects, what shipped
-- Lessons (200-400w): What worked/didn't, principles, when to use
+**Structure:**
+1. **TL;DR first** - Expandable `<details>` with 2-min summary (outcome, architecture, impact, core lesson)
+2. **Reading metadata upfront** - Minutes + section count before story begins
+3. **Badge hierarchy** - Category for domain (Real-Time Collection), status/skill for differentiating tech (XState, ANTLR)
+4. **Section flow** - Origins → Problem → Architecture → Impact → Lessons → Behind Scenes → CTA
+
+**Visual Patterns:**
+5. **Side-by-side comparisons** - Before/after diagrams in 2-column grid with border separators
+6. **Mermaid accessibility** - Wrap diagrams in `<figure>` + `<details>` text alternative for screen readers
+7. **Photo captions** - Italic, centered, 12px text explaining context/year
+8. **Progressive disclosure** - Accordion for deep technical details (DSL syntax, state machines)
+9. **Section dividers** - Major spacing (12-16px) between acts, minor (6px) within sections
+10. **Metric cards** - 3-column grids with balanced character counts (±15% variance)
+
+**Narrative Voice:**
+11. **Origin as specific scene** - Week one partnership, not abstract introduction (Ali dictating rules, typing in VSCode)
+12. **Problem as dialogue** - Start with collectors arguing, product managers fielding Slack questions, real friction
+13. **Questions open sections** - "How do you change rules without invalidating history?" not declarative statements
+14. **Team attribution throughout** - Name who built what (Waheed's claims, Hadeel's subscriptions, Adham's Kafka)
+15. **Regret visible** - "What I'd change" shows humility, learning ("team building year three, not founding principle")
+
+**Copy Mechanics:**
+16. **Sentence rhythm** - Vary short (punch), medium (flow), long (build to insight)
+17. **Italics for transitions** - Context-setting paragraphs between major sections ("Understanding why explains... now: how")
+18. **Strong verbs** - Shipped, scaled, evolved, fragmented (not "implemented", "created", "made")
+19. **Metrics serve lessons** - "16h → 4h" explains architectural payoff, not bragging rights
+20. **Callouts for principles** - Core lessons in dedicated Callout components, not buried in paragraphs
+
+**Content Balance:**
+- **Origins (10%)** - Week one partnership, first tool, mutual trust foundation
+- **Problem (15%)** - Specific pain (2-merge bottleneck), why it blocked scale
+- **Architecture (35%)** - How decisions enabled 10x scale (DSLs, state machines, event graphs)
+- **Impact (20%)** - Timeline comparison, quotes, what made non-linear leverage possible
+- **Lessons (15%)** - What transfers, what doesn't, context boundaries
+- **Behind Scenes (5%)** - Photo gallery, human dimension
 
 ### Blog: Hook → Context → Deep Dive → Principle → Application
 
