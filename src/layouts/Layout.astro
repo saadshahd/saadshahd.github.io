@@ -5,7 +5,6 @@ import Link from '../components/Link.astro';
 import SSLogo from '../components/SSLogo.astro';
 import BottomTabBar from '../components/navigation/BottomTabBar.astro';
 import TabItem from '../components/navigation/TabItem.astro';
-import ScrollProgress from '../components/animations/ScrollProgress.astro';
 import { House, BriefcaseBusiness, VenetianMask, Atom, Send } from '@lucide/astro';
 import '../styles/global.css';
 import '../styles/animations.css';
@@ -14,7 +13,6 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
-  showScrollProgress?: boolean;
   disableAutoHideNav?: boolean;
 }
 
@@ -22,7 +20,6 @@ const {
   title,
   description = 'Building realtime systems that scale through functional architecture and separation of concerns',
   ogImage = '/og-image.png',
-  showScrollProgress = false,
   disableAutoHideNav = false
 } = Astro.props;
 
@@ -135,9 +132,6 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <!-- Client-side rendering + View Transitions support built-in -->
   </head>
   <body class="bg-background text-text antialiased">
-    <!-- Scroll Progress Indicator (long-form content pages only) -->
-    {showScrollProgress && <ScrollProgress />}
-
     <!-- Responsive Navigation: Mobile circular badge → Desktop bar -->
     <nav id="desktop-nav" class="headroom md:fixed md:mt-0 mt-8 top-2 left-2 right-2 max-w-6xl mx-auto z-50 rounded-lg md:bg-surface/80 md:backdrop-blur-lg flex items-center justify-center border border-neutral-lighter" data-disable-auto-hide={disableAutoHideNav}>
       <div class="flex items-center justify-center md:justify-between w-full px-4">

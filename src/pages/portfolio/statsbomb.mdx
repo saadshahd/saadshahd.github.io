@@ -1,7 +1,6 @@
 ---
 layout: ../../layouts/MDXLayout.astro
 title: "Statsbomb Real Time Data Collection - Saad Shahd"
-showScrollProgress: false
 ---
 import Button from '../../components/Button.astro';
 import Badge from '../../components/Badge.astro';
@@ -14,7 +13,6 @@ import MediaGallery from '../../components/MediaGallery.astro';
 import statsbombMedia from '../../data/statsbomb-photos.json';
 import Accordion from '../../components/Accordion.astro';
 import DefinitionList from '../../components/DefinitionList.astro';
-import ScrollProgress from '../../components/ScrollProgress.astro';
 import SectionDivider from '../../components/SectionDivider.astro';
 import ReadingMetadata from '../../components/ReadingMetadata.astro';
 import MetricCard from '../../components/MetricCard.astro';
@@ -22,9 +20,6 @@ import ComparisonCard from '../../components/ComparisonCard.astro';
 import Quote from '../../components/Quote.astro';
 
 import { MoveRight } from '@lucide/astro';
-
-
-<ScrollProgress />
 
 <div class="max-w-4xl mx-auto px-4 md:px-6 py-20">
   {/* Hero Section with integrated TL;DR */}
