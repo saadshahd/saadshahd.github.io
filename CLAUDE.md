@@ -201,7 +201,7 @@ Card 3: "Non-linear scaling achieved without proportional staffing growth"
 - [ ] Every paragraph teaches
 - [ ] Production wisdom evident
 - [ ] First principles explained
-- [ ] Questions open major sections (Socratic authority)
+- [ ] Section headings match reader intent: questions for exploration ("How do you...?"), declarations for authority ("The X Pattern"), scenes for story ("Week One: The Partnership")
 - [ ] Collaborative framing ("we", "teams", no "I did X" heroics)
 - [ ] Philosophical systems thinking present
 - [ ] Humble learning visible ("still exploring", "lesson learned")

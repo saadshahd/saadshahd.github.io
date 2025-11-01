@@ -49,18 +49,12 @@ import { MoveRight } from '@lucide/astro';
     <details class="mb-8 p-6 bg-surface rounded-lg border border-neutral-light" open>
       <summary class="cursor-pointer font-semibold text-text hover:text-text-light transition-colors">TL;DR: What We Built (2 min)</summary>
 
-      {/* Hook - outcome-focused, concrete impact */}
-      <Body size="lg" as="p" class="my-6 text-text font-medium leading-relaxed">Built a real-time sports data collection system through configuration-driven architecture that scaled from 2 founding engineers to distributed teams across multiple sports.</Body>
-
-      <ul class="space-y-3 mb-6 text-text-lighter">
-        <li><strong>What Shipped:</strong> Concurrent collection at scale across multiple sports during live matches</li>
-        <li><strong>Core Architecture:</strong> Separated domain rules (DSLs) from execution (state machines), enabling configuration-driven expansion without code rewrites for each new sport</li>
-        <li><strong>Business Impact:</strong> Product managers shipped new sports independently, 5-person metadata team scaled to cover thousands collectors information needs</li>
-      </ul>
+      {/* Hook - human story + validation */}
+      <Body size="lg" as="p" class="my-6 text-text font-medium leading-relaxed">Built real-time sports data collection with Ali from week one sketches to 5000+ collectors across multiple sports. When Hudl acquired Statsbomb in 2024, they bought the collection infrastructure—the system that made concurrent data capture possible at broadcaster scale. What started as "my hand doesn't cramp anymore" feedback became the foundation for industry-standard tooling.</Body>
 
       {/* Core lesson callout */}
       <Callout variant="primary" icon="lightbulb" title="Core Lesson">
-        <p>Shared ownership multiplies architectural leverage—treating it as year-three discovery rather than founding principle meant fragmentation interrupted completing the customer-facing vision.</p>
+        <p>Architectural separation multiplied team leverage—product managers shipped new sports without engineering bottlenecks. When Adham, Waheed, Hadeel, and Abdallah took ownership, they evolved the system beyond what we started with.</p>
       </Callout>
     </details>
   </section>
@@ -75,7 +69,7 @@ We shipped twice daily. Every morning, I'd push a new build of the FreezeFrame t
 *"My hand doesn't cramp anymore."*
 *"Eyes stay on video, not the mouse."*
 
-I felt like a star. Not from Ali, not from product—from the collectors. The people doing the work thanked me. That feeling—that mutual trust—became the foundation for everything we built over four years. When you ship for people who thank you, architecture stops being abstract.
+That feeling—collector gratitude—became the foundation for everything we built over four years. Not from management validation or product roadmaps, but from the people doing the actual work saying "thank you." When you ship for people who thank you, architecture stops being abstract.
 
 **The Partnership: Domain Expertise Meets Systems Thinking**
 
@@ -164,7 +158,7 @@ Two collectors, same match. Hours after the final whistle, they're still arguing
 "No, interception—he anticipated the pass."
 "But possession hadn't transferred yet."
 
-Post-match reconciliation consumed 2 hours across two merge points. First merge: align on what events happened during collection. Second merge: reconcile how those events were validated, positioned, and tagged. The tool permitted ambiguous interpretations during the match. People paid the cost afterward.
+Collectors spent 2 hours post-match reconciling across two merge points. First merge: align on what events happened during collection. Second merge: reconcile how those events were validated, positioned, and tagged. The tool allowed ambiguous interpretations during the match. Collectors paid the cost afterward.
 
 {/* Workflow Comparison: Before vs. After */}
 <div class="grid md:grid-cols-2 my-8">
@@ -294,7 +288,7 @@ graph TD
 
 The merge tax scaled linearly with collectors. At 100 collectors, two product managers mediated conflicts manually—tedious but manageable. At 1000 collectors? The math broke. Manual conflict resolution couldn't scale without proportional staffing increases, blocking market expansion.
 
-What collectors needed: prevention during collection, not reconciliation after. Architecture shaped to make ambiguous interpretations structurally impossible.
+What collectors needed: prevention during collection, not reconciliation after. We architected the tool to make ambiguous interpretations structurally impossible—if you can't express it in the UI, you can't collect it wrong.
   </section>
 
   <SectionDivider spacing="major" />
@@ -329,7 +323,7 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
 
   {/* Architecture Section */}
   <section class="mb-8" id="architecture">
-    <Heading level={3} as="h2" class="mb-6 text-navy">Architecture: Separation as First Principle</Heading>
+    <Heading level={3} as="h2" class="mb-6 text-navy">Architecture: Three Systems in Parallel</Heading>
 
 <Body size="sm" as="p" class="mb-6 text-text-lighter italic">
   Understanding the business value explains *why* we built this. Now: *how* did architectural decisions enable 10x scale and multi-sport expansion without code rewrites?
@@ -349,15 +343,18 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
         <span class="font-semibold text-navy">Domain Logic as Configuration</span>
         <span class="text-sm text-text-lighter"> — Product managers owned the rules</span>
       </span>
-Product managers needed to express domain logic—entry validation, sequencing logic, aggregation rules—in readable syntax that compiled to execution logic. The dataspec as configuration, not code.
+
+Remember week one—Ali dictating rules while I typed in notepad? That's when it clicked: the dataspec can't be code. It has to be data we can iterate without deploys. That became the DSL principle.
+
+Product managers needed to express domain logic—entry validation, sequencing logic, aggregation rules—in readable syntax that compiled to execution logic. Rules as data, not code.
 
 Atomic events (passes, shots) aggregated into derived facts (possession phases, drives, turnovers). Store unchanging truth, recompute everything else when rules evolved.
 
 Week one, Ali and I sketched `start → [middle] → break` as sequential chains. Production revealed ball possession had states—`carry`, `flight`, `loose`—not sequence positions. Early classification asked 'is this recovery offensive?' Later versions asked 'whose team has the ball?'—simpler question, impossible to misinterpret. Pass tracking shifted from outcome-based logic (did it complete?) to state-based (ball in flight → resolution). Flight became its own phase with clear resolution paths.
 
-**The payoff came in 2020.** When we expanded to American football, product managers wrote drive segmentation rules using the same DSL patterns. New sport, same architectural separation. Zero engineering bottleneck.
+**The payoff came in 2020.** When we expanded to American football, product managers wrote drive segmentation rules using the same patterns. New sport, same architectural separation. Zero engineering bottleneck.
 
-Without DSLs, every new rule required engineering deploys. With DSLs, product managers shipped dataspec changes independently—velocity without correctness trade-offs.
+Without DSLs, every new rule required engineering deploys. With DSLs, product managers shipped independently—velocity without correctness trade-offs.
     </Accordion>
 
     <Accordion
@@ -371,11 +368,14 @@ Without DSLs, every new rule required engineering deploys. With DSLs, product ma
         <span class="font-semibold text-navy">Live-Collection-App</span>
         <span class="text-sm text-text-lighter"> — State machines owned correctness</span>
       </span>
+
+Remember the 2am Test? World Cup extra time, keyboard glitches, WebSocket drops. Those failures taught us: real-time isn't a feature checkbox. When collectors are exhausted at 2am during penalty shootouts, the tool can't allow ambiguous inputs. Prevention through state machines, not validation after the fact—that became the XState requirement.
+
 The first thing we built was the tool collectors would use every day—an Electron desktop app replacing Dartfish's rigid forms with keyboard-first workflows.
 
-**Why Dartfish Couldn't Scale**: The industry standard—Dartfish—forced button-heavy mouse clicks for every selection. It had keyboard shortcuts, but each key mapped to only one event type globally across the entire dataspec. With 50+ event types but only 40 usable keys, collectors memorized arbitrary mappings at all times, regardless of game context. Cognitive overload blocked velocity.
+**Why Dartfish Couldn't Scale**: The industry standard forced button-heavy mouse clicks for every selection. It had keyboard shortcuts, but each key mapped to only one event type globally. With 50+ event types but only 40 usable keys, collectors memorized arbitrary mappings regardless of game context. Cognitive overload blocked velocity.
 
-**State Machines for Prevention**: We modeled collection workflows as explicit finite state machines with XState. Define workflows as explicit states with clear transitions, and illegal states become structurally impossible. Can't skip steps. Can't submit incomplete data. Prevention, not validation.
+**State Machines for Prevention**: We modeled collection workflows as explicit finite state machines with XState. Define workflows as explicit states with clear transitions, and illegal states become structurally impossible. Can't skip steps. Can't submit incomplete data.
 
 **Context-Aware Keyboard Mappings**: Same key, different actions per context. Press 'P' for pass—the DSL determined valid pass types for that player's position. If only one option remained, auto-filled and skipped. Collectors touch-typed like Vim users. Eyes on video, hands on keyboard.
 
@@ -383,7 +383,7 @@ The first thing we built was the tool collectors would use every day—an Electr
 
 **Concurrent Collection**: Hadeel implemented GraphQL subscriptions via WebSocket. One collector published the base event, others subscribed with specialized contributions (positions, attributes, timing). Zero overlapping responsibility = zero merge conflicts.
 
-The dataspec drove UI validation, DSL defined legal sequences, state machines constrained invalid states. Architecture caught errors before collectors saw them.
+The dataspec drove UI validation, DSLs defined legal sequences, state machines constrained invalid states. Architecture caught errors before collectors saw them.
     </Accordion>
 
     <Accordion
@@ -425,7 +425,7 @@ The dataspec itself had to be uncertain. I knew from week one we'd iterate, have
 
   {/* Team Building Section */}
   <section class="mb-8" id="team-building">
-    <Heading level={3} as="h2" class="mb-6 text-navy ">The Team Building Challenge:</Heading>
+    <Heading level={3} as="h2" class="mb-6 text-navy ">Distributed Ownership: Learning to Scale</Heading>
 
 I could iterate quickly alone—ship twice daily, no coordination overhead, direct feedback from collectors. As the system grew (DSLs, state machines, metadata resolution), that velocity became a bottleneck. The technical architecture took three years to evolve. The harder lesson: building a team that could iterate beyond my initial vision while learning to lead for the first time.
 
@@ -452,9 +452,7 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
   <SectionDivider spacing="major" />
 
   {/* Transition Bridge to Technical Sections */}
-  <Body size="sm" as="p" class="mb-12 text-text-lighter italic text-center max-w-[700px] mx-auto">
-The acquisition validated the collection system—but what made 5000+ collectors possible? Three architectural decisions: configuration-driven domain logic, prevention through state machines, and event graphs for time. Here's the quantified impact, then how we built it.
-  </Body>
+  <Body size="sm" as="p" class="mb-12 text-text-lighter italic text-center max-w-[700px] mx-auto">The acquisition validated the collection system—but what made 5000+ collectors possible? Three architectural decisions: configuration-driven domain logic, prevention through state machines, and event graphs for time. Here's the quantified impact, then how we built it.</Body>
 
   {/* Impact Section */}
   <section class="mb-12" id="impact">
@@ -467,17 +465,17 @@ The acquisition validated the collection system—but what made 5000+ collectors
 <div class="grid md:grid-cols-2 gap-6 mb-8">
   <ComparisonCard variant="before" title="Engineering Bottleneck">
     <ul class="space-y-3">
-      <li><strong>American football expansion:</strong> 1-year engineering scope blocked product roadmap</li>
-      <li><strong>New event type:</strong> Release + regression testing required for every rule change</li>
-      <li><strong>Support burden:</strong> Product managers fielded 50+ daily Slack questions about dataspec rules</li>
+      <li><strong>American football expansion:</strong> 12-month engineering estimate blocked product roadmap expansion</li>
+      <li><strong>Dataspec changes:</strong> 5-day engineering cycle (code → test → deploy → regression) per rule change</li>
+      <li><strong>Support burden:</strong> 2 product managers fielded 50+ daily Slack questions about dataspec interpretation</li>
     </ul>
   </ComparisonCard>
 
-  <ComparisonCard variant="after" title="Configuration-Driven Scale">
+  <ComparisonCard variant="after" title="Product Manager Independence">
     <ul class="space-y-3">
-      <li><strong>NFL first iteration shipped day one:</strong> Product managers wrote drive rules, shipped day one</li>
-      <li><strong>New event type:</strong> Deployed in minutes through DSL, we released twice daily</li>
-      <li><strong>Automated resolution:</strong> System resolved 98% automatically and escalated the rest to the quality team</li>
+      <li><strong>NFL shipped day one:</strong> Product managers wrote drive segmentation rules independently, zero engineering bottleneck</li>
+      <li><strong>Dataspec changes:</strong> 5-minute product manager deploy via DSL editor (we shipped twice daily during World Cup 2022)</li>
+      <li><strong>Automated resolution:</strong> 5-person metadata team handled 2% escalations while system resolved 98% automatically</li>
     </ul>
   </ComparisonCard>
 </div>
@@ -526,7 +524,7 @@ The acquisition validated the collection system—but what made 5000+ collectors
   </Accordion>
 </div>
 
-<Body size="sm" as="p" class="mb-6 text-text-lighter italic">The system scaled horizontally as load increased. Product managers could ship new dataspecs without engineering bottlenecks, though some edge cases still required technical collaboration for complex state transitions.</Body>
+<Body size="sm" as="p" class="mb-6 text-text-lighter italic">From 100 to 5000+ collectors, product managers shipped new dataspecs without proportional engineering investment, though complex state transitions occasionally required technical collaboration.</Body>
   </section>
 
   <SectionDivider spacing="major" />
