@@ -63,31 +63,6 @@ import { MoveRight } from "@lucide/astro";
 
     </CaseStudyTLDR>
 
-    {/* Timeline: Capability Evolution */}
-    <Timeline>
-      <TimelineItem
-        date="2018"
-        title="Soccer, Offline Collection"
-        description="~100 collectors tagging events from recorded match videos after games ended. Bottleneck: 16-hour turnaround for full match data."
-      />
-      <TimelineItem
-        date="2020"
-        title="Live Collection Breakthrough"
-        description="Shipped real-time capability. 1000 collectors could tag events as matches happened, reducing collection to 4 concurrent hours."
-      />
-      <TimelineItem
-        date="2021"
-        title="American Football Expansion"
-        description="Extended architecture to multi-sport. Different event types, field geometry, and rules—same prevention-first DSL approach."
-      />
-      <TimelineItem
-        date="Post-2022"
-        title="Scale Beyond Departure"
-        description="5000+ collectors by Hudl acquisition (2024), validating architecture could scale 50x from original design."
-        isLast={true}
-      />
-    </Timeline>
-
   </Section>
 
 {/* Origins: Week One Partnership */}
@@ -319,8 +294,7 @@ The merge tax scaled linearly with collectors. At 100 collectors, two product ma
   <Figure
     src="/images/statsbomb/collectors-at-work.jpg"
     alt="Collectors processing live matches with dual monitors in Cairo collection center"
-    caption="Collection center, Cairo: Collectors processing live matches with dual monitors—soccer field footage on one screen, collection tool on the other"
-    aspectRatio="5/3"
+    caption="Collectors processing live matches with dual monitors—soccer field footage on one screen, collection tool on the other"
   />
 </div>
 
@@ -346,15 +320,20 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
 
 {/* Visual proof: 2am debugging */}
 
-{" "}
+<div class="grid md:grid-cols-2 gap-8 items-center my-8">
+  <Figure
+    src="/images/statsbomb/df52f41a-686e-4989-8f34-08b1487920b6.jpg"
+    alt="Late night debugging session with Adham and Waheed"
+    caption="Late night, Cairo (2019): Debugging real-time collection with Adham and Waheed"
+    aspectRatio="16/9"
+  />
 
-<Figure
-  src="/images/statsbomb/df52f41a-686e-4989-8f34-08b1487920b6.jpg"
-  alt="Late night debugging session with Adham and Waheed"
-  caption="Late night, Cairo (2019): Debugging real-time collection with Adham and Waheed"
-  aspectRatio="auto"
-  class="mx-auto"
-/>
+  <div>
+    <Body size="base" as="p" class="text-text leading-relaxed">
+      That's when we'd debug together: Adham tracing the Kafka lag, me testing state machine transitions.
+    </Body>
+  </div>
+</div>
 
 {" "}
 
@@ -554,6 +533,31 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
     <Callout variant="neutral" size="inline" icon="lightbulb" title="The 80/20 Lesson" class="mb-6">
       <Body size="sm">"Design for the 80% case"—The Pragmatic Programmer. That principle shaped most decisions: DSL for standard sequences, state machines for common flows, metadata for typical events. When 95% of matches follow patterns, build for patterns.</Body>
     </Callout>
+
+    {/* Timeline: Scale Progression */}
+    <Timeline>
+      <TimelineItem
+        date="2018"
+        title="Soccer, Offline Collection"
+        description="~100 collectors, offline tagging"
+      />
+      <TimelineItem
+        date="2020"
+        title="Live Collection Breakthrough"
+        description="Live collection, 1000 collectors"
+      />
+      <TimelineItem
+        date="2021"
+        title="American Football Expansion"
+        description="American football expansion"
+      />
+      <TimelineItem
+        date="Post-2022"
+        title="Scale Beyond Departure"
+        description="5000+ by acquisition"
+        isLast={true}
+      />
+    </Timeline>
 
     <Heading level={4} as="h4" class="mb-4 mt-6">What Made This Possible</Heading>
 
