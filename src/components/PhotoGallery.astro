@@ -196,6 +196,7 @@ try {
   import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption-plugin';
   import "photoswipe/style.css";
   import 'photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css';
+  import { trackPhotoClick, trackPhotoNavigation, trackLightboxClose } from '@/utils/analytics';
 
   // Check for reduced motion preference
   function prefersReducedMotion(): boolean {
@@ -240,6 +241,36 @@ try {
 
       lightbox.init();
       console.log("[PhotoGallery] Lightbox initialized for:", galleryId);
+
+      // Track which photos were viewed during this session
+      const viewedSlides = new Set<number>();
+
+      // Track lightbox open (initial photo click)
+      lightbox.on('firstUpdate', () => {
+        const initialIndex = lightbox.pswp?.currSlide?.index ?? 0;
+        const photoElement = lightbox.pswp?.currSlide?.data?.element;
+        const photoSrc = photoElement?.getAttribute('href') || 'unknown';
+        const page = window.location.pathname.split('/').filter(Boolean).pop() || 'unknown';
+
+        viewedSlides.add(initialIndex);
+        trackPhotoClick(galleryId, photoSrc, initialIndex, page);
+      });
+
+      // Track navigation between slides
+      lightbox.on('change', () => {
+        const currentIndex = lightbox.pswp?.currSlide?.index ?? 0;
+        const totalSlides = lightbox.pswp?.getNumItems() ?? 0;
+
+        viewedSlides.add(currentIndex);
+        trackPhotoNavigation(galleryId, currentIndex, totalSlides);
+      });
+
+      // Track session completion when lightbox closes
+      lightbox.on('close', () => {
+        const totalSlides = lightbox.pswp?.getNumItems() ?? 0;
+        trackLightboxClose(galleryId, viewedSlides.size, totalSlides);
+        viewedSlides.clear(); // Reset for next session
+      });
     });
   }
 

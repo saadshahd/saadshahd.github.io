@@ -172,3 +172,80 @@ export function trackAccordionToggle(
     ...(section && { section }),
   });
 }
+
+/**
+ * Track photo lightbox open (user clicks thumbnail)
+ *
+ * Useful for understanding which photos attract attention and get opened.
+ *
+ * @param galleryId - Gallery container ID (e.g., 'media-gallery', 'statsbomb-photos')
+ * @param photoSrc - Image path (unique identifier)
+ * @param photoIndex - Position in gallery (0-indexed)
+ * @param page - Page identifier (e.g., 'statsbomb-case-study')
+ *
+ * @example
+ * trackPhotoClick('media-gallery', '/images/team-photo.jpg', 0, 'statsbomb-case-study');
+ */
+export function trackPhotoClick(
+  galleryId: string,
+  photoSrc: string,
+  photoIndex: number,
+  page: string,
+): void {
+  trackEvent("photo-click", {
+    gallery: galleryId,
+    photo: photoSrc,
+    position: photoIndex + 1, // Human-readable (1-indexed)
+    page,
+  });
+}
+
+/**
+ * Track gallery navigation (prev/next slide in lightbox)
+ *
+ * Useful for understanding how deeply users explore galleries.
+ *
+ * @param galleryId - Gallery container ID
+ * @param photoIndex - New slide index (0-indexed)
+ * @param totalPhotos - Total slides in gallery
+ *
+ * @example
+ * trackPhotoNavigation('media-gallery', 3, 16);
+ */
+export function trackPhotoNavigation(
+  galleryId: string,
+  photoIndex: number,
+  totalPhotos: number,
+): void {
+  trackEvent("photo-navigation", {
+    gallery: galleryId,
+    position: photoIndex + 1,
+    total: totalPhotos,
+    depth: `${Math.round(((photoIndex + 1) / totalPhotos) * 100)}%`,
+  });
+}
+
+/**
+ * Track lightbox close (engagement session end)
+ *
+ * Useful for understanding gallery completion rates and engagement depth.
+ *
+ * @param galleryId - Gallery container ID
+ * @param viewedCount - Number of unique photos viewed in this session
+ * @param totalPhotos - Total slides in gallery
+ *
+ * @example
+ * trackLightboxClose('media-gallery', 5, 16); // Viewed 5 out of 16 photos (31% completion)
+ */
+export function trackLightboxClose(
+  galleryId: string,
+  viewedCount: number,
+  totalPhotos: number,
+): void {
+  trackEvent("lightbox-close", {
+    gallery: galleryId,
+    viewed: viewedCount,
+    total: totalPhotos,
+    completion: `${Math.round((viewedCount / totalPhotos) * 100)}%`,
+  });
+}
