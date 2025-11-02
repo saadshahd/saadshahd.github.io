@@ -9,14 +9,12 @@ import { trackScrollDepth } from "@/utils/analytics";
 
 // Track scroll depth milestones using Intersection Observer
 function setupScrollDepthTracking() {
-  console.log("[Scroll Tracking] Setting up scroll depth tracking...");
-
   // Define depth milestones with corresponding sections
   const depthMarkers = [
     { depth: 25, selector: "#origins", label: "Origins" },
     { depth: 50, selector: "#architecture", label: "Architecture" },
     { depth: 75, selector: "#lessons", label: "Lessons" },
-    { depth: 100, selector: "footer", label: "End" },
+    { depth: 100, selector: "#behind-the-scenes", label: "End" },
   ];
 
   // Track which depths have already been fired (prevent duplicates)
@@ -33,9 +31,6 @@ function setupScrollDepthTracking() {
           );
 
           if (marker && !firedDepths.has(marker.depth)) {
-            console.log(
-              `[Scroll Tracking] Reached ${marker.depth}% (${marker.label})`,
-            );
             // Track this depth milestone
             trackScrollDepth(
               "statsbomb-case-study",
@@ -57,23 +52,12 @@ function setupScrollDepthTracking() {
   );
 
   // Observe all depth marker elements
-  let observedCount = 0;
   depthMarkers.forEach((marker) => {
     const element = document.querySelector(marker.selector);
     if (element) {
       observer.observe(element);
-      observedCount++;
-      console.log(
-        `[Scroll Tracking] Observing: ${marker.selector} (${marker.depth}%)`,
-      );
-    } else {
-      console.warn(`[Scroll Tracking] Element not found: ${marker.selector}`);
     }
   });
-
-  console.log(
-    `[Scroll Tracking] Observing ${observedCount}/${depthMarkers.length} elements`,
-  );
 }
 
 // Run after page load (support View Transitions)

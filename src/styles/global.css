@@ -252,7 +252,7 @@ pre.mermaid,
   rx: var(--diagram-border-radius);
   ry: var(--diagram-border-radius);
   fill: transparent !important;
-  stroke: var(--color-neutral-light)
+  stroke: var(--color-neutral-light) !important;
 }
 
 /* Node labels - use design system typography */
