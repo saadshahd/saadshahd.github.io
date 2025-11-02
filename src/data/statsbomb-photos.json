@@ -91,6 +91,15 @@
 
   {
     "type": "image",
+    "src": "/images/statsbomb/team-gathering-outdoor.jpg",
+    "alt": "Full team gathering at outdoor venue in Cairo with palm trees and decorations",
+    "caption": "2019: Team gathering, Cairo—from week-one partnership to distributed ownership across collection, metadata, engineering, and ops",
+    "width": 1024,
+    "height": 683
+  },
+
+  {
+    "type": "image",
     "src": "/images/statsbomb/IMG_5078.jpg",
     "alt": "Product, tech, and ops leadership teams during Ramadan Iftar 2023",
     "caption": "2023: Ramadan Iftar with product, tech, and ops leadership teams—now supporting collectors together",
