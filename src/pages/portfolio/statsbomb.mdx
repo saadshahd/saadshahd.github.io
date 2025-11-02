@@ -145,13 +145,9 @@ Two collectors, same match. Hours after the final whistle, they're still arguing
 "No, interception—he anticipated the pass."
 "But possession hadn't transferred yet."
 
-Collectors spent 2 hours post-match reconciling across two merge points.
+Same foul—collector A logs "foul-committed, 0.01s." Collector B logs "foul-won, 0.011s." Same moment, different perspectives, imperfect timestamps. Hours spent pairing: which events describe the same thing? Then validate chains. Then location, freeze frames.
 
-**First merge:** Align on what events happened during collection—that's a recovery at 23:45, this is an interception at 42:10.
-
-**Then came post-processing:** Each collector spent 4 hours validating, positioning, and adding freeze frames to the now-agreed-upon events. Same events, but two collectors enriching them independently with different interpretations.
-
-**Second merge:** Reconcile how those events were tagged and positioned. The tool prevented conflicts during collection but created them during post-processing. Two bottlenecks instead of one.
+The tool allowed perspective-based collection. Collectors paid the pairing cost afterward.
 
 {/* Workflow Comparison: Before vs. After */}
 
