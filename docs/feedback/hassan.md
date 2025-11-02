@@ -30,14 +30,26 @@
 - **Impact:** If a former team member finds it unclear, external readers definitely will
 - **Missing:** Step-by-step walkthrough of why two merges were necessary
 
+## Decision
+
+**Point #1 (Names vs. Job Titles):** **KEEP NAMES** - Disagree with Hassan's feedback
+- Reasoning: Credits individuals for their work, humanizes the story, shows genuine partnership
+- Aligns with CLAUDE.md "Collaborative framing — Team credit, not individual genius"
+- No action taken
+
+**Point #2 (Gratitude → Partnership):** **AGREE** - Implement feedback loop framing
+- Action: Rewrite line 76 to show genuine collector partnership vs. self-congratulatory tone
+
+**Point #3 (Two-Merge Bottleneck):** **AGREE** - Text must stand alone without diagram
+- Action: Clarify workflow with explicit post-processing gap between merges
+- Principle: Diagrams are supporting proof (like sketches), text should be self-sufficient
+
 ## Action Items
 
-- [ ] **Decision needed:** Keep names for narrative credit vs. anonymize to job titles
-- [ ] Rewrite line 76 to focus on impact/trust instead of "saying thank you"
-- [ ] Replace gratitude framing with concrete feedback loops (e.g., "9 minutes saved per frame" → iteration)
-- [ ] Clarify two-merge bottleneck with explicit workflow steps
-- [ ] Add concrete example: "Collector A marks event as recovery, Collector B marks as interception → First merge resolves what happened → Both add positioning data differently → Second merge resolves how it was tagged"
-- [ ] Consider adding visual walkthrough or numbered steps for merge workflow
+- [x] **Decision made:** Keep names for narrative credit (disagree with point #1)
+- [ ] Rewrite line 76 to focus on feedback loops instead of "saying thank you"
+- [ ] Clarify two-merge bottleneck by explaining post-processing gap between merges
+- [ ] Ensure text stands alone without requiring diagram for comprehension
 
 ## Proposed Rewrites
 
