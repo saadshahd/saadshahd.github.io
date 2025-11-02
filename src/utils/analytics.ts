@@ -249,3 +249,206 @@ export function trackLightboxClose(
     completion: `${Math.round((viewedCount / totalPhotos) * 100)}%`,
   });
 }
+
+/**
+ * Track UTM campaign parameters on page load
+ *
+ * Captures marketing campaign source/medium/campaign from URL parameters.
+ * Essential for understanding which LinkedIn posts/campaigns drive traffic.
+ *
+ * @param source - Traffic source (e.g., 'linkedin', 'twitter', 'email')
+ * @param medium - Marketing medium (e.g., 'social', 'paid', 'organic')
+ * @param campaign - Campaign identifier (e.g., 'case-study-launch', 'portfolio-update')
+ * @param content - Optional content identifier (e.g., 'post-nov-1', 'comment-thread')
+ * @param term - Optional search term for paid campaigns
+ *
+ * @example
+ * trackCampaignSource('linkedin', 'social', 'case-study-launch', 'post-nov-1');
+ * trackCampaignSource('google', 'cpc', 'engineering-leads', undefined, 'functional-architecture');
+ */
+export function trackCampaignSource(
+  source: string,
+  medium: string,
+  campaign: string,
+  content?: string,
+  term?: string,
+): void {
+  trackEvent("campaign-source", {
+    source,
+    medium,
+    campaign,
+    ...(content && { content }),
+    ...(term && { term }),
+  });
+}
+
+/**
+ * Track entry point when visitor lands on site
+ *
+ * Captures where visitors enter the site and from which source.
+ * Essential for understanding LinkedIn funnel entry points.
+ *
+ * @param landingPage - First page visited (e.g., '/portfolio/statsbomb', '/')
+ * @param referrer - Referring domain (e.g., 'linkedin.com', 'direct')
+ * @param device - Device type (e.g., 'mobile', 'desktop', 'tablet')
+ *
+ * @example
+ * trackEntry('/portfolio/statsbomb', 'linkedin.com', 'mobile');
+ * trackEntry('/', 'direct', 'desktop');
+ */
+export function trackEntry(
+  landingPage: string,
+  referrer: string,
+  device: string,
+): void {
+  trackEvent("entry", {
+    landing: landingPage,
+    referrer,
+    device,
+  });
+}
+
+/**
+ * Track exit point when visitor leaves site
+ *
+ * Captures last page, section, and engagement depth before leaving.
+ * Essential for understanding where 75% bounce rate occurs.
+ *
+ * @param lastPage - Last page visited before exit
+ * @param lastSection - Last section ID viewed (optional)
+ * @param timeOnPage - Seconds spent on last page
+ * @param scrollDepth - Percentage scrolled on last page
+ *
+ * @example
+ * trackExit('/portfolio/statsbomb', 'architecture', 187, 65);
+ * trackExit('/', undefined, 12, 15);
+ */
+export function trackExit(
+  lastPage: string,
+  lastSection: string | undefined,
+  timeOnPage: number,
+  scrollDepth: number,
+): void {
+  trackEvent("exit", {
+    page: lastPage,
+    ...(lastSection && { section: lastSection }),
+    duration: timeOnPage,
+    depth: `${scrollDepth}%`,
+  });
+}
+
+/**
+ * Track time spent viewing a specific section
+ *
+ * Measures engagement depth by tracking how long visitors spend in each section.
+ * Essential for understanding which sections hold attention.
+ *
+ * @param page - Page identifier (e.g., 'statsbomb-case-study')
+ * @param section - Section identifier (e.g., 'architecture', 'origins')
+ * @param timeInSection - Seconds actively viewing this section
+ * @param engagementScore - Engagement quality ('low' | 'medium' | 'high')
+ *
+ * @example
+ * trackSectionTime('statsbomb-case-study', 'architecture', 183, 'high');
+ * trackSectionTime('statsbomb-case-study', 'origins', 45, 'medium');
+ */
+export function trackSectionTime(
+  page: string,
+  section: string,
+  timeInSection: number,
+  engagementScore: "low" | "medium" | "high",
+): void {
+  trackEvent("section-time", {
+    page,
+    section,
+    duration: timeInSection,
+    engagement: engagementScore,
+  });
+}
+
+/**
+ * Track resume download clicks
+ *
+ * Captures resume downloads as key conversion events.
+ * Essential for understanding serious interest from visitors.
+ *
+ * @param source - Page/component where download was triggered (e.g., 'statsbomb-cta', 'about-page', 'footer')
+ * @param format - File format ('pdf', 'docx')
+ * @param referrer - Referring domain (e.g., 'linkedin.com', 'direct')
+ *
+ * @example
+ * trackResumeDownload('statsbomb-cta', 'pdf', 'linkedin.com');
+ * trackResumeDownload('footer', 'pdf', 'direct');
+ */
+export function trackResumeDownload(
+  source: string,
+  format: string,
+  referrer: string,
+): void {
+  trackEvent("resume-download", {
+    source,
+    format,
+    referrer,
+  });
+}
+
+/**
+ * Track cross-page navigation flow
+ *
+ * Captures visitor journey through the site to understand navigation patterns.
+ * Essential for understanding LinkedIn → Statsbomb → (About? Contact? Exit?) flow.
+ *
+ * @param fromPage - Previous page path
+ * @param toPage - New page path
+ * @param trigger - What triggered navigation (e.g., 'footer-cta', 'nav-link', 'case-study-card')
+ * @param timeOnPreviousPage - Seconds spent on previous page
+ *
+ * @example
+ * trackPageFlow('/portfolio/statsbomb', '/about', 'footer-cta', 245);
+ * trackPageFlow('/', '/portfolio/statsbomb', 'case-study-card', 32);
+ */
+export function trackPageFlow(
+  fromPage: string,
+  toPage: string,
+  trigger: string,
+  timeOnPreviousPage: number,
+): void {
+  trackEvent("page-flow", {
+    from: fromPage,
+    to: toPage,
+    trigger,
+    duration: timeOnPreviousPage,
+  });
+}
+
+/**
+ * Track read completion rate for long-form content
+ *
+ * Measures how much of a case study/article was actually consumed.
+ * Essential for understanding if visitors finish the Statsbomb story.
+ *
+ * @param page - Page identifier (e.g., 'statsbomb-case-study')
+ * @param completion - Completion percentage (0-100)
+ * @param sectionsRead - Array of section IDs that were viewed
+ * @param tldrExpanded - Whether TL;DR accordion was expanded
+ * @param regretsExpanded - Whether "What I'd Change" accordion was expanded
+ *
+ * @example
+ * trackReadCompletion('statsbomb-case-study', 85, ['origins', 'architecture', 'lessons'], true, false);
+ * trackReadCompletion('statsbomb-case-study', 45, ['origins'], false, false);
+ */
+export function trackReadCompletion(
+  page: string,
+  completion: number,
+  sectionsRead: string[],
+  tldrExpanded: boolean,
+  regretsExpanded: boolean,
+): void {
+  trackEvent("read-completion", {
+    page,
+    completion: `${completion}%`,
+    sections: sectionsRead.join(","),
+    tldr: tldrExpanded ? "expanded" : "collapsed",
+    regrets: regretsExpanded ? "expanded" : "collapsed",
+  });
+}
