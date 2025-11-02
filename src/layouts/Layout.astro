@@ -169,6 +169,11 @@ const ogImageURL = new URL(ogImage, Astro.site);
         });
       });
     </script>
+
+    <!-- Scroll depth tracking for case study pages -->
+    <script>
+      import '@/scripts/track-scroll-depth';
+    </script>
   </head>
   <body class="bg-background text-text antialiased">
     <!-- Responsive Navigation: Mobile circular badge → Desktop bar -->
