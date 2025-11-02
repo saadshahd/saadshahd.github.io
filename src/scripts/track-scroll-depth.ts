@@ -57,8 +57,10 @@ function setupScrollDepthTracking() {
       });
     },
     {
-      // Fire when 50% of element is visible
-      threshold: 0.5,
+      // Fire when ANY part of element enters viewport
+      // Using 0.1 (10%) instead of 0.5 (50%) because sections are tall
+      // and may never have 50% visible at once
+      threshold: 0.1,
     },
   );
 
