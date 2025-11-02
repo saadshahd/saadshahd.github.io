@@ -28,6 +28,8 @@ import MetricCard from "../../components/MetricCard.astro";
 import ComparisonCard from "../../components/ComparisonCard.astro";
 import ComparisonGrid from "../../components/ComparisonGrid.astro";
 import Quote from "../../components/Quote.astro";
+import Timeline from "../../components/Timeline.astro";
+import TimelineItem from "../../components/TimelineItem.astro";
 
 import { MoveRight } from "@lucide/astro";
 
@@ -60,6 +62,31 @@ import { MoveRight } from "@lucide/astro";
 
 
     </CaseStudyTLDR>
+
+    {/* Timeline: Capability Evolution */}
+    <Timeline>
+      <TimelineItem
+        date="2018"
+        title="Soccer, Offline Collection"
+        description="~100 collectors tagging events from recorded match videos after games ended. Bottleneck: 16-hour turnaround for full match data."
+      />
+      <TimelineItem
+        date="2020"
+        title="Live Collection Breakthrough"
+        description="Shipped real-time capability. 1000 collectors could tag events as matches happened, reducing collection to 4 concurrent hours."
+      />
+      <TimelineItem
+        date="2021"
+        title="American Football Expansion"
+        description="Extended architecture to multi-sport. Different event types, field geometry, and rules—same prevention-first DSL approach."
+      />
+      <TimelineItem
+        date="Post-2022"
+        title="Scale Beyond Departure"
+        description="5000+ collectors by Hudl acquisition (2024), validating architecture could scale 50x from original design."
+        isLast={true}
+      />
+    </Timeline>
 
   </Section>
 
@@ -282,15 +309,20 @@ graph TD
 
 The merge tax scaled linearly with collectors. At 100 collectors, two product managers mediated conflicts manually—tedious but manageable. At 1000 collectors? The math broke. Manual conflict resolution couldn't scale without proportional staffing increases, blocking market expansion.
 
-What collectors needed: prevention during collection, not reconciliation after. We architected the tool to make ambiguous interpretations structurally impossible—if you can't express it in the UI, you can't collect it wrong.
+<div class="grid md:grid-cols-2 gap-8 items-center my-8">
+  <div>
+    <Body size="base" as="p" class="text-text leading-relaxed">
+      What collectors needed: prevention during collection, not reconciliation after. We architected the tool to make ambiguous interpretations structurally impossible—if you can't express it in the UI, you can't collect it wrong.
+    </Body>
+  </div>
 
-<Figure
-  src="/images/statsbomb/collectors-at-work.jpg"
-  alt="Collectors processing live matches with dual monitors in Cairo collection center"
-  caption="Collection center, Cairo: Collectors processing live matches with dual monitors—soccer field footage on one screen, collection tool on the other"
-  aspectRatio="5/3"
-  class="mx-auto my-8"
-/>
+  <Figure
+    src="/images/statsbomb/collectors-at-work.jpg"
+    alt="Collectors processing live matches with dual monitors in Cairo collection center"
+    caption="Collection center, Cairo: Collectors processing live matches with dual monitors—soccer field footage on one screen, collection tool on the other"
+    aspectRatio="5/3"
+  />
+</div>
 
   </Section>
 
@@ -671,7 +703,7 @@ These aren't universal truths—they worked because of specific conditions:
 
   <Section spacing="default" id="behind-the-scenes" titleLevel={2} title="Behind the Scenes">
 
-Cairo, 2018-2022: Arqam (Statsbomb)—night shifts, onboarding, farewells. From hand-drawn rules to collectors analyzing their own game nights.
+Evolution: From 100 collectors doing offline tagging (2018) to live collection at scale (2020), expanding to American football (2021) and ultimately 5000+ collectors by acquisition (2024).
 
 <MediaGallery class="mb-8" items={statsbombMedia} columns={3} />
 
