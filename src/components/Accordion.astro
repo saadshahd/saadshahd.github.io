@@ -267,6 +267,8 @@ if (grouped && !position) {
 </style>
 
 <script>
+  import { trackAccordionToggle } from '@/utils/analytics';
+
   function initAccordions() {
     const details = document.querySelectorAll<HTMLDetailsElement>('details[data-accordion]');
 
@@ -279,6 +281,13 @@ if (grouped && !position) {
       if (!content) return;
 
       detail.addEventListener('toggle', () => {
+        // Track expansion/collapse for analytics
+        const accordionId = detail.getAttribute('id') || 'unnamed-accordion';
+        const page = window.location.pathname.split('/').filter(Boolean).pop() || 'unknown';
+        const action = detail.open ? 'expand' : 'collapse';
+
+        trackAccordionToggle(accordionId, action, page);
+
         // Exclusive behavior for grouped accordions
         if (detail.open && detail.hasAttribute('data-grouped')) {
           const parent = detail.parentElement;

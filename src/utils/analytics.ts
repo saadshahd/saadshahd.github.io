@@ -144,3 +144,31 @@ export function trackFormSubmit(formName: string, success: boolean): void {
     success: success ? "true" : "false",
   });
 }
+
+/**
+ * Track accordion expansion/collapse interactions
+ *
+ * Useful for understanding which content gets revealed vs. skipped.
+ *
+ * @param accordionId - Unique identifier for the accordion
+ * @param action - Whether accordion was expanded or collapsed
+ * @param page - Page identifier (e.g., 'statsbomb-case-study')
+ * @param section - Optional parent section name
+ *
+ * @example
+ * trackAccordionToggle('impact-details', 'expand', 'statsbomb-case-study', 'Impact');
+ * trackAccordionToggle('lessons-team-building', 'collapse', 'statsbomb-case-study');
+ */
+export function trackAccordionToggle(
+  accordionId: string,
+  action: "expand" | "collapse",
+  page: string,
+  section?: string,
+): void {
+  trackEvent("accordion-toggle", {
+    id: accordionId,
+    action,
+    page,
+    ...(section && { section }),
+  });
+}
