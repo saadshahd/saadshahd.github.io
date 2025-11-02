@@ -326,8 +326,8 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
 
 <EditorialNote>
   Understanding the business value explains *why* we built this. Now: *how* did
-  architectural decisions enable 10x scale and multi-sport expansion without
-  code rewrites?
+  architectural decisions enable scale and multi-sport expansion through
+  separation of concerns?
 </EditorialNote>
 
 <p class="mb-6 text-text-lighter leading-relaxed">
@@ -373,7 +373,7 @@ Without DSLs, every new rule required engineering deploys. With DSLs, product ma
         <span class="text-sm text-text-lighter"> — State machines owned correctness</span>
       </span>
 
-Remember the 2am Test? World Cup extra time, exhausted collectors, keyboard glitches, WebSocket drops. Those failures taught us: when humans are depleted, tools must guide them.
+The 2am Test taught us: World Cup extra time, exhausted collectors, keyboard glitches, WebSocket drops. When humans are depleted, tools must guide them.
 
 The industry-standard video analysis tool (Dartfish) forced button-heavy mouse clicks with rigid keyboard shortcuts—50+ event types mapped to 40 keys, memorized regardless of context.
 
@@ -423,7 +423,7 @@ Most systems would version the data: v1 events stay v1, new matches use v2. But 
 
 The solution: **tiered evolution.** When the dataspec changed, we'd backfill historical data through the new rules—recomputing derived facts from the atomic events we stored. The graph structure made this possible: we knew what cascaded when one definition changed.
 
-The dataspec itself had to be uncertain. By week one, the question shifted: not _if_ we'd iterate, but _how often_. Our historical data needed to evolve with our understanding—not versioned snapshots frozen in time, but living data that grew smarter as we did.
+The dataspec itself had to be uncertain. From week one, we knew: not _if_ we'd iterate, but _how often_. Our historical data needed to evolve with our understanding—not versioned snapshots frozen in time, but living data that grew smarter as we did.
 
   </Section>
 
