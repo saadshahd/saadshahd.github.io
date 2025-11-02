@@ -67,7 +67,9 @@ import { MoveRight } from "@lucide/astro";
 
   <Section spacing="compact" id="origins" titleLevel={3} title="Origins: Week One Partnership">
 
-We shipped twice daily. Every morning, I'd push a new build of the FreezeFrame tool—replacing Dartfish's 12-minute manual clicking with computer vision-assisted positioning. By afternoon, collectors would test it during matches. By evening, I'd see their feedback in Slack.
+StatsBomb (Arqam) employed hundreds of soccer analysts—called collectors—who manually tracked every pass, shot, tackle, and positioning during live matches. Video analysis, frame by frame, translated into structured data for professional teams.
+
+Early days, we shipped twice daily. Every morning, I'd push a new build of the FreezeFrame tool—replacing Dartfish's 12-minute manual clicking with computer vision-assisted positioning. By afternoon, collectors would test it during matches. By evening, I'd see their feedback in Slack.
 
 _"This saved me 9 minutes per frame."_
 _"My hand doesn't cramp anymore."_
@@ -373,7 +375,7 @@ Without DSLs, every new rule required engineering deploys. With DSLs, product ma
 
 Remember the 2am Test? World Cup extra time, exhausted collectors, keyboard glitches, WebSocket drops. Those failures taught us: when humans are depleted, tools must guide them.
 
-The industry standard (Dartfish) forced button-heavy mouse clicks with rigid keyboard shortcuts—50+ event types mapped to 40 keys, memorized regardless of context.
+The industry-standard video analysis tool (Dartfish) forced button-heavy mouse clicks with rigid keyboard shortcuts—50+ event types mapped to 40 keys, memorized regardless of context.
 
 We built context-aware: press 'P' for pass, the system knew valid pass types for that player's position. One option remaining? Auto-filled and advanced. Collectors touch-typed like Vim users. Eyes on video, hands on keyboard.
 
