@@ -59,8 +59,6 @@ import { MoveRight } from "@lucide/astro";
     <CaseStudyTLDR>
       {/* Hook - human story + validation */}
       <Body size="lg" as="p" class="my-6 text-text font-medium leading-relaxed">Built real-time sports data collection with Ali from week one sketches to 5000+ collectors across multiple sports. When Hudl acquired Statsbomb in 2024, they bought the collection infrastructure—the system that made concurrent data capture possible at broadcaster scale. What started as "my hand doesn't cramp anymore" feedback became the foundation for industry-standard tooling.</Body>
-
-
     </CaseStudyTLDR>
 
   </Section>
@@ -286,12 +284,11 @@ The merge tax scaled linearly with collectors. At 100 collectors, two product ma
 
 <div class="grid md:grid-cols-2 gap-8 items-center my-8">
   <div>
-    <Body size="base" as="p" class="text-text leading-relaxed">
-      What collectors needed: prevention during collection, not reconciliation after. We architected the tool to make ambiguous interpretations structurally impossible—if you can't express it in the UI, you can't collect it wrong.
-    </Body>
+    <Body size="base" as="p" class="text-text leading-relaxed">What collectors needed: prevention during collection, not reconciliation after. We architected the tool to make ambiguous interpretations structurally impossible—if you can't express it in the UI, you can't collect it wrong.</Body>
   </div>
 
   <Figure
+    class="my-0 md:mt-3"
     src="/images/statsbomb/collectors-at-work.jpg"
     alt="Collectors processing live matches with dual monitors in Cairo collection center"
     caption="Collectors processing live matches with dual monitors—soccer field footage on one screen, collection tool on the other"
@@ -314,14 +311,13 @@ I'd start at 10am, leave at 3am. Not grinding for grinding's sake—I needed to 
 
 Ali stayed nights for company. Not to supervise—he wasn't debugging TypeScript with me. But he understood the stakes. Broadcasters needed real-time commentary data. Collectors needed tools that didn't break at 2am when fatigue set in.
 
-That's when we'd debug together: Adham tracing the Kafka lag, me testing state machine transitions with a tired collector who just wanted to finish the match and go home.
-
   </Section>
 
 {/* Visual proof: 2am debugging */}
 
 <div class="grid md:grid-cols-2 gap-8 items-center my-8">
   <Figure
+    class="my-0"
     src="/images/statsbomb/df52f41a-686e-4989-8f34-08b1487920b6.jpg"
     alt="Late night debugging session with Adham and Waheed"
     caption="Late night, Cairo (2019): Debugging real-time collection with Adham and Waheed"
@@ -329,9 +325,7 @@ That's when we'd debug together: Adham tracing the Kafka lag, me testing state m
   />
 
   <div>
-    <Body size="base" as="p" class="text-text leading-relaxed">
-      That's when we'd debug together: Adham tracing the Kafka lag, me testing state machine transitions.
-    </Body>
+    <Body size="base" as="p" class="leading-relaxed">That's when we'd debug together: Adham tracing the Kafka lag, me testing state machine transitions, Waheed debugging the metadata, with a tired collector who just wanted to finish the match and go home.</Body>
   </div>
 </div>
 
@@ -534,81 +528,79 @@ The patterns Ali and I sketched in notepad during week one became valuable enoug
       <Body size="sm">"Design for the 80% case"—The Pragmatic Programmer. That principle shaped most decisions: DSL for standard sequences, state machines for common flows, metadata for typical events. When 95% of matches follow patterns, build for patterns.</Body>
     </Callout>
 
-    {/* Timeline: Scale Progression */}
-    <Timeline>
-      <TimelineItem
-        date="2018"
-        title="Soccer, Offline Collection"
-        description="~100 collectors, offline tagging"
-      />
-      <TimelineItem
-        date="2020"
-        title="Live Collection Breakthrough"
-        description="Live collection, 1000 collectors"
-      />
-      <TimelineItem
-        date="2021"
-        title="American Football Expansion"
-        description="American football expansion"
-      />
-      <TimelineItem
-        date="Post-2022"
-        title="Scale Beyond Departure"
-        description="5000+ by acquisition"
-        isLast={true}
-      />
-    </Timeline>
+    <div class="grid md:grid-cols-2 gap-2 mb-8">
+      <Timeline>
+        <TimelineItem
+          date="2018"
+          title="Soccer, Offline Collection"
+          description="~100 collectors, offline tagging"
+        />
+        <TimelineItem
+          date="2020"
+          title="Live Collection Breakthrough"
+          description="Live collection, 1000 collectors"
+        />
+        <TimelineItem
+          date="2021"
+          title="American Football Expansion"
+          description="American football expansion"
+        />
+        <TimelineItem
+          date="Post-2022"
+          title="Scale Beyond Departure"
+          description="5000+ by acquisition"
+          isLast={true}
+        />
+      </Timeline>
+      <div>
+        <Heading level={4} as="h4" class="mb-4 mt-6">What Made This Possible</Heading>
+        <div class="mb-6">
+          <Accordion
+            size="inline"
+            variant="default"
+            summary="Non-linear leverage"
+            defaultOpen={false}
+          >
+            <Body size="sm" as="p">Non-linear scaling without proportional staffing increases. The 5-person metadata team (Muhanad led ops context) queried pending conflicts, resolved once via claims interface, and the system cascaded updates to all affected events.</Body>
+          </Accordion>
 
-    <Heading level={4} as="h4" class="mb-4 mt-6">What Made This Possible</Heading>
+          <Accordion
+            size="inline"
+            variant="default"
+            summary="Minimal engineering bottleneck"
+            defaultOpen={false}
+          >
+            <Body size="sm" as="p">When we expanded to American football in 2020, product managers wrote new dataspecs and grouping rules. Engineering only intervened for state machine edge cases (e.g., possession turnover during penalty review—an NFL-specific complexity).</Body>
+          </Accordion>
 
-    <div class="mb-6">
-      <Accordion
-        size="inline"
-        variant="default"
-        summary="Non-linear leverage"
-        defaultOpen={false}
-      >
-        <Body size="sm" as="p">Non-linear scaling without proportional staffing increases. The 5-person metadata team (Muhanad led ops context) queried pending conflicts, resolved once via claims interface, and the system cascaded updates to all affected events.</Body>
-      </Accordion>
+          <Accordion
+            size="inline"
+            variant="default"
+            summary="Collector experience transformation"
+            defaultOpen={false}
+          >
+            <Body size="sm" as="p">Keyboard flows built muscle memory. Contextual mappings reduced cognitive load (press 'P' for pass, but context changes based on phase). Computer vision assisted bounding box input, reducing manual pixel-perfect clicking.</Body>
+          </Accordion>
 
-      <Accordion
-        size="inline"
-        variant="default"
-        summary="Minimal engineering bottleneck"
-        defaultOpen={false}
-      >
-        <Body size="sm" as="p">When we expanded to American football in 2020, product managers wrote new dataspecs and grouping rules. Engineering only intervened for state machine edge cases (e.g., possession turnover during penalty review—an NFL-specific complexity).</Body>
-      </Accordion>
+          <Accordion
+            size="inline"
+            variant="default"
+            summary="Client customization through configuration"
+            defaultOpen={false}
+          >
+            <Body size="sm" as="p">Different granularity requirements—basic event tracking or advanced positioning data with x/y coordinates—handled through dataspec configuration, not separate codebases.</Body>
+          </Accordion>
+        </div>
 
-      <Accordion
-        size="inline"
-        variant="default"
-        summary="Collector experience transformation"
-        defaultOpen={false}
-      >
-        <Body size="sm" as="p">Keyboard flows built muscle memory. Contextual mappings reduced cognitive load (press 'P' for pass, but context changes based on phase). Computer vision assisted bounding box input, reducing manual pixel-perfect clicking.</Body>
-      </Accordion>
+        <EditorialNote>From 100 to 5000+ collectors, product managers shipped new dataspecs without proportional engineering investment, though complex state transitions occasionally required technical collaboration.</EditorialNote>
 
-      <Accordion
-        size="inline"
-        variant="default"
-        summary="Client customization through configuration"
-        defaultOpen={false}
-      >
-        <Body size="sm" as="p">Different granularity requirements—basic event tracking or advanced positioning data with x/y coordinates—handled through dataspec configuration, not separate codebases.</Body>
-      </Accordion>
+      </div>
     </div>
-
-    <EditorialNote>From 100 to 5000+ collectors, product managers shipped new dataspecs without proportional engineering investment, though complex state transitions occasionally required technical collaboration.</EditorialNote>
 
   </div>
 </details>
 
-{" "}
-
 <SectionDivider spacing="major" class="mt-2" />
-
-{/* Lessons Section */}
 
   <Section spacing="default" id="lessons" titleLevel={3} title="Lessons: What Transfers? What Only Worked Here?">
 
@@ -657,8 +649,6 @@ These aren't universal truths—they worked because of specific conditions:
   >
     <Body size="sm" as="p">During peak live match time, the system processes 100,000+ atomic events per minute—touches, passes, tackles, runs—streaming through arbitrary validation layers in real-time. With 100 collectors, manual coordination could absorb this velocity. At 1000+ collectors, 2 product managers couldn't handle 50+ daily dataspec questions while the spec evolved. Today at 5000+ collectors processing live matches simultaneously, architectural separation isn't optimization—it's the only way to handle this streaming intensity without engineering bottlenecks.</Body>
   </Accordion>
-
-{" "}
 
 <Accordion
   size="inline"
