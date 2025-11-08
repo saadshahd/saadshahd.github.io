@@ -9,38 +9,18 @@ import ReadingMetadata from '../components/ReadingMetadata.astro';
 import Callout from '../components/Callout.astro';
 import { FileText, Triangle } from '@lucide/astro';
 
-const expertiseItems = [
+const domainsItems = [
   {
-    term: "Functional Programming",
-    definition: "Separation of concerns through pure functions, immutable data, and composable architectures"
+    term: "Sports Data Collection",
+    definition: "Real-time event processing at scale, DSL-driven validation, distributed collector coordination"
   },
   {
-    term: "Distributed Systems",
-    definition: "Building correct systems that handle millions of events while maintaining both velocity and correctness guarantees"
+    term: "Fintech Content Systems",
+    definition: "Editorial infrastructure for global→local complexity, regulatory content workflows"
   },
   {
-    term: "Real-Time Processing",
-    definition: "Event-driven architectures with Kafka, exactly-once semantics, and graceful degradation"
-  },
-  {
-    term: "Content Architecture",
-    definition: "Editorial infrastructure for global→local fintech content, handling regulatory and cultural complexity"
-  },
-  {
-    term: "Global Scaling",
-    definition: "Fintech regulations, internationalization, and localization across diverse markets"
-  },
-  {
-    term: "Platform Engineering",
-    definition: "Infrastructure that lets teams deploy confidently through observability, testing, and progressive delivery"
-  },
-  {
-    term: "Architecture Patterns",
-    definition: "Domain-Driven Design, CQRS, event sourcing, and microservice decomposition"
-  },
-  {
-    term: "LLM Integration",
-    definition: "Cognitive partners revealing architectural possibilities, not automation replacing judgment"
+    term: "Developer Tools",
+    definition: "SDK reliability, crash reporting systems, developer experience optimization"
   }
 ];
 ---
@@ -50,20 +30,16 @@ const expertiseItems = [
     <Heading level={1} as="h1" class="mb-16"><span>About</span></Heading>
 
     <div>
-      <Body size="lg" as="p" class="text-text-lighter mb-8 leading-normal">
-        What if we asked <i>why</i> before <i>how</i>? Building products for the humans showed: when teams explore constraints first, architecture emerges from real problems people face.
+      <Body size="base" as="p" class="mb-6 leading-relaxed">
+        Spec gaps emerged during live collection—VAR reviews in World Cup matches, new positioning requirements from clients. Updates couldn't wait for engineering sprints when the next match started in hours. This drove an approach: separate what changes (domain rules) from execution (validation), let domain experts express solutions without code, design structure that eliminates coordination overhead.
       </Body>
 
       <Body size="base" as="p" class="mb-6 leading-relaxed">
-        Working with distributed teams editing shared content—regulations collide with cultural nuances, offerings vary by market. The problem space is architectural: how do we maintain coherence when constraints multiply? Building editorial infrastructure that handles global→local complexity through structural separation.
-      </Body>
-
-      <Body size="base" as="p" class="mb-6 leading-relaxed">
-        Functional programming principles emerged through production bugs. Traditional thinking treats velocity and correctness as opposing forces. Building products for the humans revealed they're complementary: when you separate behavior from state and make illegal states unrepresentable, both increase together. Still learning what's possible when architecture constrains failure.
+        The pattern transfers. Fintech editorial teams hit the same wall: regulatory content updates outpace engineering deploys. When domain experts control rules through configuration rather than code changes, teams ship faster without compromising correctness.
       </Body>
 
       <Body size="base" as="p" class="mb-8 leading-relaxed">
-        How do systems adapt when human needs change unpredictably? Building products for the humans showed: when you make illegal states unrepresentable, systems handle surprises structurally. Exploring how LLMs fit—cognitive partners revealing possibilities for serving people better. Primarily TypeScript, Python, Go, and Clojure.
+        Exploring how LLMs reveal design possibilities beyond code generation—architectural partnership, not just automation. Based in UK, working with distributed teams on fintech content systems. Still exploring what becomes possible when constraints shape architecture instead of fighting it.
       </Body>
 
       <Callout variant="primary" size="compact">
@@ -72,14 +48,14 @@ const expertiseItems = [
             <Triangle class="w-5 h-5 inline mr-1" />
             Curious about the <strong>why</strong> first—it sometimes reveals the <strong>how,</strong> but always clarifies what we're building.
           </div>
-          <Button variant="primary" size="sm" href="#" class="mt-3 md:mt-0">Full Background</Button>
+          <Button variant="primary" size="sm" href="/portfolio" class="mt-3 md:mt-0">See Case Studies</Button>
         </div>
       </Callout>
 
       
 
-      <Heading level={1} as="h2" class="mt-12 mb-6"><span>Technical Expertise</span></Heading>
-      <DefinitionList items={expertiseItems} />
+      <Heading level={1} as="h2" class="mt-12 mb-6"><span>Domains</span></Heading>
+      <DefinitionList items={domainsItems} />
 
     </div>
   </Container>
