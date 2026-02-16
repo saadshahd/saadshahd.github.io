@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Writing Playground</title>
+<style>
+  :root {
+    --gold: #F4C430;
+    --gold-light: #FFD700;
+    --blue: #0EA5E9;
+    --cyan: #06B6D4;
+    --cream: #F5F1E8;
+    --surface: #FEFDFB;
+    --text: #0F172A;
+    --text-light: #1E293B;
+    --text-lighter: #475569;
+    --neutral: #94A3B8;
+    --neutral-light: #CBD5E1;
+    --neutral-lighter: #F1F5F9;
+
+    --radius: 8px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-lg: 0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--neutral-light);
+    flex-shrink: 0;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .mode-tabs {
+    display: flex;
+    gap: 2px;
+    background: var(--neutral-lighter);
+    border-radius: 6px;
+    padding: 2px;
+  }
+
+  .mode-tab {
+    padding: 6px 16px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-lighter);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .mode-tab:hover { color: var(--text); }
+  .mode-tab.active {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  }
+
+  .file-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .file-btn {
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--neutral-light);
+    background: var(--surface);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-lighter);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+
+  .file-btn:hover {
+    border-color: var(--neutral);
+    color: var(--text);
+    background: var(--neutral-lighter);
+  }
+
+  .file-indicator {
+    font-size: 13px;
+    color: var(--text-lighter);
+    margin-right: 4px;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .file-indicator.dirty { color: var(--text); }
+
+  .file-indicator.dirty::before {
+    content: '● ';
+    color: var(--gold);
+  }
+
+  .recovery-banner {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    background: #FEF3C7;
+    border-bottom: 1px solid #F59E0B;
+    font-size: 13px;
+    color: #78350F;
+  }
+
+  .recovery-banner.visible { display: flex; }
+
+  .recovery-banner button {
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid #F59E0B;
+    background: white;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #78350F;
+  }
+
+  .recovery-banner button:hover { background: #FEF3C7; }
+  .recovery-banner .dismiss { border-color: #D4A017; color: #92400E; }
+
+  main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* Daemons Sidebar */
+  .daemons-sidebar {
+    width: 220px;
+    background: var(--surface);
+    border-right: 1px solid var(--neutral-light);
+    display: flex;
+    flex-direction: column;
+    padding: 16px 12px;
+    gap: 8px;
+    flex-shrink: 0;
+    overflow-y: auto;
+  }
+
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-lighter);
+    padding: 0 4px 8px;
+  }
+
+  .daemon-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.12s ease;
+  }
+
+  .daemon-item:hover { background: var(--neutral-lighter); }
+
+  .daemon-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .daemon-info { flex: 1; min-width: 0; }
+
+  .daemon-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .daemon-desc {
+    font-size: 11px;
+    color: var(--text-lighter);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .daemon-edit-btn {
+    opacity: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--text-lighter);
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: opacity 0.12s;
+  }
+
+  .daemon-item:hover .daemon-edit-btn { opacity: 1; }
+  .daemon-edit-btn:hover { background: var(--neutral-light); }
+
+  .add-daemon-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    border: 1px dashed var(--neutral-light);
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-lighter);
+    transition: all 0.12s;
+    margin-top: 4px;
+  }
+
+  .add-daemon-btn:hover {
+    border-color: var(--neutral);
+    background: var(--neutral-lighter);
+    color: var(--text);
+  }
+
+  /* Editor */
+  .editor-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .editor-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 40px;
+  }
+
+  #editor {
+    max-width: 680px;
+    margin: 0 auto;
+    min-height: 400px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-light);
+    outline: none;
+  }
+
+  #editor:empty::before {
+    content: "Start writing here. Select text to see operations, or click a daemon to generate a prompt from your full text...";
+    color: var(--neutral);
+    pointer-events: none;
+  }
+
+  #editor p { margin-bottom: 1em; }
+
+  /* Branch Mode */
+  .branch-zone {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .branch-zone.active { display: flex; }
+  .editor-zone.hidden { display: none; }
+
+  .branch-input-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 20px 16px;
+    gap: 16px;
+  }
+
+  .branch-input-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-lighter);
+  }
+
+  .branch-input {
+    width: 100%;
+    max-width: 560px;
+    padding: 14px 18px;
+    border: 2px solid var(--neutral-light);
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    text-align: center;
+    transition: border-color 0.15s;
+  }
+
+  .branch-input:focus { border-color: var(--gold); }
+  .branch-input::placeholder { color: var(--neutral); }
+
+  .branch-buttons {
+    display: flex;
+    gap: 12px;
+  }
+
+  .branch-btn {
+    padding: 8px 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--neutral-light);
+    background: var(--surface);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.12s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text);
+  }
+
+  .branch-btn:hover { border-color: var(--gold); background: var(--cream); }
+
+  .branch-cards-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px 32px;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+  }
+
+  .branch-column {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .branch-column-header {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-lighter);
+    text-align: center;
+    padding-bottom: 8px;
+  }
+
+  .branch-card {
+    background: var(--surface);
+    border: 1px solid var(--neutral-light);
+    border-radius: var(--radius);
+    padding: 14px 42px 14px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-light);
+    position: relative;
+  }
+
+  .branch-deeper-btn {
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--neutral-light);
+    background: var(--surface);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--text-lighter);
+    transition: all 0.12s;
+    box-shadow: var(--shadow);
+  }
+
+  .branch-deeper-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .branch-paste-area {
+    padding: 16px 20px;
+    border-top: 1px solid var(--neutral-light);
+    background: var(--neutral-lighter);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .branch-paste-area textarea {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--neutral-light);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 60px;
+    outline: none;
+    color: var(--text);
+  }
+
+  .branch-paste-area textarea:focus { border-color: var(--gold); }
+
+  .branch-parse-btn {
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    border: none;
+    background: var(--gold);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.12s;
+  }
+
+  .branch-parse-btn:hover { background: var(--gold-light); }
+
+  /* Prompt Panel */
+  .prompt-panel {
+    width: 340px;
+    background: var(--surface);
+    border-left: 1px solid var(--neutral-light);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+
+  .panel-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--neutral-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-lighter);
+  }
+
+  .clear-history-btn {
+    border: none;
+    background: none;
+    font-size: 11px;
+    color: var(--text-lighter);
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .clear-history-btn:hover { background: var(--neutral-lighter); color: var(--text); }
+
+  .prompt-output-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .prompt-card {
+    background: var(--cream);
+    border: 1px solid var(--neutral-light);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .prompt-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--neutral-light);
+    background: var(--surface);
+  }
+
+  .prompt-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-lighter);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .prompt-card-label .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .copy-btn {
+    border: none;
+    background: var(--gold);
+    color: var(--text);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+
+  .copy-btn:hover { background: var(--gold-light); }
+  .copy-btn.copied { background: #10B981; color: white; }
+
+  .prompt-card-body {
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-light);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .prompt-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .prompt-empty p {
+    font-size: 13px;
+    color: var(--neutral);
+    line-height: 1.6;
+  }
+
+  /* Epi Toolbar */
+  .epi-toolbar {
+    position: absolute;
+    display: none;
+    background: var(--text);
+    border-radius: var(--radius);
+    padding: 4px;
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    gap: 2px;
+  }
+
+  .epi-toolbar.visible { display: flex; }
+
+  .epi-btn {
+    padding: 6px 10px;
+    border: none;
+    background: transparent;
+    color: #e2e8f0;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px;
+    white-space: nowrap;
+    transition: background 0.1s;
+  }
+
+  .epi-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+
+  .epi-btn .shortcut {
+    font-size: 10px;
+    opacity: 0.5;
+    margin-left: 4px;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+  }
+
+  .modal-overlay.visible { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 24px;
+    width: 420px;
+    max-width: 90vw;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  }
+
+  .modal h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .modal label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-lighter);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .modal input,
+  .modal textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--neutral-light);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    margin-bottom: 14px;
+    transition: border-color 0.15s;
+  }
+
+  .modal input:focus,
+  .modal textarea:focus { border-color: var(--gold); }
+
+  .modal textarea { min-height: 100px; resize: vertical; line-height: 1.5; }
+
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+
+  .modal-btn {
+    padding: 8px 18px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--neutral-light);
+    background: var(--surface);
+    color: var(--text);
+    transition: all 0.12s;
+  }
+
+  .modal-btn:hover { background: var(--neutral-lighter); }
+
+  .modal-btn.primary {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .modal-btn.primary:hover { background: var(--gold-light); }
+
+  .modal-btn.danger {
+    color: #EF4444;
+    border-color: #FCA5A5;
+  }
+
+  .modal-btn.danger:hover { background: #FEF2F2; }
+
+  .color-picker-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .color-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.12s, transform 0.12s;
+  }
+
+  .color-swatch:hover { transform: scale(1.1); }
+  .color-swatch.selected { border-color: var(--text); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="header-title">AI Writing Playground</span>
+    <div class="mode-tabs">
+      <button class="mode-tab active" data-mode="write">Write</button>
+      <button class="mode-tab" data-mode="branch">Branch</button>
+    </div>
+  </div>
+  <div class="file-actions">
+    <span class="file-indicator" id="fileIndicator">Untitled</span>
+    <button class="file-btn" id="fileNewBtn">New</button>
+    <button class="file-btn" id="fileOpenBtn">Open</button>
+    <button class="file-btn" id="fileSaveBtn">Save</button>
+  </div>
+</header>
+
+<div class="recovery-banner" id="recoveryBanner">
+  <span>Recovered unsaved content from last session.</span>
+  <button id="recoveryRestore">Restore</button>
+  <button class="dismiss" id="recoveryDismiss">Dismiss</button>
+</div>
+
+<main>
+  <aside class="daemons-sidebar" id="daemonsSidebar">
+    <div class="sidebar-label">Daemons</div>
+  </aside>
+
+  <section class="editor-zone" id="editorZone">
+    <div class="editor-container">
+      <div id="editor" contenteditable="true"></div>
+    </div>
+    <div class="epi-toolbar" id="epiToolbar"></div>
+  </section>
+
+  <section class="branch-zone" id="branchZone">
+    <div class="branch-input-area">
+      <div class="branch-input-label">Make a claim</div>
+      <input type="text" class="branch-input" id="branchInput" placeholder="Enter a claim to explore its causes and consequences...">
+      <div class="branch-buttons" id="branchButtons"></div>
+    </div>
+    <div class="branch-cards-area" id="branchCards">
+      <div class="branch-column" id="causesColumn">
+        <div class="branch-column-header">Causes</div>
+      </div>
+      <div class="branch-column" id="consequencesColumn">
+        <div class="branch-column-header">Consequences</div>
+      </div>
+    </div>
+    <div class="branch-paste-area">
+      <textarea id="branchPaste" placeholder="Paste AI response here (bullet points) to create cards..."></textarea>
+      <button class="branch-parse-btn" id="branchParseBtn">Parse → Cards</button>
+    </div>
+  </section>
+
+  <aside class="prompt-panel">
+    <div class="panel-header">
+      <span class="panel-title">Prompt Output</span>
+      <button class="clear-history-btn" id="clearHistoryBtn">Clear</button>
+    </div>
+    <div class="prompt-output-area" id="promptOutput">
+      <div class="prompt-empty" id="promptEmpty">
+        <p>Generated prompts appear here.<br>Click a daemon or select text to start.</p>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<div class="modal-overlay" id="daemonModal">
+  <div class="modal">
+    <h3 id="modalTitle">Edit Daemon</h3>
+    <label>Name</label>
+    <input type="text" id="modalName" placeholder="Daemon name">
+    <label>Color</label>
+    <div class="color-picker-row" id="colorPicker"></div>
+    <label>Persona Prompt</label>
+    <textarea id="modalPersona" placeholder="Describe how this daemon should analyze the text..."></textarea>
+    <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<script>
+  const DAEMON_COLORS = [
+    '#3B82F6', '#8B5CF6', '#EC4899', '#EF4444', '#F97316',
+    '#10B981', '#06B6D4', '#6366F1', '#D946EF', '#F59E0B'
+  ];
+
+  let daemons = [
+    {
+      id: 'advocate',
+      name: "Devil's Advocate",
+      color: '#3B82F6',
+      desc: 'Challenges claims',
+      persona: "You are a rigorous Devil's Advocate. Your job is to stress-test the writer's arguments. For every claim, identify the strongest counter-argument. Find logical gaps, unstated assumptions, and places where evidence is thin. Be specific — point to exact sentences. Be constructive — suggest how to strengthen weak points."
+    },
+    {
+      id: 'editor',
+      name: 'Editor',
+      color: '#8B5CF6',
+      desc: 'Tightens prose',
+      persona: "You are a sharp prose editor in the tradition of William Zinsser. Cut every word that doesn't earn its place. Flag passive voice, nominalizations, and unnecessary qualifiers. Suggest tighter alternatives. Preserve the writer's voice while removing clutter. Focus on clarity and rhythm — short sentences for punch, longer ones for flow."
+    },
+    {
+      id: 'synth',
+      name: 'Synthesizer',
+      color: '#EC4899',
+      desc: 'Finds connections',
+      persona: "You are a cross-disciplinary synthesizer. Read the text and identify surprising connections to other fields — science, philosophy, design, history, systems thinking. Surface patterns the writer might not see. Suggest analogies and mental models that could deepen the argument. Each connection should illuminate, not decorate."
+    },
+    {
+      id: 'research',
+      name: 'Researcher',
+      color: '#EF4444',
+      desc: 'Asks for evidence',
+      persona: "You are a meticulous research advisor. For every major claim, ask: what's the evidence? Identify assertions that need citations, statistics that need sources, and generalizations that need qualification. Suggest specific types of evidence that would strengthen each point — studies, case studies, data, expert quotes."
+    },
+    {
+      id: 'expander',
+      name: 'Expander',
+      color: '#F97316',
+      desc: 'Elaborates ideas',
+      persona: "You are a thoughtful expander of underdeveloped ideas. Find the seeds in the text — points mentioned briefly that deserve more depth. For each, explain why it matters and suggest 2-3 directions the writer could develop it. Focus on ideas where more detail would strengthen the overall argument, not tangents."
+    }
+  ];
+
+  let promptHistory = [];
+  let editingDaemonId = null;
+  let lastBranchDirection = null;
+  let selectedText = '';
+  let selectionContext = '';
+
+  const EPI_OPS = {
+    evidence: {
+      label: 'Find evidence',
+      shortcut: '⌘E',
+      build(sel, ctx) {
+        return `Find credible evidence supporting or challenging the following claim. Include specific studies, data, or expert sources where possible.\n\nSelected text:\n"${sel}"\n\nSurrounding context:\n${ctx}`;
+      }
+    },
+    more: {
+      label: 'Say more',
+      shortcut: '⌘M',
+      build(sel, ctx) {
+        return `Expand and deepen this idea. Add nuance, examples, or implications the writer may have missed. Keep the same voice and tone.\n\nSelected text:\n"${sel}"\n\nSurrounding context:\n${ctx}`;
+      }
+    },
+    critique: {
+      label: 'Critique',
+      shortcut: '⌘H',
+      build(sel, ctx) {
+        return `Identify logical weaknesses, unstated assumptions, or gaps in the following. Be specific about what's missing or could break down under scrutiny.\n\nSelected text:\n"${sel}"\n\nSurrounding context:\n${ctx}`;
+      }
+    },
+    rephrase: {
+      label: 'Rephrase',
+      shortcut: '⌘P',
+      build(sel, ctx) {
+        return `Offer 3 alternative phrasings for the following. Maintain the same meaning but vary tone (formal, conversational, punchy) and sentence structure.\n\nSelected text:\n"${sel}"\n\nSurrounding context:\n${ctx}`;
+      }
+    },
+    research: {
+      label: 'Research Qs',
+      shortcut: '⌘U',
+      build(sel, ctx) {
+        return `Generate 3-5 research questions raised by the following. Each question should be specific enough to investigate and relevant to strengthening the argument.\n\nSelected text:\n"${sel}"\n\nSurrounding context:\n${ctx}`;
+      }
+    },
+    assumptions: {
+      label: 'Assumptions',
+      shortcut: '⌘I',
+      build(sel, ctx) {
+        return `List the implicit assumptions in the following. For each assumption, note why it matters and what would change if it were false.\n\nSelected text:\n"${sel}"\n\nSurrounding context:\n${ctx}`;
+      }
+    }
+  };
+
+  /* ─── Safe DOM helpers ─── */
+
+  function el(tag, attrs, children) {
+    const node = document.createElement(tag);
+    if (attrs) {
+      Object.entries(attrs).forEach(([k, v]) => {
+        if (k === 'style' && typeof v === 'object') {
+          Object.assign(node.style, v);
+        } else if (k.startsWith('on')) {
+          node.addEventListener(k.slice(2), v);
+        } else if (k === 'className') {
+          node.className = v;
+        } else {
+          node.setAttribute(k, v);
+        }
+      });
+    }
+    if (children != null) {
+      const items = Array.isArray(children) ? children : [children];
+      items.forEach(c => {
+        if (typeof c === 'string') {
+          node.appendChild(document.createTextNode(c));
+        } else if (c instanceof Node) {
+          node.appendChild(c);
+        }
+      });
+    }
+    return node;
+  }
+
+  /* ─── Daemons Sidebar ─── */
+
+  function renderDaemons() {
+    const sidebar = document.getElementById('daemonsSidebar');
+    const label = sidebar.querySelector('.sidebar-label');
+
+    while (sidebar.lastChild !== label) {
+      sidebar.removeChild(sidebar.lastChild);
+    }
+
+    daemons.forEach(d => {
+      const editBtn = el('button', {
+        className: 'daemon-edit-btn',
+        title: 'Edit daemon',
+        onclick(e) { e.stopPropagation(); openDaemonEdit(d.id); }
+      }, '✎');
+
+      const item = el('div', {
+        className: 'daemon-item',
+        onclick() { generateDaemonPrompt(d); }
+      }, [
+        el('div', { className: 'daemon-dot', style: { background: d.color } }),
+        el('div', { className: 'daemon-info' }, [
+          el('div', { className: 'daemon-name' }, d.name),
+          el('div', { className: 'daemon-desc' }, d.desc)
+        ]),
+        editBtn
+      ]);
+
+      sidebar.appendChild(item);
+    });
+
+    sidebar.appendChild(
+      el('button', {
+        className: 'add-daemon-btn',
+        onclick() { openDaemonEdit(null); }
+      }, '+ Create new daemon')
+    );
+  }
+
+  function generateDaemonPrompt(daemon) {
+    const editorText = document.getElementById('editor').innerText.trim();
+    if (!editorText) {
+      addPrompt(daemon.name, daemon.color, 'Write something in the editor first — daemons analyze your full text.');
+      return;
+    }
+
+    const prompt = `${daemon.persona}\n\nHere is the text to analyze:\n\n---\n${editorText}\n---\n\nProvide your analysis. Be specific — reference exact phrases and sentences. Structure your response with clear sections.`;
+    addPrompt(daemon.name, daemon.color, prompt);
+  }
+
+  /* ─── Epi Toolbar ─── */
+
+  function buildEpiToolbar() {
+    const toolbar = document.getElementById('epiToolbar');
+    Object.entries(EPI_OPS).forEach(([op, config]) => {
+      const btn = el('button', {
+        className: 'epi-btn',
+        'data-op': op,
+        onclick() { handleEpiOp(op); }
+      }, [
+        config.label,
+        el('span', { className: 'shortcut' }, config.shortcut)
+      ]);
+      toolbar.appendChild(btn);
+    });
+  }
+
+  function handleEpiOp(op) {
+    const config = EPI_OPS[op];
+    if (!config || !selectedText) return;
+    addPrompt(config.label, null, config.build(selectedText, selectionContext));
+    hideEpiToolbar();
+  }
+
+  function getSelectionContext() {
+    const editor = document.getElementById('editor');
+    const sel = window.getSelection();
+    if (!sel.rangeCount || sel.isCollapsed) return { text: '', context: '' };
+
+    const text = sel.toString().trim();
+    if (!text) return { text: '', context: '' };
+
+    const fullText = editor.innerText;
+    const selStart = fullText.indexOf(text);
+    if (selStart === -1) return { text, context: fullText };
+
+    const paragraphs = fullText.split(/\n\n+/);
+    let charCount = 0;
+    let selParagraphIdx = 0;
+
+    for (let i = 0; i < paragraphs.length; i++) {
+      const end = charCount + paragraphs[i].length;
+      if (selStart >= charCount && selStart < end + 2) {
+        selParagraphIdx = i;
+        break;
+      }
+      charCount = end + 2;
+    }
+
+    const contextStart = Math.max(0, selParagraphIdx - 2);
+    const contextEnd = Math.min(paragraphs.length, selParagraphIdx + 3);
+    return { text, context: paragraphs.slice(contextStart, contextEnd).join('\n\n') };
+  }
+
+  function positionEpiToolbar() {
+    const sel = window.getSelection();
+    if (!sel.rangeCount || sel.isCollapsed) { hideEpiToolbar(); return; }
+
+    const text = sel.toString().trim();
+    if (!text) { hideEpiToolbar(); return; }
+
+    const range = sel.getRangeAt(0);
+    const editor = document.getElementById('editor');
+    if (!editor.contains(range.commonAncestorContainer)) { hideEpiToolbar(); return; }
+
+    const rect = range.getBoundingClientRect();
+    const toolbar = document.getElementById('epiToolbar');
+    const editorZone = document.getElementById('editorZone');
+    const zoneRect = editorZone.getBoundingClientRect();
+
+    toolbar.classList.add('visible');
+    const toolbarRect = toolbar.getBoundingClientRect();
+
+    let left = rect.left + (rect.width / 2) - (toolbarRect.width / 2) - zoneRect.left;
+    let top = rect.top - toolbarRect.height - 8 - zoneRect.top;
+
+    left = Math.max(4, Math.min(left, zoneRect.width - toolbarRect.width - 4));
+    if (top < 4) top = rect.bottom + 8 - zoneRect.top;
+
+    toolbar.style.left = left + 'px';
+    toolbar.style.top = top + 'px';
+
+    const result = getSelectionContext();
+    selectedText = result.text;
+    selectionContext = result.context;
+  }
+
+  function hideEpiToolbar() {
+    document.getElementById('epiToolbar').classList.remove('visible');
+  }
+
+  document.getElementById('editor').addEventListener('mouseup', () => {
+    setTimeout(positionEpiToolbar, 10);
+  });
+
+  document.addEventListener('mousedown', (e) => {
+    const toolbar = document.getElementById('epiToolbar');
+    if (!toolbar.contains(e.target) && !document.getElementById('editor').contains(e.target)) {
+      hideEpiToolbar();
+    }
+  });
+
+  /* ─── Keyboard Shortcuts ─── */
+
+  const SHORTCUT_MAP = { e: 'evidence', m: 'more', h: 'critique', p: 'rephrase', u: 'research', i: 'assumptions' };
+
+  document.addEventListener('keydown', (e) => {
+    if (!e.metaKey && !e.ctrlKey) return;
+    const op = SHORTCUT_MAP[e.key.toLowerCase()];
+    if (!op) return;
+
+    const sel = window.getSelection();
+    if (!sel.rangeCount || sel.isCollapsed) return;
+
+    const editor = document.getElementById('editor');
+    if (!editor.contains(sel.getRangeAt(0).commonAncestorContainer)) return;
+
+    e.preventDefault();
+    const result = getSelectionContext();
+    if (!result.text) return;
+
+    const config = EPI_OPS[op];
+    addPrompt(config.label, null, config.build(result.text, result.context));
+  });
+
+  /* ─── Branch Mode ─── */
+
+  function buildBranchButtons() {
+    const container = document.getElementById('branchButtons');
+    container.appendChild(
+      el('button', { className: 'branch-btn', onclick() { generateBranch('causes'); } }, [
+        el('span', null, '←'), ' Causes'
+      ])
+    );
+    container.appendChild(
+      el('button', { className: 'branch-btn', onclick() { generateBranch('consequences'); } }, [
+        'Consequences ', el('span', null, '→')
+      ])
+    );
+  }
+
+  function generateBranch(direction) {
+    const claim = document.getElementById('branchInput').value.trim();
+    if (!claim) return;
+
+    lastBranchDirection = direction;
+    const dirLabel = direction === 'causes'
+      ? '3-5 root causes or contributing factors'
+      : '3-5 likely consequences or downstream effects';
+
+    const prompt = `Given the claim: "${claim}"\n\nIdentify ${dirLabel}. Format as a bullet list where each item is a concise, distinct point with a 1-2 sentence explanation.\n\nExample format:\n- **Point**: Brief explanation\n- **Point**: Brief explanation`;
+
+    addPrompt('Branch: ' + direction, direction === 'causes' ? '#3B82F6' : '#F97316', prompt);
+  }
+
+  function parseBranchResponse() {
+    const raw = document.getElementById('branchPaste').value.trim();
+    if (!raw || !lastBranchDirection) return;
+
+    const lines = raw.split('\n').filter(l =>
+      l.trim().startsWith('-') || l.trim().startsWith('•') || /^\d+[.\)]/.test(l.trim())
+    );
+
+    const columnId = lastBranchDirection === 'causes' ? 'causesColumn' : 'consequencesColumn';
+    const column = document.getElementById(columnId);
+
+    lines.forEach(line => {
+      const text = line.replace(/^[\s\-•\d.)]+/, '').trim();
+      if (!text) return;
+
+      const deeperBtn = el('button', {
+        className: 'branch-deeper-btn',
+        title: 'Explore deeper',
+        onclick() { branchDeeper(text, columnId); }
+      }, '+');
+
+      column.appendChild(
+        el('div', { className: 'branch-card' }, [
+          document.createTextNode(text),
+          deeperBtn
+        ])
+      );
+    });
+
+    document.getElementById('branchPaste').value = '';
+  }
+
+  function branchDeeper(cardText, columnId) {
+    const direction = columnId === 'causesColumn' ? 'causes' : 'consequences';
+    const dirLabel = direction === 'causes' ? 'deeper root causes' : 'further downstream effects';
+    lastBranchDirection = direction;
+
+    const prompt = `Given this point: "${cardText}"\n\nIdentify 2-3 ${dirLabel}. Go one level deeper. Format as a bullet list:\n- **Point**: Brief explanation`;
+    addPrompt('Deeper: ' + direction, direction === 'causes' ? '#3B82F6' : '#F97316', prompt);
+  }
+
+  document.getElementById('branchParseBtn').addEventListener('click', parseBranchResponse);
+
+  /* ─── Prompt Output ─── */
+
+  function addPrompt(label, dotColor, promptText) {
+    const output = document.getElementById('promptOutput');
+    const empty = document.getElementById('promptEmpty');
+    if (empty) empty.remove();
+
+    const promptId = 'prompt-' + Date.now();
+
+    const labelContent = [];
+    if (dotColor) {
+      labelContent.push(el('span', { className: 'dot', style: { background: dotColor } }));
+    }
+    labelContent.push(document.createTextNode(label));
+
+    const copyBtn = el('button', { className: 'copy-btn', onclick() { copyPrompt(promptId, copyBtn); } }, 'Copy');
+
+    const body = el('div', { className: 'prompt-card-body', id: promptId });
+    body.textContent = promptText;
+
+    const card = el('div', { className: 'prompt-card' }, [
+      el('div', { className: 'prompt-card-header' }, [
+        el('span', { className: 'prompt-card-label' }, labelContent),
+        copyBtn
+      ]),
+      body
+    ]);
+
+    output.insertBefore(card, output.firstChild);
+    promptHistory.push({ label, promptText });
+  }
+
+  function copyPrompt(id, btn) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 1500);
+    });
+  }
+
+  function clearPromptHistory() {
+    const output = document.getElementById('promptOutput');
+    while (output.firstChild) output.removeChild(output.firstChild);
+
+    const emptyMsg = el('div', { className: 'prompt-empty', id: 'promptEmpty' }, [
+      el('p', null, 'Generated prompts appear here.\nClick a daemon or select text to start.')
+    ]);
+    output.appendChild(emptyMsg);
+    promptHistory = [];
+  }
+
+  document.getElementById('clearHistoryBtn').addEventListener('click', clearPromptHistory);
+
+  /* ─── Mode Switching ─── */
+
+  document.querySelectorAll('.mode-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const mode = tab.dataset.mode;
+      document.querySelectorAll('.mode-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
+
+      document.getElementById('editorZone').classList.toggle('hidden', mode !== 'write');
+      document.getElementById('branchZone').classList.toggle('active', mode === 'branch');
+    });
+  });
+
+  /* ─── Daemon Modal ─── */
+
+  function buildModalActions() {
+    const container = document.getElementById('modalActions');
+    const deleteBtn = el('button', {
+      className: 'modal-btn danger',
+      id: 'modalDelete',
+      onclick: deleteDaemon,
+      style: { display: 'none' }
+    }, 'Delete');
+
+    container.appendChild(deleteBtn);
+    container.appendChild(el('button', { className: 'modal-btn', onclick: closeModal }, 'Cancel'));
+    container.appendChild(el('button', { className: 'modal-btn primary', onclick: saveDaemon }, 'Save'));
+  }
+
+  function openDaemonEdit(daemonId) {
+    editingDaemonId = daemonId;
+    const nameInput = document.getElementById('modalName');
+    const personaInput = document.getElementById('modalPersona');
+    const deleteBtn = document.getElementById('modalDelete');
+    const picker = document.getElementById('colorPicker');
+
+    while (picker.firstChild) picker.removeChild(picker.firstChild);
+
+    let selectedColor = DAEMON_COLORS[0];
+
+    if (daemonId) {
+      const d = daemons.find(d => d.id === daemonId);
+      document.getElementById('modalTitle').textContent = 'Edit Daemon';
+      nameInput.value = d.name;
+      personaInput.value = d.persona;
+      selectedColor = d.color;
+      deleteBtn.style.display = '';
+    } else {
+      document.getElementById('modalTitle').textContent = 'Create Daemon';
+      nameInput.value = '';
+      personaInput.value = '';
+      deleteBtn.style.display = 'none';
+    }
+
+    DAEMON_COLORS.forEach(c => {
+      const swatch = el('div', {
+        className: 'color-swatch' + (c === selectedColor ? ' selected' : ''),
+        style: { background: c },
+        onclick() {
+          picker.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+          swatch.classList.add('selected');
+        }
+      });
+      picker.appendChild(swatch);
+    });
+
+    document.getElementById('daemonModal').classList.add('visible');
+    nameInput.focus();
+  }
+
+  function closeModal() {
+    document.getElementById('daemonModal').classList.remove('visible');
+    editingDaemonId = null;
+  }
+
+  function saveDaemon() {
+    const name = document.getElementById('modalName').value.trim();
+    const persona = document.getElementById('modalPersona').value.trim();
+    const selectedSwatch = document.querySelector('#colorPicker .color-swatch.selected');
+    const color = selectedSwatch ? selectedSwatch.style.background : DAEMON_COLORS[0];
+
+    if (!name || !persona) return;
+
+    const desc = persona.split(/[.\n]/)[0].substring(0, 40).trim();
+
+    if (editingDaemonId) {
+      const d = daemons.find(d => d.id === editingDaemonId);
+      Object.assign(d, { name, persona, color, desc });
+    } else {
+      daemons.push({ id: 'custom-' + Date.now(), name, color, desc, persona });
+    }
+
+    closeModal();
+    renderDaemons();
+  }
+
+  function deleteDaemon() {
+    if (!editingDaemonId) return;
+    daemons = daemons.filter(d => d.id !== editingDaemonId);
+    closeModal();
+    renderDaemons();
+  }
+
+  document.getElementById('daemonModal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('daemonModal')) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  /* ─── File Operations (File System Access API) ─── */
+
+  const MD_FILE_TYPES = [{ description: 'Markdown', accept: { 'text/markdown': ['.md'] } }];
+  let currentFileHandle = null;
+  let isDirty = false;
+  let autosaveTimer = null;
+
+  function updateFileIndicator() {
+    const indicator = document.getElementById('fileIndicator');
+    const name = currentFileHandle ? currentFileHandle.name : 'Untitled';
+    indicator.textContent = name;
+    indicator.classList.toggle('dirty', isDirty);
+    document.title = (isDirty ? '● ' : '') + name + ' — AI Writing Playground';
+  }
+
+  function markDirty() {
+    if (!isDirty) {
+      isDirty = true;
+      updateFileIndicator();
+    }
+  }
+
+  document.getElementById('editor').addEventListener('input', markDirty);
+
+  async function handleNew() {
+    if (isDirty && !confirm('You have unsaved changes. Discard them?')) return;
+    document.getElementById('editor').textContent = '';
+    currentFileHandle = null;
+    isDirty = false;
+    localStorage.removeItem('playground-autosave');
+    updateFileIndicator();
+  }
+
+  async function handleOpen() {
+    if (isDirty && !confirm('You have unsaved changes. Discard them?')) return;
+    try {
+      const [handle] = await window.showOpenFilePicker({ types: MD_FILE_TYPES, multiple: false });
+      const file = await handle.getFile();
+      const text = await file.text();
+      document.getElementById('editor').textContent = text;
+      currentFileHandle = handle;
+      isDirty = false;
+      localStorage.removeItem('playground-autosave');
+      updateFileIndicator();
+    } catch (e) {
+      if (e.name !== 'AbortError') console.error('Open failed:', e);
+    }
+  }
+
+  async function handleSave() {
+    if (!currentFileHandle) return handleSaveAs();
+    try {
+      const writable = await currentFileHandle.createWritable();
+      await writable.write(document.getElementById('editor').innerText);
+      await writable.close();
+      isDirty = false;
+      localStorage.removeItem('playground-autosave');
+      updateFileIndicator();
+    } catch (e) {
+      console.error('Save failed:', e);
+    }
+  }
+
+  async function handleSaveAs() {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: currentFileHandle ? currentFileHandle.name : 'draft.md',
+        types: MD_FILE_TYPES
+      });
+      currentFileHandle = handle;
+      await handleSave();
+    } catch (e) {
+      if (e.name !== 'AbortError') console.error('Save As failed:', e);
+    }
+  }
+
+  document.getElementById('fileNewBtn').addEventListener('click', handleNew);
+  document.getElementById('fileOpenBtn').addEventListener('click', handleOpen);
+  document.getElementById('fileSaveBtn').addEventListener('click', handleSave);
+
+  /* ─── Autosave (localStorage crash recovery) ─── */
+
+  function autosave() {
+    if (!isDirty) return;
+    const content = document.getElementById('editor').innerText;
+    if (content.trim()) {
+      localStorage.setItem('playground-autosave', JSON.stringify({
+        content,
+        timestamp: Date.now(),
+        filename: currentFileHandle ? currentFileHandle.name : null
+      }));
+    }
+  }
+
+  autosaveTimer = setInterval(autosave, 30000);
+
+  function checkRecovery() {
+    const saved = localStorage.getItem('playground-autosave');
+    if (!saved) return;
+
+    try {
+      const data = JSON.parse(saved);
+      if (!data.content || !data.content.trim()) return;
+
+      const editor = document.getElementById('editor');
+      if (editor.innerText.trim()) return;
+
+      document.getElementById('recoveryBanner').classList.add('visible');
+
+      document.getElementById('recoveryRestore').addEventListener('click', () => {
+        editor.textContent = data.content;
+        isDirty = true;
+        updateFileIndicator();
+        document.getElementById('recoveryBanner').classList.remove('visible');
+      });
+
+      document.getElementById('recoveryDismiss').addEventListener('click', () => {
+        localStorage.removeItem('playground-autosave');
+        document.getElementById('recoveryBanner').classList.remove('visible');
+      });
+    } catch (e) {
+      localStorage.removeItem('playground-autosave');
+    }
+  }
+
+  /* ─── ⌘S Save Shortcut ─── */
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
+      e.preventDefault();
+      handleSave();
+    }
+  });
+
+  /* ─── Init ─── */
+  buildEpiToolbar();
+  buildBranchButtons();
+  buildModalActions();
+  renderDaemons();
+  checkRecovery();
+</script>
+</body>
+</html>
