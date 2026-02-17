@@ -7,7 +7,7 @@ import Body from '@/components/typography/Body.astro';
 import Card from '@/components/Card.astro';
 import BadgeList from '@/components/BadgeList.astro';
 import Link from '@/components/Link.astro';
-import { mapTagToBadge, readingTime } from '@/utils/blog';
+import { mapTagToBadge, readingTime, excerpt } from '@/utils/blog';
 
 const posts = (await getCollection('blog'))
   .filter((post) => (import.meta.env.PROD ? !post.data.draft : true))
@@ -47,6 +47,7 @@ const posts = (await getCollection('blog'))
             </div>
             
             <Body size="base" as="p">{post.data.description}</Body>
+            <Body size="sm" as="p" class="text-text-lighter mt-2 line-clamp-2">{excerpt(post.body ?? '')}</Body>
           </Card>
         );
       })}
