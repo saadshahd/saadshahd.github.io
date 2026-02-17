@@ -1,0 +1,66 @@
+---
+import Layout from './Layout.astro';
+import Container from '@/components/Container.astro';
+import Heading from '@/components/typography/Heading.astro';
+import Body from '@/components/typography/Body.astro';
+import BadgeList from '@/components/BadgeList.astro';
+import ReadingMetadata from '@/components/ReadingMetadata.astro';
+import SectionDivider from '@/components/SectionDivider.astro';
+import Link from '@/components/Link.astro';
+import { mapTagToBadge } from '@/utils/blog';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags: string[];
+  readingTime: string;
+  cover?: string;
+  coverAlt?: string;
+}
+
+const { title, description, date, tags, readingTime, cover, coverAlt } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const tagBadges = tags.map(mapTagToBadge);
+---
+
+<Layout title={`${title} - Saad Shahd`} description={description}>
+  <Container width="narrow" spacing="default" as="article">
+    {cover && (
+      <img
+        src={cover}
+        alt={coverAlt ?? ''}
+        class="w-full aspect-video object-cover rounded-lg mb-10"
+        loading="eager"
+      />
+    )}
+    <header class="mb-12">
+      <Heading level={1} as="h1" spacing="compact">
+        <span>{title}</span>
+      </Heading>
+      <Body size="base" as="p" class="font-serif text-text-lighter mb-6 leading-tight">{description}</Body>
+      <div class="flex flex-wrap items-center gap-4 mb-3">
+        <time datetime={date.toISOString()} class="text-sm text-text-lighter">
+          {formattedDate}
+        </time>
+        <ReadingMetadata readingTime={readingTime} />
+      </div>
+    </header>
+
+    <section class="blog-prose">
+      <slot />
+    </section>
+
+    <SectionDivider spacing="major" />
+
+    <footer>
+      <Link href="/blog" variant="inline">&larr; All posts</Link>
+    </footer>
+  </Container>
+</Layout>

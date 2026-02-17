@@ -86,7 +86,8 @@ const ogImageURL = new URL(ogImage, Astro.site);
           if (!href) return;
 
           const normalizedHref = normalizePath(href);
-          const isActive = normalizedHref === currentPath;
+          const isActive = normalizedHref === currentPath
+            || (normalizedHref !== '/' && currentPath.startsWith(normalizedHref + '/'));
 
           if (isActive) {
             tab.classList.add('text-accent', 'scale-105');
@@ -187,7 +188,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
           <Link variant="nav" href="/portfolio" active={currentPath === '/portfolio'}>Portfolio</Link>
           <Link variant="nav" href="/about" active={currentPath === '/about'}>About</Link>
           <Link variant="nav" href="/resume" active={currentPath === '/resume'}>Resume</Link>
-          <Link variant="nav" href="/blog" active={currentPath === '/blog'}>Blog</Link>
+          <Link variant="nav" href="/blog" active={currentPath === '/blog' || currentPath.startsWith('/blog/')}>Blog</Link>
           <Link variant="nav" href="/contact" active={currentPath === '/contact'}>Contact</Link>
         </div>
       </div>
@@ -207,7 +208,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
         <VenetianMask size={24} />
       </TabItem>
 
-      <TabItem href="/blog" active={currentPath === '/blog'} label="Blog">
+      <TabItem href="/blog" active={currentPath === '/blog' || currentPath.startsWith('/blog/')} label="Blog">
         <Atom size={24} />
       </TabItem>
 

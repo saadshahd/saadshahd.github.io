@@ -29,11 +29,13 @@ interface Props extends HTMLAttributes<'div'>, VariantProps<typeof list> {
    * Array of badge objects with label and variant
    */
   badges: BadgeItem[];
+  size?: 'xs' | 'default'
 }
 
 const {
   badges,
   spacing,
+  size = 'default',
   class: className,
   ...htmlAttrs
 } = Astro.props;
@@ -41,6 +43,6 @@ const {
 
 <div class={cn(list({ spacing }), className)} {...htmlAttrs}>
   {badges.map((badge) => (
-    <Badge variant={badge.variant}>{badge.label}</Badge>
+    <Badge size={size} variant={badge.variant}>{badge.label}</Badge>
   ))}
 </div>

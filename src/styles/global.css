@@ -301,3 +301,53 @@ section pre {
   border-radius: 0.5rem;              /* 8px */
   margin-bottom: 1.5rem;              /* mb-6 */
 }
+
+/* ===== Blog Prose Styling ===== */
+.blog-prose p {
+  color: var(--color-text-light);
+}
+
+.blog-prose p strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.blog-prose > p:first-child {
+  font-family: var(--font-family-serif);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.blog-prose em {
+  color: var(--color-text);
+  font-style: italic;
+}
+
+.blog-prose a {
+  color: var(--color-secondary);
+  border-bottom: 1px solid var(--color-secondary-light);
+  transition: color 0.2s, border-color 0.2s;
+
+  &:hover {
+    color: var(--color-secondary-dark);
+    border-color: var(--color-secondary-dark);
+  }
+}
+
+.blog-prose hr {
+  border-color: var(--color-neutral-light);
+  margin: 2rem 0;
+}
+
+.blog-prose .aside {
+  font-size: 0.875rem;
+  color: var(--color-text-lighter);
+}
+
+.blog-prose .closing {
+  font-family: var(--font-family-serif);
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 1.0625rem;
+}

@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import Container from '@/components/Container.astro';
+import Heading from '@/components/typography/Heading.astro';
+import Body from '@/components/typography/Body.astro';
+import Card from '@/components/Card.astro';
+import BadgeList from '@/components/BadgeList.astro';
+import Link from '@/components/Link.astro';
+import { mapTagToBadge, readingTime } from '@/utils/blog';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => (import.meta.env.PROD ? !post.data.draft : true))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Layout title="Blog - Saad Shahd">
+  <Container width="default" spacing="default">
+    <Heading level={1} as="h1" class="mb-4"><span>Blog</span></Heading>
+    <Body size="xl" as="p" class="text-text-lighter mb-12">
+      On systems, craft, and the questions worth sitting with
+    </Body>
+
+    <div class="grid gap-6">
+      {posts.map((post) => {
+        const formattedDate = post.data.date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        });
+
+        const readTime = readingTime(post.body ?? '');
+        const tagBadges = post.data.tags.map(mapTagToBadge);
+
+        return (
+          <Card variant="blog" href={`/blog/${post.id}`}>
+            <Heading level={2} as="h2">
+              <span>{post.data.title}</span>
+            </Heading>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-lighter my-4">
+              {tagBadges.length > 0 && (
+                  <BadgeList size="xs" badges={tagBadges} />
+              )}
+              <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
+              <span aria-hidden="true">&middot;</span>
+              <span>~{readTime} read</span>
+            </div>
+            
+            <Body size="base" as="p">{post.data.description}</Body>
+          </Card>
+        );
+      })}
+    </div>
+
+    <Body size="sm" as="p" class="text-text-lighter mt-12">
+      Want to discuss systems architecture, functional programming patterns, or eliminating complexity before it exists? <Link href="/contact" variant="inline">Start a conversation &rarr;</Link>
+    </Body>
+  </Container>
+</Layout>
