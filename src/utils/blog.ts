@@ -17,7 +17,11 @@ export function readingTime(body: string): string {
   return `${Math.max(1, Math.round(words / 238))} min`;
 }
 
-export function excerpt(body: string, maxLength = 160): string {
+export function excerpt(
+  body: string,
+  minLength = 320,
+  maxLength = 480,
+): string {
   const plain = body
     .replace(/^import\s.+$/gm, "")
     .replace(/<[^>]+>/g, "")
@@ -27,13 +31,24 @@ export function excerpt(body: string, maxLength = 160): string {
     .replace(/\n{2,}/g, "\n")
     .trim();
 
-  const firstParagraph = plain.split("\n")[0] ?? "";
+  const paragraphs = plain.split("\n").filter((p) => p.trim().length > 0);
+  let result = "";
 
-  if (firstParagraph.length <= maxLength) return firstParagraph;
+  for (const paragraph of paragraphs) {
+    const candidate = result ? `${result} ${paragraph}` : paragraph;
 
-  const truncated = firstParagraph.slice(0, maxLength);
-  const lastSpace = truncated.lastIndexOf(" ");
-  return `${truncated.slice(0, lastSpace)}…`;
+    if (candidate.length >= minLength) {
+      if (candidate.length <= maxLength) return candidate;
+
+      const truncated = candidate.slice(0, maxLength);
+      const lastSpace = truncated.lastIndexOf(" ");
+      return `${truncated.slice(0, lastSpace)}…`;
+    }
+
+    result = candidate;
+  }
+
+  return result;
 }
 
 export function mapTagToBadge(tag: string): TagConfig {
