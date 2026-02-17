@@ -11,42 +11,64 @@ coverAlt: "A lone figure dwarfed by a massive blue-gray geometric lattice, golde
 import SectionDivider from "@/components/SectionDivider.astro";
 import Figure from "@/components/Figure.astro";
 
-I miss thinking. AI didn't take it. The hype did.
+I miss having nothing to do. Sitting on my couch without feeling anxious that I have agents doing something on my behalf.
 
-Not the performative kind: the gymnastics, the abstractions nobody questioned. Not problem-solving either — the slow kind, the kind that needs your full weight on it before it moves. Agentic coding made me a little faster, so I opened eight sessions. The writing moved to the machine. The thinking didn't. It still grows the way it always did, with your full attention.
+Eight agent sessions are open on my screen right now. I need to pick up where I left off on one of them. But all I have is questions, not answers. What I'm certain of is that some of the 8 are hotfixes for hotfixes the agent verified and gave me false confidence it would work.
 
-A year ago I went all in on AI coding agents. Spent thousands on tokens. Built tools, rebuilt them as the ecosystem shifted under me. Everything I could produce expanded overnight.
+A year ago, I went all in on AI coding agents. Spent thousands on tokens. Built a Claude Code plugin called [hope](https://github.com/saadshahd/moo.md). The whole idea was: if output is cheap, make thinking systematic. Maintained it as the ecosystem shifted under me. Everything I could produce expanded overnight.
 
 Then I noticed: my output expanded, but the energy didn't move where I expected.
 
 <SectionDivider spacing="subsection" />
 
-Writing got cheap. That part worked. Steering AI, <span class="aside">framing problems, reviewing output, catching the plausible-but-wrong</span>, takes effort, but it's learnable. The part I didn't anticipate: thinking didn't shrink. It expanded. Because when creation is free, the cost that used to filter what should exist disappears. Every feature too expensive to build, every doc not worth writing, every edge case too unlikely to justify. They all show up. And you're still the accountable maintainer.
+Writing got cheap, and I exhausted it. But clarifying intent, shaping it, and verifying output takes so much effort. I still have to own decisions and react to their consequences.
+
+I got greedy and committed to every feature and every doc before verifying it was worth it. I ended up owning way more than I used to own. And this, my friends, is the pain of the craft. We substituted the reward we got from creating with the suffering of owning.
+
+Here's what my morning looks like. I open the laptop. Eight sessions from yesterday. I pick one. Scroll through the code. Nothing clicks. I read the commit messages. Still nothing. I was in the room when this happened. But being a reviewer with divided attention is not the same as being an author with single focus.
+
+On the surface it looks like the best-documented, most ceremonial engineering you've seen. Underneath it's the output of 1/8 attention. We got ourselves the colleagues we would never hire. Very popular and productive but with zero accountability and fake urgency.
 
 <SectionDivider spacing="subsection" />
 
-When the 2am page comes, you're searching through generated noise for the signal that matters. You open a file and nothing looks familiar, because you were never in the room when the decision happened. The agent was. You approved it. You own it. That's not the same thing as understanding it.
+The friction the ease of generation removed had a side effect we need to restore. Moving slowly meant you understood what changed. You built your mental model while committing to the change. You got the time to experience the edge cases and mitigate them. You can't start at the end and pretend everything is just fine.
 
-AI is stateless. It carries nothing between sessions. No memory of last month's outage. No scar tissue from the migration. No disrupted sleep. Even when memory is bolted on, it's a managed artifact, curated, maintained, carrying its own overhead. Not the embodied context that comes from having been there. AI performs engineering convincingly and then forgets. You carry all of it: the context no prompt can encode, the gut feeling about that module. Your context isn't a 200k token window. It's fifteen years of production bugs.
+Your colleagues still need the same time to build their mental models. To experience the failures. If we all don't go through these, who does? The agent pretends it went through the whole experience and that's why it's fast. If you made it really go through the whole experience, you'd discover that it's as slow as you. But still you put the same time, more effort, and got the same output but without you and your team's mental model evolving.
 
-The friction I used to complain about was the ground floor. Not all of it was valuable. But it hid a dependency we didn't know we had. Writing code slowly meant understanding what you wrote. Sitting with a problem meant it changed shape in your mind; you noticed the edge case, you talked to a teammate. You couldn't generate your way past that.
+AI is stateless. It carries nothing between sessions. No memory of last month's outage. No pain from the migration regressions. Plug in the most sophisticated memory layer you could get your hands on. Do you see a difference? Do you feel a difference? Did you learn more about what matters to you and your product?
 
-I tried. Wrote thousands of lines of system prompts encoding what I knew. But encoding narrows. What you know lives in reflex, in pattern recognition you can't articulate. The prompt captures the conclusion but not the instinct that produced it. And it flattens: one engineer's history becomes the template, drowning out the judgment different histories produce.
+Do you feel confident in what you know about what you own? Would you risk your mental health on a bet that the agents will handle everything the world throws at you?
 
-Generation scales. Judgment doesn't.
+Each agent you use to make a change moves to the next session without learning anything new or even remembering what it just did. Let's pretend retrieval is the answer. At the start of every session let's hope the agent will retrieve the correct files and wait for it to explore the codebase and the git history. How is this unnecessary effort compounding?
+
+You open multiple sessions, right? Now every interaction costs Agent(context setup) + Human(context switching). Decades of research show it takes around 20 minutes for engineers to regain focus after switching context. With agents, from my experience, the time is less than 20 minutes. Maybe 5 minutes. But those 5 minutes require high energy. Every time. It's not sustainable to operate at high effort all the time.
+
+We can be heroes when there is a reward. But we can't make that the new norm. Trying to be a hero is a trap because guess what? You aren't one. You're a regular human using the same brain your ancestors have been using since the stone age. Same brain plus lived experiences. Compounding collaborative knowledge is what evolved over the years, not the biology. Will the desire to be a hero normalize us getting a chip planted so we can bypass the cognition bottleneck?
+
+And before you say just use markdown properly, yay simplicity wins, I did. I had thousands of lines trying to encode what I knew. It was great. I started packaging it and sharing it with my friends. It appeared like we all do what checks the list. We got comfortable and started relying on it and took shortcuts to speed things up, to maximize our velocity. But I feel distracted. I feel tired of the velocity. And I can't imagine what could be next reliably and confidently. I lost the connection with what I stand behind.
+
+Generation scales. But what about ownership, the ability to form a vision?
 
 <SectionDivider spacing="subsection" />
 
-Use AI. Go deep with it. But don't create things you can't justify owning. The expense of creation filtered out the noise. That filter is gone. Now you are the filter. When creation was expensive, you didn't evaluate everything; you built what seemed sufficient and moved on. Cost gave you a stopping rule. Remove it and every decision stays open. You could have written that test. Was it the right one? The load isn't from producing more. It's from the unbounded obligation to decide what should exist.
+Use AI. I use it all the way. It's my new hammer, practically my new window to the world. But use it intentionally. It doesn't give you superpowers.
 
-The skill isn't prompting. It's knowing when to stop generating and start deciding what should exist. That capacity is finite. Better models won't reduce the burden. They'll increase it, because more convincing output demands sharper judgment. This isn't a phase. Capability and burden scale together. Not because the tools are immature, but because judgment is the bottleneck, and bottlenecks don't dissolve. They become more visible under load.
+Think of it as a new type of value. Computers used to deal with booleans, numbers, strings, all in a deterministic way. Now we've managed to model non-deterministic values and we need to find the proper way and place to use that kind of earned capability.
+
+AI is not a new layer of abstraction in the same sense as C to assembly. The C compiler took ownership of the assembly. Deterministically. Same input, same output. You never reviewed the assembly. You never maintained it. AI doesn't take ownership of anything. It hands you artifacts and walks away. That's not a new abstraction layer. That's a careless over-confident colleague with zero stakes.
+
+Don't rush and don't feel left behind. The agentic coding products are working hard to reframe and hide the cognition problem, and that is great. However, UX, psychology, and all the known solutions and theories we have have no workaround to scale our cognition.
+
+Don't chase prompting techniques. Always start your sessions by asking questions. Clear intent. Shape. Ask probing questions all the time for the sake of curiosity. Don't bypass that.
 
 <SectionDivider spacing="subsection" />
 
 The code is the truth. For now. It runs or it doesn't. That's more honest than anything above it.
 
-Code is the most honest layer we have — and it's not honest enough. Too opaque to own at scale, too precise to replace with English. We were already losing ground-level understanding; no one person held a whole system. We're still looking for the layer where intent and execution meet clearly enough that a human can hold the whole thing.
+Code is the most honest layer we have. And it's not honest enough. Too scattered to own at scale, too deterministic to replace with English. We were already losing ground-level understanding. No one person held a whole system.
 
-<p class="closing">
-  Until then, someone has to stand on the ground floor. That someone is you.
-</p>
+The debt we have in the backlog is a signal that pre-AI we lacked a shared understanding. AI could close that gap or widen it. Depending on how intentional and experimental you are when using it.
+
+We're still looking for the layer where intent and execution meet clearly enough that a person can hold the whole thing. The 7 axioms language doesn't exist yet. And AI is awful at respecting axioms.
+
+Until we have that or plant a chip in our brain, someone has to stand on the ground floor. That someone is you.
