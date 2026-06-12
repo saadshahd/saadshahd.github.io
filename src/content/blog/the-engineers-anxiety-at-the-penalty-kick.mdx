@@ -9,33 +9,62 @@ coverAlt: "A lone dark goalkeeper on his line, dwarfed by an endless stream of p
 ---
 
 import SectionDivider from "@/components/SectionDivider.astro";
-import FigureRow from "@/components/FigureRow.astro";
+import FigureStory from "@/components/FigureStory.astro";
 
 Picture a goalkeeper facing ninety penalties in ninety minutes. One a minute, the entire match.
 
-<FigureRow src="/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-01.webp" alt="Penalty 1, full-stretch near-save" side="end">
-  The first one, he is everything a keeper is supposed to be. Full horizontal stretch, fingertips grazing the ball, beaten by centimeters.
-
-  The miss doesn't matter. The effort is total. Every cell of him is in the moment of that kick.
-</FigureRow>
-
-<FigureRow src="/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-04.webp" alt="Penalty 4, the save" side="start">
-  By the fourth, the heroics have settled into craft. He reads the run-up, picks the corner, gets there, and the ball sticks in his gloves.
-
-  This is competence working as designed. Attention, skill, and a decision that matters because there aren't many of them.
-</FigureRow>
-
-<FigureRow src="/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-48.webp" alt="Penalty 48, standing motionless" side="end">
-  But there are many of them. By the forty-eighth, he stands on his line and doesn't move. His body is in the goal. The rest of him is somewhere else. The kick happens near him, like weather.
-</FigureRow>
-
-<FigureRow src="/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-73.webp" alt="Penalty 73, smoking outside the goal" side="start">
-  By the seventy-third he has left the goal entirely. He leans against the post from the outside, smoking, watching the balls go in the way you'd watch a neighbor's sprinkler.
-</FigureRow>
-
-<FigureRow src="/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-89.webp" alt="Penalty 89, asleep in bed" side="end">
-  And the eighty-ninth finds him at home, asleep in bed, the goal standing empty behind the kicker.
-</FigureRow>
+<FigureStory
+  aspect="1600/893"
+  beats={[
+    {
+      src: "/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-01.webp",
+      alt: "Penalty 1, full-stretch near-save",
+      label: "Penalty 1 — Minute 01",
+      labelColor: "#F4C430",
+      paras: [
+        "The first one, he is everything a keeper is supposed to be. Full horizontal stretch, fingertips grazing the ball, beaten by centimeters.",
+        "The miss doesn't matter. The effort is total. Every cell of him is in the moment of that kick.",
+      ],
+    },
+    {
+      src: "/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-04.webp",
+      alt: "Penalty 4, the save",
+      label: "Penalty 4 — Minute 04",
+      labelColor: "#F4C430",
+      paras: [
+        "By the fourth, the heroics have settled into craft. He reads the run-up, picks the corner, gets there, and the ball sticks in his gloves.",
+        "This is competence working as designed. Attention, skill, and a decision that matters because there aren't many of them.",
+      ],
+    },
+    {
+      src: "/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-48.webp",
+      alt: "Penalty 48, standing motionless",
+      label: "Penalty 48 — Minute 48",
+      labelColor: "#475569",
+      paras: [
+        "But there are many of them. By the forty-eighth, he stands on his line and doesn't move. His body is in the goal. The rest of him is somewhere else. The kick happens near him, like weather.",
+      ],
+    },
+    {
+      src: "/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-73.webp",
+      alt: "Penalty 73, smoking outside the goal",
+      label: "Penalty 73 — Minute 73",
+      labelColor: "#94A3B8",
+      paras: [
+        "By the seventy-third he has left the goal entirely. He leans against the post from the outside, smoking, watching the balls go in the way you'd watch a neighbor's sprinkler.",
+      ],
+    },
+    {
+      src: "/images/blog/the-engineers-anxiety-at-the-penalty-kick/pen-89.webp",
+      alt: "Penalty 89, asleep in bed",
+      label: "Penalty 89 — Minute 89",
+      labelColor: "#DDD6C6",
+      paras: [
+        "And the eighty-ninth finds him at home, asleep in bed, the goal standing empty behind the kicker.",
+      ],
+    },
+  ]}
+/>
 
 Nobody saves the 89th penalty. The kicks never got harder. Each one is exactly as saveable as the first. Nobody is built to mean the eighty-ninth decision of the hour the way they meant the first.
 
