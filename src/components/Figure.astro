@@ -4,7 +4,7 @@ import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/utils/cn';
 
 const figureContainer = cva(
-  'overflow-hidden rounded-lg bg-neutral-light',
+  'overflow-hidden rounded-lg',
   {
     variants: {
       aspectRatio: {
@@ -13,9 +13,14 @@ const figureContainer = cva(
         square: 'h-64',                       // Equal dimensions
         auto: 'h-auto',                       // Natural aspect ratio
       },
+      surface: {
+        neutral: 'bg-neutral-light',          // Placeholder behind photos
+        none: '',                             // Transparent artwork
+      },
     },
     defaultVariants: {
       aspectRatio: 'portrait',
+      surface: 'neutral',
     },
   }
 );
@@ -40,13 +45,14 @@ const {
   alt,
   caption,
   aspectRatio,
+  surface,
   class: className,
   ...htmlAttrs
 } = Astro.props;
 ---
 
 <figure class={cn('my-6', className)} {...htmlAttrs}>
-  <div class={cn(figureContainer({ aspectRatio }))}>
+  <div class={cn(figureContainer({ aspectRatio, surface }))}>
     <img
       src={src}
       alt={alt}
