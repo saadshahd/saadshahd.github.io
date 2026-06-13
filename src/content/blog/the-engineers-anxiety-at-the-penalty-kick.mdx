@@ -50,9 +50,9 @@ Imagine a goalkeeper facing penalties eight hours a day, five days a week.
 />
 
 <SectionDivider spacing="subsection" />
-Agentic coding multiplied how many decisions I have to keep track of, and that volume is what wears comprehension down. A migration here, a refactor there, a dependency bump, a schema change, each diff arriving minutes after the last, each waiting for the same verdict. Approve or reject. I used to make a handful of few calls in a day and could feel the weight of each one. Now the calls gets thrown on me endlessly, and the thrower is stateless and doesn't care which number I'm on.
+Agentic coding multiplied how many decisions I have to keep track of, and that volume is what wears comprehension down. A migration here, a refactor there, a dependency bump, a schema change. I used to make a handful of calls in a day and could feel the weight of each one. Now the calls get thrown on me endlessly, and the thrower is stateless and doesn't care which number I'm on.
 
-What concerns me is when I find myself approving whatever without realising the decision nor the stakes at hand.
+What concerns me is how quickly the calls stop feeling load-bearing. Each one is just another in the stream, so I stop weighing them - I approve whatever without realising the decision or the stakes at hand, trusting the game will be played with or without me.
 
 <SectionDivider spacing="subsection" />
 
@@ -68,7 +68,7 @@ To own it. And ownership without comprehension is just a signature. Engaged prac
 
 <SectionDivider spacing="subsection" />
 
-Suppose the agent ships a migration that corrupts content in production. What happens to the agent? Nothing. There's no Tuesday morning for it. What happens to you? You're in the incident channel, your name is on the merge, your credibility with the leadership you just won over takes the hit, your one-month deadline track record gets an asterisk. The consequences of the decision have somewhere to _land_ - a continuous person with a reputation, a salary, a future at Wise, anxiety at 2am. The model generates the decision; you absorb its results.
+Suppose the agent ships a migration that corrupts content in production. What happens to the agent? Nothing. There's no Tuesday morning for it. What happens to you? You're in the incident channel, your name is on the merge, your credibility takes the hit, your track record gets an asterisk. The consequences of the decision have somewhere to _land_ - a continuous person with a reputation, a salary, a future, anxiety at 2am. The model generates the decision; you absorb its results.
 
 <SectionDivider spacing="subsection" />
 
@@ -76,8 +76,26 @@ _**So what could I do?**_
 
 The trap is that disengagement doesn't feel like disengagement. You steer the agent all day, your hands never leave the keyboard, and the motion feels like work. You can be busy approving and understand none of what you approve. Nothing in the loop stops to ask whether you still follow what you're signing.
 
-So the practice has to be deliberate - the comprehension won't rebuild itself by accident. What that looks like for engineering is the question I'm seeking an anwser for by maintiaing [moo.md](https://github.com/saadshahd/moo.md) hope plugin.
+So the practice has to be deliberate - the comprehension won't rebuild itself by accident. I work an idea in one direction and refuse to rush it. It starts as a seed - the rawest, most honest version of what I actually want - grown until it ripens, never handed to my pairs or my users before it does. I push that seed through `intent` (what, exactly), then `shape` (how, at a high level), then build it with the [superpowers](https://github.com/obra/superpowers) skills that keep me honest, `TDD` among them.
+
+<figure class="my-8">
+  <img
+    src="/images/blog/the-engineers-anxiety-at-the-penalty-kick/practice-flow.webp"
+    alt="A small figure grows one idea like a plant across five stages — planting the seed, watering the sprout (intent), staking the stem (shape), inspecting the bud (build), and handing the ripe fruit to two others (deliver) — with a dashed arrow looping back each Monday to re-own the work"
+    class="w-full h-auto"
+    loading="lazy"
+  />
+  <figcaption class="text-xs text-text-lighter mt-1 text-center italic">
+    Grow the seed until it ripens, then deliver — and return every Monday to stay in the loop.
+  </figcaption>
+</figure>
+
+The line I won't cross is delegating the decisions. The slow, interactive loop - from the seed through `intent` and `shape` - stays mine; I keep it under watch in [soloterm](https://soloterm.com/) as it grows. And rather than let that thinking pile up in one context until the agent compacts it behind my back, I hand each step off on a [card](https://github.com/saadshahd/moo.md/blob/main/hope/skills/card.md): a durable, minimal, human-first note holding only the facts that survive without the session that made them. Compaction mutates the one artifact I'm meant to own, quietly, without me looking; a card is one I write on purpose. I don't keep the history of that growing - the point is to stay present to the idea, not to archive it.
+
+What I delegate with `/hope:delegate` is the tactical, observable work - implement, test, verify, audit, explore - never the judgment. Anything that touches the future of the project, or the cornerstones of the original intent, gets surfaced back to me by design, so I stay engaged, involved, and the one who cares how it turns out. And every Monday I run `/hope:own` to check I still follow what's shipped - that I'm the keeper on his line, not the one asleep while the game plays on.
+
+What all of this should look like for engineering is the question I'm still working out in the open - in [moo.md](https://github.com/saadshahd/moo.md), a public Claude Code plugin.
 
 <SectionDivider spacing="subsection" />
 
-at the end if you share the same feelings please repeat after me: agentic tools don't threaten my skills; at their current shape they threaten the practice that keeps my accountability honest.
+If you feel it too, here's the line I keep coming back to: agentic tools don't threaten my skills; at their current shape they threaten the practice that keeps my accountability honest.
