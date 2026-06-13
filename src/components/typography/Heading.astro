@@ -38,6 +38,6 @@ type Props = VariantProps<typeof headingVariants> & {
 const { level, spacing, color, as: Tag = 'h2', class: className } = Astro.props;
 ---
 
-<Tag class={cn(headingVariants({ level, spacing, color }), className)}>
+<Tag class={cn(headingVariants({ level, spacing, color }), className)} style="font-family: var(--font-family-display); font-style: normal;">
   <slot />
 </Tag>

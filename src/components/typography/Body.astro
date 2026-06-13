@@ -5,10 +5,10 @@ import { cn } from '../../utils/cn';
 const bodyVariants = cva('text-text-lighter', {
   variants: {
     size: {
-      sm: 'text-sm leading-normal',              // 14px → 16.8px after scaling
-      base: 'text-base leading-relaxed',         // 16px → 19.2px after scaling
-      lg: 'text-base lg:text-xl leading-relaxed',  // Mobile/Tablet: 16px → 19.2px | Desktop: 24px → 28.8px (1.5x larger on desktop)
-      xl: 'text-xl leading-relaxed',             // 24px → 28.8px after scaling
+      sm: 'text-sm leading-normal',              // 14px → 16.8px | small UI text stays sans
+      base: 'text-base leading-relaxed',         // 16px → 19.2px | reading serif (Newsreader)
+      lg: 'text-base lg:text-xl leading-relaxed',  // Mobile/Tablet: 16px → 19.2px | Desktop: 24px → 28.8px (reading serif)
+      xl: 'text-xl leading-relaxed',             // 24px → 28.8px | reading serif (Newsreader)
     },
   },
   defaultVariants: {
@@ -22,8 +22,13 @@ type Props = VariantProps<typeof bodyVariants> & {
 };
 
 const { size, as: Tag = 'p', class: className, ...rest } = Astro.props;
+
+const fontFamily =
+  size === 'sm'
+    ? 'var(--font-family-sans)'
+    : 'var(--font-family-serif)';
 ---
 
-<Tag class:list={[cn(bodyVariants({ size }), className)]} {...rest}>
+<Tag class:list={[cn(bodyVariants({ size }), className)]} style={`font-family: ${fontFamily};`} {...rest}>
   <slot />
 </Tag>

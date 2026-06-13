@@ -18,7 +18,7 @@ interface Props {
 
 const {
   title,
-  description = 'Building realtime systems that scale through functional architecture and separation of concerns',
+  description = 'Systems will always fail. How do you make failure recoverable instead of catastrophic? Notes on resilient architecture, drawn from production.',
   ogImage = '/og-image.png',
   disableAutoHideNav = false
 } = Astro.props;
@@ -178,8 +178,8 @@ const ogImageURL = new URL(ogImage, Astro.site);
   </head>
   <body class="bg-background text-text antialiased">
     <!-- Responsive Navigation: Mobile circular badge → Desktop bar -->
-    <nav id="desktop-nav" class="headroom md:fixed md:mt-0 mt-8 top-2 left-2 right-2 max-w-6xl mx-auto z-50 rounded-lg md:bg-surface/80 md:backdrop-blur-lg flex items-center justify-center md:border md:border-neutral-lighter" data-disable-auto-hide={disableAutoHideNav}>
-      <div class="flex items-center justify-center md:justify-between w-full px-4">
+    <nav id="desktop-nav" class="md:fixed md:mt-0 mt-8 md:top-0 top-2 left-2 right-2 md:left-0 md:right-0 max-w-6xl md:max-w-none mx-auto z-50 rounded-lg md:rounded-none md:bg-surface md:border-0 md:border-b-4 md:border-double md:border-text/20 flex items-center justify-center" data-disable-auto-hide="true">
+      <div class="flex items-center justify-center md:justify-between w-full max-w-6xl mx-auto px-4 md:py-3">
         <a href="/" class="hover:opacity-80 transition-opacity">
           <SSLogo />
         </a>

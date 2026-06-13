@@ -21,6 +21,6 @@ type Props = VariantProps<typeof displayVariants> & {
 const { level, as: Tag = 'h1', class: className } = Astro.props;
 ---
 
-<Tag class:list={[displayVariants({ level }), 'font-display', className]} style="font-family: var(--font-family-display);">
+<Tag class:list={[displayVariants({ level }), 'font-display', className]} style="font-family: var(--font-family-display); font-style: normal;">
   <slot />
 </Tag>

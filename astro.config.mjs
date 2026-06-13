@@ -62,15 +62,16 @@ export default defineConfig({
       },
       {
         provider: fontProviders.google(),
-        name: "IBM Plex Serif",
-        weights: ["400", "600"],
+        name: "Newsreader",
+        weights: ["400", "500", "600"],
+        styles: ["normal", "italic"],
         cssVariable: "--font-serif",
         display: "swap"
       },
       {
         provider: fontProviders.google(),
-        name: "Space Grotesk",
-        weights: ["600", "700"],
+        name: "Fraunces",
+        weights: ["400", "600", "700"],
         cssVariable: "--font-display",
         display: "swap"
       }

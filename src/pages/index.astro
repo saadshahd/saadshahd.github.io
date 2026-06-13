@@ -1,26 +1,33 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Container from '../components/Container.astro';
 import Button from '../components/Button.astro';
+import Card from '../components/Card.astro';
+import BadgeList from '../components/BadgeList.astro';
+import Link from '../components/Link.astro';
+import SectionDivider from '../components/SectionDivider.astro';
 import Display from '../components/typography/Display.astro';
 import Body from '../components/typography/Body.astro';
 import Heading from '../components/typography/Heading.astro';
+import { mapTagToBadge, readingTime } from '../utils/blog';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => (import.meta.env.PROD ? !post.data.draft : true))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <Layout title="Saad Shahd - Software Engineer" disableAutoHideNav={true}>
-  <!-- Centered content on top of patterns -->
-  <Container width="default" spacing="hero" class="relative flex flex-col justify-center items-center" style="z-index: 1;">
-    <div class="w-full flex flex-col items-center text-center">
-      <Display level={1} as="h1" class="hero-name mb-2 leading-tight opacity-0 max-w-150 md:max-w-170">
-        Saad Shahd
+  <Container width="default" spacing="hero" class="relative flex flex-col justify-center" style="z-index: 1;">
+    <div class="w-full max-w-180">
+      <p class="hero-name text-sm text-text-lighter font-medium uppercase tracking-wide mb-4 opacity-0">Saad Shahd &mdash; Principal Engineer</p>
+      <Display level={1} as="h1" class="hero-title mb-6 leading-tight opacity-0">
+        Systems will always fail. The work is making failure survivable.
       </Display>
-      <Heading level={3} class="hero-title leading-tight text-text mb-6 opacity-0 max-w-150 md:max-w-170 text-balance">
-        What if systems couldn't break by design?
-      </Heading>
-      <Body size="lg" as="p" class="hero-value text-text-lighter mb-8 leading-relaxed opacity-0 max-w-150 md:max-w-150 lg:text-lg text-balance">
-        Over a decade building products for the humans, one pattern keeps appearing: when systems can't break by design, reliability becomes structural. Still exploring what's possible when architecture serves people first—curious about your context?
+      <Body size="lg" as="p" class="hero-value text-text-lighter mb-8 leading-relaxed opacity-0 max-w-150 text-pretty">
+        For fifteen years I chased the dream of systems that couldn't break. They broke anyway&mdash;at 2am, mid-match, under load no one modelled. The pattern that held wasn't prevention; it was recovery. So the question I keep asking teams is this: when this fails, and it will, how fast can we see it, name it, and bring it back? Reliability isn't the absence of failure. It's how gracefully you carry it.
       </Body>
-      <div class="hero-ctas flex gap-4 justify-center opacity-0">
+      <div class="hero-ctas flex flex-wrap gap-4 opacity-0">
         <Button variant="primary" size="md" href="/portfolio" trackLocation="hero">
           <span class="inline sm:hidden">View Work</span>
           <span class="hidden sm:inline">Explore My Work</span>
@@ -30,6 +37,93 @@ import Heading from '../components/typography/Heading.astro';
           <span class="hidden sm:inline">Start a Conversation</span>
         </Button>
       </div>
+    </div>
+  </Container>
+
+  <Container width="default" spacing="default" as="section" aria-labelledby="selected-work">
+    <SectionDivider spacing="major" />
+    <div class="max-w-180 mb-8">
+      <p class="text-sm text-text-lighter font-medium uppercase tracking-wide mb-2">Selected Work</p>
+      <Heading level={2} as="h2" id="selected-work" class="mb-3">
+        <span>Where the failure became the design.</span>
+      </Heading>
+      <Body size="base" as="p" class="text-text-lighter max-w-150 text-pretty">
+        One system, told honestly&mdash;origins, the bottleneck, the 2am test, and what I'd change.
+      </Body>
+    </div>
+
+    <Card variant="case-study" href="/portfolio/statsbomb" class="p-6 md:p-8 max-w-180">
+      <p class="text-sm text-text-lighter font-medium uppercase tracking-wide mb-2">Case Study &middot; 2018&ndash;2022</p>
+      <Heading level={3} as="h3" class="mb-3">
+        <span>Statsbomb: Real-Time Data Collection</span>
+      </Heading>
+      <Body size="base" as="p" class="text-text-lighter mb-4 max-w-150 text-pretty">
+        How do you let thousands of collectors capture a live match concurrently without choosing between speed and correctness? We built it from week-one sketches with Ali to the collection infrastructure Hudl bought in 2024.
+      </Body>
+      <BadgeList
+        size="xs"
+        badges={[
+          { label: 'Real-Time Data Collection', variant: 'category' },
+          { label: 'State Machines', variant: 'status' },
+          { label: 'Stream Processing', variant: 'status' },
+          { label: 'Distributed Teams', variant: 'skill' },
+        ]}
+      />
+    </Card>
+  </Container>
+
+  <Container width="default" spacing="default" as="section" aria-labelledby="writing">
+    <SectionDivider spacing="major" />
+    <div class="max-w-180 mb-8 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="text-sm text-text-lighter font-medium uppercase tracking-wide mb-2">Writing</p>
+        <Heading level={2} as="h2" id="writing">
+          <span>Questions worth sitting with.</span>
+        </Heading>
+      </div>
+      <Link href="/blog" variant="inline" class="text-sm">All writing &rarr;</Link>
+    </div>
+
+    <div class="grid gap-6 max-w-180">
+      {posts.map((post) => {
+        const formattedDate = post.data.date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        });
+        const readTime = readingTime(post.body ?? '');
+        const tagBadges = post.data.tags.map(mapTagToBadge);
+
+        return (
+          <Card variant="blog" href={`/blog/${post.id}`}>
+            <Heading level={3} as="h3">
+              <span>{post.data.title}</span>
+            </Heading>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-lighter my-3">
+              {tagBadges.length > 0 && <BadgeList size="xs" badges={tagBadges} />}
+              <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
+              <span aria-hidden="true">&middot;</span>
+              <span>~{readTime} read</span>
+            </div>
+            <Body size="base" as="p" class="text-pretty">{post.data.description}</Body>
+          </Card>
+        );
+      })}
+    </div>
+  </Container>
+
+  <Container width="default" spacing="default" as="section" aria-labelledby="contact-cta">
+    <SectionDivider spacing="major" />
+    <div class="max-w-180">
+      <Heading level={2} as="h2" id="contact-cta" class="mb-3">
+        <span>What does failure look like in your systems?</span>
+      </Heading>
+      <Body size="base" as="p" class="text-text-lighter mb-6 max-w-150 text-pretty">
+        If you're wrestling with reliability, resilience, or the architecture underneath both, I'd like to hear the shape of it. No pitch&mdash;just the question first.
+      </Body>
+      <Button variant="primary" size="md" href="/contact" trackLocation="footer-cta">
+        Start a Conversation
+      </Button>
     </div>
   </Container>
 </Layout>
@@ -48,19 +142,18 @@ import Heading from '../components/typography/Heading.astro';
     const isDesktop = window.innerWidth >= 1024;
 
     if (!prefersReducedMotion) {
-      // Content: Animate hero elements with staggered timing
       // ✅ Type-safe Motion One usage: individual transform properties, not transform strings
       const keyframes: DOMKeyframesDefinition = {
         opacity: [0, 1],
-        y: [30, 0] // Use 'y' property instead of transform: "translateY()"
+        y: [30, 0]
       };
 
       animate('.hero-name, .hero-title, .hero-value, .hero-ctas', keyframes, {
         duration: 0.8,
-        delay: stagger(0.15, { startDelay: isDesktop ? 0.6 : 0.3 }) // Desktop: wait for patterns, Mobile: smoother entry
+        delay: stagger(0.15, { startDelay: isDesktop ? 0.6 : 0.3 })
       });
     } else {
-      // If reduced motion, just show content immediately
+      // If reduced motion, show content immediately
       heroElements.forEach(el => {
         (el as HTMLElement).style.opacity = '1';
       });

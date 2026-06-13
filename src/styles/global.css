@@ -62,17 +62,19 @@
   --color-category: var(--color-badge-category-border); /* #0EA5E9 - Blue */
   --color-status: var(--color-badge-status-border);    /* #10B981 - Emerald */
 
-  /* Callout Variant Backgrounds - WCAG AA Compliant */
-  --color-callout-insight-bg: #FEF9E7;     /* Lightest gold tint */
-  --color-callout-context-bg: #EFF6FF;     /* Light blue tint */
-  --color-callout-warning-bg: #FFFBEB;     /* Amber tint */
-  --color-callout-technical-bg: #ECFDF5;   /* Lightest emerald tint */
-  --color-callout-subtle-bg: var(--color-surface); /* Surface color */
+  /* Callout Backgrounds - Warm Editorial: single restrained hairline-ruled note.
+     All variants resolve to the paper surface; differentiation comes from the
+     variant's left-border accent, not competing tint fills. API unchanged. */
+  --color-callout-insight-bg: var(--color-surface);
+  --color-callout-context-bg: var(--color-surface);
+  --color-callout-warning-bg: var(--color-surface);
+  --color-callout-technical-bg: var(--color-surface);
+  --color-callout-subtle-bg: var(--color-surface);
 
   /* ===== Typography (Font components provide --font-sans, --font-serif, --font-display) ===== */
   --font-family-sans: var(--font-sans, 'IBM Plex Sans', system-ui, -apple-system, sans-serif);
-  --font-family-serif: var(--font-serif, 'IBM Plex Serif', Georgia, serif);
-  --font-family-display: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  --font-family-serif: var(--font-serif, 'Newsreader', Georgia, 'Times New Roman', serif);
+  --font-family-display: var(--font-display, 'Fraunces', Georgia, serif);
   --font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
 
   /* Font Sizes - Content-First Scale */
@@ -280,7 +282,8 @@ pre.mermaid,
 /* ===== MDX Native Paragraph Styling ===== */
 /* Style bare <p> tags from markdown (not inside components) */
 section p {
-  font-size: 1rem;                    /* text-base */
+  font-family: var(--font-family-serif); /* Newsreader - reading serif for long-form prose */
+  font-size: 1.0625rem;               /* 17px - optical reading size */
   line-height: 1.75;                  /* leading-relaxed */
   color: var(--color-text-lighter);   /* #475569 */
   margin-bottom: 1.5rem;              /* mb-6 */
@@ -304,6 +307,7 @@ section pre {
 
 /* ===== Blog Prose Styling ===== */
 .blog-prose p {
+  font-family: var(--font-family-serif); /* Newsreader - reading serif body */
   color: var(--color-text-light);
 }
 
@@ -325,13 +329,13 @@ section pre {
 }
 
 .blog-prose a {
-  color: var(--color-secondary);
-  border-bottom: 1px solid var(--color-secondary-light);
+  color: var(--color-secondary-dark);  /* #0369A1 - deepened, contrast-safe link blue */
+  border-bottom: 1px solid var(--color-secondary-dark);
   transition: color 0.2s, border-color 0.2s;
 
   &:hover {
-    color: var(--color-secondary-dark);
-    border-color: var(--color-secondary-dark);
+    color: var(--color-text);
+    border-color: var(--color-text);
   }
 }
 
