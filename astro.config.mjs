@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import astrobook from "@northstarthemes/astrobook";
 import mdx from "@astrojs/mdx";
 import mermaid from "astro-mermaid";
+import rehypeExternalLinks from "rehype-external-links";
 
 // https://astro.build/config
 export default defineConfig({
@@ -90,5 +91,12 @@ export default defineConfig({
       theme: "github-dark-default",
       wrap: true,
     },
+    rehypePlugins: [
+      [rehypeExternalLinks, {
+        target: "_blank",
+        rel: ["noopener", "noreferrer"],
+        properties: { dataTrackOutbound: "true" },
+      }],
+    ],
   },
 });

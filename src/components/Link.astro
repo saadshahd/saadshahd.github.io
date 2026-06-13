@@ -71,8 +71,8 @@ const currentPath = Astro.url.pathname;
 
     if (!link) return;
 
-    const destination = link.getAttribute('data-track-destination');
-    const source = link.getAttribute('data-track-source');
+    const destination = link.getAttribute('data-track-destination') || link.href;
+    const source = link.getAttribute('data-track-source') || window.location.pathname;
     const text = link.textContent?.trim() || '';
 
     if (destination && source) {
